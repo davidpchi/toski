@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
 import axios from 'axios';
 import { SheetData } from './types/service/SheetData';
+import { Flex, Heading } from '@chakra-ui/react';
+import { sheetRowToMatch } from './types/service/dataMappers';
+import { Match } from './types/domain/Match';
+import { SortableTable } from './components/SortableTable';
+import { matchHistoryColumns } from './components/matchHistory/matchHistoryColumnHelper';
 
 const dataEndpoint = 'https://docs.google.com/spreadsheets/d/1FsjnGp3JPsqAEmlyWlxmYK5pSwGASqfIcDl9HvD-fuk/gviz/tq?gid=1885300192';
 
@@ -18,44 +22,34 @@ export const fetchData = (): Promise<SheetData> =>
 
 function App() {
 
-  const [data, setData] = useState<string[]>([]);
+  const [data, setData] = useState<Match[]>([]);
 
-  fetchData().then((result) => {
-    console.dir(result);
-    const gameResults: string[] = [];
-    for (const cell of result.table.rows) {
-      const gameDate = cell.c[2];
-      const gameWinner = cell.c[22]
-      if (gameDate !== null && gameWinner !== null) {
-        gameResults.push(gameDate.f + ": " + gameWinner.v);
+  useEffect(() => {
+    fetchData().then((result) => {
+      console.dir(result);
+      const matches: Match[] = [];
+
+      for (let i = 0; i < result.table.rows.length; i++) {
+        const cell = result.table.rows[i];
+        const match = sheetRowToMatch(cell, i.toString());
+        matches.push(match);
       }
-    }
-    if (data.length === 0) {
-      setData(gameResults);
-    }
-  });
 
-  const results = data.map((value) =>
-    <p>{value}</p>
-  )
+      setData(matches);
+    });
+  }, []);
+
+
+
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          {results}
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Flex direction='column' justify='center' align='center'>
+      <Heading>Match History</Heading>
+      <SortableTable
+        columns={matchHistoryColumns}
+        data={data}
+      />
+    </Flex>
   );
 }
 
