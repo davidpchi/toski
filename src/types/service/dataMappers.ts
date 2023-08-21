@@ -27,8 +27,6 @@ function matchPlayerHelper(
 export function sheetRowToMatch(cell: SheetRow, id: string): Match {
     const date = cell.c[2];
 
-    console.log(date);
-
     const player1 = matchPlayerHelper(cell, 3, 4, 5, 6);
     const player2 = matchPlayerHelper(cell, 7, 8, 9, 10);
     const player3 = matchPlayerHelper(cell, 11, 12, 13, 14);
@@ -45,4 +43,37 @@ export function sheetRowToMatch(cell: SheetRow, id: string): Match {
         players: [player1, player2, player3, player4],
         winner: winnerName ? winnerName.v.toString() : "",
     }
+}
+
+export function getPlayerWinRate(matches: Match[], playerName: string): { name: string, winR: number, loseR: number } {
+    // Games counter
+    let games = 0;
+
+    // Wins counter
+    let wins = 0;
+
+
+    // There exists an array of match objects, each contains an array of match player objects, match player objects have a "name" key
+    // We want to loop through all matches / match players looking for playerName and incrementing games / wins
+
+    // Loop through matches
+    for (let i = 0; i < matches.length; i++) {
+        // Capture matches[i]
+        let currentMatch = matches[i];
+
+        // Loop through match players
+        for (let j = 0; j < currentMatch.players.length; j++) {
+            // If player is in the game, increment game
+            if (playerName === currentMatch.players[j].name) {
+                games++;
+
+                // If player won the game, increment wins
+                if (playerName === currentMatch.winner) {
+                    wins++;
+                }
+            }
+        }
+    }
+
+    return { name: playerName, winR: (wins / games), loseR: (1 - (wins / games)) }
 }
