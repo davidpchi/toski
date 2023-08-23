@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Root from "./Root";
 import { Error } from "../components/Error";
 import { MatchHistory } from "../components/matchHistory/MatchHistory";
+import { CommanderOverview } from "../components/commanderOverview/CommanderOverview";
 
 export const router = createBrowserRouter([
     {
@@ -10,16 +11,20 @@ export const router = createBrowserRouter([
         errorElement: <Error error={'Whoops! Made a wrong turn!'} />,
         children: [
             {
-                path: '/',
+                path: '/toski',
                 element: <MatchHistory />,
             },
             {
-                path: '/playerOverview',
+                path: '/toski/playerOverview',
                 element: <MatchHistory />,
             },
             {
-                path: '/matchHistory',
+                path: '/toski/matchHistory',
                 element: <MatchHistory />,
+            },
+            {
+                path: '/toski/commanderOverview',
+                element: <CommanderOverview />,
             },
         ]
     }
