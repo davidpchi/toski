@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { getMatch } from "../../redux/statsSelectors";
 import { Loading } from "../Loading";
 import { FiLoader } from "react-icons/fi";
+import { commanderList } from "../../services/commanderList";
 
 export async function loader(data: { params: any }) {
     return data.params.matchId;
@@ -63,9 +64,23 @@ const MatchPlayerCard = React.memo(
                     flex={1}
                     padding={1}
                     size='md'
-
                 >
-                    <Image src={"https://cards.scryfall.io/normal/front/0/8/0873cfa8-046c-4b14-ae22-3fd6a691f763.jpg?1674137476"} />
+                    {
+                        commanderList[player.commander.name] ? <Image src={commanderList[player.commander.name].image} /> :
+                            <Flex width={200} alignContent='center'>
+                                <p
+                                    style={{
+                                        fontStyle: 'italic',
+                                        fontWeight: 'bold',
+                                        color: textColor,
+                                        wordBreak: "break-word",
+                                        whiteSpace: "normal"
+                                    }}
+                                >
+                                    {player.commander.name}
+                                </p>
+                            </Flex>
+                    }
                 </Button>
                 <Button
                     variant='ghost'
@@ -138,7 +153,7 @@ export const MatchDetails = React.memo(function MatchDetails() {
             >
                 {playerCards}
             </Flex>
-            {match.numberOfTurns ? <Text>
+            {match.winner ? <Text>
                 {`Winner: ${match.winner}`}
             </Text> : null}
             {match.numberOfTurns ? <Text>

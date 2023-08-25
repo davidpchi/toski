@@ -44,7 +44,7 @@ function matchesToCommanders(matches: Match[]): { [id: string]: Commander } {
                 if (commanderId !== undefined) {
                     // commander is valid-- add it
                     results[player.commander] = {
-                        id: commanderList[player.commander],
+                        id: commanderList[player.commander].id,
                         name: player.commander,
                         matches: [match]
                     };
