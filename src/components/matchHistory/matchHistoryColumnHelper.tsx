@@ -1,6 +1,7 @@
-import { Flex } from "@chakra-ui/react";
+import { Flex, Image } from "@chakra-ui/react";
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import { Match } from "../../types/domain/Match";
+import { commanderList } from "../../services/commanderList";
 
 const columnHelper = createColumnHelper<Match>();
 
@@ -35,7 +36,19 @@ export const matchHistoryColumns: ColumnDef<Match, any>[] = [
     columnHelper.accessor((row) => row.winner, {
         id: 'winner',
         cell: (info) => {
-            return info.getValue();
+
+            const match = info.row.original;
+            // get the commander image for the winner
+            const winner = match.players.find((player) => player.name === match.winner);
+            const commander = winner ? winner.commander : "";
+            const commanderImage = commanderList[commander] ? commanderList[commander].image.replace("normal", "art_crop") : "";
+
+            return (
+                <Flex alignContent={'center'} justifyContent={'center'} flexDirection={'column'}>
+                    <Image src={commanderImage} width={20} borderRadius={8} />
+                    <span>{info.getValue()}</span>
+                </Flex>
+            )
         },
         header: () => <span>Winner</span>,
     }),
