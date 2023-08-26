@@ -4,6 +4,7 @@ import { Error } from "../components/Error";
 import { MatchDetails, loader as matchLoader } from "../components/matchHistory/MatchDetails";
 import { MatchHistory } from "../components/matchHistory/MatchHistory";
 import { CommanderOverview } from "../components/commanderOverview/CommanderOverview";
+import Home from "../components/home/Home";
 
 export const router = createBrowserRouter([
     {
@@ -13,7 +14,7 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: '/toski',
-                element: <MatchHistory />,
+                element: <Home />,
             },
             {
                 path: '/toski/playerOverview',

@@ -11,8 +11,8 @@ function matchPlayerHelper(
 
     const nameData = cell.c[nameIndex];
     const commanderData = cell.c[commanderIndex];
-    const rankData = cell.c[positionIndex];
-    const turnData = cell.c[rankIndex];
+    const rankData = cell.c[rankIndex];
+    const turnData = cell.c[positionIndex];
 
     const player: MatchPlayer = {
         name: nameData ? nameData.v.toString() : "",
@@ -36,11 +36,32 @@ export function sheetRowToMatch(cell: SheetRow, id: string): Match {
 
     const winnerName = cell.c[22];
 
+    const players: MatchPlayer[] = [];
+
+    // drop all empty players
+    if (player1.name !== undefined && player1.name !== "") {
+        players.push(player1);
+    }
+
+    if (player2.name !== undefined && player2.name !== "") {
+        players.push(player2);
+    }
+
+    if (player3.name !== undefined && player3.name !== "") {
+        players.push(player3);
+    }
+
+    if (player4.name !== undefined && player4.name !== "") {
+        players.push(player4);
+    }
+
+    players.sort((a, b) => Number(a.turnPosition) - Number(b.turnPosition));
+
     return {
         date: date && date.f ? new Date(date.f) : new Date(),
         id,
         numberOfTurns: numberOfTurns ? numberOfTurns.v.toString() : "",
-        players: [player1, player2, player3, player4],
+        players: players,
         winner: winnerName ? winnerName.v.toString() : "",
     }
 }
