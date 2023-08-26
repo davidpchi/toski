@@ -11,7 +11,7 @@ export const CommanderOverview = React.memo(function MatchHistory() {
     const commanders: { [id: string]: Commander } | undefined = useSelector(getCommanders);
 
     if (commanders === undefined) {
-        return <Loading text="" />;
+        return <Loading text="loading..." />;
     }
 
     const commandersArray = Object.values(commanders);
