@@ -2,7 +2,8 @@ import { Flex } from "@chakra-ui/react";
 const backgroundVideo = 'https://cdn.discordapp.com/attachments/983610720316977193/1144864732914925620/Editor115_VP9.webm';
 
 const generalLogo =
-    'https://media.discordapp.net/attachments/980133030050021396/1144855095486447686/toski_logo_1.png';
+    'https://cdn.discordapp.com/attachments/980133030050021396/1145161251945709670/toski_logo_v1.png';
+//'https://media.discordapp.net/attachments/980133030050021396/1145161252298035250/toski_logo_v1_alt.png';
 
 export default function Home() {
     return (
