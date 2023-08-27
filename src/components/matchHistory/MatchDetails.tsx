@@ -54,7 +54,7 @@ const MatchPlayerCard = React.memo(
                 minWidth={160}
                 maxWidth={250}
                 borderWidth={5}
-                borderColor={player.isWinner ? "#2f2477" : "transparent"}
+                borderColor={player.isWinner ? "#091503" : "transparent"}
                 borderRadius={8}
             >
                 <Button
