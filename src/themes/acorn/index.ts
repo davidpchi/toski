@@ -8,19 +8,19 @@ import { mode, StyleFunctionProps } from '@chakra-ui/theme-tools';
 import { Heading } from './components/heading';
 import { Text } from './components/text';
 
-export const amethyst = extendTheme({
+export const acorn = extendTheme({
     colors: {
         primary: {
-            50: '#ebe7f3',
-            100: '#cdc4e2',
-            200: '#ac9ecf',
-            300: '#8c78bc',
-            400: '#745bae',
-            500: '#5d41a0',
-            600: '#553c9a',
-            700: '#493491',
-            800: '#3f2e88',
-            900: '#2f2477',
+            50: '#d2dace',
+            100: '#a5b59e',
+            200: '#78906d',
+            300: '#4a6a3d',
+            400: '#1e460d',
+            500: '#18380a',
+            600: '#122a07',
+            700: '#0f2306',
+            800: '#0c1c05',
+            900: '#091503',
         },
         secondary: {
             50: '#e2f2f3',

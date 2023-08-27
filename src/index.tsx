@@ -4,14 +4,14 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ChakraProvider } from '@chakra-ui/react';
-import { amethyst } from './themes/amethyst';
+import { acorn } from './themes/acorn';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <ChakraProvider theme={amethyst}>
+    <ChakraProvider theme={acorn}>
       <App />
     </ChakraProvider>
   </React.StrictMode>
