@@ -1,7 +1,7 @@
 {
   "name": "toski",
   "version": "0.1.0",
-  "homepage": "https://davidpchi.github.io/toski",
+  "homepage": "https://davidpchi.github.io/toski/",
   "private": true,
   "dependencies": {
     "@chakra-ui/icons": "^2.0.9",

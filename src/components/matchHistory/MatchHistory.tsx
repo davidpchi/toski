@@ -25,7 +25,7 @@ export const MatchHistory = React.memo(function MatchHistory() {
                 getRowProps={(row: any) => {
                     return {
                         onClick: () => {
-                            navigate('/toski/matchHistory/' + row.original.id);
+                            navigate('/matchHistory/' + row.original.id);
                             window.scrollTo(0, 0);
                         },
                     };
