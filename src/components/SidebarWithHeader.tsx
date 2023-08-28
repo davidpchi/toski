@@ -34,11 +34,11 @@ interface LinkItemProps {
     route: string;
 }
 const LinkItems: Array<LinkItemProps> = [
-    { name: 'Home', icon: FiHome, route: '/toski' },
-    { name: 'Player Overview', icon: FiUsers, route: '/toski/playerOverview' },
-    { name: 'Commander Overview', icon: FiShield, route: '/toski/commanderOverview' },
-    { name: 'Match History', icon: FiCalendar, route: '/toski/matchHistory' },
-    { name: 'News', icon: FiBookOpen, route: '/toski/news' },
+    { name: 'Home', icon: FiHome, route: '/' },
+    { name: 'Player Overview', icon: FiUsers, route: '/playerOverview' },
+    { name: 'Commander Overview', icon: FiShield, route: '/commanderOverview' },
+    { name: 'Match History', icon: FiCalendar, route: '/matchHistory' },
+    { name: 'News', icon: FiBookOpen, route: '/news' },
 ];
 
 export default function SidebarWithHeader({
