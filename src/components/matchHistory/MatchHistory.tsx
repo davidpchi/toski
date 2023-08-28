@@ -17,10 +17,9 @@ export const MatchHistory = React.memo(function MatchHistory() {
         return <Loading text="" />;
     }
 
-    // ADD TEST CODE HERE AS NEEDED
+    // Temporary player dictionary check test
     console.dir(matchesToPlayers(matches));
-    // MARKING FOR AXIOMATICADI
-    
+
     return (
         <Flex direction='column' justify='center' align='center'>
             <Heading>Match History</Heading>
