@@ -25,4 +25,9 @@ export const commanderOverviewColumns: ColumnDef<Commander, any>[] = [
         cell: (info) => info.row.original.matches.length,
         header: () => <span>Game Count</span>,
     }),
+    columnHelper.accessor((row) => row.wins, {
+        id: 'wins',
+        cell: (info) => info.row.original.wins,
+        header: () => <span>Wins</span>,
+    }),
 ];

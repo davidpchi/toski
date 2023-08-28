@@ -31,34 +31,37 @@ export const statsReducer = createReducer(initialState, (builder) => {
 
 // given a collection of matches, return all of the commanders in those matches
 function matchesToCommanders(matches: Match[]): { [id: string]: Commander } {
-    const results: { [id: string]: Commander } = {};
-    for (const match of matches) {
+    const commanderDictionary: { [id: string]: Commander } = {};
+    for (const currentMatch of matches) {
         // iterate through each player, and add those commanders to our commander dictionary
-        for (const player of match.players) {
-            const data = results[player.commander];
+        for (const player of currentMatch.players) {
+            // Variable to call commander name
+            const currentCommanderName = player.commander;
+            const potentialCommanderObj = commanderDictionary[currentCommanderName];
             // if the entry doesn't exist, maybe add it to our dictionary
-            if (data === undefined) {
+            if  (potentialCommanderObj === undefined) {
                 // validate that it is a real commander
-                const commanderId = commanderList[player.commander];
-
+                const commanderId = commanderList[currentCommanderName];
                 if (commanderId !== undefined) {
                     // commander is valid-- add it
-                    results[player.commander] = {
-                        id: commanderList[player.commander].id,
-                        name: player.commander,
-                        matches: [match]
+                     commanderDictionary[currentCommanderName] = {
+                        id: commanderList[currentCommanderName].id,
+                        name: currentCommanderName,
+                        matches: [currentMatch],
+                        wins: (player.rank === "1") ? 1 : 0,
                     };
                 } else {
                     // log the invalid commander
-                    console.log(`Invalid commander found in match <${match.id}> : ${player.commander}`);
+                    console.log(`Invalid commander found in currentMatch <$ currentMatch.id}> : ${currentCommanderName}`);
                 }
             } else {
-                // since this commander exists, update the match count
-                data.matches.push(match);
-                results[player.commander] = data;
+                // since this commander exists, update the currentMatch count
+                commanderDictionary[currentCommanderName].matches.push(currentMatch);
+                if (player.rank === "1") { 
+                    commanderDictionary[currentCommanderName].wins++; 
+                }
             }
         }
     }
-
-    return results
+    return commanderDictionary;
 }

@@ -4,4 +4,5 @@ export type Commander = {
     id: string;
     name: string;
     matches: Match[];
+    wins: number;
 }
