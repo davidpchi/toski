@@ -1,8 +1,9 @@
-import { createReducer } from "@reduxjs/toolkit";
+import { createReducer, current } from "@reduxjs/toolkit";
 import { Match } from "../types/domain/Match";
 import { StatsAction } from "./statsActions";
 import { Commander } from "../types/domain/Commander";
 import { commanderList } from "../services/commanderList";
+import { Player } from "../types/domain/Player";
 
 /**
  * State containing all game history data
@@ -65,3 +66,32 @@ function matchesToCommanders(matches: Match[]): { [id: string]: Commander } {
     }
     return commanderDictionary;
 }
+
+// // given a collection of matches, return all of the players in those matches
+// function matchesToPlayers(matches: Match[]): { [name: string]: Player } {
+//     const playerDictionary: { [name: string]: Player } = {};
+//     for (const currentMatch of matches) {
+//         // iterate through each player, and add those commanders to our commander dictionary
+//         for (const player of currentMatch.players) {
+//             const currentPlayerName = player.name;
+//             const potentialPlayerObj = playerDictionary[currentPlayerName];
+
+//             // if the entry doesn't exist, add to dictionary
+//             if  (potentialPlayerObj === undefined) {
+//                 playerDictionary[currentPlayerName] = {
+//                     name: currentPlayerName,
+//                     matches: [currentMatch],
+//                     wins: (player.rank === "1") ? 1 : 0,
+//                 }
+//             } else {
+//                 // since this player exists, update the currentMatch count
+//                 playerDictionary[currentPlayerName].matches.push(currentMatch);
+//                 if (player.rank === "1") { 
+//                     playerDictionary[currentPlayerName].wins++; 
+//                 }
+//             }
+//         }
+//     }
+//     return playerDictionary;
+// }
+
