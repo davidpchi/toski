@@ -6,6 +6,7 @@ import { getMatches } from "../../redux/statsSelectors";
 import { useSelector } from "react-redux";
 import { Loading } from "../Loading";
 import { useNavigate } from "react-router-dom";
+import { matchesToPlayers } from "../../redux/statsReducer";
 
 export const MatchHistory = React.memo(function MatchHistory() {
     const navigate = useNavigate();
@@ -15,6 +16,9 @@ export const MatchHistory = React.memo(function MatchHistory() {
     if (matches === undefined) {
         return <Loading text="" />;
     }
+
+    // Temporary player dictionary check test
+    console.dir(matchesToPlayers(matches));
 
     return (
         <Flex direction='column' justify='center' align='center'>
