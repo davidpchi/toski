@@ -14,7 +14,7 @@ export const CommanderOverview = React.memo(function MatchHistory() {
         return <Loading text="loading..." />;
     }
 
-    const commandersArray = Object.values(commanders);
+    const commandersArray = Object.values(commanders).sort((a: Commander, b: Commander) => a.name.localeCompare(b.name));
 
     return (
         <Flex direction='column' justify='center' align='center'>
