@@ -11,3 +11,4 @@ export const getMatch = (state: AppState, matchId: string) => {
 }
 
 export const getCommanders = (state: AppState) => state.stats.commanders;
+export const getPlayers = (state: AppState) => state.stats.players;

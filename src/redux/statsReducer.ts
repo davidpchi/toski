@@ -11,11 +11,13 @@ import { Player } from "../types/domain/Player";
 export type StatsState = Readonly<{
     matches: Match[] | undefined;
     commanders: { [id: string]: Commander } | undefined;
+    players: { [id: string]: Player } | undefined;
 }>;
 
 const initialState: StatsState = {
     matches: undefined,
     commanders: undefined,
+    players: undefined,
 };
 
 export const statsReducer = createReducer(initialState, (builder) => {
@@ -26,6 +28,7 @@ export const statsReducer = createReducer(initialState, (builder) => {
                 const matchesCollection = action.payload;
                 state.matches = matchesCollection;
                 state.commanders = matchesToCommanders(matchesCollection);
+                state.players = matchesToPlayers(matchesCollection);
             }
         );
 });
