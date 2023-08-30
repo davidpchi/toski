@@ -7,18 +7,19 @@ import { useSelector } from "react-redux";
 import { Loading } from "../Loading";
 import { useNavigate } from "react-router-dom";
 import { matchesToPlayers } from "../../redux/statsReducer";
+import { Match } from "../../types/domain/Match";
 
 export const MatchHistory = React.memo(function MatchHistory() {
     const navigate = useNavigate();
 
-    const matches = useSelector(getMatches);
+    let matches = useSelector(getMatches);
 
     if (matches === undefined) {
         return <Loading text="" />;
     }
 
-    // Temporary player dictionary check test
-    console.dir(matchesToPlayers(matches));
+    // cannot directly mutate state, copy to new array first
+    matches = matches.slice().sort((a: Match, b: Match) => Number(b.id) - Number(a.id));
 
     return (
         <Flex direction='column' justify='center' align='center'>

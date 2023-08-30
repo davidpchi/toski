@@ -38,7 +38,7 @@ const LinkItems: Array<LinkItemProps> = [
     { name: 'Player Overview', icon: FiUsers, route: '/playerOverview' },
     { name: 'Commander Overview', icon: FiShield, route: '/commanderOverview' },
     { name: 'Match History', icon: FiCalendar, route: '/matchHistory' },
-    { name: 'News', icon: FiBookOpen, route: '/news' },
+    // { name: 'News', icon: FiBookOpen, route: '/news' },
 ];
 
 export default function SidebarWithHeader({
