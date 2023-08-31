@@ -6,12 +6,10 @@ import { getMatches } from "../../redux/statsSelectors";
 import { useSelector } from "react-redux";
 import { Loading } from "../Loading";
 import { useNavigate } from "react-router-dom";
-import { matchesToPlayers } from "../../redux/statsReducer";
 import { Match } from "../../types/domain/Match";
 
 export const MatchHistory = React.memo(function MatchHistory() {
     const navigate = useNavigate();
-
     let matches = useSelector(getMatches);
 
     if (matches === undefined) {

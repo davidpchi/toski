@@ -9,8 +9,19 @@ import { Player } from "../types/domain/Player";
  * State containing all game history data
  */
 export type StatsState = Readonly<{
+    /**
+     * An array of all the matches arranged from most recent to earliest.
+     */
     matches: Match[] | undefined;
+
+    /**
+     * A map of all commanders where the ID is the scryfall commander id.
+     */
     commanders: { [id: string]: Commander } | undefined;
+
+    /**
+     * A map of all the players where the ID is the user name.
+     */
     players: { [id: string]: Player } | undefined;
 }>;
 
@@ -41,28 +52,30 @@ function matchesToCommanders(matches: Match[]): { [id: string]: Commander } {
         for (const player of currentMatch.players) {
             // Variable to call commander name
             const currentCommanderName = player.commander;
-            const potentialCommanderObj = commanderDictionary[currentCommanderName];
-            // if the entry doesn't exist, maybe add it to our dictionary
-            if  (potentialCommanderObj === undefined) {
-                // validate that it is a real commander
-                const commanderId = commanderList[currentCommanderName];
-                if (commanderId !== undefined) {
-                    // commander is valid-- add it
-                     commanderDictionary[currentCommanderName] = {
-                        id: commanderList[currentCommanderName].id,
-                        name: currentCommanderName,
-                        matches: [currentMatch],
-                        wins: (player.rank === "1") ? 1 : 0,
-                    };
-                } else {
-                    // log the invalid commander
-                    console.log(`Invalid commander found in currentMatch <$ currentMatch.id}> : ${currentCommanderName}`);
-                }
+            const commander = commanderList[currentCommanderName];
+
+            // check to see if the commander name is valid
+            if (commander === undefined) {
+                // log the invalid commander
+                console.log(`Invalid commander found in currentMatch <$ currentMatch.id}> : ${currentCommanderName}`);
+                continue;
+            }
+
+            // commander name is valid. let's check to see if we already added it to our dictionary
+            const potentialCommanderObj = commanderDictionary[commander.id];
+            if (potentialCommanderObj === undefined) {
+                // the entry doesn't exist, add it to our dictionary
+                commanderDictionary[commander.id] = {
+                    id: commander.id,
+                    name: currentCommanderName,
+                    matches: [currentMatch],
+                    wins: (player.rank === "1") ? 1 : 0,
+                };
             } else {
                 // since this commander exists, update the currentMatch count
-                commanderDictionary[currentCommanderName].matches.push(currentMatch);
-                if (player.rank === "1") { 
-                    commanderDictionary[currentCommanderName].wins++; 
+                commanderDictionary[potentialCommanderObj.id].matches.push(currentMatch);
+                if (player.rank === "1") {
+                    commanderDictionary[potentialCommanderObj.id].wins++;
                 }
             }
         }
@@ -80,7 +93,7 @@ export function matchesToPlayers(matches: Match[]): { [name: string]: Player } {
             const potentialPlayerObj = playerDictionary[currentPlayerName];
 
             // if the entry doesn't exist, add to dictionary
-            if  (potentialPlayerObj === undefined) {
+            if (potentialPlayerObj === undefined) {
                 playerDictionary[currentPlayerName] = {
                     name: currentPlayerName,
                     matches: [currentMatch],
@@ -89,8 +102,8 @@ export function matchesToPlayers(matches: Match[]): { [name: string]: Player } {
             } else {
                 // since this player exists, update the currentMatch count
                 playerDictionary[currentPlayerName].matches.push(currentMatch);
-                if (player.rank === "1") { 
-                    playerDictionary[currentPlayerName].wins++; 
+                if (player.rank === "1") {
+                    playerDictionary[currentPlayerName].wins++;
                 }
             }
         }
