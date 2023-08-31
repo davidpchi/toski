@@ -6,8 +6,10 @@ import { getCommanders } from "../../redux/statsSelectors";
 import { useSelector } from "react-redux";
 import { Loading } from "../Loading";
 import { Commander } from "../../types/domain/Commander";
+import { useNavigate } from "react-router-dom";
 
 export const CommanderOverview = React.memo(function MatchHistory() {
+    const navigate = useNavigate();
     const commanders: { [id: string]: Commander } | undefined = useSelector(getCommanders);
 
     if (commanders === undefined) {
@@ -22,6 +24,14 @@ export const CommanderOverview = React.memo(function MatchHistory() {
             <SortableTable
                 columns={commanderOverviewColumns}
                 data={commandersArray}
+                getRowProps={(row: any) => {
+                    return {
+                        onClick: () => {
+                            navigate('/commanderOverview/' + row.original.id);
+                            window.scrollTo(0, 0);
+                        },
+                    };
+                }}
             />
         </Flex>
     );

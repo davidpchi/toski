@@ -14,7 +14,7 @@ export async function loader(data: { params: any }) {
 
 export type MatchDisplayCommander = {
     name: string;
-    // image: string;
+    id: string | undefined;
 };
 
 export type MatchDisplayPlayer = {
@@ -38,7 +38,9 @@ const MatchPlayerCard = React.memo(
         const navigate = useNavigate();
 
         const championNav = useCallback(() => {
-            navigate('/commanderOverview/' + player.commander.name);
+            if (player.commander.id !== undefined) {
+                navigate('/commanderOverview/' + player.commander.id);
+            }
         }, [navigate, player.commander.name]);
 
         const playerNav = useCallback(() => {
@@ -129,7 +131,8 @@ export const MatchDetails = React.memo(function MatchDetails() {
         const matchPlayer: MatchDisplayPlayer = {
             name: player.name,
             commander: {
-                name: player.commander
+                name: player.commander,
+                id: commanderList[player.commander] ? commanderList[player.commander].id : undefined
             },
             isWinner: match.winner === player.name
         }
