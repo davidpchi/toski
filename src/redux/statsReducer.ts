@@ -68,12 +68,12 @@ function matchesToCommanders(matches: Match[]): { [id: string]: Commander } {
                 commanderDictionary[commander.id] = {
                     id: commander.id,
                     name: currentCommanderName,
-                    matches: [currentMatch],
+                    matches: [currentMatch.id],
                     wins: (player.rank === "1") ? 1 : 0,
                 };
             } else {
                 // since this commander exists, update the currentMatch count
-                commanderDictionary[potentialCommanderObj.id].matches.push(currentMatch);
+                commanderDictionary[potentialCommanderObj.id].matches.push(currentMatch.id);
                 if (player.rank === "1") {
                     commanderDictionary[potentialCommanderObj.id].wins++;
                 }
