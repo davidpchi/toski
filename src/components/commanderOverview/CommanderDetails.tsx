@@ -41,6 +41,9 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                     <Text>
                         {`Winrate: ${commander.matches.length > 0 ? Math.round(commander.wins / commander.matches.length * 100) : 0}%`}
                     </Text>
+                    <Text>
+                        {`Qualified: ${matches.length >= 5 ? 'Yes' : 'No'}`}
+                    </Text>
                 </Flex>
             </Flex>
             <SortableTable

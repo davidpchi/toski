@@ -20,7 +20,7 @@ export const commanderOverviewColumns: ColumnDef<Commander, any>[] = [
         },
         header: () => <span>Name</span>,
     }),
-    columnHelper.accessor((row) => row.matches, {
+    columnHelper.accessor((row) => row.matches.length, {
         id: 'gameCount',
         cell: (info) => info.row.original.matches.length,
         header: () => <span>Game Count</span>,
