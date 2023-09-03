@@ -130,7 +130,7 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                     </TabPanel>
                     <TabPanel>
                         <Flex justifyContent={"center"} alignItems={"center"} padding="8px">
-                            <Line
+                            {matches.length >= 5 ? <Line
                                 data={commanderWinRatePerMatchData}
                                 style={{ maxHeight: 300, flexGrow: 1, maxWidth: 1024 }}
                                 options={{
@@ -158,7 +158,7 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                                         }
                                     },
                                 }}
-                            />
+                            /> : <Text>Not enough matches</Text>}
                         </Flex>
                     </TabPanel>
                 </TabPanels>
