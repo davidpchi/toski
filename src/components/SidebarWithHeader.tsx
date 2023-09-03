@@ -24,6 +24,7 @@ import {
     FiHome,
     FiMenu,
     FiShield,
+    FiTrendingUp,
     FiUsers,
 } from 'react-icons/fi';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -38,6 +39,7 @@ const LinkItems: Array<LinkItemProps> = [
     { name: 'Player Overview', icon: FiUsers, route: '/playerOverview' },
     { name: 'Commander Overview', icon: FiShield, route: '/commanderOverview' },
     { name: 'Match History', icon: FiCalendar, route: '/matchHistory' },
+    { name: 'Match Trends', icon: FiTrendingUp, route: '/matchTrends' },
     // { name: 'News', icon: FiBookOpen, route: '/news' },
 ];
 
@@ -139,7 +141,7 @@ const NavItem = ({ icon, label, route, onClose }: NavItemProps) => {
     const location = useLocation();
     const navigate = useNavigate();
     const isSelected = () => {
-        return location.pathname === route;
+        return location.pathname === route || (route !== "/" && location.pathname.indexOf(route) > -1);
     };
 
     const onClick = useCallback(() => {

@@ -1,17 +1,11 @@
-import { Box, Button, Flex, Heading, Image, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
 import {
-    CategoryScale,
     Chart as ChartJS,
-    Filler,
-    Legend,
-    LinearScale,
-    LineElement,
-    PointElement,
-    Tooltip,
+    registerables
 } from 'chart.js';
 import React, { useCallback } from "react";
 import { useSelector } from "react-redux";
 import { useLoaderData, useNavigate } from "react-router-dom";
+import { Box, Button, Flex, Heading, Image, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
 
 import { AppState } from "../../redux/rootReducer";
 import { getCommander, getMatch, getMatches, getMatchesByCommanderName } from "../../redux/statsSelectors";
@@ -25,13 +19,7 @@ import { Match } from "../../types/domain/Match";
 import { MatchPlayer } from "../../types/domain/MatchPlayer";
 
 ChartJS.register(
-    PointElement,
-    LineElement,
-    CategoryScale,
-    LinearScale,
-    Filler,
-    Tooltip,
-    Legend
+    ...registerables
 );
 
 export async function loader(data: { params: any }) {

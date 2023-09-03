@@ -14,6 +14,7 @@ import {
 } from "../components/matchHistory/MatchDetails";
 import { MatchHistory } from "../components/matchHistory/MatchHistory";
 import { PlayerOverview } from "../components/playerOverview/playerOverview";
+import { MatchTrends } from "../components/matchTrends/MatchTrends";
 
 export const router = createHashRouter([
 	{
@@ -34,13 +35,17 @@ export const router = createHashRouter([
 				element: <MatchHistory />,
 			},
 			{
-				path: "/commanderOverview",
-				element: <CommanderOverview />,
-			},
-			{
 				path: "/matchHistory/:matchId",
 				loader: matchLoader,
 				element: <MatchDetails />,
+			},
+			{
+				path: "/matchTrends",
+				element: <MatchTrends />,
+			},
+			{
+				path: "/commanderOverview",
+				element: <CommanderOverview />,
 			},
 			{
 				path: "/commanderOverview/:commanderId",
