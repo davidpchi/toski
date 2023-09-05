@@ -12,11 +12,11 @@ export const CommanderOverview = React.memo(function MatchHistory() {
     const navigate = useNavigate();
     const commanders: { [id: string]: Commander } | undefined = useSelector(getCommanders);
     const [isFiltered, setIsFiltered] = useState<boolean>(true);
-    
-    const onFilterChange = () => {setIsFiltered(!isFiltered)};
+
+    const onFilterChange = () => { setIsFiltered(!isFiltered) };
 
     if (commanders === undefined) {
-        return <Loading text="loading..." />;
+        return <Loading text="Loading..." />;
     }
 
     let commandersArray = Object.values(commanders).sort((a: Commander, b: Commander) => a.name.localeCompare(b.name));
@@ -34,19 +34,18 @@ export const CommanderOverview = React.memo(function MatchHistory() {
                     </Checkbox>
                 </Flex>
                 <SortableTable
-                columns={commanderOverviewColumns}
-                data={commandersArray}
-                getRowProps={(row: any) => {
-                    return {
-                        onClick: () => {
-                            navigate('/commanderOverview/' + row.original.id);
-                            window.scrollTo(0, 0);
-                        },
-                    };
-                }}
-            />
+                    columns={commanderOverviewColumns}
+                    data={commandersArray}
+                    getRowProps={(row: any) => {
+                        return {
+                            onClick: () => {
+                                navigate('/commanderOverview/' + row.original.id);
+                                window.scrollTo(0, 0);
+                            },
+                        };
+                    }}
+                />
             </Flex>
-            
         </Flex>
     );
 });

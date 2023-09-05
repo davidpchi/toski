@@ -1,26 +1,21 @@
 import {
-    Chart as ChartJS,
-    registerables
+    TooltipItem
 } from 'chart.js';
-import React, { useCallback } from "react";
+import 'chartjs-adapter-moment';
+import React from "react";
 import { useSelector } from "react-redux";
 import { useLoaderData, useNavigate } from "react-router-dom";
-import { Box, Button, Flex, Heading, Image, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
+import { Flex, Heading, Image, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
 
 import { AppState } from "../../redux/rootReducer";
-import { getCommander, getMatch, getMatches, getMatchesByCommanderName } from "../../redux/statsSelectors";
+import { getCommander, getMatchesByCommanderName } from "../../redux/statsSelectors";
 import { Loading } from "../Loading";
-import { FiLoader } from "react-icons/fi";
 import { commanderList } from "../../services/commanderList";
 import { SortableTable } from "../SortableTable";
 import { matchHistoryColumns } from "../matchHistory/matchHistoryColumnHelper";
-import { Line } from "react-chartjs-2";
 import { Match } from "../../types/domain/Match";
 import { MatchPlayer } from "../../types/domain/MatchPlayer";
-
-ChartJS.register(
-    ...registerables
-);
+import { LineGraph } from '../LineGraph';
 
 export async function loader(data: { params: any }) {
     return data.params.commanderId;
@@ -60,21 +55,8 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
         return { x: index + 1, y: Math.round(currentWinRate * 100) };
     });
 
-    const commanderWinRatePerMatchData = {
-        datasets: [
-            {
-                label: 'Winrate',
-                data: winratePerMatch,
-                fill: true,
-                backgroundColor: 'rgba(99, 132, 255, 0.5)',
-                borderColor: 'rgb(99, 132, 255, 0.5)',
-                pointBackgroundColor: 'rgb(99, 132, 255)',
-                pointBorderColor: '#fff',
-                pointHoverBackgroundColor: '#fff',
-                pointHoverBorderColor: 'rgb(99, 132, 225)',
-            },
-        ],
-    };
+    const tooltipTitleCallback = (item: TooltipItem<"line">[]) => { return `Match Id: ${matches[item[0].dataIndex].id}` };
+    const tooltipLabelCallback = (item: TooltipItem<"line">) => { return `Winrate: ${item.formattedValue}%` };
 
     return (
         <Flex direction='column' justify='center' align='center'>
@@ -117,36 +99,19 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                         />
                     </TabPanel>
                     <TabPanel>
-                        <Flex justifyContent={"center"} alignItems={"center"} padding="8px">
-                            {matches.length >= 5 ? <Line
-                                data={commanderWinRatePerMatchData}
-                                style={{ maxHeight: 300, flexGrow: 1, maxWidth: 1024 }}
-                                options={{
-                                    scales: {
-                                        x: {
-                                            type: 'linear',
-                                            min: 1,
-                                            max: matches.length,
-                                        },
-                                        y: {
-                                            suggestedMin: 0,
-                                            suggestedMax: 100,
-                                        },
-                                    },
-                                    plugins: {
-                                        legend: {
-                                            display: false,
-                                        },
-                                        tooltip: {
-                                            callbacks: {
-                                                title: (item) => { return `Match Id: ${matches[item[0].dataIndex].id}` },
-                                                label: (item) => { return `Winrate: ${item.formattedValue}%` },
-                                            },
-                                            displayColors: false
-                                        }
-                                    },
-                                }}
-                            /> : <Text>Not enough matches</Text>}
+                        <Flex flexDirection={"column"} justifyContent={"center"} alignItems={"center"} padding="8px">
+                            {matches.length >= 5 ?
+                                <>
+                                    <LineGraph
+                                        dataLabel={"Winrate"}
+                                        data={winratePerMatch}
+                                        allowTogglableDataPoints={true}
+                                        tooltipTitleCallback={tooltipTitleCallback}
+                                        tooltipLabelCallback={tooltipLabelCallback}
+                                        minX={1}
+                                        maxX={winratePerMatch.length}
+                                    />
+                                </> : <Text>Not enough matches</Text>}
                         </Flex>
                     </TabPanel>
                 </TabPanels>

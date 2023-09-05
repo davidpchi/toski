@@ -11,7 +11,7 @@ export const PlayerOverview = React.memo(function MatchHistory() {
 	const players: { [id: string]: Player } | undefined = useSelector(getPlayers);
 
 	if (players === undefined) {
-		return <Loading text="loading..." />;
+		return <Loading text="Loading..." />;
 	}
 
 	const playersArray = Object.values(players);
