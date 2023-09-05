@@ -1,16 +1,12 @@
 import {
-    Chart as ChartJS,
-    registerables
+    TooltipItem
 } from 'chart.js';
 import React from "react";
 import { Bar } from "react-chartjs-2";
 import { Text } from "@chakra-ui/react";
 
 import { Match } from "../../types/domain/Match";
-
-ChartJS.register(
-    ...registerables
-);
+import { BarGraph } from '../BarGraph';
 
 export const MatchLengthBarChart = React.memo(function MatchHistory({ matches }: { matches: Match[] }) {
     const matchesWithLengths = matches.filter((match: Match) => match.numberOfTurns);
@@ -45,35 +41,18 @@ export const MatchLengthBarChart = React.memo(function MatchHistory({ matches }:
         ],
     };
 
+    const tooltipTitleCallback = (item: TooltipItem<"bar">[]) => { return `Games with ${matchesWithLengthsData[item[0].dataIndex].x} turns: ${matchesWithLengthsData[item[0].dataIndex].y}` };
+    const tooltipLabelCallback = (_item: TooltipItem<"bar">) => { return `` };
+
     return (
         <>
             <Text>Match Lengths</Text>
-            <Bar
-                data={matchesWithLengthsDataObj}
-                style={{ maxHeight: 300, flexGrow: 1, maxWidth: 1024 }}
-                options={{
-                    scales: {
-                        x: {
-                            type: 'linear',
-                        },
-                        y: {
-                            suggestedMin: 0,
-                            suggestedMax: 25,
-                        },
-                    },
-                    plugins: {
-                        legend: {
-                            display: false,
-                        },
-                        tooltip: {
-                            callbacks: {
-                                title: (item) => { return `Games with ${matchesWithLengthsData[item[0].dataIndex].x} turns: ${matchesWithLengthsData[item[0].dataIndex].y}` },
-                                label: (item) => { return "" },
-                            },
-                            displayColors: false
-                        }
-                    },
-                }}
+            <BarGraph
+                dataLabel={"Match Lengths"}
+                data={matchesWithLengthsData}
+                tooltipTitleCallback={tooltipTitleCallback}
+                tooltipLabelCallback={tooltipLabelCallback}
+                maxY={50}
             />
         </>
     )

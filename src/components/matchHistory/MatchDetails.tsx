@@ -7,6 +7,7 @@ import { getMatch } from "../../redux/statsSelectors";
 import { Loading } from "../Loading";
 import { FiLoader } from "react-icons/fi";
 import { commanderList } from "../../services/commanderList";
+import { primaryColor } from "../../themes/acorn";
 
 export async function loader(data: { params: any }) {
     return data.params.matchId;
@@ -56,7 +57,7 @@ const MatchPlayerCard = React.memo(
                 minWidth={160}
                 maxWidth={250}
                 borderWidth={5}
-                borderColor={player.isWinner ? "#091503" : "transparent"}
+                borderColor={player.isWinner ? primaryColor[400] : "transparent"}
                 borderRadius={8}
             >
                 <Button
@@ -68,7 +69,8 @@ const MatchPlayerCard = React.memo(
                     size='md'
                 >
                     {
-                        commanderList[player.commander.name] ? <Image src={commanderList[player.commander.name].image} /> :
+                        commanderList[player.commander.name] ?
+                            <Image src={commanderList[player.commander.name].image} /> :
                             <Flex width={200} alignContent='center'>
                                 <p
                                     style={{

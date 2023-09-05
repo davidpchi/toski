@@ -1,21 +1,17 @@
 import {
-    Chart as ChartJS,
-    registerables
+    TooltipItem
 } from 'chart.js';
 import React from "react";
 import { Text } from "@chakra-ui/react";
 
 import { Match } from "../../types/domain/Match";
 import { Line } from "react-chartjs-2";
-
-ChartJS.register(
-    ...registerables
-);
+import { LineGraph } from '../LineGraph';
 
 export const MatchLengthLineChart = React.memo(function MatchHistory({ matches }: { matches: Match[] }) {
     const matchesWithLengths = matches.filter((match: Match) => match.numberOfTurns);
 
-    const matchesWithLengthsData = matchesWithLengths.map((match: Match) => {
+    const matchesWithLengthsData = matchesWithLengths.map((match: Match,) => {
         return { x: match.id, y: Number(match.numberOfTurns) };
     });
 
@@ -35,35 +31,19 @@ export const MatchLengthLineChart = React.memo(function MatchHistory({ matches }
         ],
     };
 
+    const tooltipTitleCallback = (item: TooltipItem<"line">[]) => { return `Match Id: ${matchesWithLengths[item[0].dataIndex].id}` };
+    const tooltipLabelCallback = (item: TooltipItem<"line">) => { return `Number of Turns: ${item.formattedValue}` };
+
     return (
         <>
             <Text>Match Lengths Over Time</Text>
-            <Line
-                data={matchesWithLengthsDataObj}
-                style={{ maxHeight: 300, flexGrow: 1, maxWidth: 1024 }}
-                options={{
-                    scales: {
-                        x: {
-                            type: 'linear',
-                        },
-                        y: {
-                            suggestedMin: 0,
-                            suggestedMax: 25,
-                        },
-                    },
-                    plugins: {
-                        legend: {
-                            display: false,
-                        },
-                        tooltip: {
-                            callbacks: {
-                                title: (item) => { return `Match Id: ${matchesWithLengths[item[0].dataIndex].id}` },
-                                label: (item) => { return `Number of Turns: ${item.formattedValue}` },
-                            },
-                            displayColors: false
-                        }
-                    },
-                }}
+            <LineGraph
+                dataLabel={"Match Lengths"}
+                data={matchesWithLengthsData}
+                allowTogglableDataPoints={true}
+                tooltipTitleCallback={tooltipTitleCallback}
+                tooltipLabelCallback={tooltipLabelCallback}
+                maxY={25}
             />
         </>
     )
