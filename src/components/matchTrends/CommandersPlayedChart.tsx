@@ -12,7 +12,9 @@ export const CommandersPlayedChart = React.memo(function MatchHistory({ matches 
 
     const commandersCountData = matches.map((match: Match, index: number) => {
         for (const player of match.players) {
-            commandersDictionary[player.commander] = player.commander;
+            for (const commander of player.commanders) {
+                commandersDictionary[commander] = commander;
+            }
         }
         return { x: match.id, y: Object.values(commandersDictionary).length };
     });

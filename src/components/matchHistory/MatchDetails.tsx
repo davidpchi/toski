@@ -133,8 +133,8 @@ export const MatchDetails = React.memo(function MatchDetails() {
         const matchPlayer: MatchDisplayPlayer = {
             name: player.name,
             commander: {
-                name: player.commander,
-                id: commanderList[player.commander] ? commanderList[player.commander].id : undefined
+                name: player.commanders[0],
+                id: commanderList[player.commanders[0]] ? commanderList[player.commanders[0]].id : undefined
             },
             isWinner: match.winner === player.name
         }
