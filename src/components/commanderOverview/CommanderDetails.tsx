@@ -42,14 +42,15 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
 
         // this should always be true
         if (winningPlayer !== undefined) {
-            const winningCommander = winningPlayer.commander;
-            const isWinner = winningCommander === commander.name;
+            for (const winningCommander of winningPlayer.commanders) {
+                const isWinner = winningCommander === commander.name;
 
-            if (isWinner) {
-                numberOfWins += 1;
+                if (isWinner) {
+                    numberOfWins += 1;
+                }
+
+                currentWinRate = (numberOfWins / (index + 1));
             }
-
-            currentWinRate = (numberOfWins / (index + 1));
         }
 
         return { x: index + 1, y: Math.round(currentWinRate * 100) };

@@ -50,32 +50,37 @@ function matchesToCommanders(matches: Match[]): { [id: string]: Commander } {
     for (const currentMatch of matches) {
         // iterate through each player, and add those commanders to our commander dictionary
         for (const player of currentMatch.players) {
-            // Variable to call commander name
-            const currentCommanderName = player.commander;
-            const commander = commanderList[currentCommanderName];
+            // there is a chance the commander is actually multiple commanders.
+            // the current separator for commanders is " && "
+            const currentCommanderNames: string[] = player.commanders;
 
-            // check to see if the commander name is valid
-            if (commander === undefined) {
-                // log the invalid commander
-                console.log(`Invalid commander found in currentMatch <$ currentMatch.id}> : ${currentCommanderName}`);
-                continue;
-            }
+            // loop through all commanders and update our commanders dictionary
+            for (const currentCommanderName of currentCommanderNames) {
+                const commander = commanderList[currentCommanderName];
 
-            // commander name is valid. let's check to see if we already added it to our dictionary
-            const potentialCommanderObj = commanderDictionary[commander.id];
-            if (potentialCommanderObj === undefined) {
-                // the entry doesn't exist, add it to our dictionary
-                commanderDictionary[commander.id] = {
-                    id: commander.id,
-                    name: currentCommanderName,
-                    matches: [currentMatch.id],
-                    wins: (player.rank === "1") ? 1 : 0,
-                };
-            } else {
-                // since this commander exists, update the currentMatch count
-                commanderDictionary[potentialCommanderObj.id].matches.push(currentMatch.id);
-                if (player.rank === "1") {
-                    commanderDictionary[potentialCommanderObj.id].wins++;
+                // check to see if the commander name is valid
+                if (commander === undefined) {
+                    // log the invalid commander
+                    console.log(`Invalid commander found in currentMatch <${currentMatch.id}> : ${currentCommanderName}`);
+                    continue;
+                }
+
+                // commander name is valid. let's check to see if we already added it to our dictionary
+                const potentialCommanderObj = commanderDictionary[commander.id];
+                if (potentialCommanderObj === undefined) {
+                    // the entry doesn't exist, add it to our dictionary
+                    commanderDictionary[commander.id] = {
+                        id: commander.id,
+                        name: currentCommanderName,
+                        matches: [currentMatch.id],
+                        wins: (player.rank === "1") ? 1 : 0,
+                    };
+                } else {
+                    // since this commander exists, update the currentMatch count
+                    commanderDictionary[potentialCommanderObj.id].matches.push(currentMatch.id);
+                    if (player.rank === "1") {
+                        commanderDictionary[potentialCommanderObj.id].wins++;
+                    }
                 }
             }
         }

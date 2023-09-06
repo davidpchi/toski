@@ -26,7 +26,7 @@ export const getMatchesByCommanderName = (state: AppState, commanderName: string
     const matches = [];
     for (const match of state.stats.matches) {
         for (const player of match.players) {
-            if (player.commander === commanderName) {
+            if (player.commanders[0] === commanderName || player.commanders[1] === commanderName) {
                 matches.push(match);
                 break;
             }

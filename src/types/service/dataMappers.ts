@@ -14,9 +14,11 @@ function matchPlayerHelper(
     const rankData = cell.c[rankIndex];
     const turnData = cell.c[positionIndex];
 
+    const commanders = commanderData ? commanderData.v.toString().split(" && ") : [];
+
     const player: MatchPlayer = {
         name: nameData ? nameData.v.toString() : "",
-        commander: commanderData ? commanderData.v.toString() : "",
+        commanders: commanders,
         rank: rankData ? rankData.v.toString() : "",
         turnPosition: turnData ? turnData.v.toString() : ""
     };
