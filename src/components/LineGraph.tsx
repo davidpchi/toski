@@ -4,7 +4,6 @@ import {
     registerables,
     TooltipItem
 } from 'chart.js';
-import 'chartjs-adapter-moment';
 import React, { useMemo, useState } from "react";
 import { Line } from "react-chartjs-2";
 import { primaryColor } from '../themes/acorn';
