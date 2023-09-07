@@ -25,12 +25,23 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
 
 	// Calculate metrics (number of games, win rate)
 	const numberOfMatches = matches.length;
+	let numberOfWins = 0; // initialized at zero but incremented below
+	for (let i = 0; i < numberOfMatches; i++) {
+		if (matches[i].winner === playerId) {
+			numberOfWins++;
+		}
+	}
+	const playerWinRate =
+		numberOfMatches > 0
+			? Math.round((numberOfWins * 100) / numberOfMatches)
+			: 0;
 
 	return (
 		<Flex direction="column" justify="center" align="center">
 			<Heading>{title}</Heading>
 			<Flex direction="column" padding="16px">
 				<Text>{`Total Number of Games: ${numberOfMatches}`}</Text>
+				<Text>{`Winrate: ${playerWinRate}%`}</Text>
 			</Flex>
 		</Flex>
 	);
