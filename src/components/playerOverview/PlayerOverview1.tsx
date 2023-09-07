@@ -7,6 +7,9 @@ import { useSelector } from "react-redux";
 import { Loading } from "../Loading";
 import { Player } from "../../types/domain/Player";
 
+/**
+ * Component showing all the players in a big list
+ */
 export const PlayerOverview = React.memo(function MatchHistory() {
 	const players: { [id: string]: Player } | undefined = useSelector(getPlayers);
 

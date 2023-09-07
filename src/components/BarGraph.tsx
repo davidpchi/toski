@@ -3,7 +3,6 @@ import {
     registerables,
     TooltipItem
 } from 'chart.js';
-import 'chartjs-adapter-moment';
 import React, { useMemo } from "react";
 import { Bar } from "react-chartjs-2";
 import { primaryColor } from '../themes/acorn';

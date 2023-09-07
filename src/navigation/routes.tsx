@@ -13,7 +13,7 @@ import {
 	loader as matchLoader,
 } from "../components/matchHistory/MatchDetails";
 import { MatchHistory } from "../components/matchHistory/MatchHistory";
-import { PlayerOverview } from "../components/playerOverview/playerOverview";
+import { PlayerOverview } from "../components/playerOverview/PlayerOverview";
 import { MatchTrends } from "../components/matchTrends/MatchTrends";
 
 export const router = createHashRouter([

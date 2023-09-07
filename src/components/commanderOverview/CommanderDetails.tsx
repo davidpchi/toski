@@ -1,7 +1,6 @@
 import {
     TooltipItem
 } from 'chart.js';
-import 'chartjs-adapter-moment';
 import React from "react";
 import { useSelector } from "react-redux";
 import { useLoaderData, useNavigate } from "react-router-dom";
