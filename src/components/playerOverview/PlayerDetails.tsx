@@ -1,13 +1,27 @@
 import React from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
-import { Flex, Heading, Image, Text } from "@chakra-ui/react";
+import {
+	Flex,
+	Heading,
+	Image,
+	Tab,
+	TabList,
+	TabPanel,
+	TabPanels,
+	Tabs,
+	Text,
+} from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 
-import { getMatchesByPlayerName } from "../../redux/statsSelectors";
+import {
+	getCommandersByPlayerName,
+	getMatchesByPlayerName,
+} from "../../redux/statsSelectors";
 import { AppState } from "../../redux/rootReducer";
 import { matchHistoryColumns } from "../matchHistory/matchHistoryColumnHelper";
 import { SortableTable } from "../SortableTable";
 import { Loading } from "../Loading";
+import { commanderOverviewColumns } from "../commanderOverview/commanderOverviewColumnHelper";
 
 export async function loader(data: { params: any }) {
 	return data.params.playerId;
@@ -21,6 +35,10 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
 	const title = playerId;
 	const matches = useSelector((state: AppState) =>
 		getMatchesByPlayerName(state, playerId ? playerId : ""),
+	);
+
+	const playedCommanders = useSelector((state: AppState) =>
+		getCommandersByPlayerName(state, playerId ? playerId : ""),
 	);
 
 	if (matches.length === 0) {
@@ -55,18 +73,51 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
 				</Flex>
 			</Flex>
 
-			<SortableTable
-				columns={matchHistoryColumns}
-				data={matches}
-				getRowProps={(row: any) => {
-					return {
-						onClick: () => {
-							navigate(`/matchHistory/${row.original.id}`);
-							window.scrollTo(0, 0);
-						},
-					};
-				}}
-			/>
+			<Tabs
+				isFitted={true}
+				width={"100%"}
+				paddingRight={"10%"}
+				paddingLeft={"10%"}
+			>
+				<TabList>
+					<Tab>
+						<Text>Match History</Text>
+					</Tab>
+					<Tab>
+						<Text>Commander History</Text>
+					</Tab>
+				</TabList>
+				<TabPanels>
+					<TabPanel>
+						<SortableTable
+							columns={matchHistoryColumns}
+							data={matches}
+							getRowProps={(row: any) => {
+								return {
+									onClick: () => {
+										navigate(`/matchHistory/${row.original.id}`);
+										window.scrollTo(0, 0);
+									},
+								};
+							}}
+						/>
+					</TabPanel>
+					<TabPanel>
+						<SortableTable
+							columns={commanderOverviewColumns}
+							data={playedCommanders}
+							getRowProps={(row: any) => {
+								return {
+									onClick: () => {
+										navigate(`/commanderOverview/${row.original.id}`);
+										window.scrollTo(0, 0);
+									},
+								};
+							}}
+						/>
+					</TabPanel>
+				</TabPanels>
+			</Tabs>
 		</Flex>
 	);
 });
