@@ -1,5 +1,3 @@
-import { Match } from "./Match";
-
 export type Commander = {
     id: string;
     name: string;
@@ -8,4 +6,4 @@ export type Commander = {
      */
     matches: string[];
     wins: number;
-}
+};
