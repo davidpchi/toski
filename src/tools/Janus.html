@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+    <h2>Janus</h2>
+
+    <div id="demo">
+        <textarea id="commanderList" style="width:500px;height:500px;"></textarea>
+        <button type="button" onclick="run()">Run</button>
+    </div>
+    </div>
+
+    <script>
+        async function run() {
+            document.getElementById("commanderList").value = `export const commanderList: { [friendlyName: string]: { id: string, image: string } } = {`;
+
+            const delay = async (ms) => new Promise(res => setTimeout(res, ms));
+
+            let nextPageUrl = "https://api.scryfall.com/cards/search?q=is:commander%20-is:digital";
+
+            while (nextPageUrl !== undefined) {
+                const xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        // document.getElementById("demo").innerHTML =
+                        //     this.responseText;
+                        const result = JSON.parse(this.responseText);
+                        nextPageUrl = result.next_page;
+                        const data = result.data;
+                        for (const item of data) {
+                            if (item.image_uris === undefined || item.image_uris.normal === undefined) {
+                                document.getElementById("commanderList").value += `"${item.name.replaceAll('"', "\\\"")}": { id: "${item.id}", image: "${item.card_faces[0].image_uris.normal}" }, ${"\r\n"}`;
+                            } else {
+                                document.getElementById("commanderList").value += `"${item.name.replaceAll('"', "\\\"")}": { id: "${item.id}", image: "${item.image_uris.normal}" }, ${"\r\n"}`;
+                            }
+                        }
+                    }
+                };
+                xhttp.open("GET", nextPageUrl, true);
+                xhttp.send();
+                await delay(5000);
+            }
+
+            alert("finished!");
+        }
+    </script>
+
+</body>
+
+</html>
