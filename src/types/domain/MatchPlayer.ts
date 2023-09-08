@@ -4,9 +4,9 @@ export type MatchPlayer = {
      */
     name: string;
     /**
-     * The commanders that this player is using, as identified by commanderId
+     * The commanders that this player is using, as identified by commander NAME
      */
     commanders: string[];
     rank: string;
     turnPosition: string;
-}
+};
