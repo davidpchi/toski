@@ -181,7 +181,7 @@ function getPlayedCommanderDictionary(
 }
 
 /**
- * Create a dictionary of players who have played a specific commander (by commander ID)
+ * Create a dictionary of players who have played a specific commander (by commander NAME)
  * @param matches
  * @param playerId
  * @returns dictionary of players
@@ -210,7 +210,7 @@ function getCommanderPlayerDictionary(
                             wins: player.rank === "1" ? 1 : 0,
                         };
                     } else {
-                        // since this commander exists, update the currentMatch count
+                        // since this player exists, update the currentMatch count
                         playerDictionary[potentialPlayerObj.name].matches.push(
                             currentMatch,
                         );
