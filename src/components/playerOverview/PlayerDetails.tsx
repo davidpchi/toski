@@ -1,6 +1,6 @@
 import React from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
-import { Flex, Heading, Text } from "@chakra-ui/react";
+import { Flex, Heading, Image, Text } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 
 import { getMatchesByPlayerName } from "../../redux/statsSelectors";
@@ -43,11 +43,14 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
 
 	return (
 		<Flex direction="column" justify="center" align="center">
-			<Flex>
-				<Heading>{title}</Heading>
+			<Heading>{title}</Heading>
 
+			<Flex direction="row">
 				<Flex direction="column" padding="16px">
-					<Text> {`Total Number of Games: ${numberOfMatches}`}</Text>
+					<Image src="https://static.thenounproject.com/png/5425-200.png" />
+				</Flex>
+				<Flex direction="column" padding="16px">
+					<Text>{`Total Number of Games: ${numberOfMatches}`}</Text>
 					<Text>{`Winrate: ${playerWinRate}%`}</Text>
 				</Flex>
 			</Flex>
