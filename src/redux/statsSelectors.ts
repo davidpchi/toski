@@ -1,3 +1,4 @@
+import { getCommandersByPlayerNameHelper, getPlayersByCommanderNameHelper } from "../logic/dictionaryUtils";
 import { commanderList } from "../services/commanderList";
 import { Commander } from "../types/domain/Commander";
 import { Match } from "../types/domain/Match";
@@ -72,7 +73,7 @@ export const getMatchesByPlayerName = (
 };
 
 /**
- * Returns a collection commanders in chronological order given a player NAME
+ * Returns a collection commanders in chronological order given a player name
  */
 export const getCommandersByPlayerName = (
     state: AppState,
@@ -86,14 +87,14 @@ export const getCommandersByPlayerName = (
     }
 
     const commanders = Object.values(
-        getPlayedCommanderDictionary(state.stats.matches, playerName),
+        getCommandersByPlayerNameHelper(state.stats.matches, playerName),
     );
 
     return commanders;
 };
 
 /**
- * Get players in chronological order based on commander NAME
+ * Returns a collection of players in chronological order based on commander NAME
  * @param state
  * @param playerName
  * @returns
@@ -110,7 +111,7 @@ export const getPlayersByCommanderName = (
     }
 
     const players = Object.values(
-        getCommanderPlayerDictionary(state.stats.matches, commanderName),
+        getPlayersByCommanderNameHelper(state.stats.matches, commanderName),
     );
 
     return players;
@@ -122,105 +123,3 @@ export const getPlayersByCommanderName = (
 export const getCommander = (state: AppState, id: string) => {
     return state.stats.commanders ? state.stats.commanders[id] : undefined;
 };
-
-/**
- * Create a dictionary of commanders played by a specific playerId
- */
-function getPlayedCommanderDictionary(
-    matches: Match[],
-    playerId: string,
-): { [id: string]: Commander } {
-    const playedCommanderDictionary: { [id: string]: Commander } = {};
-    for (const currentMatch of matches) {
-        // iterate through each player, and add those commanders to our commander dictionary
-        for (const player of currentMatch.players) {
-            if (player.name === playerId) {
-                // there is a chance the commander is actually multiple commanders.
-                // the current separator for commanders is " && "
-                const currentCommanderNames: string[] = player.commanders;
-
-                // loop through all commanders and update our commanders dictionary
-                for (const currentCommanderName of currentCommanderNames) {
-                    const commander = commanderList[currentCommanderName];
-
-                    // check to see if the commander name is valid
-                    if (commander === undefined) {
-                        // log the invalid commander
-                        console.log(
-                            `Invalid commander found in currentMatch <${currentMatch.id}> : ${currentCommanderName}`,
-                        );
-                        continue;
-                    }
-
-                    // commander name is valid. let's check to see if we already added it to our dictionary
-                    const potentialCommanderObj =
-                        playedCommanderDictionary[commander.id];
-                    if (potentialCommanderObj === undefined) {
-                        // the entry doesn't exist, add it to our dictionary
-                        playedCommanderDictionary[commander.id] = {
-                            id: commander.id,
-                            name: currentCommanderName,
-                            matches: [currentMatch.id],
-                            wins: player.rank === "1" ? 1 : 0,
-                        };
-                    } else {
-                        // since this commander exists, update the currentMatch count
-                        playedCommanderDictionary[
-                            potentialCommanderObj.id
-                        ].matches.push(currentMatch.id);
-                        if (player.rank === "1") {
-                            playedCommanderDictionary[potentialCommanderObj.id]
-                                .wins++;
-                        }
-                    }
-                }
-            }
-        }
-    }
-    return playedCommanderDictionary;
-}
-
-/**
- * Create a dictionary of players who have played a specific commander (by commander NAME)
- * @param matches
- * @param playerId
- * @returns dictionary of players
- */
-function getCommanderPlayerDictionary(
-    matches: Match[],
-    commanderName: string,
-): { [id: string]: Player } {
-    const playerDictionary: { [id: string]: Player } = {};
-    for (const currentMatch of matches) {
-        // iterate through each player, and add those commanders to our commander dictionary
-        for (const player of currentMatch.players) {
-            const playerCommanders: string[] = player.commanders;
-
-            // loop through all commanders search for our match
-            for (const currentCommanderName of playerCommanders) {
-                if (currentCommanderName === commanderName) {
-                    // Commander is a match, let's check to see if player is already in our dictionary
-                    const potentialPlayerObj: Player | undefined =
-                        playerDictionary[player.name];
-                    if (potentialPlayerObj === undefined) {
-                        // the entry doesn't exist, add it to our dictionary
-                        playerDictionary[player.name] = {
-                            name: player.name,
-                            matches: [currentMatch],
-                            wins: player.rank === "1" ? 1 : 0,
-                        };
-                    } else {
-                        // since this player exists, update the currentMatch count
-                        playerDictionary[potentialPlayerObj.name].matches.push(
-                            currentMatch,
-                        );
-                        if (player.rank === "1") {
-                            playerDictionary[potentialPlayerObj.name].wins++;
-                        }
-                    }
-                }
-            }
-        }
-    }
-    return playerDictionary;
-}

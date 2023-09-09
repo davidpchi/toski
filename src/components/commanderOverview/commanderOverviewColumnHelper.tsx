@@ -30,4 +30,20 @@ export const commanderOverviewColumns: ColumnDef<Commander, any>[] = [
         cell: (info) => info.row.original.wins,
         header: () => <span>Wins</span>,
     }),
+    columnHelper.accessor(
+        (row) =>
+            row.matches.length > 0
+                ? Math.round((row.wins / row.matches.length) * 100)
+                : 0,
+        {
+            id: "winrate",
+            cell: (info) =>
+                info.row.original.matches.length > 0
+                    ? `${Math.round(
+                        (info.row.original.wins / info.row.original.matches.length) * 100,
+                    )}%`
+                    : `0%`,
+            header: () => <span>Winrate</span>,
+        },
+    ),
 ];

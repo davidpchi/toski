@@ -38,10 +38,10 @@ export const playerOverviewColumns: ColumnDef<Player, any>[] = [
 			id: "winrate",
 			cell: (info) =>
 				info.row.original.matches.length > 0
-					? Math.round(
-							(info.row.original.wins / info.row.original.matches.length) * 100,
-					  )
-					: 0,
+					? `${Math.round(
+						(info.row.original.wins / info.row.original.matches.length) * 100,
+					)}%`
+					: `0%`,
 			header: () => <span>Winrate</span>,
 		},
 	),
