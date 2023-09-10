@@ -31,7 +31,12 @@ export const matchHistoryColumns: ColumnDef<Match, any>[] = [
                     commanderText += " and " + value.commanders[1]
                 }
 
-                return (<Flex key={index}>{value.name + " playing " + commanderText}</Flex>);
+                // TODO: right now, we assume the 3rd commander listed is the companion
+                const companionText = value.commanders[2] !== undefined ? `with companion ${value.commanders[2]}` : undefined;
+                return (<Flex key={index} flexDirection={"column"}>
+                    <Text>{value.name + " playing " + commanderText}</Text>
+                    {companionText !== undefined ? <Text paddingLeft={2}>{companionText}</Text> : null}
+                </Flex>);
             });
 
             return (
