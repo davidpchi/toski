@@ -35,11 +35,19 @@ export const getMatchesByCommanderName = (
     const matches = [];
     for (const match of state.stats.matches) {
         for (const player of match.players) {
-            if (
-                player.commanders[0] === commanderName ||
-                player.commanders[1] === commanderName
-            ) {
-                matches.push(match);
+            let foundCommander = false;
+
+            for (const commander of player.commanders) {
+                if (commander === commanderName) {
+                    matches.push(match);
+                    foundCommander = true;
+                    break;
+                }
+            }
+
+            // since we already determined that this match has the commander, 
+            // we don't need to keep looking through the rest of the players of this match
+            if (foundCommander) {
                 break;
             }
         }
