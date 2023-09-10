@@ -27,25 +27,23 @@ export const CommanderOverview = React.memo(function MatchHistory() {
     return (
         <Flex direction='column' justify='center' align='center'>
             <Heading>Commander Overview</Heading>
-            <Flex direction='column' justify='center'>
-                <Flex alignSelf={'end'} marginBottom={'16px'}>
-                    <Checkbox isChecked={isFiltered} onChange={onFilterChange} >
-                        {'Show only qualified'}
-                    </Checkbox>
-                </Flex>
-                <SortableTable
-                    columns={commanderOverviewColumns}
-                    data={commandersArray}
-                    getRowProps={(row: any) => {
-                        return {
-                            onClick: () => {
-                                navigate('/commanderOverview/' + row.original.id);
-                                window.scrollTo(0, 0);
-                            },
-                        };
-                    }}
-                />
+            <Flex alignSelf={'center'} marginBottom={'16px'}>
+                <Checkbox isChecked={isFiltered} onChange={onFilterChange} >
+                    {'Show only qualified'}
+                </Checkbox>
             </Flex>
+            <SortableTable
+                columns={commanderOverviewColumns}
+                data={commandersArray}
+                getRowProps={(row: any) => {
+                    return {
+                        onClick: () => {
+                            navigate('/commanderOverview/' + row.original.id);
+                            window.scrollTo(0, 0);
+                        },
+                    };
+                }}
+            />
         </Flex>
     );
 });
