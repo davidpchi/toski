@@ -1,4 +1,4 @@
-import { Flex, Image } from "@chakra-ui/react";
+import { Flex, Image, Text } from "@chakra-ui/react";
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import { Match } from "../../types/domain/Match";
 import { commanderList } from "../../services/commanderList";
@@ -24,6 +24,9 @@ export const matchHistoryColumns: ColumnDef<Match, any>[] = [
             const players = info.row.original.players.map((value, index) => {
                 // loop through all the commanders and build the string
                 let commanderText = value.commanders[0];
+
+                // TODO: we need to better handle this and properly determine
+                // if the 2nd commander listed is a partner or a companion
                 if (value.commanders[1] !== undefined) {
                     commanderText += " and " + value.commanders[1]
                 }
@@ -32,7 +35,7 @@ export const matchHistoryColumns: ColumnDef<Match, any>[] = [
             });
 
             return (
-                <Flex align='start' flexDirection='column' flexWrap='wrap'>
+                <Flex align='start' flexDirection='column' flexWrap='wrap' maxWidth={"500px"}>
                     {players}
                 </Flex >
             );
