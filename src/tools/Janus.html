@@ -5,8 +5,12 @@
 
     <h2>Janus</h2>
 
-    <div id="demo">
-        <textarea id="commanderList" style="width:500px;height:500px;"></textarea>
+    <div id="demo" style="display: flex; flex-direction: column;">
+        <br>Special Cases:
+        <textarea id="extraAdds"
+            style="width:500px;height:500px;">Dhalsim, Pliable Pacifist;Witch of the Moors;Tamanoa</textarea>
+        <br>Output:
+        <textarea id="commanderList" style="width:500px;height:500px; margin-bottom: 16px;"></textarea>
         <button type="button" onclick="run()">Run</button>
     </div>
     </div>
@@ -42,6 +46,44 @@
                 xhttp.open("GET", nextPageUrl, true);
                 xhttp.send();
                 await delay(5000);
+            }
+
+            // now we loop through all of the special cases
+            const rawExtras = document.getElementById("extraAdds").value;
+            const specials = rawExtras.split(";");
+
+            let currentIndex = 0;
+            if (specials[currentIndex] !== undefined && specials[currentIndex] !== "") {
+                let specialQuery = "https://api.scryfall.com/cards/named?fuzzy=" + specials[currentIndex];
+
+                while (specialQuery !== undefined) {
+                    const xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function () {
+                        if (this.readyState == 4 && this.status == 200) {
+                            // document.getElementById("demo").innerHTML =
+                            //     this.responseText;
+                            const result = JSON.parse(this.responseText);
+
+                            currentIndex++;
+                            if (specials[currentIndex] !== undefined) {
+                                // more special cases to loop through
+                                specialQuery = "https://api.scryfall.com/cards/named?fuzzy=" + specials[currentIndex];
+                            } else {
+                                // no more special cases
+                                specialQuery = undefined;
+                            }
+                            const item = result;
+                            if (item.image_uris === undefined || item.image_uris.normal === undefined) {
+                                document.getElementById("commanderList").value += `"${item.name.replaceAll('"', "\\\"")}": { id: "${item.id}", image: "${item.card_faces[0].image_uris.normal}" }, ${"\r\n"}`;
+                            } else {
+                                document.getElementById("commanderList").value += `"${item.name.replaceAll('"', "\\\"")}": { id: "${item.id}", image: "${item.image_uris.normal}" }, ${"\r\n"}`;
+                            }
+                        }
+                    };
+                    xhttp.open("GET", specialQuery, true);
+                    xhttp.send();
+                    await delay(5000);
+                }
             }
 
             alert("finished!");

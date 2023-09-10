@@ -1920,4 +1920,7 @@ export const commanderList: { [friendlyName: string]: { id: string, image: strin
     "Zurgo Helmsmasher": { id: "13f4bafe-0d21-47ba-8f16-0274107d618c", image: "https://cards.scryfall.io/normal/front/1/3/13f4bafe-0d21-47ba-8f16-0274107d618c.jpg?1562782879" },
     "Zur the Enchanter": { id: "aeb0160a-dfdc-4b1f-865e-ef905aee65d5", image: "https://cards.scryfall.io/normal/front/a/e/aeb0160a-dfdc-4b1f-865e-ef905aee65d5.jpg?1673149301" },
     "Zurzoth, Chaos Rider": { id: "c62990d7-a337-4fc3-859c-63bc1dade1b9", image: "https://cards.scryfall.io/normal/front/c/6/c62990d7-a337-4fc3-859c-63bc1dade1b9.jpg?1673484441" },
+    "Dhalsim, Pliable Pacifist": { id: "b0f32937-ca7e-407c-aa23-117b1eae9798", image: "https://cards.scryfall.io/normal/front/b/0/b0f32937-ca7e-407c-aa23-117b1eae9798.jpg?1682694303" },
+    "Witch of the Moors": { id: "f484f19a-0121-4173-a70b-6698cc5f6303", image: "https://cards.scryfall.io/normal/front/f/4/f484f19a-0121-4173-a70b-6698cc5f6303.jpg?1632261791" },
+    "Tamanoa": { id: "6d32955b-cbf6-429b-9513-17ca75d4ec2c", image: "https://cards.scryfall.io/normal/front/6/d/6d32955b-cbf6-429b-9513-17ca75d4ec2c.jpg?1593275551" },
 };
