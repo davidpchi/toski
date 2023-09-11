@@ -6,7 +6,7 @@ import { Bar } from "react-chartjs-2";
 import { Text } from "@chakra-ui/react";
 
 import { Match } from "../../types/domain/Match";
-import { BarGraph } from '../BarGraph';
+import { BarGraph } from '../dataVisualizations/BarGraph';
 
 export const MatchLengthBarChart = React.memo(function MatchHistory({ matches }: { matches: Match[] }) {
     const matchesWithLengths = matches.filter((match: Match) => match.numberOfTurns);

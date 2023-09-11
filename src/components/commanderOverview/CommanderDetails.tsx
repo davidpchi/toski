@@ -22,11 +22,11 @@ import {
 } from "../../redux/statsSelectors";
 import { Loading } from "../Loading";
 import { commanderList } from "../../services/commanderList";
-import { SortableTable } from "../SortableTable";
+import { SortableTable } from "../dataVisualizations/SortableTable";
 import { matchHistoryColumns } from "../matchHistory/matchHistoryColumnHelper";
 import { Match } from "../../types/domain/Match";
 import { MatchPlayer } from "../../types/domain/MatchPlayer";
-import { LineGraph } from "../LineGraph";
+import { LineGraph } from "../dataVisualizations/LineGraph";
 import { Player } from "../../types/domain/Player";
 import { playerOverviewColumns } from "../playerOverview/playerOverviewColumnHelper";
 
@@ -110,19 +110,17 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                     <Text>{`Total Number of Games: ${commander.matches.length}`}</Text>
                     <Text>{`Wins: ${commander.wins}`}</Text>
                     <Text>
-                        {`Winrate: ${
-                            commander.matches.length > 0
-                                ? Math.round(
-                                      (commander.wins /
-                                          commander.matches.length) *
-                                          100,
-                                  )
-                                : 0
-                        }%`}
+                        {`Winrate: ${commander.matches.length > 0
+                            ? Math.round(
+                                (commander.wins /
+                                    commander.matches.length) *
+                                100,
+                            )
+                            : 0
+                            }%`}
                     </Text>
-                    <Text>{`Qualified: ${
-                        matches.length >= 5 ? "Yes" : "No"
-                    }`}</Text>
+                    <Text>{`Qualified: ${matches.length >= 5 ? "Yes" : "No"
+                        }`}</Text>
                 </Flex>
             </Flex>
             <Tabs

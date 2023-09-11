@@ -1,6 +1,6 @@
 import { Checkbox, Flex, Heading } from "@chakra-ui/react";
 import React, { useCallback, useState } from "react";
-import { SortableTable } from "../SortableTable";
+import { SortableTable } from "../dataVisualizations/SortableTable";
 import { commanderOverviewColumns } from "./commanderOverviewColumnHelper";
 import { getCommanders } from "../../redux/statsSelectors";
 import { useSelector } from "react-redux";

@@ -1,6 +1,6 @@
 import { Flex, Heading } from "@chakra-ui/react";
 import React from "react";
-import { SortableTable } from "../SortableTable";
+import { SortableTable } from "../dataVisualizations/SortableTable";
 import { matchHistoryColumns } from "./matchHistoryColumnHelper";
 import { getMatches } from "../../redux/statsSelectors";
 import { useSelector } from "react-redux";
