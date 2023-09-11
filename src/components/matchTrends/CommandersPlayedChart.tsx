@@ -5,7 +5,7 @@ import React from "react";
 import { Text } from "@chakra-ui/react";
 
 import { Match } from "../../types/domain/Match";
-import { LineGraph } from '../LineGraph';
+import { LineGraph } from '../dataVisualizations/LineGraph';
 
 export const CommandersPlayedChart = React.memo(function MatchHistory({ matches }: { matches: Match[] }) {
     let commandersDictionary: { [id: string]: string } = {};

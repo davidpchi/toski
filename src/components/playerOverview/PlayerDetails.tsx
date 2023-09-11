@@ -19,7 +19,7 @@ import {
 } from "../../redux/statsSelectors";
 import { AppState } from "../../redux/rootReducer";
 import { matchHistoryColumns } from "../matchHistory/matchHistoryColumnHelper";
-import { SortableTable } from "../SortableTable";
+import { SortableTable } from "../dataVisualizations/SortableTable";
 import { Loading } from "../Loading";
 import { commanderOverviewColumns } from "../commanderOverview/commanderOverviewColumnHelper";
 import { Commander } from "../../types/domain/Commander";

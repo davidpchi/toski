@@ -6,7 +6,7 @@ import { Text } from "@chakra-ui/react";
 
 import { Match } from "../../types/domain/Match";
 import { Line } from "react-chartjs-2";
-import { LineGraph } from '../LineGraph';
+import { LineGraph } from '../dataVisualizations/LineGraph';
 
 export const MatchLengthLineChart = React.memo(function MatchHistory({ matches }: { matches: Match[] }) {
     const matchesWithLengths = matches.filter((match: Match) => match.numberOfTurns);

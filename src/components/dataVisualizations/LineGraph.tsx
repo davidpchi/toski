@@ -1,19 +1,21 @@
+import { Checkbox, Flex } from '@chakra-ui/react';
 import {
     Chart as ChartJS,
     registerables,
     TooltipItem
 } from 'chart.js';
-import React, { useMemo } from "react";
-import { Bar } from "react-chartjs-2";
-import { primaryColor } from '../themes/acorn';
+import React, { useMemo, useState } from "react";
+import { Line } from "react-chartjs-2";
+import { primaryColor } from '../../themes/acorn';
 
 ChartJS.register(
     ...registerables
 );
 
-export const BarGraph = React.memo(function LineGraph({
+export const LineGraph = React.memo(function LineGraph({
     dataLabel,
     data,
+    allowTogglableDataPoints = false,
     tooltipTitleCallback,
     tooltipLabelCallback,
     minX,
@@ -23,35 +25,41 @@ export const BarGraph = React.memo(function LineGraph({
 }: {
     dataLabel: string,
     data: { x: number | string, y: number | string }[],
-    tooltipTitleCallback?: (tooltipItems: TooltipItem<"bar">[]) => string,
-    tooltipLabelCallback?: (tooltipItems: TooltipItem<"bar">) => string
+    allowTogglableDataPoints?: boolean,
+    tooltipTitleCallback?: (tooltipItems: TooltipItem<"line">[]) => string,
+    tooltipLabelCallback?: (tooltipItems: TooltipItem<"line">) => string
     minX?: number,
     maxX?: number,
     minY?: number,
     maxY?: number
 }) {
-    const barGraphData = useMemo(() => {
+    const [showDataPoints, setShowDataPoints] = useState<boolean>(false);
+
+    const toggleShowDataPoints = () => { setShowDataPoints(!showDataPoints) };
+
+    const lineGraphData = useMemo(() => {
         return {
             datasets: [
                 {
                     label: dataLabel,
                     data: data,
                     fill: true,
-                    backgroundColor: primaryColor[200],
+                    backgroundColor: primaryColor[50],
                     borderColor: primaryColor[300],
                     pointBackgroundColor: primaryColor[400],
                     pointBorderColor: '#fff',
                     pointHoverBackgroundColor: '#fff',
                     pointHoverBorderColor: primaryColor[200],
+                    pointRadius: showDataPoints ? undefined : 0,
                 },
             ],
         }
-    }, [data, dataLabel]);
+    }, [data, dataLabel, showDataPoints]);
 
     return (
         <>
-            <Bar
-                data={barGraphData}
+            <Line
+                data={lineGraphData}
                 style={{ maxHeight: 300, flexGrow: 1, maxWidth: 1024 }}
                 options={{
                     scales: {
@@ -79,6 +87,12 @@ export const BarGraph = React.memo(function LineGraph({
                     },
                 }}
             />
+            {
+                allowTogglableDataPoints ?
+                    <Checkbox isChecked={showDataPoints} onChange={toggleShowDataPoints} marginTop={"16px"}>
+                        {'Show data points'}
+                    </Checkbox> : null
+            }
         </>
     );
 })
