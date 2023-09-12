@@ -1,22 +1,9 @@
 import React from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
-import {
-    Flex,
-    Heading,
-    Image,
-    Tab,
-    TabList,
-    TabPanel,
-    TabPanels,
-    Tabs,
-    Text,
-} from "@chakra-ui/react";
+import { Flex, Heading, Image, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 
-import {
-    getCommandersByPlayerName,
-    getMatchesByPlayerName,
-} from "../../redux/statsSelectors";
+import { getCommandersByPlayerName, getMatchesByPlayerName } from "../../redux/statsSelectors";
 import { AppState } from "../../redux/rootReducer";
 import { matchHistoryColumns } from "../matchHistory/matchHistoryColumnHelper";
 import { SortableTable } from "../dataVisualizations/SortableTable";
@@ -36,16 +23,12 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
     // Player variables
     const playerId = useLoaderData() as string;
     const title = playerId;
-    const matches = useSelector((state: AppState) =>
-        getMatchesByPlayerName(state, playerId ? playerId : ""),
-    );
+    const matches = useSelector((state: AppState) => getMatchesByPlayerName(state, playerId ? playerId : ""));
 
     const playedCommanders: Commander[] = useSelector((state: AppState) =>
         getCommandersByPlayerName(state, playerId ? playerId : ""),
     );
-    playedCommanders.sort(
-        (a: Commander, b: Commander) => b.matches.length - a.matches.length,
-    );
+    playedCommanders.sort((a: Commander, b: Commander) => b.matches.length - a.matches.length);
 
     if (matches.length === 0) {
         return <Loading text="Loading..." />;
@@ -60,10 +43,7 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
         }
     }
 
-    const playerWinRate =
-        numberOfMatches > 0
-            ? Math.round((numberOfWins * 100) / numberOfMatches)
-            : 0;
+    const playerWinRate = numberOfMatches > 0 ? Math.round((numberOfWins * 100) / numberOfMatches) : 0;
 
     return (
         <Flex direction="column" justify="center" align="center">
@@ -76,15 +56,11 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
                 <Flex direction="column" padding="16px">
                     <Text>{`Total Number of Games: ${numberOfMatches}`}</Text>
                     <Text>{`Winrate: ${playerWinRate}%`}</Text>
+                    <Text>{`Favorite commander: ${playedCommanders[0].name}`}</Text>
                 </Flex>
             </Flex>
 
-            <Tabs
-                isFitted={true}
-                width={"100%"}
-                paddingRight={"10%"}
-                paddingLeft={"10%"}
-            >
+            <Tabs isFitted={true} width={"100%"} paddingRight={"10%"} paddingLeft={"10%"}>
                 <TabList>
                     <Tab>
                         <Text>Match History</Text>
@@ -104,9 +80,7 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
                             getRowProps={(row: any) => {
                                 return {
                                     onClick: () => {
-                                        navigate(
-                                            `/matchHistory/${row.original.id}`,
-                                        );
+                                        navigate(`/matchHistory/${row.original.id}`);
                                         window.scrollTo(0, 0);
                                     },
                                 };
@@ -120,9 +94,7 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
                             getRowProps={(row: any) => {
                                 return {
                                     onClick: () => {
-                                        navigate(
-                                            `/commanderOverview/${row.original.id}`,
-                                        );
+                                        navigate(`/commanderOverview/${row.original.id}`);
                                         window.scrollTo(0, 0);
                                     },
                                 };
