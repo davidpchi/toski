@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
-import { Flex, Heading, Image, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
+import { Flex, Heading, Image, Tab, TabList, TabPanel, TabPanels, Tabs, Text, color } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 
 import { getCommandersByPlayerName, getMatchesByPlayerName } from "../../redux/statsSelectors";
@@ -57,8 +57,13 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
                     <Text>{`Total Number of Games: ${numberOfMatches}`}</Text>
                     <Text>{`Winrate: ${playerWinRate}%`}</Text>
                     <Text>
-                        Favorite commander:
-                        <Link to={`/commanderOverview/${playedCommanders[0].id}`}> {playedCommanders[0].name}</Link>
+                        Favorite commander:{" "}
+                        <Link
+                            to={`/commanderOverview/${playedCommanders[0].id}`}
+                            style={{ color: "blue", textDecoration: "underline" }}
+                        >
+                            {playedCommanders[0].name}
+                        </Link>
                     </Text>
                 </Flex>
             </Flex>
