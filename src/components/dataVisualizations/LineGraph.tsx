@@ -67,6 +67,9 @@ export const LineGraph = React.memo(function LineGraph({
                             type: 'linear',
                             min: minX ? minX : undefined,
                             max: maxX ? maxX : undefined,
+                            ticks: {
+                                precision: 0
+                            }
                         },
                         y: {
                             suggestedMin: minY ? minY : 0,

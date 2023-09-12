@@ -1,4 +1,4 @@
-import { Checkbox, Flex, Heading } from "@chakra-ui/react";
+import { Checkbox, Flex, Heading, Tooltip } from "@chakra-ui/react";
 import React, { useCallback, useState } from "react";
 import { SortableTable } from "../dataVisualizations/SortableTable";
 import { commanderOverviewColumns } from "./commanderOverviewColumnHelper";
@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { Loading } from "../Loading";
 import { Commander } from "../../types/domain/Commander";
 import { useNavigate } from "react-router-dom";
+import { COMMANDER_MINIMUM_GAMES_REQUIRED } from "../contants";
 
 export const CommanderOverview = React.memo(function MatchHistory() {
     const navigate = useNavigate();
@@ -21,16 +22,27 @@ export const CommanderOverview = React.memo(function MatchHistory() {
 
     let commandersArray = Object.values(commanders).sort((a: Commander, b: Commander) => a.name.localeCompare(b.name));
     if (isFiltered) {
-        commandersArray = commandersArray.filter((value: Commander) => value.matches.length >= 5);
+        commandersArray = commandersArray.filter((value: Commander) => value.matches.length >= COMMANDER_MINIMUM_GAMES_REQUIRED);
     }
 
     return (
         <Flex direction='column' justify='center' align='center'>
             <Heading>Commander Overview</Heading>
             <Flex alignSelf={'center'} marginBottom={'16px'}>
-                <Checkbox isChecked={isFiltered} onChange={onFilterChange} >
-                    {'Show only qualified'}
-                </Checkbox>
+                <Tooltip
+                    label={
+                        <p style={{ textAlign: 'center', }}>
+                            Commanders play 5 games to be qualified.
+                        </p>
+                    }
+                    hasArrow
+                    arrowSize={15}>
+                    <div>
+                        <Checkbox isChecked={isFiltered} onChange={onFilterChange} >
+                            {'Show only qualified'}
+                        </Checkbox>
+                    </div>
+                </Tooltip>
             </Flex>
             <SortableTable
                 columns={commanderOverviewColumns}

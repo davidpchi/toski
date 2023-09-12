@@ -25,22 +25,6 @@ export const MatchLengthBarChart = React.memo(function MatchHistory({ matches }:
         return { x: Number(numberOfTurns), y: matchesLengthDictionary[numberOfTurns] };
     });
 
-    const matchesWithLengthsDataObj = {
-        datasets: [
-            {
-                label: 'Match lengths',
-                data: matchesWithLengthsData,
-                fill: true,
-                backgroundColor: 'rgba(99, 132, 255, 0.5)',
-                borderColor: 'rgb(99, 132, 255, 0.5)',
-                pointBackgroundColor: 'rgb(99, 132, 255)',
-                pointBorderColor: '#fff',
-                pointHoverBackgroundColor: '#fff',
-                pointHoverBorderColor: 'rgb(99, 132, 225)',
-            },
-        ],
-    };
-
     const tooltipTitleCallback = (item: TooltipItem<"bar">[]) => { return `Games with ${matchesWithLengthsData[item[0].dataIndex].x} turns: ${matchesWithLengthsData[item[0].dataIndex].y}` };
     const tooltipLabelCallback = (_item: TooltipItem<"bar">) => { return `` };
 

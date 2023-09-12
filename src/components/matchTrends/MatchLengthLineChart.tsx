@@ -15,22 +15,6 @@ export const MatchLengthLineChart = React.memo(function MatchHistory({ matches }
         return { x: match.id, y: Number(match.numberOfTurns) };
     });
 
-    const matchesWithLengthsDataObj = {
-        datasets: [
-            {
-                label: 'Match lengths',
-                data: matchesWithLengthsData,
-                fill: true,
-                backgroundColor: 'rgba(99, 132, 255, 0.5)',
-                borderColor: 'rgb(99, 132, 255, 0.5)',
-                pointBackgroundColor: 'rgb(99, 132, 255)',
-                pointBorderColor: '#fff',
-                pointHoverBackgroundColor: '#fff',
-                pointHoverBorderColor: 'rgb(99, 132, 225)',
-            },
-        ],
-    };
-
     const tooltipTitleCallback = (item: TooltipItem<"line">[]) => { return `Match Id: ${matchesWithLengths[item[0].dataIndex].id}` };
     const tooltipLabelCallback = (item: TooltipItem<"line">) => { return `Number of Turns: ${item.formattedValue}` };
 
@@ -43,7 +27,7 @@ export const MatchLengthLineChart = React.memo(function MatchHistory({ matches }
                 allowTogglableDataPoints={true}
                 tooltipTitleCallback={tooltipTitleCallback}
                 tooltipLabelCallback={tooltipLabelCallback}
-                maxY={25}
+                maxY={20}
             />
         </>
     )
