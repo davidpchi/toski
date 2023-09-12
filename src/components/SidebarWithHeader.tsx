@@ -18,11 +18,10 @@ import {
 import { ReactNode, useCallback } from 'react';
 import { IconType } from 'react-icons';
 import {
-    FiAward,
-    FiBookOpen,
     FiCalendar,
     FiHome,
     FiMenu,
+    FiRss,
     FiShield,
     FiTrendingUp,
     FiUsers,
@@ -36,11 +35,11 @@ interface LinkItemProps {
 }
 const LinkItems: Array<LinkItemProps> = [
     { name: 'Home', icon: FiHome, route: '/' },
+    { name: 'News', icon: FiRss, route: '/news' },
     { name: 'Player Overview', icon: FiUsers, route: '/playerOverview' },
     { name: 'Commander Overview', icon: FiShield, route: '/commanderOverview' },
     { name: 'Match History', icon: FiCalendar, route: '/matchHistory' },
     { name: 'Match Trends', icon: FiTrendingUp, route: '/matchTrends' },
-    // { name: 'News', icon: FiBookOpen, route: '/news' },
 ];
 
 export default function SidebarWithHeader({

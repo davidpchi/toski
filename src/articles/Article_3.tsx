@@ -1,7 +1,7 @@
-import { Flex } from '@chakra-ui/react';
-import { NewsCardData } from '../components/news/NewsCardData';
+import { paragraphStyle } from './styles';
+import { NewsArticle } from '../types/domain/NewsArticle';
 
-export const article_3: NewsCardData = {
+export const article_3: NewsArticle = {
     id: '3',
     title: 'ARAM Clash 2022 Accolade',
     date: 'December 15, 2022',
@@ -10,7 +10,6 @@ export const article_3: NewsCardData = {
     content: <Article_3 />
 };
 
-const paragraphStyle = { marginTop: 20 };
 export default function Article_3() {
     return (
         <>
@@ -26,6 +25,4 @@ export default function Article_3() {
             </p>
         </>
     );
-}
-// blue 3ee5fe
-// purple d300ff
+};

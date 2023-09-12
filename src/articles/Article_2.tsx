@@ -1,8 +1,7 @@
-import { NewsCardData } from "../components/news/NewsCardData";
+import { paragraphStyle } from "./styles";
+import { NewsArticle } from "../types/domain/NewsArticle";
 
-const paragraphStyle = { marginTop: 20 };
-
-export const article_2: NewsCardData = {
+export const article_2: NewsArticle = {
     id: '2',
     title: 'MMR and SPR',
     date: 'November 21, 2022',
@@ -85,6 +84,4 @@ export default function Article_2() {
             ></img>
         </>
     );
-}
-// blue 3ee5fe
-// purple d300ff
+};

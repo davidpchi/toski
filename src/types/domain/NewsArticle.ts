@@ -1,4 +1,4 @@
-export type NewsCardData = {
+export type NewsArticle = {
     title: string;
     date: string;
     summary: string;

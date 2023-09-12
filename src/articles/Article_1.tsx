@@ -1,10 +1,10 @@
-import { Flex, Tag, TagLeftIcon, Text } from '@chakra-ui/react';
 import { GiWingedSword } from 'react-icons/gi';
-import { NewsCardData } from '../components/news/NewsCardData';
+import { Flex, Tag, TagLeftIcon, Text } from '@chakra-ui/react';
 
-const paragraphStyle = { marginTop: 20 };
+import { paragraphStyle } from './styles';
+import { NewsArticle } from '../types/domain/NewsArticle';
 
-export const article_1: NewsCardData = {
+export const article_1: NewsArticle = {
     id: '1',
     title: 'Monday Night Customs Season 1',
     date: 'October 20, 2022',
@@ -130,4 +130,4 @@ export default function Article_1() {
             </h1>
         </>
     );
-}
+};
