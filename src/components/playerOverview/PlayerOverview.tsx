@@ -29,7 +29,6 @@ export const PlayerOverview = React.memo(function MatchHistory() {
 				columns={playerOverviewColumns}
 				data={playersArray}
 				getRowProps={(row: any) => {
-					console.log(row);
 					return {
 						onClick: () => {
 							navigate(`/playerOverview/${row.original.name}`);
