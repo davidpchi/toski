@@ -29,6 +29,7 @@ import { MatchPlayer } from "../../types/domain/MatchPlayer";
 import { LineGraph } from "../dataVisualizations/LineGraph";
 import { Player } from "../../types/domain/Player";
 import { playerOverviewColumns } from "../playerOverview/playerOverviewColumnHelper";
+import { COMMANDER_MINIMUM_GAMES_REQUIRED } from "../contants";
 
 export async function loader(data: { params: any }) {
     return data.params.commanderId;
@@ -119,7 +120,7 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                             : 0
                             }%`}
                     </Text>
-                    <Text>{`Qualified: ${matches.length >= 5 ? "Yes" : "No"
+                    <Text>{`Qualified: ${matches.length >= COMMANDER_MINIMUM_GAMES_REQUIRED ? "Yes" : "No"
                         }`}</Text>
                 </Flex>
             </Flex>
@@ -164,22 +165,20 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                             alignItems={"center"}
                             padding="8px"
                         >
-                            {matches.length >= 5 ? (
-                                <>
-                                    <LineGraph
-                                        dataLabel={"Winrate"}
-                                        data={winratePerMatch}
-                                        allowTogglableDataPoints={true}
-                                        tooltipTitleCallback={
-                                            tooltipTitleCallback
-                                        }
-                                        tooltipLabelCallback={
-                                            tooltipLabelCallback
-                                        }
-                                        minX={1}
-                                        maxX={winratePerMatch.length}
-                                    />
-                                </>
+                            {matches.length >= COMMANDER_MINIMUM_GAMES_REQUIRED ? (
+                                <LineGraph
+                                    dataLabel={"Winrate"}
+                                    data={winratePerMatch}
+                                    allowTogglableDataPoints={true}
+                                    tooltipTitleCallback={
+                                        tooltipTitleCallback
+                                    }
+                                    tooltipLabelCallback={
+                                        tooltipLabelCallback
+                                    }
+                                    minX={1}
+                                    maxX={winratePerMatch.length}
+                                />
                             ) : (
                                 <Text>Not enough matches</Text>
                             )}

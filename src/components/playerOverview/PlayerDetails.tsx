@@ -23,6 +23,8 @@ import { SortableTable } from "../dataVisualizations/SortableTable";
 import { Loading } from "../Loading";
 import { commanderOverviewColumns } from "../commanderOverview/commanderOverviewColumnHelper";
 import { Commander } from "../../types/domain/Commander";
+import { MatchPlacementBarChart } from "./MatchPlacementBarChart";
+import { PLAYER_MINIMUM_GAMES_REQUIRED } from "../contants";
 
 export async function loader(data: { params: any }) {
     return data.params.playerId;
@@ -90,6 +92,9 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
                     <Tab>
                         <Text>Commander History</Text>
                     </Tab>
+                    <Tab>
+                        <Text>Player Trends</Text>
+                    </Tab>
                 </TabList>
                 <TabPanels>
                     <TabPanel>
@@ -123,6 +128,20 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
                                 };
                             }}
                         />
+                    </TabPanel>
+                    <TabPanel>
+                        {matches.length >= PLAYER_MINIMUM_GAMES_REQUIRED ? (
+                            <MatchPlacementBarChart matches={matches} playerId={playerId} />
+                        ) : (
+                            <Flex
+                                flexDirection={"column"}
+                                justifyContent={"center"}
+                                alignItems={"center"}
+                                padding="8px"
+                            >
+                                <Text>Not enough matches</Text>
+                            </Flex>
+                        )}
                     </TabPanel>
                 </TabPanels>
             </Tabs>
