@@ -1,5 +1,5 @@
 import React from "react";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { Flex, Heading, Image, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 
@@ -56,7 +56,10 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
                 <Flex direction="column" padding="16px">
                     <Text>{`Total Number of Games: ${numberOfMatches}`}</Text>
                     <Text>{`Winrate: ${playerWinRate}%`}</Text>
-                    <Text>{`Favorite commander: ${playedCommanders[0].name}`}</Text>
+                    <Text>
+                        Favorite commander:
+                        <Link to={`/commanderOverview/${playedCommanders[0].id}`}> {playedCommanders[0].name}</Link>
+                    </Text>
                 </Flex>
             </Flex>
 
