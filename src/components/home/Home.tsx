@@ -1,7 +1,6 @@
-import { Button, Flex } from "@chakra-ui/react";
-import { FiArrowRight } from "react-icons/fi";
-import { NewsCards } from "../news/NewsCards";
-import { useNavigate } from "react-router-dom";
+import { Flex } from "@chakra-ui/react";
+import { HomeNewsSection } from "./HomeNewsSection";
+import { FF_IS_NEWS_ENABLED } from "../../services/featureFlagService";
 const backgroundVideo = 'https://cdn.discordapp.com/attachments/983610720316977193/1144864732914925620/Editor115_VP9.webm';
 
 const generalLogo =
@@ -9,13 +8,6 @@ const generalLogo =
 //'https://media.discordapp.net/attachments/980133030050021396/1145161252298035250/toski_logo_v1_alt.png';
 
 export default function Home() {
-    const navigate = useNavigate();
-
-    const navigateToNews = () => {
-        navigate('/news');
-    };
-
-
     return (
         <Flex
             style={{
@@ -70,35 +62,7 @@ export default function Home() {
                     </div>
                 </div>
             </Flex>
-            <Flex
-                backgroundColor='white'
-                flexDirection='column'
-                alignItems='center'
-                paddingTop='4'
-                paddingBottom='4'
-            >
-                <Flex maxWidth='1024px' flexDirection='column' wrap='wrap'>
-                    <Button
-                        variant='ghost'
-                        flex={1}
-                        padding={1}
-                        size='md'
-                        alignSelf={'flex-end'}
-                        marginBottom='4'
-                        marginRight='1'
-                        flexDirection='row'
-                        onClick={navigateToNews}
-                    >
-                        <Flex alignItems='center'>
-                            <h1>All News</h1>
-                            <FiArrowRight />
-                        </Flex>
-                    </Button>
-                    <Flex wrap='wrap' flexDirection='row'>
-                        <NewsCards />
-                    </Flex>
-                </Flex>
-            </Flex>
+            {FF_IS_NEWS_ENABLED ? <HomeNewsSection /> : null}
         </Flex>
     )
 }

@@ -27,6 +27,7 @@ import {
     FiUsers,
 } from 'react-icons/fi';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { FF_IS_NEWS_ENABLED } from '../services/featureFlagService';
 
 interface LinkItemProps {
     name: string;
@@ -35,7 +36,6 @@ interface LinkItemProps {
 }
 const LinkItems: Array<LinkItemProps> = [
     { name: 'Home', icon: FiHome, route: '/' },
-    { name: 'News', icon: FiRss, route: '/news' },
     { name: 'Player Overview', icon: FiUsers, route: '/playerOverview' },
     { name: 'Commander Overview', icon: FiShield, route: '/commanderOverview' },
     { name: 'Match History', icon: FiCalendar, route: '/matchHistory' },
@@ -83,6 +83,12 @@ interface SidebarProps extends BoxProps {
 }
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+    const linkItems = [...LinkItems];
+
+    if (FF_IS_NEWS_ENABLED) {
+        linkItems.splice(1, 0, { name: 'News', icon: FiRss, route: '/news' });
+    }
+
     return (
         <Box
             transition='3s ease'
@@ -114,7 +120,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
                 />
             </Flex>
             <VStack spacing='24px' align='stretch' justify='flex-start'>
-                {LinkItems.map((link) => (
+                {linkItems.map((link) => (
                     <NavItem
                         key={link.name}
                         icon={link.icon}
