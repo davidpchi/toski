@@ -2,7 +2,6 @@ import {
     TooltipItem
 } from 'chart.js';
 import React from "react";
-import { Bar } from "react-chartjs-2";
 import { Text } from "@chakra-ui/react";
 
 import { Match } from "../../types/domain/Match";
