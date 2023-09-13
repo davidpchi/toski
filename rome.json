@@ -14,5 +14,10 @@
         "indentStyle": "space",
         "indentSize": 4,
         "lineWidth": 120
+    },
+    "javascript": {
+        "formatter": {
+            "quoteProperties": "preserve"
+        }
     }
 }
