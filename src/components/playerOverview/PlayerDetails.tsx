@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
-import { Flex, Heading, Image, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
+import { Divider, Flex, Heading, Image, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 
 import { getCommandersByPlayerName, getMatchesByPlayerName } from "../../redux/statsSelectors";
@@ -13,6 +13,7 @@ import { Commander } from "../../types/domain/Commander";
 import { MatchPlacementBarChart } from "./MatchPlacementBarChart";
 import { PLAYER_MINIMUM_GAMES_REQUIRED } from "../contants";
 import { Match } from "../../types/domain/Match";
+import { commanderList } from "../../services/commanderList";
 
 export async function loader(data: { params: any }) {
     return data.params.playerId;
@@ -28,10 +29,17 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
     const matches = useSelector((state: AppState) => getMatchesByPlayerName(state, playerId ? playerId : ""));
     matches.sort((a: Match, b: Match) => Number(b.id) - Number(a.id));
 
+    // Get array of commanders played and sort by game count
     const playedCommanders: Commander[] = useSelector((state: AppState) =>
         getCommandersByPlayerName(state, playerId ? playerId : ""),
     );
     playedCommanders.sort((a: Commander, b: Commander) => b.matches.length - a.matches.length);
+
+    // Get image for most played commander
+    const favCommanderImage = commanderList[playedCommanders[0].name].image.replace("normal", "art_crop");
+
+    // Set hover effect to false
+    const [hovered, setHovered] = useState(false);
 
     if (matches.length === 0) {
         return <Loading text="Loading..." />;
@@ -53,21 +61,60 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
             <Heading>{title}</Heading>
 
             <Flex direction="row">
-                <Flex direction="column" padding="16px">
-                    <Image src="https://static.thenounproject.com/png/5425-200.png" />
+                <Flex>
+                    <Link
+                        to={`/commanderOverview/${playedCommanders[0].id}`}
+                        style={{ color: "blue", textDecoration: "underline" }}
+                    >
+                        <div
+                            style={{
+                                position: "relative",
+                                cursor: "pointer",
+                                width: "auto",
+                                height: "auto",
+                                borderRadius: "8px",
+                                overflow: "hidden",
+                            }}
+                            onMouseEnter={() => setHovered(true)}
+                            onMouseLeave={() => setHovered(false)}
+                        >
+                            <Image
+                                alt="Favorite Commander"
+                                src={favCommanderImage}
+                                width={40}
+                                borderRadius={8}
+                                style={{
+                                    filter: hovered ? "brightness(50%)" : "none",
+                                    transition: "filter 0.3s",
+                                }}
+                            />
+                            <div
+                                style={{
+                                    // The following properties help with responsively layering the text and darkening effect
+                                    position: "absolute",
+                                    top: "50%",
+                                    left: "50%",
+                                    transform: "translate(-50%, -50%)",
+
+                                    // The following control text and opacity
+                                    opacity: hovered ? 1 : 0,
+                                    transition: "opacity 0.3s",
+                                    color: "white",
+                                    textAlign: "center",
+                                    fontSize: "12px",
+                                    width: "100%",
+                                    textOverflow: "ellipsis",
+                                }}
+                            >
+                                Favorite Commander: {playedCommanders[0].name}
+                            </div>
+                        </div>
+                    </Link>
                 </Flex>
+
                 <Flex direction="column" padding="16px">
                     <Text>{`Total Number of Games: ${numberOfMatches}`}</Text>
                     <Text>{`Winrate: ${playerWinRate}%`}</Text>
-                    <Text> Favorite commander: </Text>
-                    <Text>
-                        <Link
-                            to={`/commanderOverview/${playedCommanders[0].id}`}
-                            style={{ color: "blue", textDecoration: "underline" }}
-                        >
-                            {playedCommanders[0].name}
-                        </Link>
-                    </Text>
                 </Flex>
             </Flex>
 
