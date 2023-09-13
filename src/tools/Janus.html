@@ -8,7 +8,7 @@
     <div id="demo" style="display: flex; flex-direction: column;">
         <br>Special Cases:
         <textarea id="extraAdds"
-            style="width:500px;height:500px;">Dhalsim, Pliable Pacifist;Witch of the Moors;Tamanoa</textarea>
+            style="width:500px;height:500px;">Witch of the Moors;Tamanoa</textarea>
         <br>Output:
         <textarea id="commanderList" style="width:500px;height:500px; margin-bottom: 16px;"></textarea>
         <button type="button" onclick="run()">Run</button>
@@ -19,9 +19,18 @@
     <!-- Copy and paste script results into ~/src/services/commanderList.ts -->
     <script>
         async function run() {
-            document.getElementById("commanderList").value = `export const commanderList: { [friendlyName: string]: { id: string, image: string } } = {`;
+            document.getElementById("commanderList").value = `export const commanderList: { [friendlyName: string]: { id: string, image: string, color_identity: string[] } } = {`;
 
             const delay = async (ms) => new Promise(res => setTimeout(res, ms));
+
+            const getCommanderData = (item) => {
+                // const tempColorIdentityArray = `"${item.color_identity[0]}"`;
+                if (item.image_uris === undefined || item.image_uris.normal === undefined) {
+                    return `"${item.name.replaceAll('"', "\\\"")}": { id: "${item.id}", image: "${item.card_faces[0].image_uris.normal}", color_identity: ["${item.color_identity.join(`","`)}"] },${"\r\n"}`;
+                } else {
+                    return `"${item.name.replaceAll('"', "\\\"")}": { id: "${item.id}", image: "${item.image_uris.normal}", color_identity: ["${item.color_identity.join(`","`)}"] }, ${"\r\n"}`;
+                }
+            }
 
             let nextPageUrl = "https://api.scryfall.com/cards/search?q=is:commander%20-is:digital";
 
@@ -35,11 +44,7 @@
                         nextPageUrl = result.next_page;
                         const data = result.data;
                         for (const item of data) {
-                            if (item.image_uris === undefined || item.image_uris.normal === undefined) {
-                                document.getElementById("commanderList").value += `"${item.name.replaceAll('"', "\\\"")}": { id: "${item.id}", image: "${item.card_faces[0].image_uris.normal}" }, ${"\r\n"}`;
-                            } else {
-                                document.getElementById("commanderList").value += `"${item.name.replaceAll('"', "\\\"")}": { id: "${item.id}", image: "${item.image_uris.normal}" }, ${"\r\n"}`;
-                            }
+                            document.getElementById("commanderList").value += getCommanderData(item);
                         }
                     }
                 };
@@ -73,11 +78,8 @@
                                 specialQuery = undefined;
                             }
                             const item = result;
-                            if (item.image_uris === undefined || item.image_uris.normal === undefined) {
-                                document.getElementById("commanderList").value += `"${item.name.replaceAll('"', "\\\"")}": { id: "${item.id}", image: "${item.card_faces[0].image_uris.normal}" }, ${"\r\n"}`;
-                            } else {
-                                document.getElementById("commanderList").value += `"${item.name.replaceAll('"', "\\\"")}": { id: "${item.id}", image: "${item.image_uris.normal}" }, ${"\r\n"}`;
-                            }
+
+                            document.getElementById("commanderList").value += getCommanderData(item);
                         }
                     };
                     xhttp.open("GET", specialQuery, true);
