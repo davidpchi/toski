@@ -59,8 +59,8 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
                 <Flex direction="column" padding="16px">
                     <Text>{`Total Number of Games: ${numberOfMatches}`}</Text>
                     <Text>{`Winrate: ${playerWinRate}%`}</Text>
+                    <Text> Favorite commander: </Text>
                     <Text>
-                        Favorite commander:{" "}
                         <Link
                             to={`/commanderOverview/${playedCommanders[0].id}`}
                             style={{ color: "blue", textDecoration: "underline" }}
