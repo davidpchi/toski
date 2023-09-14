@@ -14,7 +14,9 @@ export const CommanderOverview = React.memo(function MatchHistory() {
     const commanders: { [id: string]: Commander } | undefined = useSelector(getCommanders);
     const [isFiltered, setIsFiltered] = useState<boolean>(true);
 
-    const onFilterChange = () => { setIsFiltered(!isFiltered) };
+    const onFilterChange = () => {
+        setIsFiltered(!isFiltered);
+    };
 
     if (commanders === undefined) {
         return <Loading text="Loading..." />;
@@ -22,24 +24,23 @@ export const CommanderOverview = React.memo(function MatchHistory() {
 
     let commandersArray = Object.values(commanders).sort((a: Commander, b: Commander) => a.name.localeCompare(b.name));
     if (isFiltered) {
-        commandersArray = commandersArray.filter((value: Commander) => value.matches.length >= COMMANDER_MINIMUM_GAMES_REQUIRED);
+        commandersArray = commandersArray.filter(
+            (value: Commander) => value.matches.length >= COMMANDER_MINIMUM_GAMES_REQUIRED,
+        );
     }
 
     return (
-        <Flex direction='column' justify='center' align='center'>
+        <Flex direction="column" justify="center" align="center">
             <Heading>Commander Overview</Heading>
-            <Flex alignSelf={'center'} marginBottom={'16px'}>
+            <Flex alignSelf={"center"} marginBottom={"16px"}>
                 <Tooltip
-                    label={
-                        <p style={{ textAlign: 'center', }}>
-                            Commanders play 5 games to be qualified.
-                        </p>
-                    }
+                    label={<p style={{ textAlign: "center" }}>Commanders play 5 games to be qualified.</p>}
                     hasArrow
-                    arrowSize={15}>
+                    arrowSize={15}
+                >
                     <div>
-                        <Checkbox isChecked={isFiltered} onChange={onFilterChange} >
-                            {'Show only qualified'}
+                        <Checkbox isChecked={isFiltered} onChange={onFilterChange}>
+                            {"Show only qualified"}
                         </Checkbox>
                     </div>
                 </Tooltip>
@@ -50,7 +51,7 @@ export const CommanderOverview = React.memo(function MatchHistory() {
                 getRowProps={(row: any) => {
                     return {
                         onClick: () => {
-                            navigate('/commanderOverview/' + row.original.id);
+                            navigate(`/commanderOverview/${row.original.id}`);
                             window.scrollTo(0, 0);
                         },
                     };
