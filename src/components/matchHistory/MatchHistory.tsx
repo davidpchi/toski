@@ -16,11 +16,11 @@ export const MatchHistory = React.memo(function MatchHistory() {
         return <Loading text="" />;
     }
 
-    // cannot directly mutate state, copy to new array first
+    // Cannot directly mutate state, copy to new array first
     matches = matches.slice().sort((a: Match, b: Match) => Number(b.id) - Number(a.id));
 
     return (
-        <Flex direction='column' justify='center' align='center'>
+        <Flex direction="column" justify="center" align="center">
             <Heading>Match History</Heading>
             <SortableTable
                 columns={matchHistoryColumns}
@@ -28,7 +28,7 @@ export const MatchHistory = React.memo(function MatchHistory() {
                 getRowProps={(row: any) => {
                     return {
                         onClick: () => {
-                            navigate('/matchHistory/' + row.original.id);
+                            navigate(`/matchHistory/${row.original.id}`);
                             window.scrollTo(0, 0);
                         },
                     };
