@@ -48,10 +48,10 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
         return <Loading text="Loading..." />;
     }
 
+    const title = player.name;
+
     // Get image for most played commander
     const favCommanderImage = commanderList[playedCommanders[0].name].image.replace("normal", "art_crop");
-
-    const title = player.name;
 
     // Calculate metrics (number of games, win rate)
     const numberOfMatches = matches.length;
