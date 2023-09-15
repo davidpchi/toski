@@ -11,7 +11,7 @@ import { Loading } from "../Loading";
 import { commanderOverviewColumns } from "../commanderOverview/commanderOverviewColumnHelper";
 import { Commander } from "../../types/domain/Commander";
 import { MatchPlacementBarChart } from "./MatchPlacementBarChart";
-import { PLAYER_MINIMUM_GAMES_REQUIRED } from "../contants";
+import { PLAYER_MINIMUM_GAMES_REQUIRED } from "../constants";
 import { Match } from "../../types/domain/Match";
 import { commanderList } from "../../services/commanderList";
 import { ImageWithHover } from "../common/ImageWithHover";

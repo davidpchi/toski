@@ -2,24 +2,10 @@ import { TooltipItem } from "chart.js";
 import React from "react";
 import { useSelector } from "react-redux";
 import { useLoaderData, useNavigate } from "react-router-dom";
-import {
-    Flex,
-    Heading,
-    Image,
-    Tab,
-    TabList,
-    TabPanel,
-    TabPanels,
-    Tabs,
-    Text,
-} from "@chakra-ui/react";
+import { Flex, Heading, Image, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
 
 import { AppState } from "../../redux/rootReducer";
-import {
-    getCommander,
-    getMatchesByCommanderName,
-    getPlayersByCommanderName,
-} from "../../redux/statsSelectors";
+import { getCommander, getMatchesByCommanderName, getPlayersByCommanderName } from "../../redux/statsSelectors";
 import { Loading } from "../Loading";
 import { commanderList } from "../../services/commanderList";
 import { SortableTable } from "../dataVisualizations/SortableTable";
@@ -29,7 +15,7 @@ import { MatchPlayer } from "../../types/domain/MatchPlayer";
 import { LineGraph } from "../dataVisualizations/LineGraph";
 import { Player } from "../../types/domain/Player";
 import { playerOverviewColumns } from "../playerOverview/playerOverviewColumnHelper";
-import { COMMANDER_MINIMUM_GAMES_REQUIRED } from "../contants";
+import { COMMANDER_MINIMUM_GAMES_REQUIRED } from "../constants";
 
 export async function loader(data: { params: any }) {
     return data.params.commanderId;
@@ -38,18 +24,12 @@ export async function loader(data: { params: any }) {
 export const CommanderDetails = React.memo(function CommanderDetails() {
     const navigate = useNavigate();
     const commanderId = useLoaderData() as string;
-    const commander = useSelector((state: AppState) =>
-        getCommander(state, commanderId),
-    );
-    const matches = useSelector((state: AppState) =>
-        getMatchesByCommanderName(state, commander ? commander.name : ""),
-    );
+    const commander = useSelector((state: AppState) => getCommander(state, commanderId));
+    const matches = useSelector((state: AppState) => getMatchesByCommanderName(state, commander ? commander.name : ""));
     const commanderPlayers: Player[] = useSelector((state: AppState) =>
         getPlayersByCommanderName(state, commander ? commander.name : ""),
     );
-    commanderPlayers.sort(
-        (a: Player, b: Player) => b.matches.length - a.matches.length,
-    );
+    commanderPlayers.sort((a: Player, b: Player) => b.matches.length - a.matches.length);
 
     if (commander === undefined) {
         return <Loading text="" />;
@@ -60,9 +40,7 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
     let numberOfWins = 0;
 
     const winratePerMatch = matches.map((match: Match, index: number) => {
-        const winningPlayer = match.players.find(
-            (player: MatchPlayer) => player.rank === "1",
-        );
+        const winningPlayer = match.players.find((player: MatchPlayer) => player.rank === "1");
 
         let currentWinRate = 0;
 
@@ -101,35 +79,21 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                 flexWrap="wrap"
                 marginBottom="32px"
             >
-                {commanderList[commander.name] ? (
-                    <Image
-                        width={300}
-                        src={commanderList[commander.name].image}
-                    />
-                ) : null}
+                {commanderList[commander.name] ? <Image width={300} src={commanderList[commander.name].image} /> : null}
                 <Flex direction="column" padding="16px">
                     <Text>{`Total Number of Games: ${commander.matches.length}`}</Text>
                     <Text>{`Wins: ${commander.wins}`}</Text>
                     <Text>
-                        {`Winrate: ${commander.matches.length > 0
-                            ? Math.round(
-                                (commander.wins /
-                                    commander.matches.length) *
-                                100,
-                            )
-                            : 0
-                            }%`}
+                        {`Winrate: ${
+                            commander.matches.length > 0
+                                ? Math.round((commander.wins / commander.matches.length) * 100)
+                                : 0
+                        }%`}
                     </Text>
-                    <Text>{`Qualified: ${matches.length >= COMMANDER_MINIMUM_GAMES_REQUIRED ? "Yes" : "No"
-                        }`}</Text>
+                    <Text>{`Qualified: ${matches.length >= COMMANDER_MINIMUM_GAMES_REQUIRED ? "Yes" : "No"}`}</Text>
                 </Flex>
             </Flex>
-            <Tabs
-                isFitted={true}
-                width={"100%"}
-                paddingRight={"10%"}
-                paddingLeft={"10%"}
-            >
+            <Tabs isFitted={true} width={"100%"} paddingRight={"10%"} paddingLeft={"10%"}>
                 <TabList>
                     <Tab>
                         <Text>Match History</Text>
@@ -149,9 +113,7 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                             getRowProps={(row: any) => {
                                 return {
                                     onClick: () => {
-                                        navigate(
-                                            "/matchHistory/" + row.original.id,
-                                        );
+                                        navigate("/matchHistory/" + row.original.id);
                                         window.scrollTo(0, 0);
                                     },
                                 };
@@ -159,23 +121,14 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                         />
                     </TabPanel>
                     <TabPanel>
-                        <Flex
-                            flexDirection={"column"}
-                            justifyContent={"center"}
-                            alignItems={"center"}
-                            padding="8px"
-                        >
+                        <Flex flexDirection={"column"} justifyContent={"center"} alignItems={"center"} padding="8px">
                             {matches.length >= COMMANDER_MINIMUM_GAMES_REQUIRED ? (
                                 <LineGraph
                                     dataLabel={"Winrate"}
                                     data={winratePerMatch}
                                     allowTogglableDataPoints={true}
-                                    tooltipTitleCallback={
-                                        tooltipTitleCallback
-                                    }
-                                    tooltipLabelCallback={
-                                        tooltipLabelCallback
-                                    }
+                                    tooltipTitleCallback={tooltipTitleCallback}
+                                    tooltipLabelCallback={tooltipLabelCallback}
                                     minX={1}
                                     maxX={winratePerMatch.length}
                                 />
@@ -191,9 +144,7 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                             getRowProps={(row: any) => {
                                 return {
                                     onClick: () => {
-                                        navigate(
-                                            `/playerOverview/${row.original.name}`,
-                                        );
+                                        navigate(`/playerOverview/${row.original.name}`);
                                         window.scrollTo(0, 0);
                                     },
                                 };
