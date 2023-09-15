@@ -36,8 +36,6 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
     );
     playedCommanders.sort((a: Commander, b: Commander) => b.matches.length - a.matches.length);
 
-    // Get image for most played commander
-    const favCommanderImage = commanderList[playedCommanders[0].name].image.replace("normal", "art_crop");
 
     if (matches.length === 0) {
         return <Loading text="Loading..." />;
