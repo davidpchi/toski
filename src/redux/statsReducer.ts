@@ -1,4 +1,4 @@
-import { createReducer, current } from "@reduxjs/toolkit";
+import { createReducer } from "@reduxjs/toolkit";
 import { Match } from "../types/domain/Match";
 import { StatsAction } from "./statsActions";
 import { Commander } from "../types/domain/Commander";
