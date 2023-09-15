@@ -32,15 +32,12 @@ const initialState: StatsState = {
 };
 
 export const statsReducer = createReducer(initialState, (builder) => {
-    builder.addCase(
-        StatsAction.HydrateMatchHistoryComplete,
-        (state, action) => {
-            const matchesCollection = action.payload;
-            state.matches = matchesCollection;
-            state.commanders = matchesToCommanders(matchesCollection);
-            state.players = matchesToPlayers(matchesCollection);
-        },
-    );
+    builder.addCase(StatsAction.HydrateMatchHistoryComplete, (state, action) => {
+        const matchesCollection = action.payload;
+        state.matches = matchesCollection;
+        state.commanders = matchesToCommanders(matchesCollection);
+        state.players = matchesToPlayers(matchesCollection);
+    });
 });
 
 // given a collection of matches, return all of the commanders in those matches
@@ -73,14 +70,13 @@ function matchesToCommanders(matches: Match[]): { [id: string]: Commander } {
                     commanderDictionary[commander.id] = {
                         id: commander.id,
                         name: currentCommanderName,
+                        color_identity: commander.color_identity,
                         matches: [currentMatch.id],
                         wins: player.rank === "1" ? 1 : 0,
                     };
                 } else {
                     // since this commander exists, update the currentMatch count
-                    commanderDictionary[potentialCommanderObj.id].matches.push(
-                        currentMatch.id,
-                    );
+                    commanderDictionary[potentialCommanderObj.id].matches.push(currentMatch.id);
                     if (player.rank === "1") {
                         commanderDictionary[potentialCommanderObj.id].wins++;
                     }

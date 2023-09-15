@@ -9,10 +9,7 @@ import { Player } from "../types/domain/Player";
  * @param playerId The player name to filter commanders by
  * @returns A dictionary of commanders keyed by commanderId
  */
-export function getCommandersByPlayerNameHelper(
-    matches: Match[],
-    playerName: string,
-): { [id: string]: Commander } {
+export function getCommandersByPlayerNameHelper(matches: Match[], playerName: string): { [id: string]: Commander } {
     const playedCommanderDictionary: { [id: string]: Commander } = {};
     for (const currentMatch of matches) {
         // iterate through each player, and add those commanders to our commander dictionary
@@ -36,24 +33,21 @@ export function getCommandersByPlayerNameHelper(
                     }
 
                     // commander name is valid. let's check to see if we already added it to our dictionary
-                    const potentialCommanderObj =
-                        playedCommanderDictionary[commander.id];
+                    const potentialCommanderObj = playedCommanderDictionary[commander.id];
                     if (potentialCommanderObj === undefined) {
                         // the entry doesn't exist, add it to our dictionary
                         playedCommanderDictionary[commander.id] = {
                             id: commander.id,
                             name: currentCommanderName,
+                            color_identity: commander.color_identity,
                             matches: [currentMatch.id],
                             wins: player.rank === "1" ? 1 : 0,
                         };
                     } else {
                         // since this commander exists, update the currentMatch count
-                        playedCommanderDictionary[
-                            potentialCommanderObj.id
-                        ].matches.push(currentMatch.id);
+                        playedCommanderDictionary[potentialCommanderObj.id].matches.push(currentMatch.id);
                         if (player.rank === "1") {
-                            playedCommanderDictionary[potentialCommanderObj.id]
-                                .wins++;
+                            playedCommanderDictionary[potentialCommanderObj.id].wins++;
                         }
                     }
                 }
@@ -69,10 +63,7 @@ export function getCommandersByPlayerNameHelper(
  * @param commanderName The commander to filter players by
  * @returns A dictionary of player keyed by playerId
  */
-export function getPlayersByCommanderNameHelper(
-    matches: Match[],
-    commanderName: string,
-): { [id: string]: Player } {
+export function getPlayersByCommanderNameHelper(matches: Match[], commanderName: string): { [id: string]: Player } {
     const playerDictionary: { [id: string]: Player } = {};
     for (const currentMatch of matches) {
         // iterate through each player, and add those commanders to our commander dictionary
@@ -83,8 +74,7 @@ export function getPlayersByCommanderNameHelper(
             for (const currentCommanderName of playerCommanders) {
                 if (currentCommanderName === commanderName) {
                     // Commander is a match, let's check to see if player is already in our dictionary
-                    const potentialPlayerObj: Player | undefined =
-                        playerDictionary[player.name];
+                    const potentialPlayerObj: Player | undefined = playerDictionary[player.name];
                     if (potentialPlayerObj === undefined) {
                         // the entry doesn't exist, add it to our dictionary
                         playerDictionary[player.name] = {
@@ -94,9 +84,7 @@ export function getPlayersByCommanderNameHelper(
                         };
                     } else {
                         // since this player exists, update the currentMatch count
-                        playerDictionary[potentialPlayerObj.name].matches.push(
-                            currentMatch,
-                        );
+                        playerDictionary[potentialPlayerObj.name].matches.push(currentMatch);
                         if (player.rank === "1") {
                             playerDictionary[potentialPlayerObj.name].wins++;
                         }
