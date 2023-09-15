@@ -1,5 +1,4 @@
-import { getCommandersByPlayerNameHelper, getPlayersByCommanderNameHelper } from "../logic/dictionaryUtils";
-import { commanderList } from "../services/commanderList";
+import { matchesToCommanderHelper, matchesToPlayersHelper } from "../logic/dictionaryUtils";
 import { Commander } from "../types/domain/Commander";
 import { Match } from "../types/domain/Match";
 import { Player } from "../types/domain/Player";
@@ -109,7 +108,7 @@ export const getCommandersByPlayerName = (
     }
 
     const commanders = Object.values(
-        getCommandersByPlayerNameHelper(state.stats.matches, playerName),
+        matchesToCommanderHelper(state.stats.matches, playerName),
     );
 
     return commanders;
@@ -133,7 +132,7 @@ export const getPlayersByCommanderName = (
     }
 
     const players = Object.values(
-        getPlayersByCommanderNameHelper(state.stats.matches, commanderName),
+        matchesToPlayersHelper(state.stats.matches, commanderName),
     );
 
     return players;
