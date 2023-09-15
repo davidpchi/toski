@@ -22,6 +22,20 @@ export const getMatch = (state: AppState, matchId: string) => {
 };
 
 /**
+ * Gets a specific commander based on commanderId.
+ */
+export const getCommander = (state: AppState, id: string) => {
+    return state.stats.commanders ? state.stats.commanders[id] : undefined;
+};
+
+/**
+ * Gets a specific player based on playerId.
+ */
+export const getPlayer = (state: AppState, id: string) => {
+    return state.stats.players ? state.stats.players[id] : undefined;
+}
+
+/**
  * Returns a collection matches in chronological order given a commander NAME. Note that this is not searching using commander id.
  */
 export const getMatchesByCommanderName = (
@@ -123,11 +137,4 @@ export const getPlayersByCommanderName = (
     );
 
     return players;
-};
-
-/**
- * Gets a specific commander based on commanderId.
- */
-export const getCommander = (state: AppState, id: string) => {
-    return state.stats.commanders ? state.stats.commanders[id] : undefined;
 };

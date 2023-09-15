@@ -39,7 +39,7 @@ export function getCommandersByPlayerNameHelper(matches: Match[], playerName: st
                         playedCommanderDictionary[commander.id] = {
                             id: commander.id,
                             name: currentCommanderName,
-                            color_identity: commander.color_identity,
+                            colorIdentity: commander.color_identity,
                             matches: [currentMatch.id],
                             wins: player.rank === "1" ? 1 : 0,
                         };
@@ -68,25 +68,48 @@ export function getPlayersByCommanderNameHelper(matches: Match[], commanderName:
     for (const currentMatch of matches) {
         // iterate through each player, and add those commanders to our commander dictionary
         for (const player of currentMatch.players) {
-            const playerCommanders: string[] = player.commanders;
-
             // loop through all commanders search for our match
-            for (const currentCommanderName of playerCommanders) {
+            for (const currentCommanderName of player.commanders) {
                 if (currentCommanderName === commanderName) {
                     // Commander is a match, let's check to see if player is already in our dictionary
                     const potentialPlayerObj: Player | undefined = playerDictionary[player.name];
                     if (potentialPlayerObj === undefined) {
+
+                        // initialize the color profile dictionary
+                        const colorProfile: { [color: string]: number } = {};
+                        // compute the players color profile
+                        for (const commanderName of player.commanders) {
+                            const colors = commanderList[commanderName].color_identity;
+                            for (const color of colors) {
+                                // add or increment this in our colorProfile dictionary
+                                colorProfile[color] = (colorProfile[color] === undefined) ? 1 : colorProfile[color] + 1;
+                            }
+                        }
+
                         // the entry doesn't exist, add it to our dictionary
                         playerDictionary[player.name] = {
                             name: player.name,
                             matches: [currentMatch],
                             wins: player.rank === "1" ? 1 : 0,
+                            colorProfile: colorProfile
                         };
                     } else {
                         // since this player exists, update the currentMatch count
                         playerDictionary[potentialPlayerObj.name].matches.push(currentMatch);
                         if (player.rank === "1") {
                             playerDictionary[potentialPlayerObj.name].wins++;
+                        }
+
+                        // compute the players color profile
+                        for (const commanderName of player.commanders) {
+                            const colors = commanderList[commanderName].color_identity;
+                            for (const color of colors) {
+                                // add or increment this in our colorProfile dictionary
+                                playerDictionary[player.name].colorProfile[color] =
+                                    playerDictionary[player.name].colorProfile[color] === undefined
+                                        ? 1
+                                        : playerDictionary[player.name].colorProfile[color] + 1;
+                            }
                         }
                     }
                 }

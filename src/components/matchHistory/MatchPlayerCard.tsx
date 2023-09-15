@@ -21,7 +21,7 @@ export const MatchPlayerCard = React.memo(function MatchPlayerCard
     const navigate = useNavigate();
 
     const playerNav = useCallback(() => {
-        navigate('/playerOverview/' + player.name.toLowerCase());
+        navigate('/playerOverview/' + player.name);
     }, [navigate, player.name]);
 
     return (
