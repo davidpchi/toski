@@ -2,8 +2,8 @@ import { createReducer } from "@reduxjs/toolkit";
 import { Match } from "../types/domain/Match";
 import { StatsAction } from "./statsActions";
 import { Commander } from "../types/domain/Commander";
-import { commanderList } from "../services/commanderList";
 import { Player } from "../types/domain/Player";
+import { matchesToCommanderHelper, matchesToPlayersHelper } from "../logic/dictionaryUtils";
 
 /**
  * State containing all game history data
@@ -42,49 +42,7 @@ export const statsReducer = createReducer(initialState, (builder) => {
 
 // given a collection of matches, return all of the commanders in those matches
 function matchesToCommanders(matches: Match[]): { [id: string]: Commander } {
-    const commanderDictionary: { [id: string]: Commander } = {};
-    for (const currentMatch of matches) {
-        // iterate through each player, and add those commanders to our commander dictionary
-        for (const player of currentMatch.players) {
-            // there is a chance the commander is actually multiple commanders.
-            // the current separator for commanders is " && "
-            const currentCommanderNames: string[] = player.commanders;
-
-            // loop through all commanders and update our commanders dictionary
-            for (const currentCommanderName of currentCommanderNames) {
-                const commander = commanderList[currentCommanderName];
-
-                // check to see if the commander name is valid
-                if (commander === undefined) {
-                    // log the invalid commander
-                    console.log(
-                        `Invalid commander found in currentMatch <${currentMatch.id}> : ${currentCommanderName}`,
-                    );
-                    continue;
-                }
-
-                // commander name is valid. let's check to see if we already added it to our dictionary
-                const potentialCommanderObj = commanderDictionary[commander.id];
-                if (potentialCommanderObj === undefined) {
-                    // the entry doesn't exist, add it to our dictionary
-                    commanderDictionary[commander.id] = {
-                        id: commander.id,
-                        name: currentCommanderName,
-                        color_identity: commander.color_identity,
-                        matches: [currentMatch.id],
-                        wins: player.rank === "1" ? 1 : 0,
-                    };
-                } else {
-                    // since this commander exists, update the currentMatch count
-                    commanderDictionary[potentialCommanderObj.id].matches.push(currentMatch.id);
-                    if (player.rank === "1") {
-                        commanderDictionary[potentialCommanderObj.id].wins++;
-                    }
-                }
-            }
-        }
-    }
-    return commanderDictionary;
+    return matchesToCommanderHelper(matches);
 }
 
 /**
@@ -93,28 +51,5 @@ function matchesToCommanders(matches: Match[]): { [id: string]: Commander } {
  * @returns a dictionary of players where the key is playerId and the value is a player
  */
 export function matchesToPlayers(matches: Match[]): { [name: string]: Player } {
-    const playerDictionary: { [name: string]: Player } = {};
-    for (const currentMatch of matches) {
-        // iterate through each player, and add those commanders to our commander dictionary
-        for (const player of currentMatch.players) {
-            const currentPlayerName = player.name;
-            const potentialPlayerObj = playerDictionary[currentPlayerName];
-
-            // if the entry doesn't exist, add to dictionary
-            if (potentialPlayerObj === undefined) {
-                playerDictionary[currentPlayerName] = {
-                    name: currentPlayerName,
-                    matches: [currentMatch],
-                    wins: player.rank === "1" ? 1 : 0,
-                };
-            } else {
-                // since this player exists, update the currentMatch count
-                playerDictionary[currentPlayerName].matches.push(currentMatch);
-                if (player.rank === "1") {
-                    playerDictionary[currentPlayerName].wins++;
-                }
-            }
-        }
-    }
-    return playerDictionary;
+    return matchesToPlayersHelper(matches);
 }

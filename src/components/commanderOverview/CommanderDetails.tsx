@@ -84,14 +84,13 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                     <Text>{`Total Number of Games: ${commander.matches.length}`}</Text>
                     <Text>{`Wins: ${commander.wins}`}</Text>
                     <Text>
-                        {`Winrate: ${
-                            commander.matches.length > 0
+                        {`Winrate: ${commander.matches.length > 0
                                 ? Math.round((commander.wins / commander.matches.length) * 100)
                                 : 0
-                        }%`}
+                            }%`}
                     </Text>
                     <Text>{`Qualified: ${matches.length >= COMMANDER_MINIMUM_GAMES_REQUIRED ? "Yes" : "No"}`}</Text>
-                    <Text>{`Color Identity: ${commander.color_identity}`}</Text>
+                    <Text>{`Color Identity: ${commander.colorIdentity}`}</Text>
                 </Flex>
             </Flex>
             <Tabs isFitted={true} width={"100%"} paddingRight={"10%"} paddingLeft={"10%"}>

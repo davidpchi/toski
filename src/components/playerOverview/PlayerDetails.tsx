@@ -3,7 +3,7 @@ import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { Divider, Flex, Heading, Image, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 
-import { getCommanders, getCommandersByPlayerName, getMatchesByPlayerName } from "../../redux/statsSelectors";
+import { getCommanders, getCommandersByPlayerName, getMatchesByPlayerName, getPlayer } from "../../redux/statsSelectors";
 import { AppState } from "../../redux/rootReducer";
 import { matchHistoryColumns } from "../matchHistory/matchHistoryColumnHelper";
 import { SortableTable } from "../dataVisualizations/SortableTable";
@@ -26,7 +26,7 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
 
     // Player variables
     const playerId = useLoaderData() as string;
-    const title = playerId;
+    const player = useSelector((state: AppState) => getPlayer(state, playerId));
 
     const commanders = useSelector((state: AppState) => getCommanders(state));
 
@@ -39,12 +39,14 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
     );
     playedCommanders.sort((a: Commander, b: Commander) => b.matches.length - a.matches.length);
 
+    if (matches.length === 0 || commanders === undefined || player === undefined) {
+        return <Loading text="Loading..." />;
+    }
+
     // Get image for most played commander
     const favCommanderImage = commanderList[playedCommanders[0].name].image.replace("normal", "art_crop");
 
-    if (matches.length === 0 || commanders === undefined) {
-        return <Loading text="Loading..." />;
-    }
+    const title = player.name;
 
     // Calculate metrics (number of games, win rate)
     const numberOfMatches = matches.length;
@@ -55,31 +57,13 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
         }
     }
 
-    // Calculate color play rate
-    const colorsPlayed: { [color: string]: number } = {
-        B: 0,
-        G: 0,
-        R: 0,
-        U: 0,
-        W: 0,
-    };
-    for (const currentMatch of matches) {
-        for (const player of currentMatch.players) {
-            if (player.name === playerId) {
-                for (const commanderName of player.commanders) {
-                    const rawCommander = commanderList[commanderName];
-                    const commanderObj = rawCommander !== undefined ? commanders[rawCommander.id] : undefined;
-                    if (commanderObj !== undefined) {
-                        for (const color of commanderObj.color_identity) {
-                            colorsPlayed[color] += 1;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    const colorsPlayedArray = [colorsPlayed.B, colorsPlayed.G, colorsPlayed.R, colorsPlayed.U, colorsPlayed.W];
+    const colorsPlayedArray = [
+        player.colorProfile["W"],
+        player.colorProfile["U"],
+        player.colorProfile["B"],
+        player.colorProfile["G"],
+        player.colorProfile["R"]
+    ];
 
     const playerWinRate = numberOfMatches > 0 ? Math.round((numberOfWins * 100) / numberOfMatches) : 0;
 
@@ -104,11 +88,11 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
                 <Flex direction="column" padding="16px">
                     <Text>{`Total Number of Games: ${numberOfMatches}`}</Text>
                     <Text>{`Winrate: ${playerWinRate}%`}</Text>
-                    <Text>{`Black commanders played: ${colorsPlayed.B}`}</Text>
-                    <Text>{`Green commanders played: ${colorsPlayed.G}`}</Text>
-                    <Text>{`Red commanders played: ${colorsPlayed.R}`}</Text>
-                    <Text>{`Blue commanders played: ${colorsPlayed.U}`}</Text>
-                    <Text>{`White commanders played: ${colorsPlayed.W}`}</Text>
+                    <Text>{`Black commanders played: ${player.colorProfile.B}`}</Text>
+                    <Text>{`Green commanders played: ${player.colorProfile.G}`}</Text>
+                    <Text>{`Red commanders played: ${player.colorProfile.R}`}</Text>
+                    <Text>{`Blue commanders played: ${player.colorProfile.U}`}</Text>
+                    <Text>{`White commanders played: ${player.colorProfile.W}`}</Text>
                 </Flex>
             </Flex>
 
