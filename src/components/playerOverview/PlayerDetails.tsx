@@ -76,32 +76,29 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
         <Flex direction="column" justify="center" align="center">
             <Heading>{title}</Heading>
 
-            <Flex direction="row">
+            <Flex direction="row" justify="space-evenly" align="center" gap="20px">
                 <Link
                     to={`/commanderOverview/${playedCommanders[0].id}`}
                     style={{ color: "blue", textDecoration: "underline" }}
                 >
                     <ImageWithHover
                         label={`Favorite Commander: ${playedCommanders[0].name}`}
-                        width={40}
+                        width={200}
                         image={favCommanderImage}
                     />
                 </Link>
-                <Flex style={{ width: "10" }}>
+
+                <Flex direction="column" padding="16px">
+                    <Text>{`Games played: ${numberOfMatches}`}</Text>
+                    <Text>{`Winrate: ${playerWinRate}%`}</Text>
+                </Flex>
+
+                <Flex width={175} height={175}>
                     <PieGraph
                         dataLabel={"Commanders played"}
                         data={colorsPlayedArray}
                         backgroundColors={MTG_COLOR_RGB}
                     />
-                </Flex>
-                <Flex direction="column" padding="16px">
-                    <Text>{`Total Number of Games: ${numberOfMatches}`}</Text>
-                    <Text>{`Winrate: ${playerWinRate}%`}</Text>
-                    <Text>{`Black commanders played: ${player.colorProfile.B}`}</Text>
-                    <Text>{`Green commanders played: ${player.colorProfile.G}`}</Text>
-                    <Text>{`Red commanders played: ${player.colorProfile.R}`}</Text>
-                    <Text>{`Blue commanders played: ${player.colorProfile.U}`}</Text>
-                    <Text>{`White commanders played: ${player.colorProfile.W}`}</Text>
                 </Flex>
             </Flex>
 

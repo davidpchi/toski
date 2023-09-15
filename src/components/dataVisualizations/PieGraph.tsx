@@ -34,10 +34,9 @@ export const PieGraph = React.memo(function PieGraph({
     }, [data, dataLabel]);
 
     return (
-        <>
+        <div style={{ flex: 1, display: "flex", width: "100%", height: "100%" }}>
             <Pie
                 data={pieGraphData}
-                style={{ maxHeight: 300, flexGrow: 1, maxWidth: 1024 }}
                 options={{
                     plugins: {
                         legend: {
@@ -53,6 +52,6 @@ export const PieGraph = React.memo(function PieGraph({
                     },
                 }}
             />
-        </>
+        </div>
     );
 });
