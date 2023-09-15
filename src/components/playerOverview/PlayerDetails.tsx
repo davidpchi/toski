@@ -52,6 +52,23 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
         }
     }
 
+    // Calculate color play rate
+    const colorsPlayed: { [color: string]: number } = {
+        B: 0,
+        G: 0,
+        R: 0,
+        U: 0,
+        W: 0,
+    };
+
+    for (let i = 0; i < playedCommanders.length; i++) {
+        for (const color in colorsPlayed) {
+            if (playedCommanders[i].color_identity.includes(color)) {
+                colorsPlayed[color]++;
+            }
+        }
+    }
+
     const playerWinRate = numberOfMatches > 0 ? Math.round((numberOfWins * 100) / numberOfMatches) : 0;
 
     return (
@@ -72,6 +89,11 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
                 <Flex direction="column" padding="16px">
                     <Text>{`Total Number of Games: ${numberOfMatches}`}</Text>
                     <Text>{`Winrate: ${playerWinRate}%`}</Text>
+                    <Text>{`Black commanders played: ${colorsPlayed.B}`}</Text>
+                    <Text>{`Green commanders played: ${colorsPlayed.G}`}</Text>
+                    <Text>{`Red commanders played: ${colorsPlayed.R}`}</Text>
+                    <Text>{`Blue commanders played: ${colorsPlayed.U}`}</Text>
+                    <Text>{`White commanders played: ${colorsPlayed.W}`}</Text>
                 </Flex>
             </Flex>
 
