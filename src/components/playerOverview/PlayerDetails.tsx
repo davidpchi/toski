@@ -3,7 +3,12 @@ import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { Divider, Flex, Heading, Image, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 
-import { getCommanders, getCommandersByPlayerName, getMatchesByPlayerName, getPlayer } from "../../redux/statsSelectors";
+import {
+    getCommanders,
+    getCommandersByPlayerName,
+    getMatchesByPlayerName,
+    getPlayer,
+} from "../../redux/statsSelectors";
 import { AppState } from "../../redux/rootReducer";
 import { matchHistoryColumns } from "../matchHistory/matchHistoryColumnHelper";
 import { SortableTable } from "../dataVisualizations/SortableTable";
@@ -11,7 +16,7 @@ import { Loading } from "../Loading";
 import { commanderOverviewColumns } from "../commanderOverview/commanderOverviewColumnHelper";
 import { Commander } from "../../types/domain/Commander";
 import { MatchPlacementBarChart } from "./MatchPlacementBarChart";
-import { PLAYER_MINIMUM_GAMES_REQUIRED } from "../constants";
+import { MTG_COLOR_NAMES, MTG_COLOR_RGB, PLAYER_MINIMUM_GAMES_REQUIRED } from "../constants";
 import { Match } from "../../types/domain/Match";
 import { commanderList } from "../../services/commanderList";
 import { ImageWithHover } from "../common/ImageWithHover";
@@ -58,11 +63,11 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
     }
 
     const colorsPlayedArray = [
-        player.colorProfile["W"],
-        player.colorProfile["U"],
         player.colorProfile["B"],
         player.colorProfile["G"],
-        player.colorProfile["R"]
+        player.colorProfile["R"],
+        player.colorProfile["U"],
+        player.colorProfile["W"],
     ];
 
     const playerWinRate = numberOfMatches > 0 ? Math.round((numberOfWins * 100) / numberOfMatches) : 0;
@@ -82,8 +87,12 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
                         image={favCommanderImage}
                     />
                 </Link>
-                <Flex style={{ width: "20" }}>
-                    <PieGraph dataLabel={"Colors Played"} data={colorsPlayedArray} />
+                <Flex style={{ width: "10" }}>
+                    <PieGraph
+                        dataLabel={"Commanders played"}
+                        data={colorsPlayedArray}
+                        backgroundColors={MTG_COLOR_RGB}
+                    />
                 </Flex>
                 <Flex direction="column" padding="16px">
                     <Text>{`Total Number of Games: ${numberOfMatches}`}</Text>
