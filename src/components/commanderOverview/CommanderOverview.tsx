@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { Loading } from "../Loading";
 import { Commander } from "../../types/domain/Commander";
 import { useNavigate } from "react-router-dom";
-import { COMMANDER_MINIMUM_GAMES_REQUIRED } from "../contants";
+import { COMMANDER_MINIMUM_GAMES_REQUIRED } from "../constants";
 
 export const CommanderOverview = React.memo(function MatchHistory() {
     const navigate = useNavigate();

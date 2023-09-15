@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { Loading } from "../Loading";
 import { Player } from "../../types/domain/Player";
 import { useNavigate } from "react-router-dom";
-import { PLAYER_MINIMUM_GAMES_REQUIRED } from "../contants";
+import { PLAYER_MINIMUM_GAMES_REQUIRED } from "../constants";
 
 /**
  * Component showing all the players in a big list
