@@ -3,7 +3,7 @@ import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { Divider, Flex, Heading, Image, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 
-import { getCommandersByPlayerName, getMatchesByPlayerName } from "../../redux/statsSelectors";
+import { getCommanders, getCommandersByPlayerName, getMatchesByPlayerName } from "../../redux/statsSelectors";
 import { AppState } from "../../redux/rootReducer";
 import { matchHistoryColumns } from "../matchHistory/matchHistoryColumnHelper";
 import { SortableTable } from "../dataVisualizations/SortableTable";
@@ -15,6 +15,7 @@ import { PLAYER_MINIMUM_GAMES_REQUIRED } from "../constants";
 import { Match } from "../../types/domain/Match";
 import { commanderList } from "../../services/commanderList";
 import { ImageWithHover } from "../common/ImageWithHover";
+import { PieGraph } from "../dataVisualizations/PieGraph";
 
 export async function loader(data: { params: any }) {
     return data.params.playerId;
@@ -26,6 +27,8 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
     // Player variables
     const playerId = useLoaderData() as string;
     const title = playerId;
+
+    const commanders = useSelector((state: AppState) => getCommanders(state));
 
     const matches = useSelector((state: AppState) => getMatchesByPlayerName(state, playerId ? playerId : ""));
     matches.sort((a: Match, b: Match) => Number(b.id) - Number(a.id));
@@ -39,7 +42,7 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
     // Get image for most played commander
     const favCommanderImage = commanderList[playedCommanders[0].name].image.replace("normal", "art_crop");
 
-    if (matches.length === 0) {
+    if (matches.length === 0 || commanders === undefined) {
         return <Loading text="Loading..." />;
     }
 
@@ -60,14 +63,23 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
         U: 0,
         W: 0,
     };
-
-    for (let i = 0; i < playedCommanders.length; i++) {
-        for (const color in colorsPlayed) {
-            if (playedCommanders[i].color_identity.includes(color)) {
-                colorsPlayed[color]++;
+    for (const currentMatch of matches) {
+        for (const player of currentMatch.players) {
+            if (player.name === playerId) {
+                for (const commanderName of player.commanders) {
+                    const rawCommander = commanderList[commanderName];
+                    const commanderObj = rawCommander !== undefined ? commanders[rawCommander.id] : undefined;
+                    if (commanderObj !== undefined) {
+                        for (const color of commanderObj.color_identity) {
+                            colorsPlayed[color] += 1;
+                        }
+                    }
+                }
             }
         }
     }
+
+    const colorsPlayedArray = [colorsPlayed.B, colorsPlayed.G, colorsPlayed.R, colorsPlayed.U, colorsPlayed.W];
 
     const playerWinRate = numberOfMatches > 0 ? Math.round((numberOfWins * 100) / numberOfMatches) : 0;
 
@@ -86,6 +98,9 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
                         image={favCommanderImage}
                     />
                 </Link>
+                <Flex style={{ width: "20" }}>
+                    <PieGraph dataLabel={"Colors Played"} data={colorsPlayedArray} />
+                </Flex>
                 <Flex direction="column" padding="16px">
                     <Text>{`Total Number of Games: ${numberOfMatches}`}</Text>
                     <Text>{`Winrate: ${playerWinRate}%`}</Text>
