@@ -73,6 +73,9 @@ export default function SidebarWithHeader({
             </Box>
             <Box ml={{ base: 0, md: 60 }} p='4'>
                 {children}
+                <Flex height={"64px"} justifyContent={"center"} alignItems={"center"} marginTop={"64px"} flexDirection={"column"}>
+                    <div style={{ textAlign: "center", fontStyle: "italic", fontSize: "12px" }}>This site contains unofficial Fan Content permitted under the <a href="https://company.wizards.com/en/legal/fancontentpolicy" style={{ textDecoration: "underline" }}>Fan Content Policy</a>. Not approved/endorsed by Wizards. Portions of the materials used are property of Wizards of the Coast. ©Wizards of the Coast LLC.</div>
+                </Flex>
             </Box>
         </Box>
     );
