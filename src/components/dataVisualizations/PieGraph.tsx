@@ -34,24 +34,22 @@ export const PieGraph = React.memo(function PieGraph({
     }, [data, dataLabel]);
 
     return (
-        <div style={{ flex: 1, display: "flex", width: "100%", height: "100%" }}>
-            <Pie
-                data={pieGraphData}
-                options={{
-                    plugins: {
-                        legend: {
-                            display: false,
-                        },
-                        tooltip: {
-                            callbacks: {
-                                title: tooltipTitleCallback ? (item) => tooltipTitleCallback(item) : undefined,
-                                label: tooltipLabelCallback ? (item) => tooltipLabelCallback(item) : undefined,
-                            },
-                            displayColors: true,
-                        },
+        <Pie
+            data={pieGraphData}
+            options={{
+                plugins: {
+                    legend: {
+                        display: false,
                     },
-                }}
-            />
-        </div>
+                    tooltip: {
+                        callbacks: {
+                            title: tooltipTitleCallback ? (item) => tooltipTitleCallback(item) : undefined,
+                            label: tooltipLabelCallback ? (item) => tooltipLabelCallback(item) : undefined,
+                        },
+                        displayColors: true,
+                    },
+                },
+            }}
+        />
     );
 });
