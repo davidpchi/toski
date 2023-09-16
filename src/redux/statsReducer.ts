@@ -35,21 +35,7 @@ export const statsReducer = createReducer(initialState, (builder) => {
     builder.addCase(StatsAction.HydrateMatchHistoryComplete, (state, action) => {
         const matchesCollection = action.payload;
         state.matches = matchesCollection;
-        state.commanders = matchesToCommanders(matchesCollection);
-        state.players = matchesToPlayers(matchesCollection);
+        state.commanders = matchesToCommanderHelper(matchesCollection);
+        state.players = matchesToPlayersHelper(matchesCollection);
     });
 });
-
-// given a collection of matches, return all of the commanders in those matches
-function matchesToCommanders(matches: Match[]): { [id: string]: Commander } {
-    return matchesToCommanderHelper(matches);
-}
-
-/**
- * Given a collection of matches, return all of the players in those matches as dictionary of players
- * @param matches an array of matches to flip through
- * @returns a dictionary of players where the key is playerId and the value is a player
- */
-export function matchesToPlayers(matches: Match[]): { [name: string]: Player } {
-    return matchesToPlayersHelper(matches);
-}
