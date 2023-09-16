@@ -62,13 +62,10 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
         }
     }
 
-    const colorsPlayedArray = [
-        player.colorProfile["B"],
-        player.colorProfile["G"],
-        player.colorProfile["R"],
-        player.colorProfile["U"],
-        player.colorProfile["W"],
-    ];
+    const colorsPlayedArray: number[] = [];
+    for (const colorObj of MTG_COLORS) {
+        colorsPlayedArray.push(player.colorProfile[colorObj.id]);
+    }
 
     const playerWinRate = numberOfMatches > 0 ? Math.round((numberOfWins * 100) / numberOfMatches) : 0;
 
