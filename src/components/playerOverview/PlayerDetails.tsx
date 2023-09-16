@@ -16,7 +16,7 @@ import { Loading } from "../Loading";
 import { commanderOverviewColumns } from "../commanderOverview/commanderOverviewColumnHelper";
 import { Commander } from "../../types/domain/Commander";
 import { MatchPlacementBarChart } from "./MatchPlacementBarChart";
-import { MTG_COLOR_NAMES, MTG_COLOR_RGB, PLAYER_MINIMUM_GAMES_REQUIRED } from "../constants";
+import { MTG_COLORS, PLAYER_MINIMUM_GAMES_REQUIRED } from "../constants";
 import { Match } from "../../types/domain/Match";
 import { commanderList } from "../../services/commanderList";
 import { ImageWithHover } from "../common/ImageWithHover";
@@ -94,11 +94,13 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
                 </Flex>
 
                 <Flex width={175} height={175}>
-                    <PieGraph
-                        dataLabel={"Commanders played"}
-                        data={colorsPlayedArray}
-                        backgroundColors={MTG_COLOR_RGB}
-                    />
+                    <div style={{ flex: 1, display: "flex", width: "100%", height: "100%" }}>
+                        <PieGraph
+                            dataLabel={"Commanders played"}
+                            data={colorsPlayedArray}
+                            backgroundColors={MTG_COLORS.map((color) => color.rgb)}
+                        />
+                    </div>
                 </Flex>
             </Flex>
 
