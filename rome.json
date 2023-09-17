@@ -13,7 +13,7 @@
         "enabled": true,
         "indentStyle": "space",
         "indentSize": 4,
-        "lineWidth": 120
+        "lineWidth": 150
     },
     "javascript": {
         "formatter": {
