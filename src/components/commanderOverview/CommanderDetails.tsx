@@ -91,6 +91,7 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                         }%`}
                     </Text>
                     <Text>{`Qualified: ${matches.length >= COMMANDER_MINIMUM_GAMES_REQUIRED ? "Yes" : "No"}`}</Text>
+                    <Text>{`Color Identity: ${commander.colorIdentity}`}</Text>
                 </Flex>
             </Flex>
             <Tabs isFitted={true} width={"100%"} paddingRight={"10%"} paddingLeft={"10%"}>
@@ -113,7 +114,7 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                             getRowProps={(row: any) => {
                                 return {
                                     onClick: () => {
-                                        navigate("/matchHistory/" + row.original.id);
+                                        navigate(`/matchHistory/${row.original.id}`);
                                         window.scrollTo(0, 0);
                                     },
                                 };

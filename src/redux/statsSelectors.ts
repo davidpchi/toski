@@ -1,5 +1,4 @@
-import { getCommandersByPlayerNameHelper, getPlayersByCommanderNameHelper } from "../logic/dictionaryUtils";
-import { commanderList } from "../services/commanderList";
+import { matchesToCommanderHelper, matchesToPlayersHelper } from "../logic/dictionaryUtils";
 import { Commander } from "../types/domain/Commander";
 import { Match } from "../types/domain/Match";
 import { Player } from "../types/domain/Player";
@@ -20,6 +19,20 @@ export const getMatch = (state: AppState, matchId: string) => {
         ? state.stats.matches[id]
         : undefined;
 };
+
+/**
+ * Gets a specific commander based on commanderId.
+ */
+export const getCommander = (state: AppState, id: string) => {
+    return state.stats.commanders ? state.stats.commanders[id] : undefined;
+};
+
+/**
+ * Gets a specific player based on playerId.
+ */
+export const getPlayer = (state: AppState, id: string) => {
+    return state.stats.players ? state.stats.players[id] : undefined;
+}
 
 /**
  * Returns a collection matches in chronological order given a commander NAME. Note that this is not searching using commander id.
@@ -95,7 +108,7 @@ export const getCommandersByPlayerName = (
     }
 
     const commanders = Object.values(
-        getCommandersByPlayerNameHelper(state.stats.matches, playerName),
+        matchesToCommanderHelper(state.stats.matches, playerName),
     );
 
     return commanders;
@@ -119,15 +132,8 @@ export const getPlayersByCommanderName = (
     }
 
     const players = Object.values(
-        getPlayersByCommanderNameHelper(state.stats.matches, commanderName),
+        matchesToPlayersHelper(state.stats.matches, commanderName),
     );
 
     return players;
-};
-
-/**
- * Gets a specific commander based on commanderId.
- */
-export const getCommander = (state: AppState, id: string) => {
-    return state.stats.commanders ? state.stats.commanders[id] : undefined;
 };
