@@ -73,7 +73,7 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
         <Flex direction="column" justify="center" align="center">
             <Heading>{title}</Heading>
 
-            <Flex direction="row" justify="space-evenly" align="center" gap="20px">
+            <Flex direction="row" justify="space-evenly" align="center" gap="20px" flexWrap={"wrap"} marginBottom={"16px"}>
                 <Link
                     to={`/commanderOverview/${playedCommanders[0].id}`}
                     style={{ color: "blue", textDecoration: "underline" }}
@@ -85,12 +85,12 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
                     />
                 </Link>
 
-                <Flex direction="column" padding="16px">
+                <Flex direction="column" padding="16px" minWidth={"200px"} justifyContent={"center"} alignItems={"center"}>
                     <Text>{`Games played: ${numberOfMatches}`}</Text>
                     <Text>{`Winrate: ${playerWinRate}%`}</Text>
                 </Flex>
 
-                <Flex width={175} height={175}>
+                <Flex maxWidth={175} maxHeight={175}>
                     <div style={{ flex: 1, display: "flex", width: "100%", height: "100%" }}>
                         <PieGraph
                             dataLabel={"Commanders played"}
