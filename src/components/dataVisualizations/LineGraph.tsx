@@ -6,7 +6,7 @@ import {
 } from 'chart.js';
 import React, { useMemo, useState } from "react";
 import { Line } from "react-chartjs-2";
-import { primaryColor } from '../../themes/acorn';
+import { primaryColor, secondaryColor } from '../../themes/acorn';
 
 ChartJS.register(
     ...registerables
@@ -15,6 +15,7 @@ ChartJS.register(
 export const LineGraph = React.memo(function LineGraph({
     dataLabel,
     data,
+    enableTrendline = false,
     allowTogglableDataPoints = false,
     tooltipTitleCallback,
     tooltipLabelCallback,
@@ -25,6 +26,7 @@ export const LineGraph = React.memo(function LineGraph({
 }: {
     dataLabel: string,
     data: { x: number | string, y: number | string }[],
+    enableTrendline?: boolean,
     allowTogglableDataPoints?: boolean,
     tooltipTitleCallback?: (tooltipItems: TooltipItem<"line">[]) => string,
     tooltipLabelCallback?: (tooltipItems: TooltipItem<"line">) => string
@@ -37,8 +39,27 @@ export const LineGraph = React.memo(function LineGraph({
 
     const toggleShowDataPoints = () => { setShowDataPoints(!showDataPoints) };
 
+    const averageData = useMemo(() => {
+        // group every 5 data points into 1 data point
+        const result: { x: number | string, y: number | string }[] = [];
+        if (data.length >= 5) {
+            let runningTotal = Number(data[0].y);
+            for (let i = 1; i < data.length; i++) {
+                runningTotal += Number(data[i].y);
+                if ((i + 1) % 5 === 0) {
+                    result.push({ x: data[i].x, y: runningTotal / 5 });
+                    if (data[i + 1] !== undefined) {
+                        runningTotal = 0;
+                    }
+                }
+            }
+        }
+
+        return result;
+    }, [data])
+
     const lineGraphData = useMemo(() => {
-        return {
+        const result = {
             datasets: [
                 {
                     label: dataLabel,
@@ -51,9 +72,30 @@ export const LineGraph = React.memo(function LineGraph({
                     pointHoverBackgroundColor: '#fff',
                     pointHoverBorderColor: primaryColor[200],
                     pointRadius: showDataPoints ? undefined : 0,
+                    lineTension: 0.4,
+                    order: 2,
                 },
             ],
         }
+
+        if (enableTrendline) {
+            result.datasets.push({
+                label: dataLabel,
+                data: averageData,
+                fill: false,
+                backgroundColor: secondaryColor[50],
+                borderColor: secondaryColor[300],
+                pointBackgroundColor: secondaryColor[400],
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: secondaryColor[200],
+                pointRadius: 0,
+                lineTension: 0.4,
+                order: 1,
+            })
+        }
+
+        return result;
     }, [data, dataLabel, showDataPoints]);
 
     return (
