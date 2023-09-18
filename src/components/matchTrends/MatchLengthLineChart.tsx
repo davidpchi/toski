@@ -24,6 +24,7 @@ export const MatchLengthLineChart = React.memo(function MatchHistory({ matches }
             <LineGraph
                 dataLabel={"Match Lengths"}
                 data={matchesWithLengthsData}
+                enableTrendline={true}
                 allowTogglableDataPoints={true}
                 tooltipTitleCallback={tooltipTitleCallback}
                 tooltipLabelCallback={tooltipLabelCallback}
