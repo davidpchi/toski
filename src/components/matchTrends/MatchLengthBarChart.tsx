@@ -2,7 +2,7 @@ import {
     TooltipItem
 } from 'chart.js';
 import React from "react";
-import { Text } from "@chakra-ui/react";
+import { Heading, Text } from "@chakra-ui/react";
 
 import { Match } from "../../types/domain/Match";
 import { BarGraph } from '../dataVisualizations/BarGraph';
@@ -29,7 +29,7 @@ export const MatchLengthBarChart = React.memo(function MatchHistory({ matches }:
 
     return (
         <>
-            <Text>Match Lengths</Text>
+            <Heading size="md">Match Lengths</Heading>
             <BarGraph
                 dataLabel={"Match Lengths"}
                 data={matchesWithLengthsData}
