@@ -16,13 +16,13 @@ export const Loading = React.memo(function Loading({ text }: { text: string }) {
                 flexDirection='column'
             >
                 <img
-                    alt='fblthp gif'
+                    alt='squirrel gif'
                     style={{
                         width: '25%',
                         height: '25%',
                         objectFit: 'contain',
                     }}
-                    src='https://cdnb.artstation.com/p/assets/images/images/046/673/159/original/lucca-moura-esquilo-export.gif?1645667884'
+                    src={process.env.PUBLIC_URL + "/squirrel.gif"}
                 />
                 <h1
                     style={{
