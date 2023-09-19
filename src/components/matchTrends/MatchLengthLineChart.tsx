@@ -2,7 +2,7 @@ import {
     TooltipItem
 } from 'chart.js';
 import React from "react";
-import { Text } from "@chakra-ui/react";
+import { Heading, Text } from "@chakra-ui/react";
 
 import { Match } from "../../types/domain/Match";
 import { Line } from "react-chartjs-2";
@@ -20,7 +20,7 @@ export const MatchLengthLineChart = React.memo(function MatchHistory({ matches }
 
     return (
         <>
-            <Text>Match Lengths Over Time</Text>
+            <Heading size="md">Match Lengths Over Time</Heading>
             <LineGraph
                 dataLabel={"Match Lengths"}
                 data={matchesWithLengthsData}

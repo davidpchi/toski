@@ -2,7 +2,7 @@ import {
     TooltipItem
 } from 'chart.js';
 import React from "react";
-import { Text } from "@chakra-ui/react";
+import { Heading, Text } from "@chakra-ui/react";
 
 import { Match } from "../../types/domain/Match";
 import { LineGraph } from '../dataVisualizations/LineGraph';
@@ -24,7 +24,7 @@ export const CommandersPlayedChart = React.memo(function MatchHistory({ matches 
 
     return (
         <>
-            <Text>Commanders Played</Text>
+            <Heading size="md">Commanders Played</Heading>
             <LineGraph
                 dataLabel={"Commanders Played"}
                 data={commandersCountData}

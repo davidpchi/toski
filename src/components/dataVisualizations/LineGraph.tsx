@@ -132,12 +132,15 @@ export const LineGraph = React.memo(function LineGraph({
                     },
                 }}
             />
-            {
-                allowTogglableDataPoints ?
-                    <Checkbox isChecked={showDataPoints} onChange={toggleShowDataPoints} marginTop={"16px"}>
-                        {'Show data points'}
-                    </Checkbox> : null
-            }
+            <Flex marginBottom={"16px"}>
+                {
+
+                    allowTogglableDataPoints ?
+                        <Checkbox isChecked={showDataPoints} onChange={toggleShowDataPoints} marginTop={"16px"}>
+                            {'Show data points'}
+                        </Checkbox> : null
+                }
+            </Flex>
         </>
     );
 })
