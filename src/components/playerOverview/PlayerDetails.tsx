@@ -67,7 +67,7 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
         colorsPlayedArray.push(player.colorProfile[colorObj.id]);
     }
 
-    const playerWinRate = numberOfMatches > 0 ? Math.round((numberOfWins * 100) / numberOfMatches) : 0;
+    const playerWinRate = numberOfMatches > 0 ? Math.round((numberOfWins / numberOfMatches) * 100) : 0;
 
     return (
         <Flex direction="column" justify="center" align="center">
