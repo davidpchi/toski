@@ -26,6 +26,7 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
     const navigate = useNavigate();
     const commanderId = useLoaderData() as string;
     const commander = useSelector((state: AppState) => getCommander(state, commanderId));
+
     const [dateFilter, setDateFilter] = useState<Date | undefined>(undefined);
     const onDatePickerChange = useCallback((date: Date | undefined) => {
         setDateFilter(date);

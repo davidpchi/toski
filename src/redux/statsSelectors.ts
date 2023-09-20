@@ -78,13 +78,16 @@ export const getMatchesByCommanderName = (
 export const getMatchesByPlayerName = (
     state: AppState,
     playerName: string,
+    startDate?: Date,
 ): Match[] => {
     if (state.stats.matches === undefined) {
         return [];
     }
 
+    const allMatches = filterMatchesByDate(state.stats.matches, startDate);
+
     const matches = [];
-    for (const match of state.stats.matches) {
+    for (const match of allMatches) {
         for (const player of match.players) {
             if (player.name === playerName) {
                 matches.push(match);
@@ -135,6 +138,24 @@ export const getCommandersByPlayerName = (
 
     return commanders;
 };
+
+export const getPlayersByDate = (
+    state: AppState,
+    startDate?: Date
+): Player[] => {
+    if (
+        state.stats.matches === undefined ||
+        state.stats.commanders === undefined
+    ) {
+        return [];
+    }
+
+    const players = Object.values(
+        matchesToPlayersHelper(state.stats.matches, undefined, startDate),
+    );
+
+    return players;
+}
 
 /**
  * Returns a collection of players in chronological order based on commander NAME
