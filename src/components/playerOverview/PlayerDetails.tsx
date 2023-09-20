@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { Divider, Flex, Heading, Image, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
@@ -21,6 +21,8 @@ import { Match } from "../../types/domain/Match";
 import { commanderList } from "../../services/commanderList";
 import { ImageWithHover } from "../common/ImageWithHover";
 import { PieGraph } from "../dataVisualizations/PieGraph";
+import { DatePicker } from "../common/DatePicker";
+import { getWinRatePercentage } from "../../logic/utils";
 
 export async function loader(data: { params: any }) {
     return data.params.playerId;
@@ -33,14 +35,19 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
     const playerId = useLoaderData() as string;
     const player = useSelector((state: AppState) => getPlayer(state, playerId));
 
+    const [dateFilter, setDateFilter] = useState<Date | undefined>(undefined);
+    const onDatePickerChange = useCallback((date: Date | undefined) => {
+        setDateFilter(date);
+    }, [setDateFilter])
+
     const commanders = useSelector((state: AppState) => getCommanders(state));
 
-    const matches = useSelector((state: AppState) => getMatchesByPlayerName(state, playerId ? playerId : ""));
+    const matches = useSelector((state: AppState) => getMatchesByPlayerName(state, playerId ? playerId : "", dateFilter));
     matches.sort((a: Match, b: Match) => Number(b.id) - Number(a.id));
 
     // Get array of commanders played and sort by game count
     const playedCommanders: Commander[] = useSelector((state: AppState) =>
-        getCommandersByPlayerName(state, playerId ? playerId : ""),
+        getCommandersByPlayerName(state, playerId ? playerId : "", dateFilter),
     );
     playedCommanders.sort((a: Commander, b: Commander) => b.matches.length - a.matches.length);
 
@@ -53,21 +60,10 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
     // Get image for most played commander
     const favCommanderImage = commanderList[playedCommanders[0].name].image.replace("normal", "art_crop");
 
-    // Calculate metrics (number of games, win rate)
-    const numberOfMatches = matches.length;
-    let numberOfWins = 0; // initialized at zero but incremented below
-    for (let i = 0; i < numberOfMatches; i++) {
-        if (matches[i].winner === playerId) {
-            numberOfWins++;
-        }
-    }
-
     const colorsPlayedArray: number[] = [];
     for (const colorObj of MTG_COLORS) {
         colorsPlayedArray.push(player.colorProfile[colorObj.id]);
     }
-
-    const playerWinRate = numberOfMatches > 0 ? Math.round((numberOfWins / numberOfMatches) * 100) : 0;
 
     return (
         <Flex direction="column" justify="center" align="center">
@@ -86,8 +82,8 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
                 </Link>
 
                 <Flex direction="column" padding="16px" minWidth={"200px"} justifyContent={"center"} alignItems={"center"}>
-                    <Text>{`Games played: ${numberOfMatches}`}</Text>
-                    <Text>{`Winrate: ${playerWinRate}%`}</Text>
+                    <Text>{`Games played: ${player.matches.length}`}</Text>
+                    <Text>{`Winrate: ${getWinRatePercentage(player.wins, player.matches.length)}%`}</Text>
                 </Flex>
 
                 <Flex maxWidth={175} maxHeight={175}>
@@ -100,7 +96,7 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
                     </div>
                 </Flex>
             </Flex>
-
+            <DatePicker onChange={onDatePickerChange} />
             <Tabs isFitted={true} width={"100%"} paddingRight={"10%"} paddingLeft={"10%"}>
                 <TabList>
                     <Tab>
