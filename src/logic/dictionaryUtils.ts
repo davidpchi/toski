@@ -4,14 +4,46 @@ import { Match } from "../types/domain/Match";
 import { Player } from "../types/domain/Player";
 
 /**
+ * Given a collection of Matches, filters them to matches after a certain date.
+ * Optionally, provide an end date as well.
+ * @param matches
+ * @param startDate 
+ * @param endDate 
+ * @returns
+ */
+export function filterMatchesByDate(matches: Match[], startDate?: Date, endDate?: Date): Match[] {
+    const result = [];
+
+    for (const match of matches) {
+        if (startDate !== undefined && match.date < startDate) {
+            continue;
+        }
+
+        if (endDate !== undefined && match.date > endDate) {
+            continue;
+        }
+
+        result.push(match);
+    }
+
+    return result;
+}
+
+/**
  * Given a collection of matches, create a dictionary of commanders with optional filters
  * @param matches The collection of matches to build the dictionary from
  * @param playerId An optional player name to filter the commanders by (will only return commanders the player has played)
  * @returns A dictionary of commanders keyed by commanderId
  */
-export function matchesToCommanderHelper(matches: Match[], playerNameFilter?: string): { [id: string]: Commander } {
+export function matchesToCommanderHelper(
+    matches: Match[],
+    playerNameFilter?: string,
+    startDate?: Date,
+): { [id: string]: Commander } {
+    const filteredMatches = filterMatchesByDate(matches, startDate);
+
     const playedCommanderDictionary: { [id: string]: Commander } = {};
-    for (const currentMatch of matches) {
+    for (const currentMatch of filteredMatches) {
         // iterate through each player, and add those commanders to our commander dictionary
         for (const player of currentMatch.players) {
             // apply our filters
@@ -67,9 +99,15 @@ export function matchesToCommanderHelper(matches: Match[], playerNameFilter?: st
  * @param commanderName An optional commander name to filter the users by (the user must have played this commander)
  * @returns A dictionary of player keyed by playerId
  */
-export function matchesToPlayersHelper(matches: Match[], commanderNameFilter?: string): { [id: string]: Player } {
+export function matchesToPlayersHelper(
+    matches: Match[],
+    commanderNameFilter?: string,
+    startDate?: Date,
+): { [id: string]: Player } {
+    const filteredMatches = filterMatchesByDate(matches, startDate);
+
     const playerDictionary: { [id: string]: Player } = {};
-    for (const currentMatch of matches) {
+    for (const currentMatch of filteredMatches) {
         // iterate through each player, and add those commanders to our commander dictionary
         for (const player of currentMatch.players) {
             // if any of the filters have a value, then we assume the player has failed the filter to start

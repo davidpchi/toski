@@ -1,8 +1,8 @@
 import { TooltipItem } from "chart.js";
-import React from "react";
+import React, { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLoaderData, useNavigate } from "react-router-dom";
-import { Flex, Heading, Image, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
+import { Flex, Heading, Image, Select, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
 
 import { AppState } from "../../redux/rootReducer";
 import { getCommander, getMatchesByCommanderName, getPlayersByCommanderName } from "../../redux/statsSelectors";
@@ -16,6 +16,7 @@ import { LineGraph } from "../dataVisualizations/LineGraph";
 import { Player } from "../../types/domain/Player";
 import { playerOverviewColumns } from "../playerOverview/playerOverviewColumnHelper";
 import { COMMANDER_MINIMUM_GAMES_REQUIRED } from "../constants";
+import { DatePicker } from "../common/DatePicker";
 
 export async function loader(data: { params: any }) {
     return data.params.commanderId;
@@ -25,9 +26,14 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
     const navigate = useNavigate();
     const commanderId = useLoaderData() as string;
     const commander = useSelector((state: AppState) => getCommander(state, commanderId));
-    const matches = useSelector((state: AppState) => getMatchesByCommanderName(state, commander ? commander.name : ""));
+    const [dateFilter, setDateFilter] = useState<Date | undefined>(undefined);
+    const onDatePickerChange = useCallback((date: Date | undefined) => {
+        setDateFilter(date);
+    }, [setDateFilter])
+
+    const matches = useSelector((state: AppState) => getMatchesByCommanderName(state, commander ? commander.name : "", dateFilter));
     const commanderPlayers: Player[] = useSelector((state: AppState) =>
-        getPlayersByCommanderName(state, commander ? commander.name : ""),
+        getPlayersByCommanderName(state, commander ? commander.name : "", dateFilter),
     );
     commanderPlayers.sort((a: Player, b: Player) => b.matches.length - a.matches.length);
 
@@ -84,16 +90,16 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                     <Text>{`Total Number of Games: ${commander.matches.length}`}</Text>
                     <Text>{`Wins: ${commander.wins}`}</Text>
                     <Text>
-                        {`Winrate: ${
-                            commander.matches.length > 0
-                                ? Math.round((commander.wins / commander.matches.length) * 100)
-                                : 0
-                        }%`}
+                        {`Winrate: ${commander.matches.length > 0
+                            ? Math.round((commander.wins / commander.matches.length) * 100)
+                            : 0
+                            }%`}
                     </Text>
                     <Text>{`Qualified: ${matches.length >= COMMANDER_MINIMUM_GAMES_REQUIRED ? "Yes" : "No"}`}</Text>
                     <Text>{`Color Identity: ${commander.colorIdentity}`}</Text>
                 </Flex>
             </Flex>
+            <DatePicker onChange={onDatePickerChange} />
             <Tabs isFitted={true} width={"100%"} paddingRight={"10%"} paddingLeft={"10%"}>
                 <TabList>
                     <Tab>
@@ -108,18 +114,20 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                 </TabList>
                 <TabPanels>
                     <TabPanel>
-                        <SortableTable
-                            columns={matchHistoryColumns}
-                            data={matches}
-                            getRowProps={(row: any) => {
-                                return {
-                                    onClick: () => {
-                                        navigate(`/matchHistory/${row.original.id}`);
-                                        window.scrollTo(0, 0);
-                                    },
-                                };
-                            }}
-                        />
+                        {
+                            matches.length > 0 ? <SortableTable
+                                columns={matchHistoryColumns}
+                                data={matches}
+                                getRowProps={(row: any) => {
+                                    return {
+                                        onClick: () => {
+                                            navigate(`/matchHistory/${row.original.id}`);
+                                            window.scrollTo(0, 0);
+                                        },
+                                    };
+                                }}
+                            /> : <div style={{ textAlign: "center" }}>No data</div>
+                        }
                     </TabPanel>
                     <TabPanel>
                         <Flex flexDirection={"column"} justifyContent={"center"} alignItems={"center"} padding="8px">
@@ -139,18 +147,20 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                         </Flex>
                     </TabPanel>
                     <TabPanel>
-                        <SortableTable
-                            columns={playerOverviewColumns}
-                            data={commanderPlayers}
-                            getRowProps={(row: any) => {
-                                return {
-                                    onClick: () => {
-                                        navigate(`/playerOverview/${row.original.name}`);
-                                        window.scrollTo(0, 0);
-                                    },
-                                };
-                            }}
-                        />
+                        {
+                            commanderPlayers.length ? <SortableTable
+                                columns={playerOverviewColumns}
+                                data={commanderPlayers}
+                                getRowProps={(row: any) => {
+                                    return {
+                                        onClick: () => {
+                                            navigate(`/playerOverview/${row.original.name}`);
+                                            window.scrollTo(0, 0);
+                                        },
+                                    };
+                                }}
+                            /> : <div style={{ textAlign: "center" }}>No data</div>
+                        }
                     </TabPanel>
                 </TabPanels>
             </Tabs>
