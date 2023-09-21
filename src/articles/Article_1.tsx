@@ -1,133 +1,66 @@
-import { GiWingedSword } from 'react-icons/gi';
-import { Flex, Tag, TagLeftIcon, Text } from '@chakra-ui/react';
-
 import { paragraphStyle } from './styles';
 import { NewsArticle } from '../types/domain/NewsArticle';
 
 export const article_1: NewsArticle = {
     id: '1',
-    title: 'Monday Night Customs Season 1',
-    date: 'October 20, 2022',
+    title: 'Understanding Chance and Clumps',
+    author: "WitchPHD",
+    note: "Originally published on WitchPHD's substack on March 3, 2022.",
+    originalLink: " https://witchphd.substack.com/p/understanding-chance?utm_source=profile&utm_medium=reader2",
+    date: 'September 20, 2023',
     summary:
-        "The Monday Night Customs team is excited to announce several new and exciting changes coming with our first ever season! From new Season Power Rankings to Season Rewards, you won't want to miss this update!",
+        "Exploring shuffling and statistics with WithPHD: A simple solution",
     content: <Article_1 />
 };
 
 export default function Article_1() {
     return (
         <>
+            <p style={paragraphStyle}>Alright, so this will be a short one. A friend of mine asked a simple question about eliminating clumps in an EDH deck. I decided to describe how I shuffle (a pile shuffle followed by iterant mash shuffling, pretty standard). But at the end of the day, theoretically speaking, clumps are a normal part of randomly distributing cards and you should expect to run into them from time to time. </p>
+
+            <p style={paragraphStyle}>I decided I wanted to explain this, and went on a completely un-asked-for rant about chance, starting with my old friend the <a href="https://stattrek.com/online-calculator/hypergeometric.aspx" rel="nofollow">HGDC</a> (which <a href="https://witchphd.substack.com/p/mdfc-hyperdrive" rel="nofollow">I wrote about here</a>). Of course, this resulted in me rambling on with math nerd stuff like the buffoon I am (though I did find out that if you’re running 37 lands then if every one of the 7.9 billion people on earth each shuffled a copy of your deck to “perfect randomness” every single day, a deck in a configuration where all the lands were sorted to the bottom would appear once every 7,000,000,000,000,000 years or so.) Anyway, on to the simple stuff. </p>
+
+            <h1 style={{ fontSize: 20, fontWeight: 'bold', marginTop: 16 }}>A Simple Way to Visualize Randomness in Your Deck</h1>
+
+            <p style={paragraphStyle}>Let’s throw out all the numbers of your deck, and simply <a href="https://www.wolframalpha.com/input?i=flip+100+coins" rel="nofollow">flip 100 coins</a> on <a href="https://www.wolframalpha.com/" rel="nofollow">wolfram alpha</a>. Pick heads or tails and simply underline all the “clumps” of 4 or more. I did this and underlined Tails:</p>
+
             <p style={paragraphStyle}>
-                The Monday Night Customs Team has heard your voices on
-                progression in our custom games. Things like difficulty in
-                increasing MMR despite winning games and stagnant rankings are
-                just some of the feedback we’ve gotten.
+                <img
+                    style={{ margin: 'auto' }}
+                    src={
+                        'https://substackcdn.com/image/fetch/w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F8160a034-3612-4280-b837-09ed63293610_1736x916.png'
+                    }
+                    alt='season 1 splash'
+                />
             </p>
-            <h1 style={{ fontSize: 20, fontWeight: 'bold', marginTop: 16 }}>
-                Introducing Seasons
-            </h1>
-            <p style={paragraphStyle}>
-                As a result, we are excited to announce something new…
-                <b>Monday Night Customs Season 1!</b>
+
+            <p style={paragraphStyle}><strong>Consider the following:</strong>  Imagine those underlined clumps as clumps of lands, or clumps of non-lands. This is what random looks like. The purpose of shuffling your deck is to make it as close to randomly ordered as practically possible.
+                <em>You may not like it, but this is what a shuffled deck will look like.</em>
             </p>
-            <img
-                style={{ margin: 'auto' }}
-                src={
-                    'https://cdn.discordapp.com/attachments/1032423770578755584/1032433210275135519/season_1_transparent.png'
-                }
-                alt='season 1 splash'
-            />
-            <p>
-                This will be a <b>timed event that occurs over 3 months</b>,
-                which will allow players to try to climb and do their best
-                before the season “resets” and the next season begins!
+
+            <p style={paragraphStyle}>The discrepancy is that most people will expect that if you have a 50% chance of flipping heads the results will be relatively even, but the reality is that long strings of heads or tails will often occur. This is the gap between what random is, and how the human brain tends to think about / predict random chance. But the truth is that you are not </p>
+
+            <p style={paragraphStyle}><strong>701.20a</strong><span> To shuffle a library or a face-down pile of cards, </span><strong>randomize the cards within</strong><span> it so that no player knows their order.</span></p>
+
+            <p style={paragraphStyle}>Your deck won’t (usually) have 50% lands and if you want truly accurate odds you must use a hypergeometric distribution, but this simple experiment is pretty easy to help understand and visualize clumping… and why it is a naturally occurring part of a properly shuffled deck… and why methods that eliminate clumps altogether (or give you an increased chance of not having them, such as mana weaving) are cheating.</p>
+
+            <h1 style={{ fontSize: 20, fontWeight: 'bold', marginTop: 16 }}>Mana Weaving</h1>
+            <p style={paragraphStyle}>Mana weaving is a technique meant to reduce clumps. Since a sufficiently randomized deck will have clumps like above, I will advise against mana weaving because it has two possible outcomes:</p>
+            <p style={{ marginLeft: 20 }}>
+                <ol>
+                    <li>
+                        <p style={paragraphStyle}>You shuffle effectively afterward and your deck is “sufficiently random” so the mana weaving doesn’t affect the outcome: <strong>You wasted your time and effort mana weaving.</strong></p>
+                    </li>
+                    <li>
+                        <p style={paragraphStyle}>Mana weaving reduces clumping in some way, which means the distribution is not sufficiently shuffled / randomized since you affected the outcome: <strong>You are cheating.</strong></p>
+                    </li>
+                </ol>
             </p>
-            <p style={paragraphStyle}>
-                Moving forward, a{' '}
-                <b>new season will be introduced every 3 months</b>, so players
-                have the opportunity to prove themselves again and get ranked.
-            </p>
-            <h1 style={{ fontSize: 20, fontWeight: 'bold', marginTop: 16 }}>
-                Season Power Ranking
-            </h1>
-            <p style={paragraphStyle}>
-                How are players going to be ranked in each season?
-            </p>
-            <p style={paragraphStyle}>
-                As part of seasons, we are introducing the concept of{' '}
-                <b>“Season Power Ranking”</b>, or “SPR” for short. SPR will be
-                driven by a different algorithm than existing MMRs. Moving
-                forward, a new “Leaderboard” on the MNC hub will be the go-to
-                place to track your progression throughout the season and
-                compare how well you are doing.
-            </p>
-            <Flex style={{ margin: 'auto', justifyContent: 'center' }}>
-                <Tag textAlign='center' color={'gray.600'} alignSelf='center'>
-                    <TagLeftIcon as={GiWingedSword}></TagLeftIcon>
-                    <Text minW='30px'>{'SPR'}</Text>
-                </Tag>
-            </Flex>
-            <p style={paragraphStyle}>
-                SPR will only be finalized after you{' '}
-                <b>complete 30 qualifying games</b>. SPRs that aren’t
-                “qualified” by the end of the season won’t count! They’ll still
-                appear on the leaderboard so players can know how much they are
-                changing, but will be deprioritized and shown at the end of the
-                list. With a season lasting 3 months, there will be plenty of
-                time to play for a “qualified” spot on the leaderboard.
-            </p>
-            <p style={paragraphStyle}>
-                Know that after your SPR is "qualified", your SPR can still
-                change! 30 games is just the minimum number of games to get your
-                rank counted for the season.
-            </p>
-            <p style={paragraphStyle}>
-                For all the players who enjoy the concept of MMR over all of
-                your games, don’t worry, the lifetime MMRs will continue to be
-                calculated and viewed on the player overview pages. MMR however
-                does not have any effect on the placement you have on the
-                leaderboard.
-            </p>
-            <h1 style={{ fontSize: 20, fontWeight: 'bold', marginTop: 16 }}>
-                Accolades
-            </h1>
-            <p style={paragraphStyle}>
-                So why qualify for a season and get ranked? Well we are also
-                excited to announce <b>Accolades</b>! Accolades are things you
-                can earn by completing various tasks across your Monday Night
-                Customs games. What are some Accolades you can earn? Well to
-                start, the player profiles are getting a little bit of a
-                cleanup, and with that we are excited to introduce{' '}
-                <b>Player Badges</b>. These are just the first of many possible
-                Accolades you can earn by accomplishing tasks throughout the
-                season, and they will appear on your profile.
-            </p>
-            <p style={paragraphStyle}>
-                To kick things off, all players who currently have been placed
-                with an MMR assigned get a <b>PROJECT: KRAKEN Badge</b> to thank
-                you for all the progress you have already made and the
-                contributions you brought to this community!
-            </p>
-            <p>
-                These 3 badges are just the beginning of what we have in store
-                for Accolades. You'll hear back from us again when we have more
-                Accolades finalized!
-            </p>
-            <h1 style={{ fontSize: 20, fontWeight: 'bold', marginTop: 16 }}>
-                Season 1 Starts Soon!
-            </h1>
-            <p style={paragraphStyle}>
-                <b>Monday Night Customs Season 1 starts on November 14th!</b>{' '}
-                Players who haven’t gotten an MMR yet before Season 1 have until
-                then to complete placements to get the PROJECT: KRAKEN badge.
-            </p>
-            <p style={paragraphStyle}>
-                Alright, that’s everything we have to announce for now! If you
-                have any feedback or questions, don't hesistate to reach out on
-                our discord! Good luck on the abyss!
-            </p>
-            <h1 style={{ fontSize: 20, fontWeight: 'bold', marginTop: 20 }}>
-                - TEAM TOXIC
-            </h1>
+
+            <h1 style={{ fontSize: 20, fontWeight: 'bold', marginTop: 16 }}>Conclusion</h1>
+            <p style={paragraphStyle}>That’s it. That’s the thought. I just thought it was a fun, simple way to communicate how random really looks and that clumping is a natural part of it. Maybe it even helps emphasize why you need to have effective sources of card draw, to help you power through those clumps, or why tutoring is so powerful.</p>
+            <p style={paragraphStyle}>I hope you enjoyed this simpler article for a change.</p>
+            <p style={paragraphStyle}><strong>Remember:</strong> <em>shuffle thoroughly, play at a reasonable pace, and don’t forget to have fun.</em></p>
         </>
     );
 };
