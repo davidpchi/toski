@@ -64,11 +64,11 @@ export const router = createHashRouter([
 				element: <CommanderDetails />,
 			},
 			{
-				path: '/news',
+				path: '/articles',
 				element: <NewsOverview />,
 			},
 			{
-				path: '/news/:newsId',
+				path: '/articles/:newsId',
 				loader: newsLoader,
 				element: <NewsDetail />,
 			},

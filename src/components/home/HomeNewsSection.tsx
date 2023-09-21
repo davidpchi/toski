@@ -8,8 +8,8 @@ import { NewsCards } from "../news/NewsCards";
 export const HomeNewsSection = React.memo(function HomeNewsSection() {
     const navigate = useNavigate();
 
-    const navigateToNews = () => {
-        navigate('/news');
+    const navigateToArticles = () => {
+        navigate('/articles');
     };
 
     return (
@@ -30,10 +30,10 @@ export const HomeNewsSection = React.memo(function HomeNewsSection() {
                     marginBottom='4'
                     marginRight='1'
                     flexDirection='row'
-                    onClick={navigateToNews}
+                    onClick={navigateToArticles}
                 >
                     <Flex alignItems='center'>
-                        <h1>All News</h1>
+                        <h1>All Articles</h1>
                         <FiArrowRight />
                     </Flex>
                 </Button>

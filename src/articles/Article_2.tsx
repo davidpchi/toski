@@ -5,7 +5,7 @@ export const article_2: NewsArticle = {
     id: '2',
     title: 'How good is Compost, really?',
     author: "Aetherium Slinky",
-    note: "Originally published on Reddit October 23, 2022.",
+    note: "Originally published on Reddit on October 23, 2022.",
     originalLink: " https://www.reddit.com/r/EDH/comments/yc2ols/how_good_is_compost_really_with_statistics/",
     date: 'September 21, 2023',
     summary:

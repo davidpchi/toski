@@ -22,8 +22,8 @@ export const NewsDetail = React.memo(function NewsDetail() {
         return <Error error={'Something went wrong! Try again later.'} />;
     }
 
-    const navigateToNews = () => {
-        navigate('/news');
+    const navigateToArticles = () => {
+        navigate('/article');
     };
 
     return (
@@ -35,7 +35,7 @@ export const NewsDetail = React.memo(function NewsDetail() {
                 </h1>
                 <Text fontStyle={"italic"}>{article.author}</Text>
                 {article.note !== undefined ? <Text fontStyle={"italic"}>{article.note}</Text> : null}
-                {article.originalLink !== undefined ? <Link href={article.originalLink}>Go to Original Article</Link> : null}
+                {article.originalLink !== undefined ? <Link href={article.originalLink}>Go to original article</Link> : null}
                 <div style={{ marginTop: 16 }}>{article.content}</div>
                 <Button
                     variant='ghost'
@@ -46,11 +46,11 @@ export const NewsDetail = React.memo(function NewsDetail() {
                     marginTop='16'
                     marginRight='1'
                     flexDirection='row'
-                    onClick={navigateToNews}
+                    onClick={navigateToArticles}
                 >
                     <Flex alignItems='center'>
                         <FiArrowLeft />
-                        <h1>Back to News</h1>
+                        <h1>Back to Articles</h1>
                     </Flex>
                 </Button>
             </Flex>

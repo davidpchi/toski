@@ -9,7 +9,7 @@ export const NewsCards = React.memo(function NewsCards() {
 
     const components = Object.values(Articles).sort((a, b) => b.id.localeCompare(a.id)).map((article) => {
         const onClickNewsTile = () => {
-            navigate(`/news/${article.id}`);
+            navigate(`/articles/${article.id}`);
             window.scrollTo(0, 0);
         };
 
