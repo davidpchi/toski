@@ -7,7 +7,7 @@ import { Articles } from '../../articles/Articles';
 export const NewsCards = React.memo(function NewsCards() {
     const navigate = useNavigate();
 
-    const components = Object.values(Articles).map((article) => {
+    const components = Object.values(Articles).sort((a, b) => b.id.localeCompare(a.id)).map((article) => {
         const onClickNewsTile = () => {
             navigate(`/news/${article.id}`);
             window.scrollTo(0, 0);

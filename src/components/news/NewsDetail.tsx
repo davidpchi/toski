@@ -2,7 +2,7 @@ import React from 'react';
 import { FiArrowLeft } from 'react-icons/fi';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 
-import { Button, Flex } from '@chakra-ui/react';
+import { Button, Flex, Link, Text } from '@chakra-ui/react';
 
 import { Error } from '../Error';
 import { Articles } from '../../articles/Articles';
@@ -33,6 +33,9 @@ export const NewsDetail = React.memo(function NewsDetail() {
                 <h1 style={{ fontSize: 30, fontWeight: 'bold' }}>
                     {article.title}
                 </h1>
+                <Text fontStyle={"italic"}>{article.author}</Text>
+                {article.note !== undefined ? <Text fontStyle={"italic"}>{article.note}</Text> : null}
+                {article.originalLink !== undefined ? <Link href={article.originalLink}>Go to Original Article</Link> : null}
                 <div style={{ marginTop: 16 }}>{article.content}</div>
                 <Button
                     variant='ghost'
