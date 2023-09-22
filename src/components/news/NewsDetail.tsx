@@ -23,7 +23,7 @@ export const NewsDetail = React.memo(function NewsDetail() {
     }
 
     const navigateToArticles = () => {
-        navigate('/article');
+        navigate('/articles');
     };
 
     return (

@@ -89,7 +89,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
     const linkItems = [...LinkItems];
 
     if (FF_IS_NEWS_ENABLED) {
-        linkItems.splice(1, 0, { name: 'News', icon: FiRss, route: '/news' });
+        linkItems.splice(1, 0, { name: 'Articles', icon: FiRss, route: '/articles' });
     }
 
     return (
