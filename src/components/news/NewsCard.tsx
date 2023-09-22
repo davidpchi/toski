@@ -5,10 +5,12 @@ export const NewsCard = React.memo(function NewsCard({
     onClick,
     title,
     date,
+    author,
     content,
 }: {
     title: string;
     date: string;
+    author: string;
     content: string;
     onClick: () => void;
 }) {
@@ -33,7 +35,7 @@ export const NewsCard = React.memo(function NewsCard({
                 height='100%'
                 width={"100%"}
             >
-                <h1 style={{ fontSize: 12 }}>{date}</h1>
+                <h1 style={{ fontSize: 12 }}>{`${date}- ${author}`}</h1>
                 <h1 style={{ fontSize: 30 }}>{title}</h1>
                 <div
                     style={{
