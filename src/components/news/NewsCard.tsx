@@ -31,6 +31,7 @@ export const NewsCard = React.memo(function NewsCard({
                 flexDirection='column'
                 alignItems={'flex-start'}
                 height='100%'
+                width={"100%"}
             >
                 <h1 style={{ fontSize: 12 }}>{date}</h1>
                 <h1 style={{ fontSize: 30 }}>{title}</h1>
@@ -40,6 +41,7 @@ export const NewsCard = React.memo(function NewsCard({
                         textAlign: 'left',
                         display: 'flex',
                         flexDirection: 'column',
+                        alignSelf: "stretch",
                         flex: 1,
                     }}
                 >
