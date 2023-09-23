@@ -19,7 +19,8 @@ export const BarGraph = React.memo(function LineGraph({
     minX,
     maxX,
     minY,
-    maxY
+    maxY,
+    xAxisTicksCallback,
 }: {
     dataLabel: string,
     data: { x: number | string, y: number | string }[],
@@ -28,7 +29,8 @@ export const BarGraph = React.memo(function LineGraph({
     minX?: number,
     maxX?: number,
     minY?: number,
-    maxY?: number
+    maxY?: number,
+    xAxisTicksCallback?: (val: any, index: any) => string
 }) {
     const barGraphData = useMemo(() => {
         return {
@@ -60,7 +62,8 @@ export const BarGraph = React.memo(function LineGraph({
                             min: minX ? minX : undefined,
                             max: maxX ? maxX : undefined,
                             ticks: {
-                                precision: 0
+                                precision: 0,
+                                callback: xAxisTicksCallback ? xAxisTicksCallback : undefined
                             }
                         },
                         y: {
