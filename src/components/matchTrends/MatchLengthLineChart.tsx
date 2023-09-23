@@ -2,13 +2,12 @@ import {
     TooltipItem
 } from 'chart.js';
 import React from "react";
-import { Heading, Text } from "@chakra-ui/react";
+import { Heading } from "@chakra-ui/react";
 
 import { Match } from "../../types/domain/Match";
-import { Line } from "react-chartjs-2";
 import { LineGraph } from '../dataVisualizations/LineGraph';
 
-export const MatchLengthLineChart = React.memo(function MatchHistory({ matches }: { matches: Match[] }) {
+export const MatchLengthLineChart = React.memo(function MatchLengthLineChart({ matches }: { matches: Match[] }) {
     const matchesWithLengths = matches.filter((match: Match) => match.numberOfTurns);
 
     const matchesWithLengthsData = matchesWithLengths.map((match: Match,) => {
@@ -17,6 +16,7 @@ export const MatchLengthLineChart = React.memo(function MatchHistory({ matches }
 
     const tooltipTitleCallback = (item: TooltipItem<"line">[]) => { return `Match Id: ${matchesWithLengths[item[0].dataIndex].id}` };
     const tooltipLabelCallback = (item: TooltipItem<"line">) => { return `Number of Turns: ${item.formattedValue}` };
+
 
     return (
         <>
@@ -29,6 +29,7 @@ export const MatchLengthLineChart = React.memo(function MatchHistory({ matches }
                 tooltipTitleCallback={tooltipTitleCallback}
                 tooltipLabelCallback={tooltipLabelCallback}
                 maxY={20}
+                maxX={Number(matchesWithLengths[matchesWithLengths.length - 1].id)}
             />
         </>
     )

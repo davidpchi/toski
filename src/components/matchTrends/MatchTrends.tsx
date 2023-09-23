@@ -8,6 +8,7 @@ import { Loading } from "../Loading";
 import { Match } from "../../types/domain/Match";
 import { CommandersPlayedChart } from "./CommandersPlayedChart";
 import { MatchLengthBarChart } from "./MatchLengthBarChart";
+import { MatchFrequencyLineChart } from "./MatchFrequencyLineChart";
 
 export const MatchTrends = React.memo(function MatchHistory() {
     let matches = useSelector(getMatches);
@@ -24,6 +25,7 @@ export const MatchTrends = React.memo(function MatchHistory() {
             <Heading>Match Trends</Heading>
             <MatchLengthBarChart matches={sortedMatches} />
             <MatchLengthLineChart matches={sortedMatches} />
+            <MatchFrequencyLineChart matches={sortedMatches} />
             <CommandersPlayedChart matches={sortedMatches} />
         </Flex>
     );
