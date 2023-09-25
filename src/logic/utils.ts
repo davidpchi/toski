@@ -1,3 +1,3 @@
 export function getWinRatePercentage(winCount: number, totalCount: number) {
-    return (Math.round((winCount / totalCount) * 100));
+    return totalCount > 0 ? Math.round((winCount / totalCount) * 100) : 0;
 }
