@@ -1,6 +1,5 @@
 import { getWinRatePercentage } from "./utils";
 
-// to run tests, run "npm run test" on the project root
 describe("getWinRatePercentage", function () {
     it("given win number and total games, provide win rate (as whole number)", function () {
         expect(getWinRatePercentage(5, 10)).toEqual(50);
