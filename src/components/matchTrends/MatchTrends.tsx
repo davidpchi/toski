@@ -45,7 +45,7 @@ export const MatchTrends = React.memo(function MatchHistory() {
     return (
         <Flex direction="column" justify="center" align="center">
             <Heading>Match Trends</Heading>
-            <Heading size="md">Colors Played</Heading>
+            <Heading size="md">Commander Colors Played</Heading>
             <Flex maxWidth={175} maxHeight={175}>
                 <div style={{ flex: 1, display: "flex", width: "100%", height: "100%" }}>
                     <PieGraph dataLabel={"Commanders played"} data={colorsPlayedArray} backgroundColors={MTG_COLORS.map((color) => color.rgb)} />
