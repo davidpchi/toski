@@ -18,6 +18,7 @@ import {
 import { ReactNode, useCallback } from 'react';
 import { IconType } from 'react-icons';
 import {
+    FiBarChart,
     FiCalendar,
     FiHome,
     FiMenu,
@@ -38,6 +39,7 @@ const LinkItems: Array<LinkItemProps> = [
     { name: 'Home', icon: FiHome, route: '/' },
     { name: 'Player Overview', icon: FiUsers, route: '/playerOverview' },
     { name: 'Commander Overview', icon: FiShield, route: '/commanderOverview' },
+    { name: 'Commander Trends', icon: FiBarChart, route: '/commanderTrends' },
     { name: 'Match History', icon: FiCalendar, route: '/matchHistory' },
     { name: 'Match Trends', icon: FiTrendingUp, route: '/matchTrends' },
 ];
