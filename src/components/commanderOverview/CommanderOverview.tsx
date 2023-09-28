@@ -1,5 +1,6 @@
-import { Checkbox, Flex, Heading, Select, Tooltip, Text } from "@chakra-ui/react";
-import React, { useCallback, useState } from "react";
+import { Checkbox, Flex, Heading, Select, Tooltip, Text, filter } from "@chakra-ui/react";
+import React, { useCallback, useMemo, useState } from "react";
+import { Input } from 'semantic-ui-react'
 import { SortableTable } from "../dataVisualizations/SortableTable";
 import { commanderOverviewColumns } from "./commanderOverviewColumnHelper";
 import { getCommanders, getCommandersByDate } from "../../redux/statsSelectors";
@@ -22,11 +23,15 @@ export const CommanderOverview = React.memo(function MatchHistory() {
     const allCommanders = useSelector(getCommanders);
     const commanders: Commander[] = useSelector((state: AppState) => getCommandersByDate(state, dateFilter));
     const [isFiltered, setIsFiltered] = useState<boolean>(true);
-
     const onFilterChange = () => {
         setIsFiltered(!isFiltered);
     };
-
+    
+    const [searchInput, setSearchInput] = useState<string>('');
+    const onSearchChange = useCallback((event: any) => {
+            setSearchInput(event.target.value);
+    }, [setSearchInput]);
+    
     if (commanders === undefined) {
         return <Loading text="Loading..." />;
     }
@@ -37,7 +42,9 @@ export const CommanderOverview = React.memo(function MatchHistory() {
             (value: Commander) => allCommanders[value.id].matches.length >= COMMANDER_MINIMUM_GAMES_REQUIRED,
         );
     }
-
+    if (searchInput.length > 0 && allCommanders) {
+        commandersArray = commandersArray.filter((value: Commander) => allCommanders[value.id].name.toLowerCase().includes(searchInput.toLowerCase()));
+    }
 
     return (
         <Flex direction="column" justify="center" align="center">
@@ -55,6 +62,13 @@ export const CommanderOverview = React.memo(function MatchHistory() {
                         </Checkbox>
                     </div>
                 </Tooltip>
+                <div style={{ padding: 20 }}>
+                    <Input 
+                        icon='search' 
+                        placeholder='Search...'
+                        onChange={onSearchChange}
+                    />
+                </div>
             </Flex>
             {
                 commandersArray.length ? <SortableTable
