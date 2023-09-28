@@ -1,5 +1,5 @@
 import { Checkbox, Flex, Heading, Select, Tooltip, Text, filter } from "@chakra-ui/react";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { Input } from 'semantic-ui-react'
 import { SortableTable } from "../dataVisualizations/SortableTable";
 import { commanderOverviewColumns } from "./commanderOverviewColumnHelper";
@@ -27,11 +27,11 @@ export const CommanderOverview = React.memo(function MatchHistory() {
         setIsFiltered(!isFiltered);
     };
     
-    const [searchInput, setSearchInput] = useState('');
-    const onSearchChange = (searchValue: any) => {
-            setSearchInput(searchValue);
-    };
-
+    const [searchInput, setSearchInput] = useState<string>('');
+    const onSearchChange = useCallback((event: any) => {
+            setSearchInput(event.target.value);
+    }, [setSearchInput]);
+    
     if (commanders === undefined) {
         return <Loading text="Loading..." />;
     }
@@ -66,7 +66,7 @@ export const CommanderOverview = React.memo(function MatchHistory() {
                     <Input 
                         icon='search' 
                         placeholder='Search...'
-                        onChange={(e) => onSearchChange(e.target.value)}
+                        onChange={onSearchChange}
                     />
                 </div>
             </Flex>

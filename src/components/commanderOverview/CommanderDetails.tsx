@@ -34,9 +34,9 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
     }, [setDateFilter])
 
     const [searchInput, setSearchInput] = useState('');
-    const onSearchChange = (searchValue: any) => {
-            setSearchInput(searchValue);
-    };
+    const onSearchChange = useCallback((event: any) => {
+        setSearchInput(event.target.value);
+    }, [setSearchInput]);
 
     const matches = useSelector((state: AppState) => getMatchesByCommanderName(state, commander ? commander.name : "", dateFilter));
     const commanderPlayers: Player[] = useSelector((state: AppState) =>
@@ -51,10 +51,15 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
     let matchesArray: Match[] = matches;
     if (searchInput.length > 0 && matches) {
         matchesArray = matches.filter((match: Match) => {
-            for (let i = 0; i < match.players.length; i++) {
-                if (match.players[i].name.toLowerCase().includes(searchInput.toLowerCase())) {
+            for (let player of match.players) {
+                if (player.name.toLowerCase().includes(searchInput.toLowerCase())) {
                     return true;
                 }
+                for (let comm of player.commanders) {
+                    if (comm.toLowerCase().includes(searchInput.toLowerCase())) {
+                        return true;
+                    }
+                }  
             };
             return false;
         });
@@ -124,7 +129,7 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                     <Input 
                         icon='search' 
                         placeholder='Search...'
-                        onChange={(e) => onSearchChange(e.target.value)}
+                        onChange={onSearchChange}
                     />
                 </div>
             </Flex>
