@@ -3,7 +3,7 @@ import { NewsArticle } from '../types/domain/NewsArticle';
 
 export const article_1: NewsArticle = {
     id: '1',
-    title: 'Toski Update Notes',
+    title: 'Project Toski Update Notes 09.22',
     author: "doomgeek",
     date: 'September 22, 2023',
     summary:

@@ -21,6 +21,7 @@ import {
 } from "../components/playerOverview/PlayerDetails";
 import NewsOverview from "../components/news/NewsOverview";
 import { loader as newsLoader, NewsDetail } from "../components/news/NewsDetail";
+import { CommanderTrends } from "../components/commanderTrends/CommanderTrends";
 
 export const router = createHashRouter([
 	{
@@ -57,6 +58,10 @@ export const router = createHashRouter([
 			{
 				path: "/commanderOverview",
 				element: <CommanderOverview />,
+			},
+			{
+				path: "/commanderTrends",
+				element: <CommanderTrends />,
 			},
 			{
 				path: "/commanderOverview/:commanderId",
