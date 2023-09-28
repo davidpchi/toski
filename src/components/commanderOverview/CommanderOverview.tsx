@@ -1,6 +1,5 @@
-import { Checkbox, Flex, Heading, Select, Tooltip, Text, filter } from "@chakra-ui/react";
-import React, { useCallback, useMemo, useState } from "react";
-import { Input } from 'semantic-ui-react'
+import { Checkbox, Flex, Heading, Tooltip, Input } from "@chakra-ui/react";
+import React, { useCallback, useState } from "react";
 import { SortableTable } from "../dataVisualizations/SortableTable";
 import { commanderOverviewColumns } from "./commanderOverviewColumnHelper";
 import { getCommanders, getCommandersByDate } from "../../redux/statsSelectors";
@@ -26,12 +25,12 @@ export const CommanderOverview = React.memo(function MatchHistory() {
     const onFilterChange = () => {
         setIsFiltered(!isFiltered);
     };
-    
+
     const [searchInput, setSearchInput] = useState<string>('');
     const onSearchChange = useCallback((event: any) => {
-            setSearchInput(event.target.value);
+        setSearchInput(event.target.value);
     }, [setSearchInput]);
-    
+
     if (commanders === undefined) {
         return <Loading text="Loading..." />;
     }
@@ -63,8 +62,7 @@ export const CommanderOverview = React.memo(function MatchHistory() {
                     </div>
                 </Tooltip>
                 <div style={{ padding: 20 }}>
-                    <Input 
-                        icon='search' 
+                    <Input
                         placeholder='Search...'
                         onChange={onSearchChange}
                     />

@@ -1,9 +1,8 @@
 import { TooltipItem } from "chart.js";
 import React, { useCallback, useState } from "react";
-import { Input } from 'semantic-ui-react'
 import { useSelector } from "react-redux";
 import { useLoaderData, useNavigate } from "react-router-dom";
-import { Flex, Heading, Image, Select, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
+import { Flex, Heading, Image, Input, Select, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
 
 import { AppState } from "../../redux/rootReducer";
 import { getCommander, getMatchesByCommanderName, getPlayersByCommanderName } from "../../redux/statsSelectors";
@@ -59,7 +58,7 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                     if (comm.toLowerCase().includes(searchInput.toLowerCase())) {
                         return true;
                     }
-                }  
+                }
             };
             return false;
         });
@@ -123,11 +122,10 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                     <Text>{`Color Identity: ${commander.colorIdentity}`}</Text>
                 </Flex>
             </Flex>
-            <Flex>
+            <Flex direction={"column"}>
                 <DatePicker onChange={onDatePickerChange} />
                 <div style={{ padding: 20 }}>
-                    <Input 
-                        icon='search' 
+                    <Input
                         placeholder='Search...'
                         onChange={onSearchChange}
                     />
