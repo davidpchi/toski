@@ -1,3 +1,4 @@
+import { createSelector } from "@reduxjs/toolkit";
 import { filterMatchesByDate, matchesToCommanderHelper, matchesToPlayersHelper } from "../logic/dictionaryUtils";
 import { Commander } from "../types/domain/Commander";
 import { Match } from "../types/domain/Match";
@@ -13,168 +14,209 @@ export const getPlayers = (state: AppState) => state.stats.players;
 /**
  * Gets a specific match based on matchId. matchId is the index in which it is in the array.
  */
-export const getMatch = (state: AppState, matchId: string) => {
-    const id = Number(matchId);
-    return !Number.isNaN(id) && state.stats.matches !== undefined
-        ? state.stats.matches[id]
-        : undefined;
-};
+export const getMatch = createSelector(
+    getMatches,
+    (_state: AppState, matchId: string) => matchId,
+    (matches: Match[] | undefined, matchId: string) => {
+        const id = Number(matchId);
+        return !Number.isNaN(id) && matches !== undefined
+            ? matches[id]
+            : undefined;
+    }
+);
 
 /**
  * Gets a specific commander based on commanderId.
  */
-export const getCommander = (state: AppState, id: string) => {
-    return state.stats.commanders ? state.stats.commanders[id] : undefined;
-};
+export const getCommander = createSelector(
+    getCommanders,
+    (_state: AppState, id: string) => id,
+    (commanders: { [id: string]: Commander } | undefined, id: string) => {
+        return commanders ? commanders[id] : undefined;
+    }
+);
 
 /**
  * Gets a specific player based on playerId.
  */
-export const getPlayer = (state: AppState, id: string) => {
-    return state.stats.players ? state.stats.players[id] : undefined;
-}
+export const getPlayer = createSelector(
+    getPlayers,
+    (_state: AppState, id: string) => id,
+    (players: { [id: string]: Player } | undefined, id: string) => {
+        return players ? players[id] : undefined;
+    }
+);
 
 /**
  * Returns a collection matches in chronological order given a commander NAME. Note that this is not searching using commander id.
  */
-export const getMatchesByCommanderName = (
-    state: AppState,
-    commanderName: string,
-    startDate?: Date,
-): Match[] => {
-    if (state.stats.matches === undefined) {
-        return [];
-    }
+export const getMatchesByCommanderName = createSelector(
+    getMatches,
+    (_state: AppState, commanderName: string) => commanderName,
+    (_state: AppState, _commanderName: string, startDate?: Date) => startDate,
+    (
+        matches: Match[] | undefined,
+        commanderName: string,
+        startDate?: Date,
+    ): Match[] => {
+        if (matches === undefined) {
+            return [];
+        }
 
-    const allMatches = filterMatchesByDate(state.stats.matches, startDate);
+        const allMatches = filterMatchesByDate(matches, startDate);
 
-    const matches = [];
-    for (const match of allMatches) {
-        for (const player of match.players) {
-            let foundCommander = false;
+        const result = [];
+        for (const match of allMatches) {
+            for (const player of match.players) {
+                let foundCommander = false;
 
-            for (const commander of player.commanders) {
-                if (commander === commanderName) {
-                    matches.push(match);
-                    foundCommander = true;
+                for (const commander of player.commanders) {
+                    if (commander === commanderName) {
+                        result.push(match);
+                        foundCommander = true;
+                        break;
+                    }
+                }
+
+                // since we already determined that this match has the commander, 
+                // we don't need to keep looking through the rest of the players of this match
+                if (foundCommander) {
                     break;
                 }
             }
-
-            // since we already determined that this match has the commander, 
-            // we don't need to keep looking through the rest of the players of this match
-            if (foundCommander) {
-                break;
-            }
         }
-    }
 
-    return matches;
-};
+        return result;
+    }
+);
 
 /**
  * Returns a collection matches in chronological order given a player NAME
  */
-export const getMatchesByPlayerName = (
-    state: AppState,
-    playerName: string,
-    startDate?: Date,
-): Match[] => {
-    if (state.stats.matches === undefined) {
-        return [];
-    }
+export const getMatchesByPlayerName = createSelector(
+    getMatches,
+    (_state: AppState, playerName: string) => playerName,
+    (_state: AppState, _playerName: string, startDate?: Date) => startDate,
+    (
+        matches: Match[] | undefined,
+        playerName: string,
+        startDate?: Date,
+    ): Match[] => {
+        if (matches === undefined) {
+            return [];
+        }
 
-    const allMatches = filterMatchesByDate(state.stats.matches, startDate);
+        const allMatches = filterMatchesByDate(matches, startDate);
 
-    const matches = [];
-    for (const match of allMatches) {
-        for (const player of match.players) {
-            if (player.name === playerName) {
-                matches.push(match);
-                break;
+        const result = [];
+        for (const match of allMatches) {
+            for (const player of match.players) {
+                if (player.name === playerName) {
+                    result.push(match);
+                    break;
+                }
             }
         }
+
+        return result;
     }
+);
 
-    return matches;
-};
+export const getCommandersByDate = createSelector(
+    getMatches,
+    getCommanders,
+    (_state: AppState, startDate?: Date) => startDate,
+    (
+        matches: Match[] | undefined,
+        commanders: { [id: string]: Commander } | undefined,
+        startDate?: Date
+    ): Commander[] => {
+        if (
+            matches === undefined ||
+            commanders === undefined
+        ) {
+            return [];
+        }
 
-export const getCommandersByDate = (
-    state: AppState,
-    startDate?: Date
-): Commander[] => {
-    if (
-        state.stats.matches === undefined ||
-        state.stats.commanders === undefined
-    ) {
-        return [];
+        return Object.values(
+            matchesToCommanderHelper(matches, undefined, startDate),
+        );
     }
-
-    const commanders = Object.values(
-        matchesToCommanderHelper(state.stats.matches, undefined, startDate),
-    );
-
-    return commanders;
-}
+);
 
 /**
  * Returns a collection commanders in chronological order given a player name
  */
-export const getCommandersByPlayerName = (
-    state: AppState,
-    playerName: string,
-    startDate?: Date,
-): Commander[] => {
-    if (
-        state.stats.matches === undefined ||
-        state.stats.commanders === undefined
-    ) {
-        return [];
+export const getCommandersByPlayerName = createSelector(
+    getMatches,
+    getCommanders,
+    (_state: AppState, playerName: string) => playerName,
+    (_state: AppState, _playerName: string, startDate?: Date) => startDate,
+    (
+        matches: Match[] | undefined,
+        commanders: { [id: string]: Commander } | undefined,
+        playerName: string,
+        startDate?: Date,
+    ): Commander[] => {
+        if (
+            matches === undefined ||
+            commanders === undefined
+        ) {
+            return [];
+        }
+
+        return Object.values(
+            matchesToCommanderHelper(matches, playerName, startDate),
+        );
+
     }
+);
 
-    const commanders = Object.values(
-        matchesToCommanderHelper(state.stats.matches, playerName, startDate),
-    );
+export const getPlayersByDate = createSelector(
+    getMatches,
+    getCommanders,
+    (_state: AppState, startDate?: Date) => startDate,
+    (
+        matches: Match[] | undefined,
+        commanders: { [id: string]: Commander } | undefined,
+        startDate?: Date
+    ): Player[] => {
+        if (
+            matches === undefined ||
+            commanders === undefined
+        ) {
+            return [];
+        }
 
-    return commanders;
-};
-
-export const getPlayersByDate = (
-    state: AppState,
-    startDate?: Date
-): Player[] => {
-    if (
-        state.stats.matches === undefined ||
-        state.stats.commanders === undefined
-    ) {
-        return [];
+        return Object.values(
+            matchesToPlayersHelper(matches, undefined, startDate),
+        );
     }
-
-    const players = Object.values(
-        matchesToPlayersHelper(state.stats.matches, undefined, startDate),
-    );
-
-    return players;
-}
+);
 
 /**
  * Returns a collection of players in chronological order based on commander NAME
  */
-export const getPlayersByCommanderName = (
-    state: AppState,
-    commanderName: string,
-    startDate?: Date,
-): Player[] => {
-    if (
-        state.stats.matches === undefined ||
-        state.stats.commanders === undefined
-    ) {
-        return [];
+export const getPlayersByCommanderName = createSelector(
+    getMatches,
+    getCommanders,
+    (_state: AppState, commanderName: string) => commanderName,
+    (_state: AppState, _commanderName: string, startDate?: Date) => startDate,
+    (
+        matches: Match[] | undefined,
+        commanders: { [id: string]: Commander } | undefined,
+        commanderName: string,
+        startDate?: Date,
+    ): Player[] => {
+        if (
+            matches === undefined ||
+            commanders === undefined
+        ) {
+            return [];
+        }
+
+        return Object.values(
+            matchesToPlayersHelper(matches, commanderName, startDate),
+        );
     }
-
-    const players = Object.values(
-        matchesToPlayersHelper(state.stats.matches, commanderName, startDate),
-    );
-
-    return players;
-};
+);
