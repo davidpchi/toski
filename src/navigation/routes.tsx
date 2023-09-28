@@ -21,6 +21,7 @@ import {
 } from "../components/playerOverview/PlayerDetails";
 import NewsOverview from "../components/news/NewsOverview";
 import { loader as newsLoader, NewsDetail } from "../components/news/NewsDetail";
+import { MatchSubmission } from "../components/matchHistory/MatchSubmission";
 
 export const router = createHashRouter([
 	{
@@ -72,6 +73,10 @@ export const router = createHashRouter([
 				loader: newsLoader,
 				element: <NewsDetail />,
 			},
+			{
+				path: '/matchHistory/submit',
+				element: <MatchSubmission />,
+			}
 		],
 	},
 ]);

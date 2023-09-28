@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
-import { Divider, Flex, Heading, Image, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
+import { Button, Divider, Flex, Heading, Image, Input, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 
 import {
@@ -23,6 +23,7 @@ import { ImageWithHover } from "../common/ImageWithHover";
 import { PieGraph } from "../dataVisualizations/PieGraph";
 import { DatePicker } from "../common/DatePicker";
 import { getWinRatePercentage } from "../../logic/utils";
+import { submitMatch } from "../../services/matchHistoryService";
 
 export async function loader(data: { params: any }) {
     return data.params.playerId;
