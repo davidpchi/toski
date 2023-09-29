@@ -6,10 +6,10 @@ export function getWinRatePercentage(winCount: number, totalCount: number) {
     return totalCount > 0 ? Math.round((winCount / totalCount) * 100) : 0;
 }
 
-export function avgWinTurn(matches: Match[], player: Player) {
+export function avgWinTurn(player: Player) {
     // Early exit conditions
-    // Don't show if player has fewer than 10 matches in time frame or 5 wins all time
-    if (player.wins < PLAYER_MINIMUM_WINS_REQUIRED || matches.length < PLAYER_MINIMUM_GAMES_REQUIRED) {
+    // Don't show if player has fewer than 10 matches or 5 wins all time
+    if (player.wins < PLAYER_MINIMUM_WINS_REQUIRED || player.matches.length < PLAYER_MINIMUM_GAMES_REQUIRED) {
         return "Insufficient data";
     }
 
@@ -17,7 +17,7 @@ export function avgWinTurn(matches: Match[], player: Player) {
     const winTurns = [];
 
     // Get win turn for every match win
-    for (const match of matches) {
+    for (const match of player.matches) {
         if (player.name === match.winner) {
             // Exclude wins without turns data
             if (Number(match.numberOfTurns) > 1) {

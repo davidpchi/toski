@@ -43,21 +43,21 @@ describe("avgWinTurn", () => {
     });
 
     it("should handle invalid matches and calculate the average win turn correctly", () => {
-        expect(avgWinTurn(matches, player)).toBe("9.0"); // (7+8+11+10+9)/5 = 9
+        expect(avgWinTurn(player)).toBe("9.0"); // (7+8+11+10+9)/5 = 9
     });
 
     it("should handle rounding average win turn correctly", () => {
-        matches = matches.slice(0, 6);
-        expect(avgWinTurn(matches, player)).toBe("8.7"); // (7+8+11)/3 = 8.6667
+        player.matches[0].numberOfTurns = "99.4";
+        expect(avgWinTurn(player)).toBe("27.5"); // (99.4+8+11+10+9)/5 = 27.48
     });
 
     it('should return "Insufficient data" if player has fewer than 10 matches', () => {
         player.matches = [];
-        expect(avgWinTurn(matches, player)).toBe("Insufficient data");
+        expect(avgWinTurn(player)).toBe("Insufficient data");
     });
 
     it('should return "Insufficient data" if player has fewer than 5 wins ever', () => {
         player.wins = 4;
-        expect(avgWinTurn(matches, player)).toBe("Insufficient data");
+        expect(avgWinTurn(player)).toBe("Insufficient data");
     });
 });

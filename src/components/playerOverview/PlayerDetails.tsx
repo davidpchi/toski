@@ -71,7 +71,7 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
                 <Flex direction="column" padding="16px" minWidth={"200px"} justifyContent={"center"} alignItems={"center"}>
                     <Text>{`Games played: ${player.matches.length}`}</Text>
                     <Text>{`Winrate: ${getWinRatePercentage(player.wins, player.matches.length)}%`}</Text>
-                    <Text>{`Avg. win turn: ${avgWinTurn(matches, player)}`}</Text>
+                    <Text>{`Avg. win turn: ${avgWinTurn(player)}`}</Text>
                 </Flex>
 
                 <Flex maxWidth={175} maxHeight={175}>
