@@ -1,4 +1,5 @@
 export const PLAYER_MINIMUM_GAMES_REQUIRED = 10;
+export const PLAYER_MINIMUM_WINS_REQUIRED = 5;
 export const COMMANDER_MINIMUM_GAMES_REQUIRED = 5;
 
 export const MTG_COLORS: { name: string; id: string; rgb: string }[] = [
