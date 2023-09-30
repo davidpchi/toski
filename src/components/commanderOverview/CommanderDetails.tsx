@@ -118,7 +118,7 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                             : 0
                             }%`}
                     </Text>
-                    <Text>{`Qualified: ${matches.length >= COMMANDER_MINIMUM_GAMES_REQUIRED ? "Yes" : "No"}`}</Text>
+                    <Text>{`Qualified: ${commander.matches.length >= COMMANDER_MINIMUM_GAMES_REQUIRED ? "Yes" : "No"}`}</Text>
                     <Text>{`Color Identity: ${commander.colorIdentity}`}</Text>
                 </Flex>
             </Flex>

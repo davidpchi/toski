@@ -172,6 +172,15 @@ export const getCommandersByPlayerName = createSelector(
     }
 );
 
+export const getFavoriteCommanderForPlayer = createSelector(
+    getCommandersByPlayerName,
+    (commanders: Commander[]) => {
+        return (commanders !== undefined && commanders.length > 0) ?
+            commanders.sort((a, b) => b.matches.length - a.matches.length)[0]!
+            : undefined;
+    }
+)
+
 export const getPlayersByDate = createSelector(
     getMatches,
     getCommanders,

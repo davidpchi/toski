@@ -14,7 +14,7 @@ export const MatchLengthBarChart = React.memo(function MatchHistory({ matches }:
 
     for (const match of matchesWithLengths) {
         if (matchesLengthDictionary[match.numberOfTurns] === undefined) {
-            matchesLengthDictionary[match.numberOfTurns] = 0;
+            matchesLengthDictionary[match.numberOfTurns] = 1;
         } else {
             matchesLengthDictionary[match.numberOfTurns] += 1;
         }
