@@ -2,7 +2,7 @@ import { TooltipItem } from "chart.js";
 import React, { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLoaderData, useNavigate } from "react-router-dom";
-import { Flex, Heading, Image, Select, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
+import { Flex, Heading, Image, Input, Select, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
 
 import { AppState } from "../../redux/rootReducer";
 import { getCommander, getMatchesByCommanderName, getPlayersByCommanderName } from "../../redux/statsSelectors";
@@ -32,6 +32,11 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
         setDateFilter(date);
     }, [setDateFilter])
 
+    const [searchInput, setSearchInput] = useState('');
+    const onSearchChange = useCallback((event: any) => {
+        setSearchInput(event.target.value);
+    }, [setSearchInput]);
+
     const matches = useSelector((state: AppState) => getMatchesByCommanderName(state, commander ? commander.name : "", dateFilter));
     const commanderPlayers: Player[] = useSelector((state: AppState) =>
         getPlayersByCommanderName(state, commander ? commander.name : "", dateFilter),
@@ -40,6 +45,23 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
 
     if (commander === undefined) {
         return <Loading text="" />;
+    }
+
+    let matchesArray: Match[] = matches;
+    if (searchInput.length > 0 && matches) {
+        matchesArray = matches.filter((match: Match) => {
+            for (let player of match.players) {
+                if (player.name.toLowerCase().includes(searchInput.toLowerCase())) {
+                    return true;
+                }
+                for (let comm of player.commanders) {
+                    if (comm.toLowerCase().includes(searchInput.toLowerCase())) {
+                        return true;
+                    }
+                }
+            };
+            return false;
+        });
     }
 
     const title = commander.name.toUpperCase();
@@ -100,7 +122,15 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                     <Text>{`Color Identity: ${commander.colorIdentity}`}</Text>
                 </Flex>
             </Flex>
-            <DatePicker onChange={onDatePickerChange} />
+            <Flex direction={"column"}>
+                <DatePicker onChange={onDatePickerChange} />
+                <div style={{ padding: 20 }}>
+                    <Input
+                        placeholder='Search...'
+                        onChange={onSearchChange}
+                    />
+                </div>
+            </Flex>
             <Tabs isFitted={true} width={"100%"} paddingRight={"10%"} paddingLeft={"10%"}>
                 <TabList>
                     <Tab>
@@ -116,9 +146,9 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                 <TabPanels>
                     <TabPanel>
                         {
-                            matches.length > 0 ? <SortableTable
+                            matchesArray.length > 0 ? <SortableTable
                                 columns={matchHistoryColumns}
-                                data={matches}
+                                data={matchesArray}
                                 getRowProps={(row: any) => {
                                     return {
                                         onClick: () => {
