@@ -1,9 +1,9 @@
 import React, { useCallback, useState } from "react";
-import { Link, useLoaderData, useNavigate } from "react-router-dom";
-import { Button, Divider, Flex, Heading, Image, Input, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
+import { Link, useLoaderData, useNavigate } from "react-router-dom";
+import { Flex, Heading, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
 
-import { getCommanders, getCommandersByPlayerName, getMatchesByPlayerName, getPlayer } from "../../redux/statsSelectors";
+import { getCommanders, getCommandersByPlayerName, getFavoriteCommanderForPlayer, getMatchesByPlayerName, getPlayer } from "../../redux/statsSelectors";
 import { AppState } from "../../redux/rootReducer";
 import { matchHistoryColumns } from "../matchHistory/matchHistoryColumnHelper";
 import { SortableTable } from "../dataVisualizations/SortableTable";
@@ -13,16 +13,11 @@ import { Commander } from "../../types/domain/Commander";
 import { MatchPlacementBarChart } from "./MatchPlacementBarChart";
 import { MTG_COLORS, PLAYER_MINIMUM_GAMES_REQUIRED } from "../constants";
 import { Match } from "../../types/domain/Match";
-import { commanderList } from "../../services/commanderList";
 import { ImageWithHover } from "../common/ImageWithHover";
 import { PieGraph } from "../dataVisualizations/PieGraph";
 import { DatePicker } from "../common/DatePicker";
-<<<<<<< HEAD
-import { getWinRatePercentage } from "../../logic/utils";
-import { submitMatch } from "../../services/matchHistoryService";
-=======
 import { getAverageWinTurn, getWinRatePercentage } from "../../logic/utils";
->>>>>>> main
+import { commanderList } from "../../services/commanderList";
 
 export async function loader(data: { params: any }) {
     return data.params.playerId;
@@ -44,6 +39,7 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
     );
 
     const commanders = useSelector((state: AppState) => getCommanders(state));
+    const favoriteCommander = useSelector((state: AppState) => getFavoriteCommanderForPlayer(state, playerId));
 
     const matches = useSelector((state: AppState) => getMatchesByPlayerName(state, playerId ? playerId : "", dateFilter));
     matches.sort((a: Match, b: Match) => Number(b.id) - Number(a.id));
@@ -52,12 +48,12 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
     const playedCommanders: Commander[] = useSelector((state: AppState) => getCommandersByPlayerName(state, playerId ? playerId : "", dateFilter));
     playedCommanders.sort((a: Commander, b: Commander) => b.matches.length - a.matches.length);
 
-    if (matches.length === 0 || commanders === undefined || player === undefined) {
+    if (commanders === undefined || player === undefined) {
         return <Loading text="Loading..." />;
     }
 
     // Get image for most played commander
-    const favCommanderImage = commanderList[playedCommanders[0].name].image.replace("normal", "art_crop");
+    const favCommanderImage = favoriteCommander ? commanderList[favoriteCommander.name].image.replace("normal", "art_crop") : "";
 
     const colorsPlayedArray: number[] = [];
     for (const colorObj of MTG_COLORS) {
@@ -69,10 +65,11 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
             <Heading>{player.name}</Heading>
 
             <Flex direction="row" justify="space-evenly" align="center" gap="20px" flexWrap={"wrap"} marginBottom={"16px"}>
-                <Link to={`/commanderOverview/${playedCommanders[0].id}`} style={{ color: "blue", textDecoration: "underline" }}>
-                    <ImageWithHover label={`Favorite Commander: ${playedCommanders[0].name}`} width={200} image={favCommanderImage} />
-                </Link>
-
+                {favoriteCommander ?
+                    <Link to={`/commanderOverview/${favoriteCommander.id}`} style={{ color: "blue", textDecoration: "underline" }}>
+                        <ImageWithHover label={`Favorite Commander: ${favoriteCommander.name}`} width={200} image={favCommanderImage} />
+                    </Link>
+                    : null}
                 <Flex direction="column" padding="16px" minWidth={"200px"} justifyContent={"center"} alignItems={"center"}>
                     <Text>{`Games played: ${player.matches.length}`}</Text>
                     <Text>{`Winrate: ${getWinRatePercentage(player.wins, player.matches.length)}%`}</Text>
@@ -100,7 +97,7 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
                 </TabList>
                 <TabPanels>
                     <TabPanel>
-                        <SortableTable
+                        {matches.length > 0 ? <SortableTable
                             columns={matchHistoryColumns}
                             data={matches}
                             getRowProps={(row: any) => {
@@ -111,7 +108,16 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
                                     },
                                 };
                             }}
-                        />
+                        /> :
+                            <Flex
+                                flexDirection={"column"}
+                                justifyContent={"center"}
+                                alignItems={"center"}
+                                padding="8px"
+                            >
+                                <Text>Not enough matches for date range selected</Text>
+                            </Flex>
+                        }
                     </TabPanel>
                     <TabPanel>
                         <SortableTable

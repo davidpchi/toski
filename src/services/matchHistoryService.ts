@@ -65,6 +65,7 @@ export const submitMatch = async (
     player2?: MatchSubmissionPlayer,
     player3?: MatchSubmissionPlayer,
     player4?: MatchSubmissionPlayer,
+    turnCount?: number,
     extraNotes?: string
 ) => {
     var body: { [fieldName: string]: string } = {};
@@ -72,7 +73,7 @@ export const submitMatch = async (
 
     if (player1) {
         body["entry.2132042053"] = player1.name;
-        body["entry.961836116"] = player1.name;
+        body["entry.961836116"] = player1.commander;
         body["entry.1252336227"] = player1.turnOrder.toString();
         body["entry.147625596"] = player1.rank.toString();
     }
@@ -99,6 +100,8 @@ export const submitMatch = async (
         body["entry.652184592"] = player4.rank.toString();
     }
 
+    body["entry.676929187"] = turnCount !== undefined ? turnCount.toString() : "";
+
     body["entry.2043626966"] = extraNotes !== undefined ? extraNotes : "";
 
     // This is all super hacky to begin so bear with me here...
@@ -117,10 +120,13 @@ export const submitMatch = async (
             }
         ).then((res) => {
             console.log(res);
+            return true;
         });
     } catch (e) {
         // just assume the data entry was successful
         console.log(e);
+        return true;
     }
 
+    return false;
 }

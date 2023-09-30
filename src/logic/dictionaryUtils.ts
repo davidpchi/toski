@@ -130,7 +130,8 @@ export function matchesToPlayersHelper(
                     const colorProfile: { [color: string]: number } = {};
                     // compute the players color profile
                     for (const commanderName of player.commanders) {
-                        const colors = commanderList[commanderName].color_identity;
+                        const potentialCommander = commanderList[commanderName];
+                        const colors = potentialCommander ? potentialCommander.color_identity : [];
                         for (const color of colors) {
                             // add or increment this in our colorProfile dictionary
                             colorProfile[color] = colorProfile[color] === undefined ? 1 : colorProfile[color] + 1;
@@ -153,7 +154,8 @@ export function matchesToPlayersHelper(
 
                     // compute the players color profile
                     for (const commanderName of player.commanders) {
-                        const colors = commanderList[commanderName].color_identity;
+                        const potentialCommander = commanderList[commanderName];
+                        const colors = potentialCommander ? potentialCommander.color_identity : [];
                         for (const color of colors) {
                             // add or increment this in our colorProfile dictionary
                             playerDictionary[player.name].colorProfile[color] =
