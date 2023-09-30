@@ -1,6 +1,6 @@
 import { Match } from "../types/domain/Match";
 import { Player } from "../types/domain/Player";
-import { avgWinTurn, getWinRatePercentage } from "./utils";
+import { getAverageWinTurn, getWinRatePercentage } from "./utils";
 
 describe("getWinRatePercentage", function () {
     it("given win number and total games, provide win rate (as whole number)", function () {
@@ -15,7 +15,7 @@ describe("getWinRatePercentage", function () {
     });
 });
 
-describe("avgWinTurn", () => {
+describe("getAverageWinTurn", () => {
     let player: Player;
     let matches: Match[];
 
@@ -26,7 +26,7 @@ describe("avgWinTurn", () => {
             { id: "2", date: new Date(), players: [], numberOfTurns: "8", winner: "John" },
             { id: "3", date: new Date(), players: [], numberOfTurns: "11", winner: "John" },
             { id: "4", date: new Date(), players: [], numberOfTurns: "0", winner: "John" }, // Invalid: turns
-            { id: "5", date: new Date(), players: [], numberOfTurns: "1", winner: "John" }, // Invalid: turns
+            { id: "5", date: new Date(), players: [], numberOfTurns: "0", winner: "John" }, // Invalid: turns
             { id: "6", date: new Date(), players: [], numberOfTurns: "4", winner: "Sara" }, // Invalid: lost
             { id: "7", date: new Date(), players: [], numberOfTurns: "10", winner: "John" },
             { id: "8", date: new Date(), players: [], numberOfTurns: "3", winner: "Jane" }, // Invalid: lost
@@ -43,21 +43,21 @@ describe("avgWinTurn", () => {
     });
 
     it("should handle invalid matches and calculate the average win turn correctly", () => {
-        expect(avgWinTurn(player)).toBe("9.0"); // (7+8+11+10+9)/5 = 9
+        expect(getAverageWinTurn(player)).toBe("9.0"); // (7+8+11+10+9)/5 = 9
     });
 
     it("should handle rounding average win turn correctly", () => {
         player.matches[0].numberOfTurns = "99.4";
-        expect(avgWinTurn(player)).toBe("27.5"); // (99.4+8+11+10+9)/5 = 27.48
+        expect(getAverageWinTurn(player)).toBe("27.5"); // (99.4+8+11+10+9)/5 = 27.48
     });
 
     it('should return "Insufficient data" if player has fewer than 10 matches', () => {
         player.matches = [];
-        expect(avgWinTurn(player)).toBe("Insufficient data");
+        expect(getAverageWinTurn(player)).toBe("Not enough games played");
     });
 
     it('should return "Insufficient data" if player has fewer than 5 wins ever', () => {
         player.wins = 4;
-        expect(avgWinTurn(player)).toBe("Insufficient data");
+        expect(getAverageWinTurn(player)).toBe("Not enough wins");
     });
 });

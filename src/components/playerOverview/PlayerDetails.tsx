@@ -17,7 +17,7 @@ import { commanderList } from "../../services/commanderList";
 import { ImageWithHover } from "../common/ImageWithHover";
 import { PieGraph } from "../dataVisualizations/PieGraph";
 import { DatePicker } from "../common/DatePicker";
-import { avgWinTurn, getWinRatePercentage } from "../../logic/utils";
+import { getAverageWinTurn, getWinRatePercentage } from "../../logic/utils";
 
 export async function loader(data: { params: any }) {
     return data.params.playerId;
@@ -71,7 +71,7 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
                 <Flex direction="column" padding="16px" minWidth={"200px"} justifyContent={"center"} alignItems={"center"}>
                     <Text>{`Games played: ${player.matches.length}`}</Text>
                     <Text>{`Winrate: ${getWinRatePercentage(player.wins, player.matches.length)}%`}</Text>
-                    <Text>{`Avg. win turn: ${avgWinTurn(player)}`}</Text>
+                    <Text>{`Avg. win turn: ${getAverageWinTurn(player)}`}</Text>
                 </Flex>
 
                 <Flex maxWidth={175} maxHeight={175}>

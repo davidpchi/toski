@@ -1,16 +1,17 @@
 import { PLAYER_MINIMUM_GAMES_REQUIRED, PLAYER_MINIMUM_WINS_REQUIRED } from "../components/constants";
-import { Match } from "../types/domain/Match";
 import { Player } from "../types/domain/Player";
 
 export function getWinRatePercentage(winCount: number, totalCount: number) {
     return totalCount > 0 ? Math.round((winCount / totalCount) * 100) : 0;
 }
 
-export function avgWinTurn(player: Player) {
+export function getAverageWinTurn(player: Player) {
     // Early exit conditions
     // Don't show if player has fewer than 10 matches or 5 wins all time
-    if (player.wins < PLAYER_MINIMUM_WINS_REQUIRED || player.matches.length < PLAYER_MINIMUM_GAMES_REQUIRED) {
-        return "Insufficient data";
+    if (player.matches.length < PLAYER_MINIMUM_GAMES_REQUIRED) {
+        return "Not enough games played";
+    } else if (player.wins < PLAYER_MINIMUM_WINS_REQUIRED) {
+        return "Not enough wins";
     }
 
     // Create win turns array
@@ -20,9 +21,8 @@ export function avgWinTurn(player: Player) {
     for (const match of player.matches) {
         if (player.name === match.winner) {
             // Exclude wins without turns data
-            if (Number(match.numberOfTurns) > 1) {
+            if (Number(match.numberOfTurns) > 0) {
                 winTurns.push(Number(match.numberOfTurns));
-                console.log(`${match.id}, ${match.numberOfTurns}, ${player.name}, ${match.winner}`);
             }
         }
     }
