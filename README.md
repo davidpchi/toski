@@ -4,7 +4,7 @@ Check out our live site here: [The Squirrel Nest](https://squirrelnest.io/ "Squi
 
 🌟 About Toski:
 
-Toski is the online news & analytics hub developed for "The Squirrel's Nest", our bustling community of passionate Magic the Gathering players. It's a nexus where data meets lore, and where every player, every card, and every outcome weaves into a larger tapestry of tales and strategies.
+Toski is the online news & analytics hub developed for "The Squirrel Nest", our bustling community of passionate Magic the Gathering players. It's a nexus where data meets lore, and where every player, every card, and every outcome weaves into a larger tapestry of tales and strategies.
 
 Key Features:
 
