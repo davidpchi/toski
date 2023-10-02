@@ -19,10 +19,8 @@ export const getMatch = createSelector(
     (_state: AppState, matchId: string) => matchId,
     (matches: Match[] | undefined, matchId: string) => {
         const id = Number(matchId);
-        return !Number.isNaN(id) && matches !== undefined
-            ? matches[id]
-            : undefined;
-    }
+        return !Number.isNaN(id) && matches !== undefined ? matches[id] : undefined;
+    },
 );
 
 /**
@@ -33,7 +31,7 @@ export const getCommander = createSelector(
     (_state: AppState, id: string) => id,
     (commanders: { [id: string]: Commander } | undefined, id: string) => {
         return commanders ? commanders[id] : undefined;
-    }
+    },
 );
 
 /**
@@ -44,7 +42,7 @@ export const getPlayer = createSelector(
     (_state: AppState, id: string) => id,
     (players: { [id: string]: Player } | undefined, id: string) => {
         return players ? players[id] : undefined;
-    }
+    },
 );
 
 /**
@@ -54,11 +52,7 @@ export const getMatchesByCommanderName = createSelector(
     getMatches,
     (_state: AppState, commanderName: string) => commanderName,
     (_state: AppState, _commanderName: string, startDate?: Date) => startDate,
-    (
-        matches: Match[] | undefined,
-        commanderName: string,
-        startDate?: Date,
-    ): Match[] => {
+    (matches: Match[] | undefined, commanderName: string, startDate?: Date): Match[] => {
         if (matches === undefined) {
             return [];
         }
@@ -78,7 +72,7 @@ export const getMatchesByCommanderName = createSelector(
                     }
                 }
 
-                // since we already determined that this match has the commander, 
+                // since we already determined that this match has the commander,
                 // we don't need to keep looking through the rest of the players of this match
                 if (foundCommander) {
                     break;
@@ -87,7 +81,7 @@ export const getMatchesByCommanderName = createSelector(
         }
 
         return result;
-    }
+    },
 );
 
 /**
@@ -97,11 +91,7 @@ export const getMatchesByPlayerName = createSelector(
     getMatches,
     (_state: AppState, playerName: string) => playerName,
     (_state: AppState, _playerName: string, startDate?: Date) => startDate,
-    (
-        matches: Match[] | undefined,
-        playerName: string,
-        startDate?: Date,
-    ): Match[] => {
+    (matches: Match[] | undefined, playerName: string, startDate?: Date): Match[] => {
         if (matches === undefined) {
             return [];
         }
@@ -119,7 +109,7 @@ export const getMatchesByPlayerName = createSelector(
         }
 
         return result;
-    }
+    },
 );
 
 export const getCommandersByDate = createSelector(
@@ -129,19 +119,14 @@ export const getCommandersByDate = createSelector(
     (
         matches: Match[] | undefined,
         commanders: { [id: string]: Commander } | undefined,
-        startDate?: Date
+        startDate?: Date,
     ): Commander[] => {
-        if (
-            matches === undefined ||
-            commanders === undefined
-        ) {
+        if (matches === undefined || commanders === undefined) {
             return [];
         }
 
-        return Object.values(
-            matchesToCommanderHelper(matches, undefined, startDate),
-        );
-    }
+        return Object.values(matchesToCommanderHelper(matches, undefined, startDate));
+    },
 );
 
 /**
@@ -158,49 +143,31 @@ export const getCommandersByPlayerName = createSelector(
         playerName: string,
         startDate?: Date,
     ): Commander[] => {
-        if (
-            matches === undefined ||
-            commanders === undefined
-        ) {
+        if (matches === undefined || commanders === undefined) {
             return [];
         }
 
-        return Object.values(
-            matchesToCommanderHelper(matches, playerName, startDate),
-        );
-
-    }
+        return Object.values(matchesToCommanderHelper(matches, playerName, startDate));
+    },
 );
 
-export const getFavoriteCommanderForPlayer = createSelector(
-    getCommandersByPlayerName,
-    (commanders: Commander[]) => {
-        return (commanders !== undefined && commanders.length > 0) ?
-            commanders.sort((a, b) => b.matches.length - a.matches.length)[0]!
-            : undefined;
-    }
-)
+export const getFavoriteCommanderForPlayer = createSelector(getCommandersByPlayerName, (commanders: Commander[]) => {
+    return commanders !== undefined && commanders.length > 0
+        ? commanders.sort((a, b) => b.matches.length - a.matches.length)[0]!
+        : undefined;
+});
 
 export const getPlayersByDate = createSelector(
     getMatches,
     getCommanders,
     (_state: AppState, startDate?: Date) => startDate,
-    (
-        matches: Match[] | undefined,
-        commanders: { [id: string]: Commander } | undefined,
-        startDate?: Date
-    ): Player[] => {
-        if (
-            matches === undefined ||
-            commanders === undefined
-        ) {
+    (matches: Match[] | undefined, commanders: { [id: string]: Commander } | undefined, startDate?: Date): Player[] => {
+        if (matches === undefined || commanders === undefined) {
             return [];
         }
 
-        return Object.values(
-            matchesToPlayersHelper(matches, undefined, startDate),
-        );
-    }
+        return Object.values(matchesToPlayersHelper(matches, undefined, startDate));
+    },
 );
 
 /**
@@ -217,15 +184,10 @@ export const getPlayersByCommanderName = createSelector(
         commanderName: string,
         startDate?: Date,
     ): Player[] => {
-        if (
-            matches === undefined ||
-            commanders === undefined
-        ) {
+        if (matches === undefined || commanders === undefined) {
             return [];
         }
 
-        return Object.values(
-            matchesToPlayersHelper(matches, commanderName, startDate),
-        );
-    }
+        return Object.values(matchesToPlayersHelper(matches, commanderName, startDate));
+    },
 );

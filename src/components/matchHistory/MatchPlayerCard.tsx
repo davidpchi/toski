@@ -6,30 +6,29 @@ import { primaryColor } from "../../themes/acorn";
 import { MatchDisplayPlayer } from "./types/MatchDisplayPlayer";
 import { MatchPlayerImage } from "./MatchPlayerImage";
 
-export const MatchPlayerCard = React.memo(function MatchPlayerCard
-    ({
-        player,
-        textColor,
-        backgroundColor,
-        borderColor,
-    }: {
-        player: MatchDisplayPlayer;
-        textColor?: string;
-        backgroundColor?: string;
-        borderColor?: string;
-    }) {
+export const MatchPlayerCard = React.memo(function MatchPlayerCard({
+    player,
+    textColor,
+    backgroundColor,
+    borderColor,
+}: {
+    player: MatchDisplayPlayer;
+    textColor?: string;
+    backgroundColor?: string;
+    borderColor?: string;
+}) {
     const navigate = useNavigate();
 
     const playerNav = useCallback(() => {
-        navigate('/playerOverview/' + player.name);
+        navigate("/playerOverview/" + player.name);
     }, [navigate, player.name]);
 
     return (
         <Flex
             flex={1}
-            align={'center'}
-            justifyContent={'center'}
-            flexDirection={'column'}
+            align={"center"}
+            justifyContent={"center"}
+            flexDirection={"column"}
             minWidth={160}
             maxWidth={250}
             borderWidth={5}
@@ -38,19 +37,19 @@ export const MatchPlayerCard = React.memo(function MatchPlayerCard
         >
             <MatchPlayerImage player={player} />
             <Button
-                variant='ghost'
+                variant="ghost"
                 onClick={playerNav}
-                alignSelf={'stretch'}
+                alignSelf={"stretch"}
                 backgroundColor={backgroundColor}
                 borderColor={borderColor}
-                size='md'
-                flexDirection='row'
+                size="md"
+                flexDirection="row"
             >
-                {player.isWinner ? <FiLoader height={32} /> : <Box height='32' />}
+                {player.isWinner ? <FiLoader height={32} /> : <Box height="32" />}
                 <Text
                     style={{
-                        fontStyle: 'italic',
-                        fontWeight: 'bold',
+                        fontStyle: "italic",
+                        fontWeight: "bold",
                         color: textColor,
                     }}
                     onClick={playerNav}
@@ -59,9 +58,8 @@ export const MatchPlayerCard = React.memo(function MatchPlayerCard
                 >
                     {player.name.toUpperCase()}
                 </Text>
-                {player.isWinner ? <FiLoader height={32} /> : <Box height='32' />}
+                {player.isWinner ? <FiLoader height={32} /> : <Box height="32" />}
             </Button>
         </Flex>
     );
-}
-);
+});

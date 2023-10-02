@@ -1,20 +1,30 @@
-import { Button, Flex, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure, } from "@chakra-ui/react";
+import {
+    Button,
+    Flex,
+    Image,
+    Modal,
+    ModalBody,
+    ModalCloseButton,
+    ModalContent,
+    ModalFooter,
+    ModalHeader,
+    ModalOverlay,
+    useDisclosure,
+} from "@chakra-ui/react";
 import React, { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { commanderList } from "../../services/commanderList";
 import { MatchDisplayPlayer } from "./types/MatchDisplayPlayer";
 import { MatchDisplayCommander } from "./types/MatchDisplayCommander";
 
-export const MatchPlayerImage = React.memo(function MatchPlayerImage(
-    { player }: { player: MatchDisplayPlayer }
-) {
+export const MatchPlayerImage = React.memo(function MatchPlayerImage({ player }: { player: MatchDisplayPlayer }) {
     const navigate = useNavigate();
-    const { isOpen, onOpen, onClose } = useDisclosure()
-    const finalRef = React.useRef(null)
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const finalRef = React.useRef(null);
 
     const soloCommanderNav = useCallback(() => {
         if (player.commanders[0].id !== undefined) {
-            navigate('/commanderOverview/' + player.commanders[0].id);
+            navigate("/commanderOverview/" + player.commanders[0].id);
         }
     }, [navigate, player.commanders]);
 
@@ -25,37 +35,37 @@ export const MatchPlayerImage = React.memo(function MatchPlayerImage(
     const commanderImagesForModal = player.commanders.map((value: MatchDisplayCommander) => {
         const onClickNav = () => {
             if (value.id !== undefined) {
-                navigate('/commanderOverview/' + value.id);
+                navigate("/commanderOverview/" + value.id);
             }
-        }
+        };
 
         return (
             <Button
                 key={value.id}
-                variant='ghost'
+                variant="ghost"
                 onClick={onClickNav}
                 height={"300px"}
                 flex={1}
                 padding={2}
                 size={"lg"}
-                alignSelf={'stretch'}
+                alignSelf={"stretch"}
             >
-                {
-                    commanderList[value.name] ?
-                        <Image key={value.id} src={commanderList[value.name].image} /> :
-                        <Flex width={200} alignContent='center'>
-                            <p
-                                style={{
-                                    fontStyle: 'italic',
-                                    fontWeight: 'bold',
-                                    wordBreak: "break-word",
-                                    whiteSpace: "normal"
-                                }}
-                            >
-                                {value.name}
-                            </p>
-                        </Flex>
-                }
+                {commanderList[value.name] ? (
+                    <Image key={value.id} src={commanderList[value.name].image} />
+                ) : (
+                    <Flex width={200} alignContent="center">
+                        <p
+                            style={{
+                                fontStyle: "italic",
+                                fontWeight: "bold",
+                                wordBreak: "break-word",
+                                whiteSpace: "normal",
+                            }}
+                        >
+                            {value.name}
+                        </p>
+                    </Flex>
+                )}
             </Button>
         );
     });
@@ -64,30 +74,30 @@ export const MatchPlayerImage = React.memo(function MatchPlayerImage(
         return (
             <Button
                 ref={finalRef}
-                variant='ghost'
-                alignSelf={'stretch'}
+                variant="ghost"
+                alignSelf={"stretch"}
                 onClick={soloCommanderNav}
                 flex={1}
                 padding={1}
                 height={"300px"}
-                size='md'
+                size="md"
             >
-                {
-                    commanderList[player.commanders[0].name] ?
-                        <Image src={commanderList[player.commanders[0].name].image} /> :
-                        <Flex width={200} alignContent='center'>
-                            <p
-                                style={{
-                                    fontStyle: 'italic',
-                                    fontWeight: 'bold',
-                                    wordBreak: "break-word",
-                                    whiteSpace: "normal"
-                                }}
-                            >
-                                {player.commanders[0].name}
-                            </p>
-                        </Flex>
-                }
+                {commanderList[player.commanders[0].name] ? (
+                    <Image src={commanderList[player.commanders[0].name].image} />
+                ) : (
+                    <Flex width={200} alignContent="center">
+                        <p
+                            style={{
+                                fontStyle: "italic",
+                                fontWeight: "bold",
+                                wordBreak: "break-word",
+                                whiteSpace: "normal",
+                            }}
+                        >
+                            {player.commanders[0].name}
+                        </p>
+                    </Flex>
+                )}
             </Button>
         );
     } else {
@@ -95,8 +105,8 @@ export const MatchPlayerImage = React.memo(function MatchPlayerImage(
             <>
                 <Button
                     ref={finalRef}
-                    variant='ghost'
-                    alignSelf={'stretch'}
+                    variant="ghost"
+                    alignSelf={"stretch"}
                     onClick={openCommanderNavModal}
                     flex={1}
                     padding={1}
@@ -104,64 +114,64 @@ export const MatchPlayerImage = React.memo(function MatchPlayerImage(
                 >
                     <div style={{ display: "grid" }}>
                         <div style={{ gridRowStart: 1, gridColumnStart: 1 }}>
-                            {
-                                commanderList[player.commanders[1].name] ?
-                                    <Image src={commanderList[player.commanders[1].name].image} /> :
-                                    <Flex width={200} alignContent='center'>
-                                        <p
-                                            style={{
-                                                fontStyle: 'italic',
-                                                fontWeight: 'bold',
-                                                wordBreak: "break-word",
-                                                whiteSpace: "normal"
-                                            }}
-                                        >
-                                            {player.commanders[1].name}
-                                        </p>
-                                    </Flex>
-                            }
+                            {commanderList[player.commanders[1].name] ? (
+                                <Image src={commanderList[player.commanders[1].name].image} />
+                            ) : (
+                                <Flex width={200} alignContent="center">
+                                    <p
+                                        style={{
+                                            fontStyle: "italic",
+                                            fontWeight: "bold",
+                                            wordBreak: "break-word",
+                                            whiteSpace: "normal",
+                                        }}
+                                    >
+                                        {player.commanders[1].name}
+                                    </p>
+                                </Flex>
+                            )}
                         </div>
                         <div style={{ gridRowStart: 1, gridColumnStart: 1, paddingTop: "20%" }}>
-                            {
-                                commanderList[player.commanders[0].name] ?
-                                    <Image src={commanderList[player.commanders[0].name].image} /> :
-                                    <Flex width={200} alignContent='center'>
+                            {commanderList[player.commanders[0].name] ? (
+                                <Image src={commanderList[player.commanders[0].name].image} />
+                            ) : (
+                                <Flex width={200} alignContent="center">
+                                    <p
+                                        style={{
+                                            fontStyle: "italic",
+                                            fontWeight: "bold",
+                                            wordBreak: "break-word",
+                                            whiteSpace: "normal",
+                                        }}
+                                    >
+                                        {player.commanders[0].name}
+                                    </p>
+                                </Flex>
+                            )}
+                        </div>
+                        {player.commanders[2] !== undefined ? (
+                            <div style={{ gridRowStart: 1, gridColumnStart: 1, paddingTop: "90%" }}>
+                                {commanderList[player.commanders[2].name] ? (
+                                    <Image src={commanderList[player.commanders[2].name].image} width={"50%"} />
+                                ) : (
+                                    <Flex width={200} alignContent="center">
                                         <p
                                             style={{
-                                                fontStyle: 'italic',
-                                                fontWeight: 'bold',
+                                                fontStyle: "italic",
+                                                fontWeight: "bold",
                                                 wordBreak: "break-word",
-                                                whiteSpace: "normal"
+                                                whiteSpace: "normal",
                                             }}
                                         >
-                                            {player.commanders[0].name}
+                                            {player.commanders[2].name}
                                         </p>
                                     </Flex>
-                            }
-                        </div>
-                        {player.commanders[2] !== undefined ?
-                            <div style={{ gridRowStart: 1, gridColumnStart: 1, paddingTop: "90%" }}>
-                                {
-                                    commanderList[player.commanders[2].name] ?
-                                        <Image src={commanderList[player.commanders[2].name].image} width={"50%"} /> :
-                                        <Flex width={200} alignContent='center'>
-                                            <p
-                                                style={{
-                                                    fontStyle: 'italic',
-                                                    fontWeight: 'bold',
-                                                    wordBreak: "break-word",
-                                                    whiteSpace: "normal"
-                                                }}
-                                            >
-                                                {player.commanders[2].name}
-                                            </p>
-                                        </Flex>
-                                }
-                            </div> : null
-                        }
+                                )}
+                            </div>
+                        ) : null}
                     </div>
-                </Button >
-                <Modal finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose} >
+                </Button>
+                <Modal finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose}>
                     <ModalOverlay />
                     <ModalContent maxW={"500px"}>
                         <ModalHeader>Select commander to view details</ModalHeader>

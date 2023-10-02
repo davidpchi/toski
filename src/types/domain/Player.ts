@@ -5,8 +5,8 @@ export type Player = {
     matches: Match[];
     wins: number;
     /**
-     * A dictionary representing the colors of the commanders the player has played. 
+     * A dictionary representing the colors of the commanders the player has played.
      * The key is the color as a string, and the value is the number of times that color has been played.
      */
-    colorProfile: { [color: string]: number }
-}
+    colorProfile: { [color: string]: number };
+};

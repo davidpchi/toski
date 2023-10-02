@@ -1,14 +1,5 @@
-import { TriangleDownIcon, TriangleUpIcon, UpDownIcon } from '@chakra-ui/icons';
-import {
-    chakra,
-    Table,
-    TableContainer,
-    Tbody,
-    Td,
-    Th,
-    Thead,
-    Tr,
-} from '@chakra-ui/react';
+import { TriangleDownIcon, TriangleUpIcon, UpDownIcon } from "@chakra-ui/icons";
+import { chakra, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 import {
     Cell,
     Column,
@@ -20,8 +11,8 @@ import {
     Row,
     SortingState,
     useReactTable,
-} from '@tanstack/react-table';
-import React from 'react';
+} from "@tanstack/react-table";
+import React from "react";
 
 const defaultPropGetter = () => ({});
 
@@ -55,12 +46,7 @@ export function SortableTable({
     });
 
     return (
-        <TableContainer
-            border='1px solid'
-            borderColor='#E2E8F0'
-            borderRadius='md'
-            backgroundColor='white'
-        >
+        <TableContainer border="1px solid" borderColor="#E2E8F0" borderRadius="md" backgroundColor="white">
             <Table>
                 <Thead>
                     {table.getHeaderGroups().map((headerGroup) => (
@@ -73,20 +59,16 @@ export function SortableTable({
                                         onClick={header.column.getToggleSortingHandler()}
                                         isNumeric={meta?.isNumeric}
                                         {...getHeaderProps(header)}
-                                        role={'button'}
+                                        role={"button"}
                                     >
-                                        {flexRender(
-                                            header.column.columnDef.header,
-                                            header.getContext()
-                                        )}
+                                        {flexRender(header.column.columnDef.header, header.getContext())}
 
-                                        <chakra.span pl='4'>
+                                        <chakra.span pl="4">
                                             {header.column.getIsSorted() ? (
-                                                header.column.getIsSorted() ===
-                                                    'desc' ? (
-                                                    <TriangleDownIcon aria-label='sorted descending' />
+                                                header.column.getIsSorted() === "desc" ? (
+                                                    <TriangleDownIcon aria-label="sorted descending" />
                                                 ) : (
-                                                    <TriangleUpIcon aria-label='sorted ascending' />
+                                                    <TriangleUpIcon aria-label="sorted ascending" />
                                                 )
                                             ) : (
                                                 <UpDownIcon />
@@ -103,11 +85,7 @@ export function SortableTable({
                         <Tr
                             key={row.id}
                             {...getRowProps(row)}
-                            role={
-                                getRowProps(row).onClick !== undefined
-                                    ? 'button'
-                                    : undefined
-                            }
+                            role={getRowProps(row).onClick !== undefined ? "button" : undefined}
                         >
                             {row.getVisibleCells().map((cell) => {
                                 const meta: any = cell.column.columnDef.meta;
@@ -118,10 +96,7 @@ export function SortableTable({
                                         {...getCellProps(cell)}
                                         {...getColumnProps(cell.column)}
                                     >
-                                        {flexRender(
-                                            cell.column.columnDef.cell,
-                                            cell.getContext()
-                                        )}
+                                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                     </Td>
                                 );
                             })}

@@ -28,16 +28,24 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
     const commander = useSelector((state: AppState) => getCommander(state, commanderId));
 
     const [dateFilter, setDateFilter] = useState<Date | undefined>(undefined);
-    const onDatePickerChange = useCallback((date: Date | undefined) => {
-        setDateFilter(date);
-    }, [setDateFilter])
+    const onDatePickerChange = useCallback(
+        (date: Date | undefined) => {
+            setDateFilter(date);
+        },
+        [setDateFilter],
+    );
 
-    const [searchInput, setSearchInput] = useState('');
-    const onSearchChange = useCallback((event: any) => {
-        setSearchInput(event.target.value);
-    }, [setSearchInput]);
+    const [searchInput, setSearchInput] = useState("");
+    const onSearchChange = useCallback(
+        (event: any) => {
+            setSearchInput(event.target.value);
+        },
+        [setSearchInput],
+    );
 
-    const matches = useSelector((state: AppState) => getMatchesByCommanderName(state, commander ? commander.name : "", dateFilter));
+    const matches = useSelector((state: AppState) =>
+        getMatchesByCommanderName(state, commander ? commander.name : "", dateFilter),
+    );
     const commanderPlayers: Player[] = useSelector((state: AppState) =>
         getPlayersByCommanderName(state, commander ? commander.name : "", dateFilter),
     );
@@ -59,7 +67,7 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                         return true;
                     }
                 }
-            };
+            }
             return false;
         });
     }
@@ -113,22 +121,22 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                     <Text>{`Total Number of Games: ${commander.matches.length}`}</Text>
                     <Text>{`Wins: ${commander.wins}`}</Text>
                     <Text>
-                        {`Winrate: ${commander.matches.length > 0
-                            ? Math.round((commander.wins / commander.matches.length) * 100)
-                            : 0
-                            }%`}
+                        {`Winrate: ${
+                            commander.matches.length > 0
+                                ? Math.round((commander.wins / commander.matches.length) * 100)
+                                : 0
+                        }%`}
                     </Text>
-                    <Text>{`Qualified: ${commander.matches.length >= COMMANDER_MINIMUM_GAMES_REQUIRED ? "Yes" : "No"}`}</Text>
+                    <Text>{`Qualified: ${
+                        commander.matches.length >= COMMANDER_MINIMUM_GAMES_REQUIRED ? "Yes" : "No"
+                    }`}</Text>
                     <Text>{`Color Identity: ${commander.colorIdentity}`}</Text>
                 </Flex>
             </Flex>
             <Flex direction={"column"}>
                 <DatePicker onChange={onDatePickerChange} />
                 <div style={{ padding: 20 }}>
-                    <Input
-                        placeholder='Search...'
-                        onChange={onSearchChange}
-                    />
+                    <Input placeholder="Search..." onChange={onSearchChange} />
                 </div>
             </Flex>
             <Tabs isFitted={true} width={"100%"} paddingRight={"10%"} paddingLeft={"10%"}>
@@ -145,8 +153,8 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                 </TabList>
                 <TabPanels>
                     <TabPanel>
-                        {
-                            matchesArray.length > 0 ? <SortableTable
+                        {matchesArray.length > 0 ? (
+                            <SortableTable
                                 columns={matchHistoryColumns}
                                 data={matchesArray}
                                 getRowProps={(row: any) => {
@@ -157,8 +165,10 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                                         },
                                     };
                                 }}
-                            /> : <div style={{ textAlign: "center" }}>No data</div>
-                        }
+                            />
+                        ) : (
+                            <div style={{ textAlign: "center" }}>No data</div>
+                        )}
                     </TabPanel>
                     <TabPanel>
                         <Flex flexDirection={"column"} justifyContent={"center"} alignItems={"center"} padding="8px">
@@ -178,8 +188,8 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                         </Flex>
                     </TabPanel>
                     <TabPanel>
-                        {
-                            commanderPlayers.length ? <SortableTable
+                        {commanderPlayers.length ? (
+                            <SortableTable
                                 columns={playerOverviewColumns}
                                 data={commanderPlayers}
                                 getRowProps={(row: any) => {
@@ -190,8 +200,10 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                                         },
                                     };
                                 }}
-                            /> : <div style={{ textAlign: "center" }}>No data</div>
-                        }
+                            />
+                        ) : (
+                            <div style={{ textAlign: "center" }}>No data</div>
+                        )}
                     </TabPanel>
                 </TabPanels>
             </Tabs>

@@ -1,9 +1,9 @@
-import { ComponentStyleConfig } from '@chakra-ui/theme';
+import { ComponentStyleConfig } from "@chakra-ui/theme";
 
 export const Tabs: ComponentStyleConfig = {
     defaultProps: {
-        variant: 'line',
-        colorScheme: 'primary',
-        size: ['sm', 'md', 'lg'],
+        variant: "line",
+        colorScheme: "primary",
+        size: ["sm", "md", "lg"],
     },
 };

@@ -1,16 +1,10 @@
-import { Checkbox, Flex } from '@chakra-ui/react';
-import {
-    Chart as ChartJS,
-    registerables,
-    TooltipItem
-} from 'chart.js';
+import { Checkbox, Flex } from "@chakra-ui/react";
+import { Chart as ChartJS, registerables, TooltipItem } from "chart.js";
 import React, { useMemo, useState } from "react";
 import { Line } from "react-chartjs-2";
-import { primaryColor, secondaryColor } from '../../themes/acorn';
+import { primaryColor, secondaryColor } from "../../themes/acorn";
 
-ChartJS.register(
-    ...registerables
-);
+ChartJS.register(...registerables);
 
 export const LineGraph = React.memo(function LineGraph({
     dataLabel,
@@ -25,25 +19,27 @@ export const LineGraph = React.memo(function LineGraph({
     maxY,
     xAxisTicksCallback,
 }: {
-    dataLabel: string,
-    data: { x: number | string, y: number | string }[],
-    enableTrendline?: boolean,
-    allowTogglableDataPoints?: boolean,
-    tooltipTitleCallback?: (tooltipItems: TooltipItem<"line">[]) => string,
-    tooltipLabelCallback?: (tooltipItems: TooltipItem<"line">) => string
-    minX?: number,
-    maxX?: number,
-    minY?: number,
-    maxY?: number,
-    xAxisTicksCallback?: (val: any, index: any) => string
+    dataLabel: string;
+    data: { x: number | string; y: number | string }[];
+    enableTrendline?: boolean;
+    allowTogglableDataPoints?: boolean;
+    tooltipTitleCallback?: (tooltipItems: TooltipItem<"line">[]) => string;
+    tooltipLabelCallback?: (tooltipItems: TooltipItem<"line">) => string;
+    minX?: number;
+    maxX?: number;
+    minY?: number;
+    maxY?: number;
+    xAxisTicksCallback?: (val: any, index: any) => string;
 }) {
     const [showDataPoints, setShowDataPoints] = useState<boolean>(false);
 
-    const toggleShowDataPoints = () => { setShowDataPoints(!showDataPoints) };
+    const toggleShowDataPoints = () => {
+        setShowDataPoints(!showDataPoints);
+    };
 
     const averageData = useMemo(() => {
         // group every 5 data points into 1 data point
-        const result: { x: number | string, y: number | string }[] = [];
+        const result: { x: number | string; y: number | string }[] = [];
         if (data.length >= 5) {
             let runningTotal = Number(data[0].y);
             for (let i = 1; i < data.length; i++) {
@@ -58,7 +54,7 @@ export const LineGraph = React.memo(function LineGraph({
         }
 
         return result;
-    }, [data])
+    }, [data]);
 
     const lineGraphData = useMemo(() => {
         const result = {
@@ -70,15 +66,15 @@ export const LineGraph = React.memo(function LineGraph({
                     backgroundColor: primaryColor[50],
                     borderColor: primaryColor[300],
                     pointBackgroundColor: primaryColor[400],
-                    pointBorderColor: '#fff',
-                    pointHoverBackgroundColor: '#fff',
+                    pointBorderColor: "#fff",
+                    pointHoverBackgroundColor: "#fff",
                     pointHoverBorderColor: primaryColor[200],
                     pointRadius: showDataPoints ? undefined : 0,
                     lineTension: 0.4,
                     order: 2,
                 },
             ],
-        }
+        };
 
         if (enableTrendline) {
             result.datasets.push({
@@ -88,13 +84,13 @@ export const LineGraph = React.memo(function LineGraph({
                 backgroundColor: secondaryColor[50],
                 borderColor: secondaryColor[300],
                 pointBackgroundColor: secondaryColor[400],
-                pointBorderColor: '#fff',
-                pointHoverBackgroundColor: '#fff',
+                pointBorderColor: "#fff",
+                pointHoverBackgroundColor: "#fff",
                 pointHoverBorderColor: secondaryColor[200],
                 pointRadius: 0,
                 lineTension: 0.4,
                 order: 1,
-            })
+            });
         }
 
         return result;
@@ -108,13 +104,13 @@ export const LineGraph = React.memo(function LineGraph({
                 options={{
                     scales: {
                         x: {
-                            type: 'linear',
+                            type: "linear",
                             min: minX ? minX : undefined,
                             max: maxX ? maxX : undefined,
                             ticks: {
                                 precision: 0,
-                                callback: xAxisTicksCallback ? xAxisTicksCallback : undefined
-                            }
+                                callback: xAxisTicksCallback ? xAxisTicksCallback : undefined,
+                            },
                         },
                         y: {
                             suggestedMin: minY ? minY : 0,
@@ -130,20 +126,18 @@ export const LineGraph = React.memo(function LineGraph({
                                 title: tooltipTitleCallback ? (item) => tooltipTitleCallback(item) : undefined,
                                 label: tooltipLabelCallback ? (item) => tooltipLabelCallback(item) : undefined,
                             },
-                            displayColors: false
-                        }
+                            displayColors: false,
+                        },
                     },
                 }}
             />
             <Flex marginBottom={"16px"}>
-                {
-
-                    allowTogglableDataPoints ?
-                        <Checkbox isChecked={showDataPoints} onChange={toggleShowDataPoints} marginTop={"16px"}>
-                            {'Show data points'}
-                        </Checkbox> : null
-                }
+                {allowTogglableDataPoints ? (
+                    <Checkbox isChecked={showDataPoints} onChange={toggleShowDataPoints} marginTop={"16px"}>
+                        {"Show data points"}
+                    </Checkbox>
+                ) : null}
             </Flex>
         </>
     );
-})
+});

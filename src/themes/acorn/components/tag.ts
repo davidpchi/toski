@@ -1,11 +1,11 @@
-import type { ComponentStyleConfig } from '@chakra-ui/theme';
+import type { ComponentStyleConfig } from "@chakra-ui/theme";
 
 export const Tag: ComponentStyleConfig = {
     variants: {
         subtle: {
             container: {
-                bg: 'secondary.500',
-                color: 'white',
+                bg: "secondary.500",
+                color: "white",
             },
         },
     },
@@ -20,7 +20,7 @@ export const Tag: ComponentStyleConfig = {
         },
     },
     defaultProps: {
-        variant: 'bold',
-        size: ['md', 'lg', 'xl'],
+        variant: "bold",
+        size: ["md", "lg", "xl"],
     },
 };

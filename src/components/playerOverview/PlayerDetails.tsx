@@ -3,7 +3,13 @@ import { useSelector } from "react-redux";
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { Flex, Heading, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
 
-import { getCommanders, getCommandersByPlayerName, getFavoriteCommanderForPlayer, getMatchesByPlayerName, getPlayer } from "../../redux/statsSelectors";
+import {
+    getCommanders,
+    getCommandersByPlayerName,
+    getFavoriteCommanderForPlayer,
+    getMatchesByPlayerName,
+    getPlayer,
+} from "../../redux/statsSelectors";
 import { AppState } from "../../redux/rootReducer";
 import { matchHistoryColumns } from "../matchHistory/matchHistoryColumnHelper";
 import { SortableTable } from "../dataVisualizations/SortableTable";
@@ -41,11 +47,15 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
     const commanders = useSelector((state: AppState) => getCommanders(state));
     const favoriteCommander = useSelector((state: AppState) => getFavoriteCommanderForPlayer(state, playerId));
 
-    const matches = useSelector((state: AppState) => getMatchesByPlayerName(state, playerId ? playerId : "", dateFilter));
+    const matches = useSelector((state: AppState) =>
+        getMatchesByPlayerName(state, playerId ? playerId : "", dateFilter),
+    );
     matches.sort((a: Match, b: Match) => Number(b.id) - Number(a.id));
 
     // Get array of commanders played and sort by game count
-    const playedCommanders: Commander[] = useSelector((state: AppState) => getCommandersByPlayerName(state, playerId ? playerId : "", dateFilter));
+    const playedCommanders: Commander[] = useSelector((state: AppState) =>
+        getCommandersByPlayerName(state, playerId ? playerId : "", dateFilter),
+    );
     playedCommanders.sort((a: Commander, b: Commander) => b.matches.length - a.matches.length);
 
     if (commanders === undefined || player === undefined) {
@@ -53,7 +63,9 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
     }
 
     // Get image for most played commander
-    const favCommanderImage = favoriteCommander ? commanderList[favoriteCommander.name].image.replace("normal", "art_crop") : "";
+    const favCommanderImage = favoriteCommander
+        ? commanderList[favoriteCommander.name].image.replace("normal", "art_crop")
+        : "";
 
     const colorsPlayedArray: number[] = [];
     for (const colorObj of MTG_COLORS) {
@@ -64,13 +76,33 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
         <Flex direction="column" justify="center" align="center">
             <Heading>{player.name}</Heading>
 
-            <Flex direction="row" justify="space-evenly" align="center" gap="20px" flexWrap={"wrap"} marginBottom={"16px"}>
-                {favoriteCommander ?
-                    <Link to={`/commanderOverview/${favoriteCommander.id}`} style={{ color: "blue", textDecoration: "underline" }}>
-                        <ImageWithHover label={`Favorite Commander: ${favoriteCommander.name}`} width={200} image={favCommanderImage} />
+            <Flex
+                direction="row"
+                justify="space-evenly"
+                align="center"
+                gap="20px"
+                flexWrap={"wrap"}
+                marginBottom={"16px"}
+            >
+                {favoriteCommander ? (
+                    <Link
+                        to={`/commanderOverview/${favoriteCommander.id}`}
+                        style={{ color: "blue", textDecoration: "underline" }}
+                    >
+                        <ImageWithHover
+                            label={`Favorite Commander: ${favoriteCommander.name}`}
+                            width={200}
+                            image={favCommanderImage}
+                        />
                     </Link>
-                    : null}
-                <Flex direction="column" padding="16px" minWidth={"200px"} justifyContent={"center"} alignItems={"center"}>
+                ) : null}
+                <Flex
+                    direction="column"
+                    padding="16px"
+                    minWidth={"200px"}
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                >
                     <Text>{`Games played: ${player.matches.length}`}</Text>
                     <Text>{`Winrate: ${getWinRatePercentage(player.wins, player.matches.length)}%`}</Text>
                     <Text>{`Avg. win turn: ${getAverageWinTurn(player)}`}</Text>
@@ -78,7 +110,11 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
 
                 <Flex maxWidth={175} maxHeight={175}>
                     <div style={{ flex: 1, display: "flex", width: "100%", height: "100%" }}>
-                        <PieGraph dataLabel={"Commanders played"} data={colorsPlayedArray} backgroundColors={MTG_COLORS.map((color) => color.rgb)} />
+                        <PieGraph
+                            dataLabel={"Commanders played"}
+                            data={colorsPlayedArray}
+                            backgroundColors={MTG_COLORS.map((color) => color.rgb)}
+                        />
                     </div>
                 </Flex>
             </Flex>
@@ -97,18 +133,20 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
                 </TabList>
                 <TabPanels>
                     <TabPanel>
-                        {matches.length > 0 ? <SortableTable
-                            columns={matchHistoryColumns}
-                            data={matches}
-                            getRowProps={(row: any) => {
-                                return {
-                                    onClick: () => {
-                                        navigate(`/matchHistory/${row.original.id}`);
-                                        window.scrollTo(0, 0);
-                                    },
-                                };
-                            }}
-                        /> :
+                        {matches.length > 0 ? (
+                            <SortableTable
+                                columns={matchHistoryColumns}
+                                data={matches}
+                                getRowProps={(row: any) => {
+                                    return {
+                                        onClick: () => {
+                                            navigate(`/matchHistory/${row.original.id}`);
+                                            window.scrollTo(0, 0);
+                                        },
+                                    };
+                                }}
+                            />
+                        ) : (
                             <Flex
                                 flexDirection={"column"}
                                 justifyContent={"center"}
@@ -117,7 +155,7 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
                             >
                                 <Text>Not enough matches for date range selected</Text>
                             </Flex>
-                        }
+                        )}
                     </TabPanel>
                     <TabPanel>
                         <SortableTable
@@ -137,7 +175,12 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
                         {matches.length >= PLAYER_MINIMUM_GAMES_REQUIRED ? (
                             <MatchPlacementBarChart matches={matches} playerId={playerId} />
                         ) : (
-                            <Flex flexDirection={"column"} justifyContent={"center"} alignItems={"center"} padding="8px">
+                            <Flex
+                                flexDirection={"column"}
+                                justifyContent={"center"}
+                                alignItems={"center"}
+                                padding="8px"
+                            >
                                 <Text>Not enough matches</Text>
                             </Flex>
                         )}

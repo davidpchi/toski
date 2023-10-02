@@ -7,8 +7,8 @@ function matchPlayerHelper(
     nameIndex: number,
     commanderIndex: number,
     positionIndex: number,
-    rankIndex: number): MatchPlayer {
-
+    rankIndex: number,
+): MatchPlayer {
     const nameData = cell.c[nameIndex];
     const commanderData = cell.c[commanderIndex];
     const rankData = cell.c[rankIndex];
@@ -20,7 +20,7 @@ function matchPlayerHelper(
         name: nameData ? nameData.v.toString() : "",
         commanders: commanders,
         rank: rankData ? rankData.v.toString() : "",
-        turnPosition: turnData ? turnData.v.toString() : ""
+        turnPosition: turnData ? turnData.v.toString() : "",
     };
 
     return player;
@@ -65,16 +65,15 @@ export function sheetRowToMatch(cell: SheetRow, id: string): Match {
         numberOfTurns: numberOfTurns ? numberOfTurns.v.toString() : "",
         players: players,
         winner: winnerName ? winnerName.v.toString() : "",
-    }
+    };
 }
 
-export function getPlayerWinRate(matches: Match[], playerName: string): { name: string, winR: number, loseR: number } {
+export function getPlayerWinRate(matches: Match[], playerName: string): { name: string; winR: number; loseR: number } {
     // Games counter
     let games = 0;
 
     // Wins counter
     let wins = 0;
-
 
     // There exists an array of match objects, each contains an array of match player objects, match player objects have a "name" key
     // We want to loop through all matches / match players looking for playerName and incrementing games / wins
@@ -98,5 +97,5 @@ export function getPlayerWinRate(matches: Match[], playerName: string): { name: 
         }
     }
 
-    return { name: playerName, winR: (wins / games), loseR: (1 - (wins / games)) }
+    return { name: playerName, winR: wins / games, loseR: 1 - wins / games };
 }
