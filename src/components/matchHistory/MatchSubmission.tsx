@@ -2,7 +2,24 @@ import React, { useCallback, useMemo, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-import { Button, Flex, Heading, Input, Select, Text, Image, IconButton, Box, Skeleton, Slider, SliderTrack, SliderFilledTrack, SliderThumb, SliderMark, Textarea } from "@chakra-ui/react";
+import {
+    Button,
+    Flex,
+    Heading,
+    Input,
+    Select,
+    Text,
+    Image,
+    IconButton,
+    Box,
+    Skeleton,
+    Slider,
+    SliderTrack,
+    SliderFilledTrack,
+    SliderThumb,
+    SliderMark,
+    Textarea,
+} from "@chakra-ui/react";
 import { submitMatch } from "../../services/matchHistoryService";
 import { CreatableSelect, SingleValue } from "chakra-react-select";
 import { useSelector } from "react-redux";
@@ -15,8 +32,8 @@ import { primaryColor } from "../../themes/acorn";
 const placeholderImage = "https://static.thenounproject.com/png/5425-200.png";
 
 type SelectItem = {
-    name: string,
-    label: string
+    name: string;
+    label: string;
 };
 
 const MatchSubmissionPlayerCard = React.memo(function MatchSubmissionPlayerCard({
@@ -28,19 +45,25 @@ const MatchSubmissionPlayerCard = React.memo(function MatchSubmissionPlayerCard(
     setPlayerRank,
     onClose,
 }: {
-    title: string,
-    commanderOptions: SelectItem[],
-    showCloseIcon?: boolean,
-    setPlayerValue: (val: string) => void,
-    setCommanderValue: (val: string) => void,
-    setPlayerRank: (val: number) => void,
-    onClose?: () => void
+    title: string;
+    commanderOptions: SelectItem[];
+    showCloseIcon?: boolean;
+    setPlayerValue: (val: string) => void;
+    setCommanderValue: (val: string) => void;
+    setPlayerRank: (val: number) => void;
+    onClose?: () => void;
 }) {
     const players = useSelector(getPlayers);
-    const playersArray = players ? Object.values(players).sort((a, b) => a.name.localeCompare(b.name)).map((value) => { return { name: value.name, label: value.name } }) : [];
+    const playersArray = players
+        ? Object.values(players)
+              .sort((a, b) => a.name.localeCompare(b.name))
+              .map((value) => {
+                  return { name: value.name, label: value.name };
+              })
+        : [];
 
     const [playerName, setPlayerName] = useState<SelectItem>();
-    const [playerNameInputValue, setPlayerNameInputValue] = useState('');
+    const [playerNameInputValue, setPlayerNameInputValue] = useState("");
     const handlePlayerInputChange = (value: string) => {
         setPlayerNameInputValue(value);
     };
@@ -51,7 +74,7 @@ const MatchSubmissionPlayerCard = React.memo(function MatchSubmissionPlayerCard(
         }
     };
     const handleCreatePlayerName = (inputValue: string) => {
-        if (inputValue !== '') {
+        if (inputValue !== "") {
             setPlayerValue(inputValue);
             setPlayerName({ name: inputValue, label: inputValue });
         }
@@ -65,21 +88,25 @@ const MatchSubmissionPlayerCard = React.memo(function MatchSubmissionPlayerCard(
         setCommanderValue(value);
     };
 
-
     const [rankSliderValue, setRankSliderValue] = useState<number>(1);
 
-    const onUpdateRank = useCallback((value: number) => {
-        setRankSliderValue(value);
-        setPlayerRank(value);
-    }, [setPlayerRank]);
+    const onUpdateRank = useCallback(
+        (value: number) => {
+            setRankSliderValue(value);
+            setPlayerRank(value);
+        },
+        [setPlayerRank],
+    );
 
-    const commanderImage = commanderList[commanderSelectValue] ? commanderList[commanderSelectValue].image.replace("normal", "art_crop") : undefined;
+    const commanderImage = commanderList[commanderSelectValue]
+        ? commanderList[commanderSelectValue].image.replace("normal", "art_crop")
+        : undefined;
 
     return (
         <Flex
-            direction='column'
-            justify='center'
-            align='left'
+            direction="column"
+            justify="center"
+            align="left"
             borderWidth={1}
             padding={"8px"}
             borderRadius={"8px"}
@@ -87,29 +114,30 @@ const MatchSubmissionPlayerCard = React.memo(function MatchSubmissionPlayerCard(
             marginRight={"16px"}
             marginTop={"16px"}
             width={"100%"}
-            maxWidth={"500px"}>
+            maxWidth={"500px"}
+        >
             <div style={{ position: "relative" }}>
-                <Flex
-                    direction={"column"}
-                    justifyContent={"center"}
-                    alignItems={"center"}
-                    flex={1}>
-                    <Heading size={"md"} padding={"0px"} marginBottom={"8px"}>{title}</Heading>
-                    {commanderImage !== undefined ?
+                <Flex direction={"column"} justifyContent={"center"} alignItems={"center"} flex={1}>
+                    <Heading size={"md"} padding={"0px"} marginBottom={"8px"}>
+                        {title}
+                    </Heading>
+                    {commanderImage !== undefined ? (
                         <Image src={commanderImage} height={20} borderRadius={8} />
-                        : <Image src={placeholderImage} height={"80px"} borderRadius={8} />
-                    }
+                    ) : (
+                        <Image src={placeholderImage} height={"80px"} borderRadius={8} />
+                    )}
                 </Flex>
-                {showCloseIcon ?
+                {showCloseIcon ? (
                     <IconButton
                         position={"absolute"}
                         top={0}
                         right={0}
                         onClick={onClose}
-                        variant='ghost'
-                        aria-label='open menu'
+                        variant="ghost"
+                        aria-label="open menu"
                         icon={<FiX />}
-                    /> : null}
+                    />
+                ) : null}
             </div>
             <Text marginTop={"8px"}>Name:</Text>
             <CreatableSelect
@@ -122,38 +150,46 @@ const MatchSubmissionPlayerCard = React.memo(function MatchSubmissionPlayerCard(
                 onChange={handleOnPlayerNameChange}
                 onInputChange={handlePlayerInputChange}
                 onCreateOption={handleCreatePlayerName}
-                placeholder='Enter Player Name'
-                size='lg'
+                placeholder="Enter Player Name"
+                size="lg"
             />
 
             <Text marginTop={"8px"}>Commander:</Text>
             <Select
-                size='lg'
+                size="lg"
                 onChange={onCommanderSelectChange}
                 value={commanderSelectValue}
                 placeholder={"Select commander..."}
             >
                 {commanderOptions.map((option) => {
-                    return (<option value={option.name}>{option.name}</option>)
+                    return <option value={option.name}>{option.name}</option>;
                 })}
             </Select>
             <Text marginTop={"8px"}>Rank:</Text>
             <Box padding={"6px"}>
                 <Slider defaultValue={1} min={1} max={4} step={1} onChangeEnd={onUpdateRank}>
-                    <SliderMark value={1} marginTop={"10px"}>1</SliderMark>
-                    <SliderMark value={2} marginTop={"10px"}>2</SliderMark>
-                    <SliderMark value={3} marginTop={"10px"}>3</SliderMark>
-                    <SliderMark value={4} marginTop={"10px"}>4</SliderMark>
-                    <SliderTrack bg={primaryColor[100]} >
-                        <Box position='relative' right={10} />
+                    <SliderMark value={1} marginTop={"10px"}>
+                        1
+                    </SliderMark>
+                    <SliderMark value={2} marginTop={"10px"}>
+                        2
+                    </SliderMark>
+                    <SliderMark value={3} marginTop={"10px"}>
+                        3
+                    </SliderMark>
+                    <SliderMark value={4} marginTop={"10px"}>
+                        4
+                    </SliderMark>
+                    <SliderTrack bg={primaryColor[100]}>
+                        <Box position="relative" right={10} />
                         <SliderFilledTrack bg={primaryColor[500]} />
                     </SliderTrack>
                     <SliderThumb boxSize={6} />
                 </Slider>
             </Box>
-        </Flex >
-    )
-})
+        </Flex>
+    );
+});
 
 export const MatchSubmission = React.memo(function MatchSubmission() {
     const navigate = useNavigate();
@@ -192,43 +228,42 @@ export const MatchSubmission = React.memo(function MatchSubmission() {
 
     const onClose = useCallback(() => {
         setPlayerCount(playerCount - 1);
-    }, [playerCount, setPlayerCount])
+    }, [playerCount, setPlayerCount]);
 
     const onAddPlayer = useCallback(() => {
         if (playerCount < 4) {
             setPlayerCount(playerCount + 1);
         }
-    }, [playerCount, setPlayerCount])
+    }, [playerCount, setPlayerCount]);
 
     const submitData = useCallback(async () => {
         const player1 = {
             name: player1Name,
             commander: player1Commander,
             turnOrder: 1,
-            rank: player1Rank
+            rank: player1Rank,
         };
 
         const player2 = {
             name: player2Name,
             commander: player2Commander,
             turnOrder: 2,
-            rank: player2Rank
+            rank: player2Rank,
         };
 
         const player3 = {
             name: player3Name,
             commander: player3Commander,
             turnOrder: 3,
-            rank: player3Rank
+            rank: player3Rank,
         };
 
         const player4 = {
             name: player4Name,
             commander: player4Commander,
             turnOrder: 4,
-            rank: player4Rank
+            rank: player4Rank,
         };
-
 
         const result = await submitMatch(date, player1, player2, player3, player4, turnCount, notes);
 
@@ -252,32 +287,40 @@ export const MatchSubmission = React.memo(function MatchSubmission() {
         player4Commander,
         player4Rank,
         turnCount,
-        notes
+        notes,
     ]);
 
     // loop through all of players and create their matchSubmission cards
 
     const commandersArray = useMemo(() => {
-        return Object.keys(commanderList).map((value) => { return { name: value, label: value } })
+        return Object.keys(commanderList).map((value) => {
+            return { name: value, label: value };
+        });
     }, []);
 
     return (
-        <Flex direction='column' justify='center' align='center'>
+        <Flex direction="column" justify="center" align="center">
             <Heading>SUBMIT MATCH</Heading>
-            <Flex direction='column' justify='center' align='left' marginBottom={"16px"}>
+            <Flex direction="column" justify="center" align="left" marginBottom={"16px"}>
                 <Text>Date:</Text>
-                <DatePicker selected={date} onChange={(value) => { if (value !== null) setDate(value); }} />
+                <DatePicker
+                    selected={date}
+                    onChange={(value) => {
+                        if (value !== null) setDate(value);
+                    }}
+                />
             </Flex>
-            <Flex direction='column' justify='center' align='left' marginBottom={"16px"}>
-                {playerCount >= 1 ?
+            <Flex direction="column" justify="center" align="left" marginBottom={"16px"}>
+                {playerCount >= 1 ? (
                     <MatchSubmissionPlayerCard
                         commanderOptions={commandersArray}
                         title={"Player 1"}
                         setPlayerValue={setPlayer1Name}
                         setCommanderValue={setPlayer1Commander}
-                        setPlayerRank={setPlayer1Rank} />
-                    : null}
-                {playerCount >= 2 ?
+                        setPlayerRank={setPlayer1Rank}
+                    />
+                ) : null}
+                {playerCount >= 2 ? (
                     <MatchSubmissionPlayerCard
                         commanderOptions={commandersArray}
                         title={"Player 2"}
@@ -285,9 +328,10 @@ export const MatchSubmission = React.memo(function MatchSubmission() {
                         setCommanderValue={setPlayer2Commander}
                         setPlayerRank={setPlayer2Rank}
                         showCloseIcon={playerCount == 2}
-                        onClose={onClose} />
-                    : null}
-                {playerCount >= 3 ?
+                        onClose={onClose}
+                    />
+                ) : null}
+                {playerCount >= 3 ? (
                     <MatchSubmissionPlayerCard
                         commanderOptions={commandersArray}
                         title={"Player 3"}
@@ -295,9 +339,10 @@ export const MatchSubmission = React.memo(function MatchSubmission() {
                         setCommanderValue={setPlayer3Commander}
                         setPlayerRank={setPlayer3Rank}
                         showCloseIcon={playerCount == 3}
-                        onClose={onClose} />
-                    : null}
-                {playerCount >= 4 ?
+                        onClose={onClose}
+                    />
+                ) : null}
+                {playerCount >= 4 ? (
                     <MatchSubmissionPlayerCard
                         commanderOptions={commandersArray}
                         title={"Player 4"}
@@ -305,22 +350,37 @@ export const MatchSubmission = React.memo(function MatchSubmission() {
                         setCommanderValue={setPlayer4Commander}
                         setPlayerRank={setPlayer4Rank}
                         showCloseIcon={playerCount == 4}
-                        onClose={onClose} />
-                    : null}
-                {playerCount < 4 ?
+                        onClose={onClose}
+                    />
+                ) : null}
+                {playerCount < 4 ? (
                     <Button onClick={onAddPlayer} width={"100%"}>
                         <Flex direction={"row"} alignItems={"center"}>
                             <FiUserPlus />
-                            <Text size={"md"} padding={"0px"} marginLeft={"16px"} >Add Player</Text>
+                            <Text size={"md"} padding={"0px"} marginLeft={"16px"}>
+                                Add Player
+                            </Text>
                         </Flex>
                     </Button>
-                    : null}
+                ) : null}
             </Flex>
             <Text>Number of Turns:</Text>
-            <Input value={turnCount} onChange={onUpdateTurnCount} marginBottom={"16px"} width={"100%"} maxWidth={"500px"}></Input>
+            <Input
+                value={turnCount}
+                onChange={onUpdateTurnCount}
+                marginBottom={"16px"}
+                width={"100%"}
+                maxWidth={"500px"}
+            ></Input>
             <Text>Notes:</Text>
-            <Textarea value={notes} onChange={onUpdateNotes} marginBottom={"16px"} width={"100%"} maxWidth={"500px"}></Textarea>
+            <Textarea
+                value={notes}
+                onChange={onUpdateNotes}
+                marginBottom={"16px"}
+                width={"100%"}
+                maxWidth={"500px"}
+            ></Textarea>
             <Button onClick={submitData}>Submit Data</Button>
         </Flex>
-    )
+    );
 });
