@@ -147,6 +147,7 @@ const NavItem = ({ icon, label, route, onClose }: NavItemProps) => {
 
     const onClick = useCallback(() => {
         navigate(route);
+        window.scrollTo(0, 0);
         onClose();
     }, [route, navigate, onClose]);
 
