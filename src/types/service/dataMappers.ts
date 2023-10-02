@@ -36,25 +36,41 @@ export function sheetRowToMatch(cell: SheetRow, id: string): Match {
 
     const numberOfTurns = cell.c[19];
 
-    const winnerName = cell.c[22];
+    // Data that is manually entered will have winnerName populated.
+    // However, if we swap to form based automated data entry, this field will not
+    // exist and we should rely on player rank instead.
+    // const winnerName = cell.c[22];
+    let winnerName = "";
 
     const players: MatchPlayer[] = [];
 
     // drop all empty players
     if (player1.name !== undefined && player1.name !== "") {
         players.push(player1);
+        if (player1.rank === "1") {
+            winnerName = player1.name;
+        }
     }
 
     if (player2.name !== undefined && player2.name !== "") {
         players.push(player2);
+        if (player2.rank === "1") {
+            winnerName = player2.name;
+        }
     }
 
     if (player3.name !== undefined && player3.name !== "") {
         players.push(player3);
+        if (player3.rank === "1") {
+            winnerName = player3.name;
+        }
     }
 
     if (player4.name !== undefined && player4.name !== "") {
         players.push(player4);
+        if (player4.rank === "1") {
+            winnerName = player4.name;
+        }
     }
 
     players.sort((a, b) => Number(a.turnPosition) - Number(b.turnPosition));
@@ -64,7 +80,7 @@ export function sheetRowToMatch(cell: SheetRow, id: string): Match {
         id,
         numberOfTurns: numberOfTurns ? numberOfTurns.v.toString() : "",
         players: players,
-        winner: winnerName ? winnerName.v.toString() : "",
+        winner: winnerName,
     };
 }
 
