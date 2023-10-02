@@ -14,21 +14,12 @@ import {
     useColorModeValue,
     useDisclosure,
     VStack,
-} from '@chakra-ui/react';
-import { ReactNode, useCallback } from 'react';
-import { IconType } from 'react-icons';
-import {
-    FiBarChart,
-    FiCalendar,
-    FiHome,
-    FiMenu,
-    FiRss,
-    FiShield,
-    FiTrendingUp,
-    FiUsers,
-} from 'react-icons/fi';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { FF_IS_NEWS_ENABLED } from '../services/featureFlagService';
+} from "@chakra-ui/react";
+import { ReactNode, useCallback } from "react";
+import { IconType } from "react-icons";
+import { FiBarChart, FiCalendar, FiHome, FiMenu, FiRss, FiShield, FiTrendingUp, FiUsers } from "react-icons/fi";
+import { useLocation, useNavigate } from "react-router-dom";
+import { FF_IS_NEWS_ENABLED } from "../services/featureFlagService";
 
 interface LinkItemProps {
     name: string;
@@ -36,34 +27,27 @@ interface LinkItemProps {
     route: string;
 }
 const LinkItems: Array<LinkItemProps> = [
-    { name: 'Home', icon: FiHome, route: '/' },
-    { name: 'Player Overview', icon: FiUsers, route: '/playerOverview' },
-    { name: 'Commander Overview', icon: FiShield, route: '/commanderOverview' },
-    { name: 'Commander Trends', icon: FiBarChart, route: '/commanderTrends' },
-    { name: 'Match History', icon: FiCalendar, route: '/matchHistory' },
-    { name: 'Match Trends', icon: FiTrendingUp, route: '/matchTrends' },
+    { name: "Home", icon: FiHome, route: "/" },
+    { name: "Player Overview", icon: FiUsers, route: "/playerOverview" },
+    { name: "Commander Overview", icon: FiShield, route: "/commanderOverview" },
+    { name: "Commander Trends", icon: FiBarChart, route: "/commanderTrends" },
+    { name: "Match History", icon: FiCalendar, route: "/matchHistory" },
+    { name: "Match Trends", icon: FiTrendingUp, route: "/matchTrends" },
 ];
 
-export default function SidebarWithHeader({
-    children,
-}: {
-    children: ReactNode;
-}) {
+export default function SidebarWithHeader({ children }: { children: ReactNode }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     return (
-        <Box minH='100vh'>
-            <SidebarContent
-                onClose={() => onClose}
-                display={{ base: 'none', md: 'block' }}
-            />
+        <Box minH="100vh">
+            <SidebarContent onClose={() => onClose} display={{ base: "none", md: "block" }} />
             <Drawer
                 autoFocus={false}
                 isOpen={isOpen}
-                placement='left'
+                placement="left"
                 onClose={onClose}
                 returnFocusOnClose={false}
                 onOverlayClick={onClose}
-                size='full'
+                size="full"
             >
                 <DrawerContent>
                     <SidebarContent onClose={onClose} />
@@ -73,10 +57,26 @@ export default function SidebarWithHeader({
             <Box>
                 <MobileNav onOpen={onOpen} />
             </Box>
-            <Box ml={{ base: 0, md: 60 }} p='4'>
+            <Box ml={{ base: 0, md: 60 }} p="4">
                 {children}
-                <Flex height={"64px"} justifyContent={"center"} alignItems={"center"} marginTop={"64px"} flexDirection={"column"}>
-                    <div style={{ textAlign: "center", fontStyle: "italic", fontSize: "12px" }}>This site contains unofficial Fan Content permitted under the <a href="https://company.wizards.com/en/legal/fancontentpolicy" style={{ textDecoration: "underline" }}>Fan Content Policy</a>. Not approved/endorsed by Wizards. Portions of the materials used are property of Wizards of the Coast. ©Wizards of the Coast LLC.</div>
+                <Flex
+                    height={"64px"}
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                    marginTop={"64px"}
+                    flexDirection={"column"}
+                >
+                    <div style={{ textAlign: "center", fontStyle: "italic", fontSize: "12px" }}>
+                        This site contains unofficial Fan Content permitted under the{" "}
+                        <a
+                            href="https://company.wizards.com/en/legal/fancontentpolicy"
+                            style={{ textDecoration: "underline" }}
+                        >
+                            Fan Content Policy
+                        </a>
+                        . Not approved/endorsed by Wizards. Portions of the materials used are property of Wizards of
+                        the Coast. ©Wizards of the Coast LLC.
+                    </div>
                 </Flex>
             </Box>
         </Box>
@@ -91,40 +91,31 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
     const linkItems = [...LinkItems];
 
     if (FF_IS_NEWS_ENABLED) {
-        linkItems.splice(1, 0, { name: 'Articles', icon: FiRss, route: '/articles' });
+        linkItems.splice(1, 0, { name: "Articles", icon: FiRss, route: "/articles" });
     }
 
     return (
         <Box
-            transition='3s ease'
-            borderRight='1px'
-            borderRightColor={useColorModeValue('gray.200', 'gray.700')}
-            w={{ base: 'full', md: 60 }}
-            pos='fixed'
-            h='full'
+            transition="3s ease"
+            borderRight="1px"
+            borderRightColor={useColorModeValue("gray.200", "gray.700")}
+            w={{ base: "full", md: 60 }}
+            pos="fixed"
+            h="full"
             {...rest}
         >
-            <Flex h='20' align='center' mx='8' justify='space-between'>
-                <Flex direction='column' justify='center' align='center'>
-                    <Text
-                        fontSize='20'
-                        fontWeight='bold'
-                        textTransform='uppercase'
-                        color='gray.600'
-                        noOfLines={1}
-                    >
+            <Flex h="20" align="center" mx="8" justify="space-between">
+                <Flex direction="column" justify="center" align="center">
+                    <Text fontSize="20" fontWeight="bold" textTransform="uppercase" color="gray.600" noOfLines={1}>
                         Project Toski
                     </Text>
-                    <Text fontSize='10px' alignSelf={'flex-end'}>
+                    <Text fontSize="10px" alignSelf={"flex-end"}>
                         Alpha
                     </Text>
                 </Flex>
-                <CloseButton
-                    display={{ base: 'flex', md: 'none' }}
-                    onClick={onClose}
-                />
+                <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
             </Flex>
-            <VStack spacing='24px' align='stretch' justify='flex-start'>
+            <VStack spacing="24px" align="stretch" justify="flex-start">
                 {linkItems.map((link) => (
                     <NavItem
                         key={link.name}
@@ -160,15 +151,15 @@ const NavItem = ({ icon, label, route, onClose }: NavItemProps) => {
     }, [route, navigate, onClose]);
 
     return (
-        <Link style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
-            <Flex direction='column'>
+        <Link style={{ textDecoration: "none" }} _focus={{ boxShadow: "none" }}>
+            <Flex direction="column">
                 <Button
                     leftIcon={<Icon as={icon}></Icon>}
                     onClick={onClick}
-                    variant={isSelected() ? 'solid' : 'ghost'}
-                    size='lg'
-                    borderRadius='0'
-                    justifyContent='flex-start'
+                    variant={isSelected() ? "solid" : "ghost"}
+                    size="lg"
+                    borderRadius="0"
+                    justifyContent="flex-start"
                 >
                     <Text>{label}</Text>
                 </Button>
@@ -185,33 +176,33 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         <Flex
             ml={{ base: 0, md: 60 }}
             px={{ base: 4, md: 4 }}
-            height='20'
-            align='center'
-            borderBottomWidth='1px'
-            borderBottomColor={useColorModeValue('gray.200', 'gray.700')}
-            justify={{ base: 'space-between', md: 'flex-end' }}
+            height="20"
+            align="center"
+            borderBottomWidth="1px"
+            borderBottomColor={useColorModeValue("gray.200", "gray.700")}
+            justify={{ base: "space-between", md: "flex-end" }}
             {...rest}
         >
             <IconButton
-                display={{ base: 'flex', md: 'none' }}
+                display={{ base: "flex", md: "none" }}
                 onClick={onOpen}
-                variant='outline'
-                aria-label='open menu'
+                variant="outline"
+                aria-label="open menu"
                 icon={<FiMenu />}
             />
 
-            <Box display={{ base: 'flex', md: 'none' }}>
-                <Flex direction='column' justify='center' align='center'>
+            <Box display={{ base: "flex", md: "none" }}>
+                <Flex direction="column" justify="center" align="center">
                     <Text
-                        fontSize='2xl'
-                        fontFamily='monospace'
-                        fontWeight='bold'
-                        textTransform='uppercase'
-                        color='gray.600'
+                        fontSize="2xl"
+                        fontFamily="monospace"
+                        fontWeight="bold"
+                        textTransform="uppercase"
+                        color="gray.600"
                     >
                         PROJECT TOSKI
                     </Text>
-                    <Text fontSize='10px' alignSelf={'flex-end'}>
+                    <Text fontSize="10px" alignSelf={"flex-end"}>
                         Alpha
                     </Text>
                 </Flex>

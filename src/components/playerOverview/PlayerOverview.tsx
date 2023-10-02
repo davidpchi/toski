@@ -18,9 +18,12 @@ export const PlayerOverview = React.memo(function MatchHistory() {
     const navigate = useNavigate();
 
     const [dateFilter, setDateFilter] = useState<Date | undefined>(undefined);
-    const onDatePickerChange = useCallback((date: Date | undefined) => {
-        setDateFilter(date);
-    }, [setDateFilter])
+    const onDatePickerChange = useCallback(
+        (date: Date | undefined) => {
+            setDateFilter(date);
+        },
+        [setDateFilter],
+    );
 
     const allPlayers: { [id: string]: Player } | undefined = useSelector(getPlayers);
     const players: Player[] = useSelector((state: AppState) => getPlayersByDate(state, dateFilter));
@@ -36,7 +39,9 @@ export const PlayerOverview = React.memo(function MatchHistory() {
 
     let playersArray = players.sort((a: Player, b: Player) => a.name.localeCompare(b.name));
     if (isFiltered) {
-        playersArray = playersArray.filter((value: Player) => allPlayers[value.name].matches.length >= PLAYER_MINIMUM_GAMES_REQUIRED);
+        playersArray = playersArray.filter(
+            (value: Player) => allPlayers[value.name].matches.length >= PLAYER_MINIMUM_GAMES_REQUIRED,
+        );
     }
 
     return (

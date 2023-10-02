@@ -534,7 +534,7 @@ export const commanderList: { [friendlyName: string]: { id: string; image: strin
         image: "https://cards.scryfall.io/normal/front/a/5/a5e6b864-58e7-43b9-9d79-1d0361340960.jpg?1627704325",
         color_identity: ["B"],
     },
-    "Asmoranomardicadaistinaculdacar": {
+    Asmoranomardicadaistinaculdacar: {
         id: "d99a9a7d-d9ca-4c11-80ab-e39d5943a315",
         image: "https://cards.scryfall.io/normal/front/d/9/d99a9a7d-d9ca-4c11-80ab-e39d5943a315.jpg?1632831210",
         color_identity: ["B", "R"],
@@ -579,7 +579,7 @@ export const commanderList: { [friendlyName: string]: { id: string; image: strin
         image: "https://cards.scryfall.io/normal/front/2/b/2b8414f7-22c3-4e1c-934b-4a0e7acf951d.jpg?1673305450",
         color_identity: ["G", "R", "W"],
     },
-    "Atogatog": {
+    Atogatog: {
         id: "4a3e6eb5-6d0f-4f82-86f9-bbce8d27afbb",
         image: "https://cards.scryfall.io/normal/front/4/a/4a3e6eb5-6d0f-4f82-86f9-bbce8d27afbb.jpg?1562908561",
         color_identity: ["B", "G", "R", "U", "W"],
@@ -929,7 +929,7 @@ export const commanderList: { [friendlyName: string]: { id: string; image: strin
         image: "https://cards.scryfall.io/normal/front/4/b/4bc07386-909f-4946-9120-3acb58622e2f.jpg?1543675209",
         color_identity: ["B"],
     },
-    "Borborygmos": {
+    Borborygmos: {
         id: "7c4a08e9-06c7-43e9-a855-4f507a35ae8b",
         image: "https://cards.scryfall.io/normal/front/7/c/7c4a08e9-06c7-43e9-a855-4f507a35ae8b.jpg?1593272594",
         color_identity: ["G", "R"],
@@ -1214,7 +1214,7 @@ export const commanderList: { [friendlyName: string]: { id: string; image: strin
         image: "https://cards.scryfall.io/normal/front/d/8/d8089e7f-7619-43fe-8e0b-31ce5d988a1b.jpg?1626100713",
         color_identity: ["B", "R"],
     },
-    "Chandler": {
+    Chandler: {
         id: "4dd3a8e3-9a90-44f4-996c-57242d3c47a5",
         image: "https://cards.scryfall.io/normal/front/4/d/4dd3a8e3-9a90-44f4-996c-57242d3c47a5.jpg?1562587277",
         color_identity: ["R"],
@@ -1269,7 +1269,7 @@ export const commanderList: { [friendlyName: string]: { id: string; image: strin
         image: "https://cards.scryfall.io/normal/front/f/6/f6cde2c4-f53d-4b44-b83b-37b12e00c835.jpg?1592713989",
         color_identity: ["G", "W"],
     },
-    "Chromium": {
+    Chromium: {
         id: "e85e54f3-012b-460f-a6f9-d0242a174adc",
         image: "https://cards.scryfall.io/normal/front/e/8/e85e54f3-012b-460f-a6f9-d0242a174adc.jpg?1562941643",
         color_identity: ["B", "U", "W"],
@@ -1364,7 +1364,7 @@ export const commanderList: { [friendlyName: string]: { id: string; image: strin
         image: "https://cards.scryfall.io/normal/front/6/4/6410a2a2-48d9-4032-b585-4eaa5bc06581.jpg?1674136050",
         color_identity: ["B"],
     },
-    "Cromat": {
+    Cromat: {
         id: "7d9e0a23-d2a8-40a6-9076-ed6fb539141b",
         image: "https://cards.scryfall.io/normal/front/7/d/7d9e0a23-d2a8-40a6-9076-ed6fb539141b.jpg?1562924606",
         color_identity: ["B", "G", "R", "U", "W"],
@@ -1814,7 +1814,7 @@ export const commanderList: { [friendlyName: string]: { id: string; image: strin
         image: "https://cards.scryfall.io/normal/front/9/5/95d197b3-fc56-43a2-981f-b5b905222b5c.jpg?1677763561",
         color_identity: ["G", "R"],
     },
-    "Elminster": {
+    Elminster: {
         id: "4eac2b49-6cb6-4ff4-8fac-2ba669326640",
         image: "https://cards.scryfall.io/normal/front/4/e/4eac2b49-6cb6-4ff4-8fac-2ba669326640.jpg?1674137504",
         color_identity: ["U", "W"],
@@ -2309,7 +2309,7 @@ export const commanderList: { [friendlyName: string]: { id: string; image: strin
         image: "https://cards.scryfall.io/normal/front/0/7/0744f08e-a588-4efe-ad56-5e9ed91dda40.jpg?1581481059",
         color_identity: ["G", "R"],
     },
-    "Gallowbraid": {
+    Gallowbraid: {
         id: "8df86192-6374-42ac-94bc-95e2e8284bd6",
         image: "https://cards.scryfall.io/normal/front/8/d/8df86192-6374-42ac-94bc-95e2e8284bd6.jpg?1562802094",
         color_identity: ["B"],
@@ -2964,7 +2964,7 @@ export const commanderList: { [friendlyName: string]: { id: string; image: strin
         image: "https://cards.scryfall.io/normal/front/4/4/440e5796-9264-4649-bf2f-58826dd0352c.jpg?1686964063",
         color_identity: ["G"],
     },
-    "Halfdane": {
+    Halfdane: {
         id: "2e939761-3542-4044-9038-d1d30c6a38fc",
         image: "https://cards.scryfall.io/normal/front/2/e/2e939761-3542-4044-9038-d1d30c6a38fc.jpg?1562858243",
         color_identity: ["B", "U", "W"],
@@ -3694,7 +3694,7 @@ export const commanderList: { [friendlyName: string]: { id: string; image: strin
         image: "https://cards.scryfall.io/normal/front/e/4/e4b1aa1e-b4e3-4346-8937-76b312501c70.jpg?1673307974",
         color_identity: ["B", "G", "R", "U", "W"],
     },
-    "Johan": {
+    Johan: {
         id: "2f2f3b3e-63f3-4cab-aa95-030990157ed5",
         image: "https://cards.scryfall.io/normal/front/2/f/2f2f3b3e-63f3-4cab-aa95-030990157ed5.jpg?1562904625",
         color_identity: ["G", "R", "W"],
@@ -3759,7 +3759,7 @@ export const commanderList: { [friendlyName: string]: { id: string; image: strin
         image: "https://cards.scryfall.io/normal/front/3/0/30553f61-6edf-4e7b-b60f-b8f62ca2bcad.jpg?1682209069",
         color_identity: ["B"],
     },
-    "Joven": {
+    Joven: {
         id: "0dabe3af-cd5b-461e-95a4-aad046646419",
         image: "https://cards.scryfall.io/normal/front/0/d/0dabe3af-cd5b-461e-95a4-aad046646419.jpg?1562587046",
         color_identity: ["R"],
@@ -4019,7 +4019,7 @@ export const commanderList: { [friendlyName: string]: { id: string; image: strin
         image: "https://cards.scryfall.io/normal/front/a/b/ab4b5ff5-fd6a-4948-9c54-440bf6324bd1.jpg?1651655270",
         color_identity: ["U"],
     },
-    "Kaysa": {
+    Kaysa: {
         id: "cd4b6daf-cf37-43c6-9446-3aa0de222ac4",
         image: "https://cards.scryfall.io/normal/front/c/d/cd4b6daf-cf37-43c6-9446-3aa0de222ac4.jpg?1562770177",
         color_identity: ["G"],
@@ -4964,7 +4964,7 @@ export const commanderList: { [friendlyName: string]: { id: string; image: strin
         image: "https://cards.scryfall.io/normal/front/b/b/bbc3bbda-a4bc-4302-a3fc-b1c89f0f5461.jpg?1608909299",
         color_identity: ["U"],
     },
-    "Malfegor": {
+    Malfegor: {
         id: "010a4b07-c2d5-433e-9898-6e148104e9e0",
         image: "https://cards.scryfall.io/normal/front/0/1/010a4b07-c2d5-433e-9898-6e148104e9e0.jpg?1562845263",
         color_identity: ["B", "R"],
@@ -5139,7 +5139,7 @@ export const commanderList: { [friendlyName: string]: { id: string; image: strin
         image: "https://cards.scryfall.io/normal/front/6/0/60b9db96-a6ab-454b-99a7-910ef77560d7.jpg?1668725069",
         color_identity: ["U"],
     },
-    "Memnarch": {
+    Memnarch: {
         id: "9203fde4-dbc1-449f-9618-4656f0e25e3c",
         image: "https://cards.scryfall.io/normal/front/9/2/9203fde4-dbc1-449f-9618-4656f0e25e3c.jpg?1562925842",
         color_identity: ["U"],
@@ -5294,7 +5294,7 @@ export const commanderList: { [friendlyName: string]: { id: string; image: strin
         image: "https://cards.scryfall.io/normal/front/5/8/585a753d-a692-474a-bc28-48dd93b73ace.jpg?1674421822",
         color_identity: ["B", "R"],
     },
-    "Missy": {
+    Missy: {
         id: "2dfae7d1-c09b-47e0-92d8-49b21402207d",
         image: "https://cards.scryfall.io/normal/front/2/d/2dfae7d1-c09b-47e0-92d8-49b21402207d.jpg?1690550110",
         color_identity: ["B", "R", "U"],
@@ -5359,7 +5359,7 @@ export const commanderList: { [friendlyName: string]: { id: string; image: strin
         image: "https://cards.scryfall.io/normal/front/c/c/cc5eacd7-aaa7-4720-9794-52e7b098c82c.jpg?1604197464",
         color_identity: ["R"],
     },
-    "Morinfen": {
+    Morinfen: {
         id: "b5006ad3-16ca-4be3-8d56-d4fe4e9e0a44",
         image: "https://cards.scryfall.io/normal/front/b/5/b5006ad3-16ca-4be3-8d56-d4fe4e9e0a44.jpg?1562802881",
         color_identity: ["B"],
@@ -5584,7 +5584,7 @@ export const commanderList: { [friendlyName: string]: { id: string; image: strin
         image: "https://cards.scryfall.io/normal/front/8/f/8f21a5b4-1cfa-466b-8a16-a8b11f20b818.jpg?1562616538",
         color_identity: ["G", "W"],
     },
-    "Nebuchadnezzar": {
+    Nebuchadnezzar: {
         id: "76a0b7cc-0889-4980-a23e-6f5088b374f8",
         image: "https://cards.scryfall.io/normal/front/7/6/76a0b7cc-0889-4980-a23e-6f5088b374f8.jpg?1562918774",
         color_identity: ["B", "U"],
@@ -5684,7 +5684,7 @@ export const commanderList: { [friendlyName: string]: { id: string; image: strin
         image: "https://cards.scryfall.io/normal/front/7/b/7b215968-93a6-4278-ac61-4e3e8c3c3943.jpg?1566971561",
         color_identity: ["B", "R", "U"],
     },
-    "Nihiloor": {
+    Nihiloor: {
         id: "a652ac92-4e61-45ec-866e-baafefd355e5",
         image: "https://cards.scryfall.io/normal/front/a/6/a652ac92-4e61-45ec-866e-baafefd355e5.jpg?1636287936",
         color_identity: ["B", "U", "W"],
@@ -6189,7 +6189,7 @@ export const commanderList: { [friendlyName: string]: { id: string; image: strin
         image: "https://cards.scryfall.io/normal/front/7/5/75ec8548-5790-4eac-8780-cdd126438192.jpg?1593096444",
         color_identity: ["B", "G"],
     },
-    "Phelddagrif": {
+    Phelddagrif: {
         id: "d9631cb2-d53b-4401-b53b-29d27bdefc44",
         image: "https://cards.scryfall.io/normal/front/d/9/d9631cb2-d53b-4401-b53b-29d27bdefc44.jpg?1562770627",
         color_identity: ["G", "U", "W"],
@@ -6324,7 +6324,7 @@ export const commanderList: { [friendlyName: string]: { id: string; image: strin
         image: "https://cards.scryfall.io/normal/front/a/1/a1dcf48c-2700-4024-807e-9244e4c649ac.jpg?1562860174",
         color_identity: ["B", "U"],
     },
-    "Progenitus": {
+    Progenitus: {
         id: "a8a5d0ba-bcb1-41db-80dd-ad22b8408105",
         image: "https://cards.scryfall.io/normal/front/a/8/a8a5d0ba-bcb1-41db-80dd-ad22b8408105.jpg?1561968078",
         color_identity: ["B", "G", "R", "U", "W"],
@@ -6464,7 +6464,7 @@ export const commanderList: { [friendlyName: string]: { id: string; image: strin
         image: "https://cards.scryfall.io/normal/front/1/1/1166ce2a-4e0b-4a57-929d-566f461a6282.jpg?1674137656",
         color_identity: ["G", "R"],
     },
-    "Ragnar": {
+    Ragnar: {
         id: "2cf6a3a3-4a06-4eb7-981a-b70cf05b2473",
         image: "https://cards.scryfall.io/normal/front/2/c/2cf6a3a3-4a06-4eb7-981a-b70cf05b2473.jpg?1555788960",
         color_identity: ["G", "U", "W"],
@@ -7659,7 +7659,7 @@ export const commanderList: { [friendlyName: string]: { id: string; image: strin
         image: "https://cards.scryfall.io/normal/front/9/3/93887cc3-888e-479f-9cc2-a0b908e364a5.jpg?1651655659",
         color_identity: ["W"],
     },
-    "Stangg": {
+    Stangg: {
         id: "a23f846e-b5e6-48c2-afea-c9be7fc8b7c3",
         image: "https://cards.scryfall.io/normal/front/a/2/a23f846e-b5e6-48c2-afea-c9be7fc8b7c3.jpg?1562439450",
         color_identity: ["G", "R"],
@@ -7934,7 +7934,7 @@ export const commanderList: { [friendlyName: string]: { id: string; image: strin
         image: "https://cards.scryfall.io/normal/front/3/b/3bd62ee4-e654-44ba-a650-889782cc9ac3.jpg?1624740235",
         color_identity: ["G", "U"],
     },
-    "Taniwha": {
+    Taniwha: {
         id: "72d12315-4220-470d-9628-b9a3ea904ca7",
         image: "https://cards.scryfall.io/normal/front/7/2/72d12315-4220-470d-9628-b9a3ea904ca7.jpg?1562720219",
         color_identity: ["U"],
@@ -8249,7 +8249,7 @@ export const commanderList: { [friendlyName: string]: { id: string; image: strin
         image: "https://cards.scryfall.io/normal/front/7/8/783f1b9f-9866-4ead-96cf-88babf459ce2.jpg?1619398874",
         color_identity: ["B", "G"],
     },
-    "Themberchaud": {
+    Themberchaud: {
         id: "ce332e85-a842-4afc-a5c5-b5064c5c4569",
         image: "https://cards.scryfall.io/normal/front/c/e/ce332e85-a842-4afc-a5c5-b5064c5c4569.jpg?1682347209",
         color_identity: ["R"],
@@ -8369,7 +8369,7 @@ export const commanderList: { [friendlyName: string]: { id: string; image: strin
         image: "https://cards.scryfall.io/normal/front/6/1/6172da14-9a87-4cf9-aff5-aca3470a67ef.jpg?1626097900",
         color_identity: ["G"],
     },
-    "Thraximundar": {
+    Thraximundar: {
         id: "0e7334eb-66c1-4410-966c-4e76c1b9e9a7",
         image: "https://cards.scryfall.io/normal/front/0/e/0e7334eb-66c1-4410-966c-4e76c1b9e9a7.jpg?1673149221",
         color_identity: ["B", "R", "U"],
@@ -8399,7 +8399,7 @@ export const commanderList: { [friendlyName: string]: { id: string; image: strin
         image: "https://cards.scryfall.io/normal/front/c/b/cbbdae80-1481-4a8c-b3c3-f4224204d29d.jpg?1690017044",
         color_identity: ["U"],
     },
-    "Tiamat": {
+    Tiamat: {
         id: "6dd0b9b0-55f4-4ce7-a916-6f23687f3fe4",
         image: "https://cards.scryfall.io/normal/front/6/d/6dd0b9b0-55f4-4ce7-a916-6f23687f3fe4.jpg?1627709478",
         color_identity: ["B", "G", "R", "U", "W"],
@@ -8634,7 +8634,7 @@ export const commanderList: { [friendlyName: string]: { id: string; image: strin
         image: "https://cards.scryfall.io/normal/front/5/8/588a8f90-4344-4882-9671-4c7295186a58.jpg?1562818431",
         color_identity: ["B", "W"],
     },
-    "Tromokratis": {
+    Tromokratis: {
         id: "f40ad933-ddd9-4975-a222-21fe3305137c",
         image: "https://cards.scryfall.io/normal/front/f/4/f40ad933-ddd9-4975-a222-21fe3305137c.jpg?1690017060",
         color_identity: ["U"],
@@ -9204,7 +9204,7 @@ export const commanderList: { [friendlyName: string]: { id: string; image: strin
         image: "https://cards.scryfall.io/normal/front/5/e/5e9d4562-964d-48ce-b03f-7cb491fa040d.jpg?1674136891",
         color_identity: ["R"],
     },
-    "X": {
+    X: {
         id: "f77f6e64-2470-4c6a-a92b-328e4edc3ea9",
         image: "https://cards.scryfall.io/normal/front/f/7/f77f6e64-2470-4c6a-a92b-328e4edc3ea9.jpg?1562947258",
         color_identity: ["B", "U"],
@@ -9609,7 +9609,7 @@ export const commanderList: { [friendlyName: string]: { id: string; image: strin
         image: "https://cards.scryfall.io/normal/front/f/4/f484f19a-0121-4173-a70b-6698cc5f6303.jpg?1632261791",
         color_identity: ["B"],
     },
-    "Tamanoa": {
+    Tamanoa: {
         id: "6d32955b-cbf6-429b-9513-17ca75d4ec2c",
         image: "https://cards.scryfall.io/normal/front/6/d/6d32955b-cbf6-429b-9513-17ca75d4ec2c.jpg?1593275551",
         color_identity: ["G", "R", "W"],

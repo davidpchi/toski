@@ -7,8 +7,8 @@ import { Player } from "../types/domain/Player";
  * Given a collection of Matches, filters them to matches after a certain date.
  * Optionally, provide an end date as well.
  * @param matches
- * @param startDate 
- * @param endDate 
+ * @param startDate
+ * @param endDate
  * @returns
  */
 export function filterMatchesByDate(matches: Match[], startDate?: Date, endDate?: Date): Match[] {

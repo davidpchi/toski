@@ -10,12 +10,7 @@ enum DatePickerOptions {
     Year1 = "year1",
 }
 
-
-export const DatePicker = React.memo(function DatePicker({
-    onChange
-}: {
-    onChange: (date: Date | undefined) => void;
-}) {
+export const DatePicker = React.memo(function DatePicker({ onChange }: { onChange: (date: Date | undefined) => void }) {
     const [dateSelectValue, setDateSelectValue] = useState<DatePickerOptions>(DatePickerOptions.AllTime);
 
     const onDateFilterChange = (event: any) => {
@@ -58,16 +53,17 @@ export const DatePicker = React.memo(function DatePicker({
         setDateSelectValue(value);
     };
 
-
-    return (<Flex direction={"row"} alignItems={"center"} marginRight={"16px"}>
-        <Text marginRight={"8px"}>Data from: </Text>
-        <Select width={200} onChange={onDateFilterChange} value={dateSelectValue}>
-            <option value={DatePickerOptions.AllTime}>All time</option>
-            <option value={DatePickerOptions.Weeks1}>1 week ago</option>
-            <option value={DatePickerOptions.Weeks2}>2 weeks ago</option>
-            <option value={DatePickerOptions.Months1}>1 month ago</option>
-            <option value={DatePickerOptions.Months6}>6 months ago</option>
-            <option value={DatePickerOptions.Year1}>1 year ago</option>
-        </Select>
-    </Flex>)
+    return (
+        <Flex direction={"row"} alignItems={"center"} marginRight={"16px"}>
+            <Text marginRight={"8px"}>Data from: </Text>
+            <Select width={200} onChange={onDateFilterChange} value={dateSelectValue}>
+                <option value={DatePickerOptions.AllTime}>All time</option>
+                <option value={DatePickerOptions.Weeks1}>1 week ago</option>
+                <option value={DatePickerOptions.Weeks2}>2 weeks ago</option>
+                <option value={DatePickerOptions.Months1}>1 month ago</option>
+                <option value={DatePickerOptions.Months6}>6 months ago</option>
+                <option value={DatePickerOptions.Year1}>1 year ago</option>
+            </Select>
+        </Flex>
+    );
 });

@@ -8,5 +8,5 @@ export const Articles: { [id: string]: NewsArticle } = {
     "1": article_1,
     "2": article_2,
     "3": article_3,
-    "4": article_4
+    "4": article_4,
 };

@@ -1,11 +1,9 @@
-import {
-    TooltipItem
-} from 'chart.js';
+import { TooltipItem } from "chart.js";
 import React from "react";
 import { Heading, Text } from "@chakra-ui/react";
 
 import { Match } from "../../types/domain/Match";
-import { BarGraph } from '../dataVisualizations/BarGraph';
+import { BarGraph } from "../dataVisualizations/BarGraph";
 
 export const MatchFrequencyLineChart = React.memo(function MatchFrequencyLineChart({ matches }: { matches: Match[] }) {
     const matchesWithLengths = matches.filter((match: Match) => match.numberOfTurns);
@@ -20,18 +18,24 @@ export const MatchFrequencyLineChart = React.memo(function MatchFrequencyLineCha
         }
     }
 
-    const matchFrequencyData = Object.keys(matchesFrequencyDictionary).map((date: string) => {
-        return { x: date, y: matchesFrequencyDictionary[date] };
-    }).sort((a, b) => Number(a.x) - Number(b.x));
+    const matchFrequencyData = Object.keys(matchesFrequencyDictionary)
+        .map((date: string) => {
+            return { x: date, y: matchesFrequencyDictionary[date] };
+        })
+        .sort((a, b) => Number(a.x) - Number(b.x));
 
     const tooltipTitleCallback = (item: TooltipItem<"bar">[]) => {
         console.log(item);
-        return `Games on ${(new Date(Number(matchFrequencyData[item[0].dataIndex].x)).toDateString())}: ${matchFrequencyData[item[0].dataIndex].y}`
+        return `Games on ${new Date(Number(matchFrequencyData[item[0].dataIndex].x)).toDateString()}: ${
+            matchFrequencyData[item[0].dataIndex].y
+        }`;
     };
-    const tooltipLabelCallback = (_item: TooltipItem<"bar">) => { return `` };
+    const tooltipLabelCallback = (_item: TooltipItem<"bar">) => {
+        return ``;
+    };
 
     const xAxisTicksCallback = (val: any, index: any) => {
-        return (new Date(val)).toDateString();
+        return new Date(val).toDateString();
     };
 
     return (
@@ -48,5 +52,5 @@ export const MatchFrequencyLineChart = React.memo(function MatchFrequencyLineCha
                 xAxisTicksCallback={xAxisTicksCallback}
             />
         </>
-    )
+    );
 });

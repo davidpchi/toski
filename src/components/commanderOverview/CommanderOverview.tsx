@@ -15,9 +15,12 @@ export const CommanderOverview = React.memo(function MatchHistory() {
     const navigate = useNavigate();
 
     const [dateFilter, setDateFilter] = useState<Date | undefined>(undefined);
-    const onDatePickerChange = useCallback((date: Date | undefined) => {
-        setDateFilter(date);
-    }, [setDateFilter])
+    const onDatePickerChange = useCallback(
+        (date: Date | undefined) => {
+            setDateFilter(date);
+        },
+        [setDateFilter],
+    );
 
     const allCommanders = useSelector(getCommanders);
     const commanders: Commander[] = useSelector((state: AppState) => getCommandersByDate(state, dateFilter));
@@ -26,10 +29,13 @@ export const CommanderOverview = React.memo(function MatchHistory() {
         setIsFiltered(!isFiltered);
     };
 
-    const [searchInput, setSearchInput] = useState<string>('');
-    const onSearchChange = useCallback((event: any) => {
-        setSearchInput(event.target.value);
-    }, [setSearchInput]);
+    const [searchInput, setSearchInput] = useState<string>("");
+    const onSearchChange = useCallback(
+        (event: any) => {
+            setSearchInput(event.target.value);
+        },
+        [setSearchInput],
+    );
 
     if (commanders === undefined) {
         return <Loading text="Loading..." />;
@@ -42,7 +48,9 @@ export const CommanderOverview = React.memo(function MatchHistory() {
         );
     }
     if (searchInput.length > 0 && allCommanders) {
-        commandersArray = commandersArray.filter((value: Commander) => allCommanders[value.id].name.toLowerCase().includes(searchInput.toLowerCase()));
+        commandersArray = commandersArray.filter((value: Commander) =>
+            allCommanders[value.id].name.toLowerCase().includes(searchInput.toLowerCase()),
+        );
     }
 
     return (
@@ -62,14 +70,11 @@ export const CommanderOverview = React.memo(function MatchHistory() {
                     </div>
                 </Tooltip>
                 <div style={{ padding: 20 }}>
-                    <Input
-                        placeholder='Search...'
-                        onChange={onSearchChange}
-                    />
+                    <Input placeholder="Search..." onChange={onSearchChange} />
                 </div>
             </Flex>
-            {
-                commandersArray.length ? <SortableTable
+            {commandersArray.length ? (
+                <SortableTable
                     columns={commanderOverviewColumns}
                     data={commandersArray}
                     getRowProps={(row: any) => {
@@ -80,8 +85,10 @@ export const CommanderOverview = React.memo(function MatchHistory() {
                             },
                         };
                     }}
-                /> : <div style={{ textAlign: "center" }}>No data</div>
-            }
+                />
+            ) : (
+                <div style={{ textAlign: "center" }}>No data</div>
+            )}
         </Flex>
     );
 });

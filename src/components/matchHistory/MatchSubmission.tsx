@@ -12,8 +12,8 @@ import { FiX } from "react-icons/fi";
 import { useNavigate } from "react-router";
 
 type SelectItem = {
-    name: string,
-    label: string
+    name: string;
+    label: string;
 };
 
 const MatchSubmissionPlayerCard = React.memo(function MatchSubmissionPlayerCard({
@@ -24,22 +24,28 @@ const MatchSubmissionPlayerCard = React.memo(function MatchSubmissionPlayerCard(
     setPlayerValue,
     setCommanderValue,
     setPlayerRank,
-    onClose
+    onClose,
 }: {
-    title: string,
-    rankValue: number,
-    commanderOptions: SelectItem[],
-    showCloseIcon?: boolean,
-    setPlayerValue: (val: string) => void,
-    setCommanderValue: (val: string) => void,
-    setPlayerRank: (val: number) => void,
-    onClose?: () => void
+    title: string;
+    rankValue: number;
+    commanderOptions: SelectItem[];
+    showCloseIcon?: boolean;
+    setPlayerValue: (val: string) => void;
+    setCommanderValue: (val: string) => void;
+    setPlayerRank: (val: number) => void;
+    onClose?: () => void;
 }) {
     const players = useSelector(getPlayers);
-    const playersArray = players ? Object.values(players).sort((a, b) => a.name.localeCompare(b.name)).map((value) => { return { name: value.name, label: value.name } }) : [];
+    const playersArray = players
+        ? Object.values(players)
+              .sort((a, b) => a.name.localeCompare(b.name))
+              .map((value) => {
+                  return { name: value.name, label: value.name };
+              })
+        : [];
 
     const [playerName, setPlayerName] = useState<SelectItem>();
-    const [playerNameInputValue, setPlayerNameInputValue] = useState('');
+    const [playerNameInputValue, setPlayerNameInputValue] = useState("");
     const handlePlayerInputChange = (value: string) => {
         setPlayerNameInputValue(value);
     };
@@ -50,7 +56,7 @@ const MatchSubmissionPlayerCard = React.memo(function MatchSubmissionPlayerCard(
         }
     };
     const handleCreatePlayerName = (inputValue: string) => {
-        if (inputValue !== '') {
+        if (inputValue !== "") {
             setPlayerValue(inputValue);
             setPlayerName({ name: inputValue, label: inputValue });
         }
@@ -68,33 +74,33 @@ const MatchSubmissionPlayerCard = React.memo(function MatchSubmissionPlayerCard(
         setPlayerRank(Number(event.target.value));
     }, []);
 
-    const commanderImage = commanderList[commanderSelectValue] ? commanderList[commanderSelectValue].image.replace("normal", "art_crop") : "";
-
+    const commanderImage = commanderList[commanderSelectValue]
+        ? commanderList[commanderSelectValue].image.replace("normal", "art_crop")
+        : "";
 
     return (
         <Flex
-            direction='column'
-            justify='center'
-            align='left'
+            direction="column"
+            justify="center"
+            align="left"
             borderWidth={1}
             padding={"8px"}
             borderRadius={"8px"}
             marginBottom={"16px"}
             marginRight={"16px"}
             marginTop={"16px"}
-            width={"500px"}>
-            <Flex justifyContent={"space-between"} >
+            width={"500px"}
+        >
+            <Flex justifyContent={"space-between"}>
                 <Flex direction={"column"}>
-                    <Heading size={"md"} padding={"0px"}>{title}</Heading>
+                    <Heading size={"md"} padding={"0px"}>
+                        {title}
+                    </Heading>
                     <Image src={commanderImage} height={20} borderRadius={8} />
                 </Flex>
-                {showCloseIcon ?
-                    <IconButton
-                        onClick={onClose}
-                        variant='ghost'
-                        aria-label='open menu'
-                        icon={<FiX />}
-                    /> : null}
+                {showCloseIcon ? (
+                    <IconButton onClick={onClose} variant="ghost" aria-label="open menu" icon={<FiX />} />
+                ) : null}
             </Flex>
             <Text>Name:</Text>
             <CreatableSelect
@@ -107,26 +113,26 @@ const MatchSubmissionPlayerCard = React.memo(function MatchSubmissionPlayerCard(
                 onChange={handleOnPlayerNameChange}
                 onInputChange={handlePlayerInputChange}
                 onCreateOption={handleCreatePlayerName}
-                placeholder='Enter Player Name'
-                size='lg'
+                placeholder="Enter Player Name"
+                size="lg"
             />
 
             <Text>Commander:</Text>
             <Select
-                size='lg'
+                size="lg"
                 onChange={onCommanderSelectChange}
                 value={commanderSelectValue}
                 placeholder={"Select commander..."}
             >
                 {commanderOptions.map((option) => {
-                    return (<option value={option.name}>{option.name}</option>)
+                    return <option value={option.name}>{option.name}</option>;
                 })}
             </Select>
             <Text>Rank:</Text>
             <Input value={rankValue} onChange={onUpdateRank} marginBottom={"16px"}></Input>
-        </Flex >
-    )
-})
+        </Flex>
+    );
+});
 
 export const MatchSubmission = React.memo(function MatchSubmission() {
     const navigate = useNavigate();
@@ -165,37 +171,36 @@ export const MatchSubmission = React.memo(function MatchSubmission() {
 
     const onClose = useCallback(() => {
         setPlayerCount(playerCount - 1);
-    }, [playerCount, setPlayerCount])
+    }, [playerCount, setPlayerCount]);
 
     const submitData = useCallback(async () => {
         const player1 = {
             name: player1Name,
             commander: player1Commander,
             turnOrder: 1,
-            rank: player1Rank
+            rank: player1Rank,
         };
 
         const player2 = {
             name: player2Name,
             commander: player2Commander,
             turnOrder: 2,
-            rank: player2Rank
+            rank: player2Rank,
         };
 
         const player3 = {
             name: player3Name,
             commander: player3Commander,
             turnOrder: 3,
-            rank: player3Rank
+            rank: player3Rank,
         };
 
         const player4 = {
             name: player4Name,
             commander: player4Commander,
             turnOrder: 4,
-            rank: player4Rank
+            rank: player4Rank,
         };
-
 
         const result = await submitMatch(date, player1, player2, player3, player4, turnCount, notes);
 
@@ -219,32 +224,40 @@ export const MatchSubmission = React.memo(function MatchSubmission() {
         player4Commander,
         player4Rank,
         turnCount,
-        notes
+        notes,
     ]);
 
     // loop through all of players and create their matchSubmission cards
 
     const commandersArray = useMemo(() => {
-        return Object.keys(commanderList).map((value) => { return { name: value, label: value } })
+        return Object.keys(commanderList).map((value) => {
+            return { name: value, label: value };
+        });
     }, []);
 
     return (
-        <Flex direction='column' justify='center' align='center'>
+        <Flex direction="column" justify="center" align="center">
             <Heading>SUBMIT MATCH</Heading>
-            <Flex direction='column' justify='center' align='left' marginBottom={"16px"}>
+            <Flex direction="column" justify="center" align="left" marginBottom={"16px"}>
                 <Text>Date:</Text>
-                <DatePicker selected={date} onChange={(value) => { if (value !== null) setDate(value); }} />
-                <Flex direction='column' justify='center' align='left' marginBottom={"16px"}>
-                    {playerCount >= 1 ?
+                <DatePicker
+                    selected={date}
+                    onChange={(value) => {
+                        if (value !== null) setDate(value);
+                    }}
+                />
+                <Flex direction="column" justify="center" align="left" marginBottom={"16px"}>
+                    {playerCount >= 1 ? (
                         <MatchSubmissionPlayerCard
                             commanderOptions={commandersArray}
                             title={"Player 1"}
                             rankValue={player1Rank}
                             setPlayerValue={setPlayer1Name}
                             setCommanderValue={setPlayer1Commander}
-                            setPlayerRank={setPlayer1Rank} />
-                        : null}
-                    {playerCount >= 2 ?
+                            setPlayerRank={setPlayer1Rank}
+                        />
+                    ) : null}
+                    {playerCount >= 2 ? (
                         <MatchSubmissionPlayerCard
                             commanderOptions={commandersArray}
                             title={"Player 2"}
@@ -253,9 +266,10 @@ export const MatchSubmission = React.memo(function MatchSubmission() {
                             setCommanderValue={setPlayer2Commander}
                             setPlayerRank={setPlayer2Rank}
                             showCloseIcon={playerCount == 2}
-                            onClose={onClose} />
-                        : null}
-                    {playerCount >= 3 ?
+                            onClose={onClose}
+                        />
+                    ) : null}
+                    {playerCount >= 3 ? (
                         <MatchSubmissionPlayerCard
                             commanderOptions={commandersArray}
                             title={"Player 3"}
@@ -264,9 +278,10 @@ export const MatchSubmission = React.memo(function MatchSubmission() {
                             setCommanderValue={setPlayer3Commander}
                             setPlayerRank={setPlayer3Rank}
                             showCloseIcon={playerCount == 3}
-                            onClose={onClose} />
-                        : null}
-                    {playerCount >= 4 ?
+                            onClose={onClose}
+                        />
+                    ) : null}
+                    {playerCount >= 4 ? (
                         <MatchSubmissionPlayerCard
                             commanderOptions={commandersArray}
                             title={"Player 4"}
@@ -275,8 +290,9 @@ export const MatchSubmission = React.memo(function MatchSubmission() {
                             setCommanderValue={setPlayer4Commander}
                             setPlayerRank={setPlayer4Rank}
                             showCloseIcon={playerCount == 4}
-                            onClose={onClose} />
-                        : null}
+                            onClose={onClose}
+                        />
+                    ) : null}
                 </Flex>
             </Flex>
             <Text>Number of Turns:</Text>
@@ -285,5 +301,5 @@ export const MatchSubmission = React.memo(function MatchSubmission() {
             <Input value={notes} onChange={onUpdateNotes} marginBottom={"16px"} width={"500px"}></Input>
             <Button onClick={submitData}>Submit Data</Button>
         </Flex>
-    )
+    );
 });

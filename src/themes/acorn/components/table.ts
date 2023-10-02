@@ -1,6 +1,6 @@
-import theme, { ComponentStyleConfig } from '@chakra-ui/theme';
-import { mode } from '@chakra-ui/theme-tools';
-import { transparentize } from '../../utils';
+import theme, { ComponentStyleConfig } from "@chakra-ui/theme";
+import { mode } from "@chakra-ui/theme-tools";
+import { transparentize } from "../../utils";
 
 export const Table: ComponentStyleConfig = {
     baseStyle: (props) => {
@@ -15,8 +15,8 @@ export const Table: ComponentStyleConfig = {
         };
     },
     defaultProps: {
-        variant: 'simple',
-        colorScheme: 'primary',
-        size: ['sm', 'md', 'lg'],
+        variant: "simple",
+        colorScheme: "primary",
+        size: ["sm", "md", "lg"],
     },
 };

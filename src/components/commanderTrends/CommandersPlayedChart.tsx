@@ -1,11 +1,9 @@
-import {
-    TooltipItem
-} from 'chart.js';
+import { TooltipItem } from "chart.js";
 import React from "react";
 import { Heading, Text } from "@chakra-ui/react";
 
 import { Match } from "../../types/domain/Match";
-import { LineGraph } from '../dataVisualizations/LineGraph';
+import { LineGraph } from "../dataVisualizations/LineGraph";
 
 export const CommandersPlayedChart = React.memo(function MatchHistory({ matches }: { matches: Match[] }) {
     let commandersDictionary: { [id: string]: string } = {};
@@ -19,8 +17,12 @@ export const CommandersPlayedChart = React.memo(function MatchHistory({ matches 
         return { x: match.id, y: Object.values(commandersDictionary).length };
     });
 
-    const tooltipTitleCallback = (item: TooltipItem<"line">[]) => { return `Match Id: ${matches[item[0].dataIndex].id}` };
-    const tooltipLabelCallback = (item: TooltipItem<"line">) => { return `Commanders played: ${item.formattedValue}` };
+    const tooltipTitleCallback = (item: TooltipItem<"line">[]) => {
+        return `Match Id: ${matches[item[0].dataIndex].id}`;
+    };
+    const tooltipLabelCallback = (item: TooltipItem<"line">) => {
+        return `Commanders played: ${item.formattedValue}`;
+    };
 
     return (
         <>
@@ -34,5 +36,6 @@ export const CommandersPlayedChart = React.memo(function MatchHistory({ matches 
                 minX={1}
                 maxX={commandersCountData.length}
             />
-        </>)
+        </>
+    );
 });

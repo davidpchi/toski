@@ -1,15 +1,17 @@
-import axios from 'axios';
-import { useDispatch } from 'react-redux';
+import axios from "axios";
+import { useDispatch } from "react-redux";
 
-import { Match } from '../types/domain/Match';
-import { sheetRowToMatch } from '../types/service/dataMappers';
-import { StatsAction } from '../redux/statsActions';
-import { useEffect } from 'react';
+import { Match } from "../types/domain/Match";
+import { sheetRowToMatch } from "../types/service/dataMappers";
+import { StatsAction } from "../redux/statsActions";
+import { useEffect } from "react";
 
-const matchHistoryDataEndpoint = 'https://docs.google.com/spreadsheets/d/1FsjnGp3JPsqAEmlyWlxmYK5pSwGASqfIcDl9HvD-fuk/gviz/tq?gid=1885300192';
+const matchHistoryDataEndpoint =
+    "https://docs.google.com/spreadsheets/d/1FsjnGp3JPsqAEmlyWlxmYK5pSwGASqfIcDl9HvD-fuk/gviz/tq?gid=1885300192";
 // const matchHistorySubmitEndpoint = 'https://docs.google.com/forms/d/e/1FAIpQLScguPsS2TOxaABYLtbCDZ5zPXec2av9AI2kPI2JFwYqmghBYQ/formResponse?&submit=Submit?usp=pp_url&entry.1178471159=2023-09-27&entry.2132042053=player+1+name&entry.961836116=player+1+commander&entry.1252336227=1&entry.147625596=2&entry.840407098=player+2+name&entry.493870522=player+2+commander&entry.898724110=2&entry.531480374=3&entry.2099339267=player+3+name&entry.1961193649=player+3+commnader&entry.87571757=3&entry.807216034=4&entry.575868019=player+4+name&entry.270994715=player+4+commander&entry.153957972=4&entry.652184592=1&entry.2043626966=additional+comments';
 // const matchHistorySubmitEndpoint = 'https://docs.google.com/forms/d/e/1FAIpQLScguPsS2TOxaABYLtbCDZ5zPXec2av9AI2kPI2JFwYqmghBYQ/formResponse?usp=pp_url&entry.1178471159=2023-09-05&entry.2132042053=player+1+name&entry.961836116=player+1+commander&entry.1252336227=1&entry.147625596=2&entry.840407098=player+2+name&entry.493870522=player+2+commander&entry.898724110=2&entry.531480374=3&entry.2099339267=player+3+name&entry.1961193649=player+3+commander&entry.87571757=3&entry.807216034=4&entry.575868019=player+4+name&entry.270994715=player+4+commander&entry.153957972=4&entry.652184592=1&entry.2043626966=woiw+comments';
-const matchHistorySubmitEndpoint = 'https://docs.google.com/forms/d/e/1FAIpQLScguPsS2TOxaABYLtbCDZ5zPXec2av9AI2kPI2JFwYqmghBYQ/formResponse';
+const matchHistorySubmitEndpoint =
+    "https://docs.google.com/forms/d/e/1FAIpQLScguPsS2TOxaABYLtbCDZ5zPXec2av9AI2kPI2JFwYqmghBYQ/formResponse";
 
 export const useMatchHistory = () => {
     // Do the initial data hydration here
@@ -37,8 +39,7 @@ export const useMatchHistory = () => {
 export function mapObjectoMatches(resultObj: any): Match[] | undefined {
     const matches: Match[] = [];
 
-    if (resultObj.table === undefined ||
-        resultObj.table.rows === undefined) {
+    if (resultObj.table === undefined || resultObj.table.rows === undefined) {
         console.log("Error parsing JSON object from data: resultObj.table or resultObj.table.rows is undefined.");
         return undefined;
     }
@@ -53,10 +54,10 @@ export function mapObjectoMatches(resultObj: any): Match[] | undefined {
 }
 
 export type MatchSubmissionPlayer = {
-    name: string,
-    commander: string,
-    turnOrder: number,
-    rank: number
+    name: string;
+    commander: string;
+    turnOrder: number;
+    rank: number;
 };
 
 export const submitMatch = async (
@@ -66,10 +67,10 @@ export const submitMatch = async (
     player3?: MatchSubmissionPlayer,
     player4?: MatchSubmissionPlayer,
     turnCount?: number,
-    extraNotes?: string
+    extraNotes?: string,
 ) => {
     var body: { [fieldName: string]: string } = {};
-    body["entry.1178471159"] = date.toISOString().split('T')[0];
+    body["entry.1178471159"] = date.toISOString().split("T")[0];
 
     if (player1) {
         body["entry.2132042053"] = player1.name;
@@ -90,7 +91,6 @@ export const submitMatch = async (
         body["entry.1961193649"] = player3.commander;
         body["entry.87571757"] = player3.turnOrder.toString();
         body["entry.807216034"] = player3.turnOrder.toString();
-
     }
 
     if (player4) {
@@ -107,21 +107,19 @@ export const submitMatch = async (
     // This is all super hacky to begin so bear with me here...
     // We are able to directly submit to the google form via a URL and POST. No auth needed since this a public form.
     // This is pretty fragile because if any of the above fields have their IDs change or are deleted
-    // this will result in a 400. 
+    // this will result in a 400.
 
     // TODO: need to figure out why we are running into CORs on local host.
     try {
-        await axios.post(
-            matchHistorySubmitEndpoint,
-            body,
-            {
+        await axios
+            .post(matchHistorySubmitEndpoint, body, {
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                withCredentials: false
-            }
-        ).then((res) => {
-            console.log(res);
-            return true;
-        });
+                withCredentials: false,
+            })
+            .then((res) => {
+                console.log(res);
+                return true;
+            });
     } catch (e) {
         // just assume the data entry was successful
         console.log(e);
@@ -129,4 +127,4 @@ export const submitMatch = async (
     }
 
     return false;
-}
+};

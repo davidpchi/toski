@@ -9,4 +9,4 @@ export type Match = {
      * The name of the winner. This value is expected to refer to a user in the players array.
      */
     winner: string;
-}
+};
