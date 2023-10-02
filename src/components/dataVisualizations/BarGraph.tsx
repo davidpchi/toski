@@ -1,15 +1,9 @@
-import {
-    Chart as ChartJS,
-    registerables,
-    TooltipItem
-} from 'chart.js';
+import { Chart as ChartJS, registerables, TooltipItem } from "chart.js";
 import React, { useMemo } from "react";
 import { Bar } from "react-chartjs-2";
-import { primaryColor } from '../../themes/acorn';
+import { primaryColor } from "../../themes/acorn";
 
-ChartJS.register(
-    ...registerables
-);
+ChartJS.register(...registerables);
 
 export const BarGraph = React.memo(function LineGraph({
     dataLabel,
@@ -22,15 +16,15 @@ export const BarGraph = React.memo(function LineGraph({
     maxY,
     xAxisTicksCallback,
 }: {
-    dataLabel: string,
-    data: { x: number | string, y: number | string }[],
-    tooltipTitleCallback?: (tooltipItems: TooltipItem<"bar">[]) => string,
-    tooltipLabelCallback?: (tooltipItems: TooltipItem<"bar">) => string
-    minX?: number,
-    maxX?: number,
-    minY?: number,
-    maxY?: number,
-    xAxisTicksCallback?: (val: any, index: any) => string
+    dataLabel: string;
+    data: { x: number | string; y: number | string }[];
+    tooltipTitleCallback?: (tooltipItems: TooltipItem<"bar">[]) => string;
+    tooltipLabelCallback?: (tooltipItems: TooltipItem<"bar">) => string;
+    minX?: number;
+    maxX?: number;
+    minY?: number;
+    maxY?: number;
+    xAxisTicksCallback?: (val: any, index: any) => string;
 }) {
     const barGraphData = useMemo(() => {
         return {
@@ -42,12 +36,12 @@ export const BarGraph = React.memo(function LineGraph({
                     backgroundColor: primaryColor[200],
                     borderColor: primaryColor[300],
                     pointBackgroundColor: primaryColor[400],
-                    pointBorderColor: '#fff',
-                    pointHoverBackgroundColor: '#fff',
+                    pointBorderColor: "#fff",
+                    pointHoverBackgroundColor: "#fff",
                     pointHoverBorderColor: primaryColor[200],
                 },
             ],
-        }
+        };
     }, [data, dataLabel]);
 
     return (
@@ -58,13 +52,13 @@ export const BarGraph = React.memo(function LineGraph({
                 options={{
                     scales: {
                         x: {
-                            type: 'linear',
+                            type: "linear",
                             min: minX ? minX : undefined,
                             max: maxX ? maxX : undefined,
                             ticks: {
                                 precision: 0,
-                                callback: xAxisTicksCallback ? xAxisTicksCallback : undefined
-                            }
+                                callback: xAxisTicksCallback ? xAxisTicksCallback : undefined,
+                            },
                         },
                         y: {
                             suggestedMin: minY ? minY : 0,
@@ -80,11 +74,11 @@ export const BarGraph = React.memo(function LineGraph({
                                 title: tooltipTitleCallback ? (item) => tooltipTitleCallback(item) : undefined,
                                 label: tooltipLabelCallback ? (item) => tooltipLabelCallback(item) : undefined,
                             },
-                            displayColors: false
-                        }
+                            displayColors: false,
+                        },
                     },
                 }}
             />
         </>
     );
-})
+});

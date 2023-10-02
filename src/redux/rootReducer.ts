@@ -1,5 +1,5 @@
-import { combineReducers, Reducer } from 'redux';
-import { statsReducer, StatsState } from './statsReducer';
+import { combineReducers, Reducer } from "redux";
+import { statsReducer, StatsState } from "./statsReducer";
 
 export interface AppState {
     stats: StatsState;

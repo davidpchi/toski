@@ -1,11 +1,9 @@
-import {
-    TooltipItem
-} from 'chart.js';
+import { TooltipItem } from "chart.js";
 import React from "react";
 import { Heading, Text } from "@chakra-ui/react";
 
 import { Match } from "../../types/domain/Match";
-import { BarGraph } from '../dataVisualizations/BarGraph';
+import { BarGraph } from "../dataVisualizations/BarGraph";
 
 export const MatchLengthBarChart = React.memo(function MatchHistory({ matches }: { matches: Match[] }) {
     const matchesWithLengths = matches.filter((match: Match) => match.numberOfTurns);
@@ -24,8 +22,14 @@ export const MatchLengthBarChart = React.memo(function MatchHistory({ matches }:
         return { x: Number(numberOfTurns), y: matchesLengthDictionary[numberOfTurns] };
     });
 
-    const tooltipTitleCallback = (item: TooltipItem<"bar">[]) => { return `Games with ${matchesWithLengthsData[item[0].dataIndex].x} turns: ${matchesWithLengthsData[item[0].dataIndex].y}` };
-    const tooltipLabelCallback = (_item: TooltipItem<"bar">) => { return `` };
+    const tooltipTitleCallback = (item: TooltipItem<"bar">[]) => {
+        return `Games with ${matchesWithLengthsData[item[0].dataIndex].x} turns: ${
+            matchesWithLengthsData[item[0].dataIndex].y
+        }`;
+    };
+    const tooltipLabelCallback = (_item: TooltipItem<"bar">) => {
+        return ``;
+    };
 
     return (
         <>
@@ -38,5 +42,5 @@ export const MatchLengthBarChart = React.memo(function MatchHistory({ matches }:
                 maxY={50}
             />
         </>
-    )
+    );
 });
