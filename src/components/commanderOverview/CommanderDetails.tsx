@@ -17,6 +17,7 @@ import { Player } from "../../types/domain/Player";
 import { playerOverviewColumns } from "../playerOverview/playerOverviewColumnHelper";
 import { COMMANDER_MINIMUM_GAMES_REQUIRED } from "../constants";
 import { DatePicker } from "../common/DatePicker";
+import { MatchPlacementBarChart } from "./MatchPlacementBarChart";
 
 export async function loader(data: { params: any }) {
     return data.params.commanderId;
@@ -150,6 +151,9 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                     <Tab>
                         <Text>Top Players</Text>
                     </Tab>
+                    <Tab>
+                        <Text>Match Placement</Text>
+                    </Tab>
                 </TabList>
                 <TabPanels>
                     <TabPanel>
@@ -201,6 +205,13 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                                     };
                                 }}
                             />
+                        ) : (
+                            <div style={{ textAlign: "center" }}>No data</div>
+                        )}
+                    </TabPanel>
+                    <TabPanel>
+                    {matchesArray.length > 0 ? (
+                            <MatchPlacementBarChart matches={matchesArray} commanderName={commander.name}/>
                         ) : (
                             <div style={{ textAlign: "center" }}>No data</div>
                         )}
