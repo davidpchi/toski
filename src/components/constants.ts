@@ -9,3 +9,10 @@ export const MTG_COLORS: { name: string; id: string; rgb: string }[] = [
     { name: "Blue", id: "U", rgb: "rgb(179, 206, 234)" },
     { name: "White", id: "W", rgb: "rgb(248, 231, 185)" },
 ];
+
+export const rankDictionary: { [key: string]: string } = {
+    "1": "1st",
+    "2": "2nd",
+    "3": "3rd",
+    "4": "4th",
+};

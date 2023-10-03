@@ -9,6 +9,7 @@ import { Loading } from "../Loading";
 import { commanderList } from "../../services/commanderList";
 import { MatchDisplayPlayer } from "./types/MatchDisplayPlayer";
 import { MatchPlayerCard } from "./MatchPlayerCard";
+import { rankDictionary } from "../constants";
 
 export async function loader(data: { params: any }) {
     return data.params.matchId;
@@ -28,7 +29,7 @@ export const MatchDetails = React.memo(function MatchDetails() {
 
     const playerCards = match.players.map((player) => {
         const matchPlayer: MatchDisplayPlayer = {
-            name: player.name,
+            name: `${player.name} - ${rankDictionary[player.rank]}`,
             commanders: player.commanders.map((commanderName: string) => {
                 return {
                     name: commanderName,
