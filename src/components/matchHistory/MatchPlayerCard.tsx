@@ -56,7 +56,7 @@ export const MatchPlayerCard = React.memo(function MatchPlayerCard({
                     marginLeft={4}
                     marginRight={4}
                 >
-                    {player.name.toUpperCase()}
+                    {`${player.name.toUpperCase()} - ${player.rank}`}
                 </Text>
                 {player.isWinner ? <FiLoader height={32} /> : <Box height="32" />}
             </Button>
