@@ -29,7 +29,8 @@ export const MatchDetails = React.memo(function MatchDetails() {
 
     const playerCards = match.players.map((player) => {
         const matchPlayer: MatchDisplayPlayer = {
-            name: `${player.name} - ${rankDictionary[player.rank]}`,
+            name: player.name,
+            rank: rankDictionary[player.rank],
             commanders: player.commanders.map((commanderName: string) => {
                 return {
                     name: commanderName,

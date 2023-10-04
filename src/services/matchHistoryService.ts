@@ -90,7 +90,7 @@ export const submitMatch = async (
         body["entry.2099339267"] = player3.name;
         body["entry.1961193649"] = player3.commander;
         body["entry.87571757"] = player3.turnOrder.toString();
-        body["entry.807216034"] = player3.turnOrder.toString();
+        body["entry.807216034"] = player3.rank.toString();
     }
 
     if (player4) {

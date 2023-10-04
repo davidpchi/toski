@@ -12,13 +12,10 @@ import {
     Image,
     IconButton,
     Box,
-    Skeleton,
-    Slider,
-    SliderTrack,
-    SliderFilledTrack,
-    SliderThumb,
-    SliderMark,
     Textarea,
+    RadioGroup,
+    Stack,
+    Radio,
 } from "@chakra-ui/react";
 import { submitMatch } from "../../services/matchHistoryService";
 import { CreatableSelect, SingleValue } from "chakra-react-select";
@@ -27,7 +24,7 @@ import { getPlayers } from "../../redux/statsSelectors";
 import { commanderList } from "../../services/commanderList";
 import { FiUserPlus, FiX } from "react-icons/fi";
 import { useNavigate } from "react-router";
-import { primaryColor } from "../../themes/acorn";
+import { current } from "@reduxjs/toolkit";
 
 const placeholderImage = "https://static.thenounproject.com/png/5425-200.png";
 
@@ -88,12 +85,12 @@ const MatchSubmissionPlayerCard = React.memo(function MatchSubmissionPlayerCard(
         setCommanderValue(value);
     };
 
-    const [rankSliderValue, setRankSliderValue] = useState<number>(1);
+    const [radioButtonValue, setRadioButtonValue] = useState<string>("1");
 
     const onUpdateRank = useCallback(
-        (value: number) => {
-            setRankSliderValue(value);
-            setPlayerRank(value);
+        (value: string) => {
+            setRadioButtonValue(value);
+            setPlayerRank(Number(value));
         },
         [setPlayerRank],
     );
@@ -167,25 +164,15 @@ const MatchSubmissionPlayerCard = React.memo(function MatchSubmissionPlayerCard(
             </Select>
             <Text marginTop={"8px"}>Rank:</Text>
             <Box padding={"6px"}>
-                <Slider defaultValue={1} min={1} max={4} step={1} onChangeEnd={onUpdateRank}>
-                    <SliderMark value={1} marginTop={"10px"}>
-                        1
-                    </SliderMark>
-                    <SliderMark value={2} marginTop={"10px"}>
-                        2
-                    </SliderMark>
-                    <SliderMark value={3} marginTop={"10px"}>
-                        3
-                    </SliderMark>
-                    <SliderMark value={4} marginTop={"10px"}>
-                        4
-                    </SliderMark>
-                    <SliderTrack bg={primaryColor[100]}>
-                        <Box position="relative" right={10} />
-                        <SliderFilledTrack bg={primaryColor[500]} />
-                    </SliderTrack>
-                    <SliderThumb boxSize={6} />
-                </Slider>
+
+            <RadioGroup onChange={onUpdateRank} value={radioButtonValue}>
+                <Stack direction='row' justifyContent={"space-between"} maxWidth={"400px"}>
+                    <Radio value='1'>1st</Radio>
+                    <Radio value='2'>2nd</Radio>
+                    <Radio value='3'>3rd</Radio>
+                    <Radio value='4'>4th</Radio>
+                </Stack>
+                </RadioGroup>
             </Box>
         </Flex>
     );
@@ -194,7 +181,8 @@ const MatchSubmissionPlayerCard = React.memo(function MatchSubmissionPlayerCard(
 export const MatchSubmission = React.memo(function MatchSubmission() {
     const navigate = useNavigate();
 
-    const [date, setDate] = useState<Date>(new Date());
+    const currentDate = new Date();
+    const [date, setDate] = useState<Date>(new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()));
 
     const [player1Name, setPlayer1Name] = useState<string>("");
     const [player1Commander, setPlayer1Commander] = useState<string>("");
