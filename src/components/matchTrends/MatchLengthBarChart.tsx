@@ -1,6 +1,6 @@
 import { TooltipItem } from "chart.js";
 import React from "react";
-import { Heading, Text } from "@chakra-ui/react";
+import { Heading } from "@chakra-ui/react";
 
 import { Match } from "../../types/domain/Match";
 import { BarGraph } from "../dataVisualizations/BarGraph";
