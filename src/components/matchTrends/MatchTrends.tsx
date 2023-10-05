@@ -6,12 +6,10 @@ import { getMatches, getPlayersByDate } from "../../redux/statsSelectors";
 import { useSelector } from "react-redux";
 import { Loading } from "../Loading";
 import { Match } from "../../types/domain/Match";
-import { CommandersPlayedChart } from "../commanderTrends/CommandersPlayedChart";
 import { MatchLengthBarChart } from "./MatchLengthBarChart";
 import { MatchFrequencyLineChart } from "./MatchFrequencyLineChart";
 import { Player } from "../../types/domain/Player";
 import { MTG_COLORS } from "../constants";
-import { PieGraph } from "../dataVisualizations/PieGraph";
 import { AppState } from "../../redux/rootReducer";
 
 export const MatchTrends = React.memo(function MatchHistory() {
