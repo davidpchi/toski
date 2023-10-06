@@ -20,6 +20,7 @@ import { IconType } from "react-icons";
 import { FiBarChart, FiCalendar, FiHome, FiMenu, FiRss, FiShield, FiTrendingUp, FiUsers } from "react-icons/fi";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FF_IS_NEWS_ENABLED } from "../services/featureFlagService";
+import { FeedbackButton } from "./FeedbackButton";
 
 interface LinkItemProps {
     name: string;
@@ -126,6 +127,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
                     ></NavItem>
                 ))}
             </VStack>
+            <FeedbackButton />
         </Box>
     );
 };
