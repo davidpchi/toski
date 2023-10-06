@@ -1,6 +1,4 @@
 import ThemeProvider from "@mui/material/styles/ThemeProvider";
-import { primaryColor } from "../themes/acorn";
-import Fab from "@mui/material/Fab/Fab";
 import { EditIcon } from "@chakra-ui/icons";
 import {
     Modal,
@@ -12,32 +10,30 @@ import {
     ModalCloseButton,
     Button,
     useDisclosure,
+    IconButton,
 } from "@chakra-ui/react";
-import createTheme from "@mui/material/styles/createTheme";
 import { FeedbackForm } from "./FeedbackForm";
-
-const theme = createTheme();
 
 export function FeedbackButton() {
     const { isOpen, onOpen, onClose } = useDisclosure();
     return (
         <>
-            <ThemeProvider theme={theme}>
-                <Fab
-                    onClick={onOpen}
-                    color="primary"
-                    aria-label="add"
-                    style={{
-                        backgroundColor: primaryColor[500],
-                        position: "fixed",
-                        right: "25px",
-                        bottom: "25px",
-                        zIndex: "-1",
-                    }}
-                >
-                    <EditIcon />
-                </Fab>
-            </ThemeProvider>
+            <IconButton
+                isRound={true}
+                variant="solid"
+                colorScheme="primary"
+                aria-label="Done"
+                fontSize="20px"
+                icon={<EditIcon />}
+                onClick={onOpen}
+                height="32px"
+                width="32px"
+                style={{
+                    position: "fixed",
+                    right: "25px",
+                    bottom: "25px",
+                }}
+            />
 
             <Modal isOpen={isOpen} onClose={onClose} blockScrollOnMount={false}>
                 <ModalOverlay />
