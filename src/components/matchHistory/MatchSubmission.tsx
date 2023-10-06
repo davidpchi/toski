@@ -164,14 +164,13 @@ const MatchSubmissionPlayerCard = React.memo(function MatchSubmissionPlayerCard(
             </Select>
             <Text marginTop={"8px"}>Rank:</Text>
             <Box padding={"6px"}>
-
-            <RadioGroup onChange={onUpdateRank} value={radioButtonValue}>
-                <Stack direction='row' justifyContent={"space-between"} maxWidth={"400px"}>
-                    <Radio value='1'>1st</Radio>
-                    <Radio value='2'>2nd</Radio>
-                    <Radio value='3'>3rd</Radio>
-                    <Radio value='4'>4th</Radio>
-                </Stack>
+                <RadioGroup onChange={onUpdateRank} value={radioButtonValue}>
+                    <Stack direction="row" justifyContent={"space-between"} maxWidth={"400px"}>
+                        <Radio value="1">1st</Radio>
+                        <Radio value="2">2nd</Radio>
+                        <Radio value="3">3rd</Radio>
+                        <Radio value="4">4th</Radio>
+                    </Stack>
                 </RadioGroup>
             </Box>
         </Flex>
@@ -182,7 +181,9 @@ export const MatchSubmission = React.memo(function MatchSubmission() {
     const navigate = useNavigate();
 
     const currentDate = new Date();
-    const [date, setDate] = useState<Date>(new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()));
+    const [date, setDate] = useState<Date>(
+        new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()),
+    );
 
     const [player1Name, setPlayer1Name] = useState<string>("");
     const [player1Commander, setPlayer1Commander] = useState<string>("");
@@ -258,6 +259,7 @@ export const MatchSubmission = React.memo(function MatchSubmission() {
         if (result) {
             alert("Match submitted successfully!");
             navigate(0);
+            window.scrollTo(0, 0);
         } else {
             alert("Match failed to submit. Try again later.");
         }
@@ -296,6 +298,7 @@ export const MatchSubmission = React.memo(function MatchSubmission() {
                     onChange={(value) => {
                         if (value !== null) setDate(value);
                     }}
+                    autoFocus={true}
                 />
             </Flex>
             <Flex direction="column" justify="center" align="left" marginBottom={"16px"}>
