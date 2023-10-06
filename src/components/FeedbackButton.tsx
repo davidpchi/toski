@@ -39,7 +39,7 @@ export function FeedbackButton() {
                 </Fab>
             </ThemeProvider>
 
-            <Modal isOpen={isOpen} onClose={onClose}>
+            <Modal isOpen={isOpen} onClose={onClose} blockScrollOnMount={false}>
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader>Submit your feedback!</ModalHeader>
