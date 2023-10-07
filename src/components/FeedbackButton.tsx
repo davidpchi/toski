@@ -1,4 +1,3 @@
-import ThemeProvider from "@mui/material/styles/ThemeProvider";
 import { EditIcon } from "@chakra-ui/icons";
 import {
     Modal,
@@ -11,11 +10,28 @@ import {
     Button,
     useDisclosure,
     IconButton,
+    Text,
+    Textarea,
 } from "@chakra-ui/react";
-import { FeedbackForm } from "./FeedbackForm";
+import React from "react";
+import { submitFeedback } from "../services/feedbackService";
 
 export function FeedbackButton() {
     const { isOpen, onOpen, onClose } = useDisclosure();
+
+    let [value, setValue] = React.useState("");
+
+    let handleInputChange = (e: any) => {
+        let inputValue = e.target.value;
+        setValue(inputValue);
+    };
+
+    let submitForm = async () => {
+        await submitFeedback(value);
+        alert("Feedback submit!");
+        onClose();
+    };
+
     return (
         <>
             <IconButton
@@ -41,11 +57,16 @@ export function FeedbackButton() {
                     <ModalHeader>Submit your feedback!</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
-                        <FeedbackForm />
+                        <Text>Feedback:</Text>
+                        <Textarea
+                            value={value}
+                            onChange={handleInputChange}
+                            placeholder="Tell us what you think!"
+                            size="md"
+                        />
                     </ModalBody>
-
                     <ModalFooter>
-                        <Button colorScheme="blue" mr={1} onClick={onClose}>
+                        <Button colorScheme="blue" mr={1} onClick={submitForm}>
                             Submit
                         </Button>
                     </ModalFooter>
