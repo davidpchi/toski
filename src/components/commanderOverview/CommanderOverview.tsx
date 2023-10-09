@@ -1,4 +1,4 @@
-import { Checkbox, Flex, Heading, Tooltip, Input } from "@chakra-ui/react";
+import { Checkbox, Flex, Tooltip, Input } from "@chakra-ui/react";
 import React, { useCallback, useState } from "react";
 import { SortableTable } from "../dataVisualizations/SortableTable";
 import { commanderOverviewColumns } from "./commanderOverviewColumnHelper";
@@ -55,7 +55,6 @@ export const CommanderOverview = React.memo(function MatchHistory() {
 
     return (
         <Flex direction="column" justify="center" align="center">
-            <Heading>Commander Overview</Heading>
             <Flex alignSelf={"center"} marginBottom={"16px"} alignItems={"center"}>
                 <DatePicker onChange={onDatePickerChange} />
                 <Tooltip

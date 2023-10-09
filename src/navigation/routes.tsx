@@ -15,64 +15,85 @@ import { loader as newsLoader, NewsDetail } from "../components/news/NewsDetail"
 import { MatchSubmission } from "../components/matchHistory/MatchSubmission";
 import { CommanderTrends } from "../components/commanderTrends/CommanderTrends";
 
+type route = {
+    name: string;
+    path: string;
+    loader?: any;
+    element: JSX.Element;
+};
+
+export const routes: { [path: string]: route } = {
+    "/": {
+        name: "Project Toski",
+        path: "/",
+        element: <Home />,
+    },
+    "/playerOverview": {
+        name: "Player Overview",
+        path: "/playerOverview",
+        element: <PlayerOverview />,
+    },
+    "/playerOverview/:playerId": {
+        name: "Player Details",
+        path: "/playerOverview/:playerId",
+        loader: playerLoader,
+        element: <PlayerDetails />,
+    },
+    "/matchHistory": {
+        name: "Match History",
+        path: "/matchHistory",
+        element: <MatchHistory />,
+    },
+    "/matchHistory/:matchId": {
+        name: "Match Details",
+        path: "/matchHistory/:matchId",
+        loader: matchLoader,
+        element: <MatchDetails />,
+    },
+    "/matchTrends": {
+        name: "Match Trends",
+        path: "/matchTrends",
+        element: <MatchTrends />,
+    },
+    "/commanderOverview": {
+        name: "Commander Overview",
+        path: "/commanderOverview",
+        element: <CommanderOverview />,
+    },
+    "/commanderTrends": {
+        name: "Commander Trends",
+        path: "/commanderTrends",
+        element: <CommanderTrends />,
+    },
+    "/commanderOverview/:commanderId": {
+        name: "Commander Details",
+        path: "/commanderOverview/:commanderId",
+        loader: commanderLoader,
+        element: <CommanderDetails />,
+    },
+    "/articles": {
+        name: "Articles",
+        path: "/articles",
+        element: <NewsOverview />,
+    },
+    "/articles/:newsId": {
+        name: "Articles",
+        path: "/articles/:newsId",
+        loader: newsLoader,
+        element: <NewsDetail />,
+    },
+    "/matchHistory/submit": {
+        name: "Match History Submission",
+        path: "/matchHistory/submit",
+        element: <MatchSubmission />,
+    },
+};
+
 export const router = createHashRouter([
     {
         path: "/",
         element: <Root />,
         errorElement: <Error error={"Whoops! Made a wrong turn!"} />,
-        children: [
-            {
-                path: "/",
-                element: <Home />,
-            },
-            {
-                path: "/playerOverview",
-                element: <PlayerOverview />,
-            },
-            {
-                path: "/playerOverview/:playerId",
-                loader: playerLoader,
-                element: <PlayerDetails />,
-            },
-            {
-                path: "/matchHistory",
-                element: <MatchHistory />,
-            },
-            {
-                path: "/matchHistory/:matchId",
-                loader: matchLoader,
-                element: <MatchDetails />,
-            },
-            {
-                path: "/matchTrends",
-                element: <MatchTrends />,
-            },
-            {
-                path: "/commanderOverview",
-                element: <CommanderOverview />,
-            },
-            {
-                path: "/commanderTrends",
-                element: <CommanderTrends />,
-            },
-            {
-                path: "/commanderOverview/:commanderId",
-                loader: commanderLoader,
-                element: <CommanderDetails />,
-            },
-            {
-                path: "/articles",
-                element: <NewsOverview />,
-            },
-            {
-                path: "/articles/:newsId",
-                loader: newsLoader,
-                element: <NewsDetail />,
-            },
-            {
-                path: "/matchHistory/submit",
-                element: <MatchSubmission />,
-            },
-        ],
+        children: Object.values(routes),
     },
 ]);
