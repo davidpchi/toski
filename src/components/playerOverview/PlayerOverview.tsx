@@ -46,7 +46,6 @@ export const PlayerOverview = React.memo(function MatchHistory() {
 
     return (
         <Flex direction="column" justify="center" align="center">
-            <Heading>Player Overview</Heading>
             <Flex alignSelf={"center"} marginBottom={"16px"} alignItems={"center"}>
                 <DatePicker onChange={onDatePickerChange} />
                 <Tooltip

@@ -42,7 +42,6 @@ export const CommanderTrends = React.memo(function CommanderTrends() {
 
     return (
         <Flex direction="column" justify="center" align="center">
-            <Heading>Commander Trends</Heading>
             <Heading size="md">Commander Colors Played</Heading>
             <Flex maxWidth={175} maxHeight={175}>
                 <div style={{ flex: 1, display: "flex", width: "100%", height: "100%" }}>

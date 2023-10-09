@@ -46,7 +46,13 @@ export function SortableTable({
     });
 
     return (
-        <TableContainer border="1px solid" borderColor="#E2E8F0" borderRadius="md" backgroundColor="white">
+        <TableContainer
+            border="0px"
+            borderColor="#E2E8F0"
+            borderRadius="md"
+            backgroundColor="white"
+            boxShadow={"0px 12px 18px -6px rgba(0,0,0,0.3)"}
+        >
             <Table>
                 <Thead>
                     {table.getHeaderGroups().map((headerGroup) => (

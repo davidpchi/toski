@@ -45,10 +45,10 @@ export const MatchDetails = React.memo(function MatchDetails() {
 
     return (
         <Flex direction="column" justify="center" align="center">
-            <Heading>{title}</Heading>
             <Flex direction={"row"} flex={1} marginBottom={8} flexWrap={"wrap"}>
                 {playerCards}
             </Flex>
+            <Heading size="md">{title}</Heading>
             {match.winner ? <Text>{`Winner: ${match.winner}`}</Text> : null}
             {match.numberOfTurns ? <Text>{`Number of turns: ${match.numberOfTurns}`}</Text> : null}
         </Flex>

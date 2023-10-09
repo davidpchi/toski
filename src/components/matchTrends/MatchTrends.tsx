@@ -1,5 +1,5 @@
 import React from "react";
-import { Flex, Heading } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 
 import { MatchLengthLineChart } from "./MatchLengthLineChart";
 import { getMatches, getPlayersByDate } from "../../redux/statsSelectors";
@@ -42,7 +42,6 @@ export const MatchTrends = React.memo(function MatchHistory() {
 
     return (
         <Flex direction="column" justify="center" align="center">
-            <Heading>Match Trends</Heading>
             <MatchLengthBarChart matches={sortedMatches} />
             <MatchLengthLineChart matches={sortedMatches} />
             <MatchFrequencyLineChart matches={sortedMatches} />
