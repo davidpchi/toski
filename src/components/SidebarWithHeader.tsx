@@ -220,10 +220,10 @@ const Header = ({ onOpen, ...rest }: HeaderProps) => {
 
     return (
         <Flex
+            transition="0.5s ease"
             ml={{ base: 0, md: 60 }}
             px={{ base: 4, md: 4 }}
-            display={{ base: "fixed", md: isHome ? "none" : "fixed" }}
-            height={20}
+            height={{ base: 20, md: isHome ? 0 : 20 }}
             align="center"
             borderBottomWidth="1px"
             borderBottomColor={useColorModeValue("gray.200", "gray.700")}
@@ -239,7 +239,7 @@ const Header = ({ onOpen, ...rest }: HeaderProps) => {
                 icon={<FiMenu />}
             />
 
-            <Flex alignItems={"flex-start"}>
+            <Flex alignItems={"flex-start"} display={{ base: "fixed", md: isHome ? "none" : "fixed" }}>
                 <Text fontSize="20" fontWeight="bold" textTransform="uppercase" color="gray.600">
                     {headerTitle}
                 </Text>
