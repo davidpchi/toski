@@ -67,7 +67,6 @@ export default function SidebarWithHeader({ children }: { children: ReactNode })
                     marginTop={"64px"}
                     flexDirection={"column"}
                 >
-                    <FeedbackButton />
                     <div style={{ textAlign: "center", fontStyle: "italic", fontSize: "12px" }}>
                         This site contains unofficial Fan Content permitted under the{" "}
                         <a
@@ -79,6 +78,7 @@ export default function SidebarWithHeader({ children }: { children: ReactNode })
                         . Not approved/endorsed by Wizards. Portions of the materials used are property of Wizards of
                         the Coast. ©Wizards of the Coast LLC.
                     </div>
+                    <FeedbackButton />
                 </Flex>
             </Box>
         </Box>

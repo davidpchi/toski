@@ -12,7 +12,7 @@ import {
     useDisclosure,
     IconButton,
     Text,
-    Textarea,
+    Textarea
 } from "@chakra-ui/react";
 
 import React from "react";
@@ -21,22 +21,59 @@ import { submitFeedback } from "../services/feedbackService";
 
 export function FeedbackButton() {
     const { isOpen, onOpen, onClose } = useDisclosure();
-
-    const [value, setValue] = React.useState("");
+    const [feedbackString, setFeedbackString] = React.useState<string>("");
+    const [isFeedbackSubmit, setIsFeedbackSubmit] = React.useState<boolean>(false);
 
     const handleInputChange = (e: any) => {
         const inputValue = e.target.value;
-
-        setValue(inputValue);
+        setFeedbackString(inputValue);
     };
 
     const submitForm = async () => {
-        await submitFeedback(value);
+        await submitFeedback(feedbackString);
 
-        alert("Feedback submit!");
+        // Communicate that feedback is submit
+        setIsFeedbackSubmit(true);
 
-        onClose();
+        // Clear feedback and close
+        setFeedbackString("");
     };
+
+    const customOnClose = () => {
+        onClose();
+        setIsFeedbackSubmit(false);
+    };
+
+    const modalContent = isFeedbackSubmit ? (
+        <ModalContent>
+            <ModalHeader>Thanks for your feedback!</ModalHeader>
+            <ModalCloseButton />
+            <ModalFooter>
+                <Button colorScheme="red" mr={1} onClick={customOnClose}>
+                    Close
+                </Button>
+            </ModalFooter>
+        </ModalContent>
+    ) : (
+        <ModalContent>
+            <ModalHeader>Submit your feedback!</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+                <Text>Feedback:</Text>
+                <Textarea
+                    value={feedbackString}
+                    onChange={handleInputChange}
+                    placeholder="Tell us what you think!"
+                    size="md"
+                />
+            </ModalBody>
+            <ModalFooter>
+                <Button colorScheme="blue" mr={1} onClick={submitForm}>
+                    Submit
+                </Button>
+            </ModalFooter>
+        </ModalContent>
+    );
 
     return (
         <>
@@ -55,35 +92,13 @@ export function FeedbackButton() {
 
                     right: "25px",
 
-                    bottom: "25px",
+                    bottom: "25px"
                 }}
             />
 
-            <Modal isOpen={isOpen} onClose={onClose} blockScrollOnMount={false}>
+            <Modal isOpen={isOpen} onClose={customOnClose} blockScrollOnMount={false}>
                 <ModalOverlay />
-
-                <ModalContent>
-                    <ModalHeader>Submit your feedback!</ModalHeader>
-
-                    <ModalCloseButton />
-
-                    <ModalBody>
-                        <Text>Feedback:</Text>
-
-                        <Textarea
-                            value={value}
-                            onChange={handleInputChange}
-                            placeholder="Tell us what you think!"
-                            size="md"
-                        />
-                    </ModalBody>
-
-                    <ModalFooter>
-                        <Button colorScheme="blue" mr={1} onClick={submitForm}>
-                            Submit
-                        </Button>
-                    </ModalFooter>
-                </ModalContent>
+                {modalContent}
             </Modal>
         </>
     );
