@@ -5,6 +5,7 @@ import { Match } from "../types/domain/Match";
 import { sheetRowToMatch } from "../types/service/dataMappers";
 import { StatsAction } from "../redux/statsActions";
 import { useEffect } from "react";
+import { sendDataToGoogleSheets } from "./googleSheetsPushService";
 
 const matchHistoryDataEndpoint =
     "https://docs.google.com/spreadsheets/d/1FsjnGp3JPsqAEmlyWlxmYK5pSwGASqfIcDl9HvD-fuk/gviz/tq?gid=1885300192";
@@ -67,7 +68,7 @@ export const submitMatch = async (
     player3?: MatchSubmissionPlayer,
     player4?: MatchSubmissionPlayer,
     turnCount?: number,
-    extraNotes?: string,
+    extraNotes?: string
 ) => {
     var body: { [fieldName: string]: string } = {};
     body["entry.1178471159"] = date.toISOString().split("T")[0];
@@ -104,27 +105,5 @@ export const submitMatch = async (
 
     body["entry.2043626966"] = extraNotes !== undefined ? extraNotes : "";
 
-    // This is all super hacky to begin so bear with me here...
-    // We are able to directly submit to the google form via a URL and POST. No auth needed since this a public form.
-    // This is pretty fragile because if any of the above fields have their IDs change or are deleted
-    // this will result in a 400.
-
-    // TODO: need to figure out why we are running into CORs on local host.
-    try {
-        await axios
-            .post(matchHistorySubmitEndpoint, body, {
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                withCredentials: false,
-            })
-            .then((res) => {
-                console.log(res);
-                return true;
-            });
-    } catch (e) {
-        // just assume the data entry was successful
-        console.log(e);
-        return true;
-    }
-
-    return false;
+    return sendDataToGoogleSheets({ body, submitEndpoint: matchHistoryDataEndpoint });
 };
