@@ -5,7 +5,7 @@ import { Match } from "../types/domain/Match";
 import { sheetRowToMatch } from "../types/service/dataMappers";
 import { StatsAction } from "../redux/statsActions";
 import { useEffect } from "react";
-import { sendDataToGoogleSheets } from "./googleSheetsPushService";
+import { sendDataToGoogleSheets } from "./googleFormsService";
 
 const matchHistoryDataEndpoint =
     "https://docs.google.com/spreadsheets/d/1FsjnGp3JPsqAEmlyWlxmYK5pSwGASqfIcDl9HvD-fuk/gviz/tq?gid=1885300192";

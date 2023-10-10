@@ -136,7 +136,6 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
                     ></NavItem>
                 ))}
             </VStack>
-            {/* POSSIBLE LOCATION */}
         </Box>
     );
 };

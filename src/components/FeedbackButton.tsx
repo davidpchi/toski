@@ -18,6 +18,7 @@ import {
 import React from "react";
 
 import { submitFeedback } from "../services/feedbackService";
+import { primaryColor } from "../themes/acorn";
 
 export function FeedbackButton() {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -49,7 +50,7 @@ export function FeedbackButton() {
             <ModalHeader>Thanks for your feedback!</ModalHeader>
             <ModalCloseButton />
             <ModalFooter>
-                <Button colorScheme="red" mr={1} onClick={customOnClose}>
+                <Button colorScheme="primary" mr={1} onClick={customOnClose}>
                     Close
                 </Button>
             </ModalFooter>
@@ -68,7 +69,7 @@ export function FeedbackButton() {
                 />
             </ModalBody>
             <ModalFooter>
-                <Button colorScheme="blue" mr={1} onClick={submitForm}>
+                <Button colorScheme="primary" mr={1} onClick={submitForm}>
                     Submit
                 </Button>
             </ModalFooter>
@@ -81,7 +82,7 @@ export function FeedbackButton() {
                 isRound={true}
                 variant="solid"
                 colorScheme="primary"
-                aria-label="Done"
+                aria-label="Feedback"
                 fontSize="20px"
                 icon={<EditIcon />}
                 onClick={onOpen}
