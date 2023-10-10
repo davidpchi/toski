@@ -13,7 +13,7 @@ import {
     Text,
     useColorModeValue,
     useDisclosure,
-    VStack,
+    VStack
 } from "@chakra-ui/react";
 import { ReactNode, useCallback, useMemo } from "react";
 import { IconType } from "react-icons";
@@ -21,6 +21,7 @@ import { FiBarChart, FiCalendar, FiHome, FiMenu, FiRss, FiShield, FiTrendingUp, 
 import { useLocation, useNavigate } from "react-router-dom";
 import { FF_IS_NEWS_ENABLED } from "../services/featureFlagService";
 import { routes } from "../navigation/routes";
+import { FeedbackButton } from "./FeedbackButton";
 
 interface LinkItemProps {
     name: string;
@@ -33,7 +34,7 @@ const LinkItems: Array<LinkItemProps> = [
     { name: "Commander Overview", icon: FiShield, route: "/commanderOverview" },
     { name: "Commander Trends", icon: FiBarChart, route: "/commanderTrends" },
     { name: "Match History", icon: FiCalendar, route: "/matchHistory" },
-    { name: "Match Trends", icon: FiTrendingUp, route: "/matchTrends" },
+    { name: "Match Trends", icon: FiTrendingUp, route: "/matchTrends" }
 ];
 
 export default function SidebarWithHeader({ children }: { children: ReactNode }) {
@@ -66,6 +67,7 @@ export default function SidebarWithHeader({ children }: { children: ReactNode })
                     marginTop={"64px"}
                     flexDirection={"column"}
                 >
+                    <FeedbackButton />
                     <div style={{ textAlign: "center", fontStyle: "italic", fontSize: "12px" }}>
                         This site contains unofficial Fan Content permitted under the{" "}
                         <a
@@ -134,6 +136,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
                     ></NavItem>
                 ))}
             </VStack>
+            {/* POSSIBLE LOCATION */}
         </Box>
     );
 };
