@@ -13,7 +13,7 @@ export const HomeNewsSection = React.memo(function HomeNewsSection() {
     };
 
     return (
-        <Flex backgroundColor="white" flexDirection="column" alignItems="center" paddingTop="4" paddingBottom="4">
+        <Flex flexDirection="column" alignItems="center" paddingTop="4" paddingBottom="4">
             <Flex maxWidth="1024px" flexDirection="column" wrap="wrap">
                 <Button
                     variant="ghost"

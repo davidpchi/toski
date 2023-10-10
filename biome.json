@@ -4,13 +4,13 @@
         "enabled": false
     },
     "linter": {
-        "enabled": true,
+        "enabled": false,
         "rules": {
             "recommended": true
         }
     },
     "formatter": {
-        "enabled": true,
+        "enabled": false,
         "indentStyle": "space",
         "indentSize": 4,
         "lineWidth": 150

@@ -1,4 +1,4 @@
-import { Flex, Heading } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import React from "react";
 import { SortableTable } from "../dataVisualizations/SortableTable";
 import { matchHistoryColumns } from "./matchHistoryColumnHelper";
@@ -21,7 +21,6 @@ export const MatchHistory = React.memo(function MatchHistory() {
 
     return (
         <Flex direction="column" justify="center" align="center">
-            <Heading>Match History</Heading>
             <SortableTable
                 columns={matchHistoryColumns}
                 data={matches}

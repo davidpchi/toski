@@ -2,7 +2,7 @@ import { TooltipItem } from "chart.js";
 import React, { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLoaderData, useNavigate } from "react-router-dom";
-import { Flex, Heading, Image, Input, Select, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
+import { Flex, Image, Input, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
 
 import { AppState } from "../../redux/rootReducer";
 import { getCommander, getMatchesByCommanderName, getPlayersByCommanderName } from "../../redux/statsSelectors";
@@ -73,8 +73,6 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
         });
     }
 
-    const title = commander.name.toUpperCase();
-
     let numberOfWins = 0;
 
     const winratePerMatch = matches.map((match: Match, index: number) => {
@@ -107,7 +105,6 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
 
     return (
         <Flex direction="column" justify="center" align="center">
-            <Heading>{title}</Heading>
             <Flex
                 direction="row"
                 maxWidth={"1024px"}
@@ -210,8 +207,8 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                         )}
                     </TabPanel>
                     <TabPanel>
-                    {matchesArray.length > 0 ? (
-                            <MatchPlacementBarChart matches={matchesArray} commanderName={commander.name}/>
+                        {matchesArray.length > 0 ? (
+                            <MatchPlacementBarChart matches={matchesArray} commanderName={commander.name} />
                         ) : (
                             <div style={{ textAlign: "center" }}>No data</div>
                         )}

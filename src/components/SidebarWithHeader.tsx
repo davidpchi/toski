@@ -15,11 +15,12 @@ import {
     useDisclosure,
     VStack,
 } from "@chakra-ui/react";
-import { ReactNode, useCallback } from "react";
+import { ReactNode, useCallback, useMemo } from "react";
 import { IconType } from "react-icons";
 import { FiBarChart, FiCalendar, FiHome, FiMenu, FiRss, FiShield, FiTrendingUp, FiUsers } from "react-icons/fi";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FF_IS_NEWS_ENABLED } from "../services/featureFlagService";
+import { routes } from "../navigation/routes";
 
 interface LinkItemProps {
     name: string;
@@ -53,11 +54,10 @@ export default function SidebarWithHeader({ children }: { children: ReactNode })
                     <SidebarContent onClose={onClose} />
                 </DrawerContent>
             </Drawer>
-            {/* mobilenav */}
             <Box>
-                <MobileNav onOpen={onOpen} />
+                <Header onOpen={onOpen} />
             </Box>
-            <Box ml={{ base: 0, md: 60 }} p="4">
+            <Box ml={{ base: 0, md: 60 }} p="8">
                 {children}
                 <Flex
                     height={"64px"}
@@ -104,18 +104,26 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
             h="full"
             {...rest}
         >
-            <Flex h="20" align="center" mx="8" justify="space-between">
-                <Flex direction="column" justify="center" align="center">
-                    <Text fontSize="20" fontWeight="bold" textTransform="uppercase" color="gray.600" noOfLines={1}>
-                        Project Toski
-                    </Text>
-                    <Text fontSize="10px" alignSelf={"flex-end"}>
-                        Alpha
-                    </Text>
-                </Flex>
+            <Flex
+                h="20"
+                align="center"
+                paddingRight={"8px"}
+                paddingLeft={"8px"}
+                justifyContent="space-between"
+                backgroundColor={"white"}
+            >
+                <Text fontSize="20" fontWeight="bold" textTransform="uppercase" color="gray.600" noOfLines={1}>
+                    Project Toski
+                </Text>
                 <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
             </Flex>
-            <VStack spacing="24px" align="stretch" justify="flex-start">
+            <VStack
+                spacing="24px"
+                align="stretch"
+                height={"100%"}
+                justify="flex-start"
+                boxShadow={"0px 12px 18px 2px rgba(0,0,0,0.3)"}
+            >
                 {linkItems.map((link) => (
                     <NavItem
                         key={link.name}
@@ -169,19 +177,58 @@ const NavItem = ({ icon, label, route, onClose }: NavItemProps) => {
     );
 };
 
-interface MobileProps extends FlexProps {
+interface HeaderProps extends FlexProps {
     onOpen: () => void;
 }
-const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
+
+const useHeaderTitle = () => {
+    const location = useLocation();
+
+    return useMemo(() => {
+        let title = "";
+
+        const path = location.pathname;
+
+        // check each of the potential "areas" of the app that may need more specific titles
+        if (path.includes("commanderOverview")) {
+            title = "Commander Overview";
+        } else if (path.includes("matchHistory")) {
+            title = "Match History";
+        } else if (path.includes("playerOverview")) {
+            title = "Player Overview";
+        } else if (path.includes("articles")) {
+            title = "Articles";
+        } else {
+            const route = routes[path];
+
+            // if the route doesn't exist, just return the default;
+            if (route !== undefined) {
+                title = route.name;
+            }
+        }
+
+        return title;
+    }, [location]);
+};
+
+// the md layout is used for normal
+// the base layout is used for mobile view
+const Header = ({ onOpen, ...rest }: HeaderProps) => {
+    const headerTitle = useHeaderTitle();
+    const location = useLocation();
+    const isHome = location.pathname === "/";
+
     return (
         <Flex
+            transition="0.5s ease"
             ml={{ base: 0, md: 60 }}
             px={{ base: 4, md: 4 }}
-            height="20"
+            height={{ base: 20, md: isHome ? 0 : 20 }}
             align="center"
             borderBottomWidth="1px"
             borderBottomColor={useColorModeValue("gray.200", "gray.700")}
-            justify={{ base: "space-between", md: "flex-end" }}
+            justify={{ base: "space-between", md: "flex-start" }}
+            boxShadow={"0px 12px 18px -12px rgba(0,0,0,0.3)"}
             {...rest}
         >
             <IconButton
@@ -192,22 +239,11 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                 icon={<FiMenu />}
             />
 
-            <Box display={{ base: "flex", md: "none" }}>
-                <Flex direction="column" justify="center" align="center">
-                    <Text
-                        fontSize="2xl"
-                        fontFamily="monospace"
-                        fontWeight="bold"
-                        textTransform="uppercase"
-                        color="gray.600"
-                    >
-                        PROJECT TOSKI
-                    </Text>
-                    <Text fontSize="10px" alignSelf={"flex-end"}>
-                        Alpha
-                    </Text>
-                </Flex>
-            </Box>
+            <Flex alignItems={"flex-start"} display={{ base: "fixed", md: isHome ? "none" : "fixed" }}>
+                <Text fontSize="20" fontWeight="bold" textTransform="uppercase" color="gray.600">
+                    {headerTitle}
+                </Text>
+            </Flex>
         </Flex>
     );
 };

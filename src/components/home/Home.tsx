@@ -12,7 +12,6 @@ export default function Home() {
         <Flex
             style={{
                 minHeight: "90vh",
-                backgroundColor: "#282c34",
                 margin: -16,
                 position: "relative",
             }}
