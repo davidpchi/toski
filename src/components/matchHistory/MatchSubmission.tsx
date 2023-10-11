@@ -16,6 +16,7 @@ import {
     RadioGroup,
     Stack,
     Radio,
+    Checkbox
 } from "@chakra-ui/react";
 import { submitMatch } from "../../services/matchHistoryService";
 import { CreatableSelect, SingleValue } from "chakra-react-select";
@@ -24,7 +25,6 @@ import { getPlayers } from "../../redux/statsSelectors";
 import { commanderList } from "../../services/commanderList";
 import { FiUserPlus, FiX } from "react-icons/fi";
 import { useNavigate } from "react-router";
-import { current } from "@reduxjs/toolkit";
 
 const placeholderImage = "https://static.thenounproject.com/png/5425-200.png";
 
@@ -40,7 +40,7 @@ const MatchSubmissionPlayerCard = React.memo(function MatchSubmissionPlayerCard(
     setPlayerValue,
     setCommanderValue,
     setPlayerRank,
-    onClose,
+    onClose
 }: {
     title: string;
     commanderOptions: SelectItem[];
@@ -78,21 +78,39 @@ const MatchSubmissionPlayerCard = React.memo(function MatchSubmissionPlayerCard(
     };
 
     const [commanderSelectValue, setCommanderSelectValue] = useState<string>("");
-
     const onCommanderSelectChange = (event: any) => {
-        const value = event.target.value;
-        setCommanderSelectValue(value);
-        setCommanderValue(value);
+        const commander = event.target.value;
+        setCommanderSelectValue(commander);
+        // if the user has a partner, make sure we stich the names together
+        setCommanderValue(hasPartner ? commander + " && " + partnerSelectValue : commander);
+    };
+
+    const [partnerSelectValue, setPartnerSelectValue] = useState<string>("");
+    const onPartnerSelectChange = (event: any) => {
+        const partner = event.target.value;
+        setPartnerSelectValue(partner);
+        setCommanderValue(commanderSelectValue + " && " + partner);
+    };
+
+    const [hasPartner, setHasPartner] = useState<boolean>(false);
+    const onHasPartnerChanged = () => {
+        if (hasPartner === true) {
+            // this means we are now setting the hasPartner as false, remove the partner value from
+            // our commander name string and clear the selection
+            setPartnerSelectValue("");
+            setCommanderValue(commanderSelectValue);
+        }
+
+        setHasPartner(!hasPartner);
     };
 
     const [radioButtonValue, setRadioButtonValue] = useState<string>("1");
-
     const onUpdateRank = useCallback(
         (value: string) => {
             setRadioButtonValue(value);
             setPlayerRank(Number(value));
         },
-        [setPlayerRank],
+        [setPlayerRank]
     );
 
     const commanderImage = commanderList[commanderSelectValue]
@@ -150,7 +168,6 @@ const MatchSubmissionPlayerCard = React.memo(function MatchSubmissionPlayerCard(
                 placeholder="Enter Player Name"
                 size="lg"
             />
-
             <Text marginTop={"8px"}>Commander:</Text>
             <Select
                 size="lg"
@@ -162,6 +179,24 @@ const MatchSubmissionPlayerCard = React.memo(function MatchSubmissionPlayerCard(
                     return <option value={option.name}>{option.name}</option>;
                 })}
             </Select>
+            <Checkbox isChecked={hasPartner} onChange={onHasPartnerChanged} marginTop={"8px"} alignSelf={"flex-end"}>
+                {"Has Partner"}
+            </Checkbox>
+            {hasPartner ? (
+                <>
+                    <Text marginTop={"8px"}>Partner/Background Commander:</Text>
+                    <Select
+                        size="lg"
+                        onChange={onPartnerSelectChange}
+                        value={partnerSelectValue}
+                        placeholder={"Select partner or background..."}
+                    >
+                        {commanderOptions.map((option) => {
+                            return <option value={option.name}>{option.name}</option>;
+                        })}
+                    </Select>
+                </>
+            ) : null}
             <Text marginTop={"8px"}>Rank:</Text>
             <Box padding={"6px"}>
                 <RadioGroup onChange={onUpdateRank} value={radioButtonValue}>
@@ -182,7 +217,7 @@ export const MatchSubmission = React.memo(function MatchSubmission() {
 
     const currentDate = new Date();
     const [date, setDate] = useState<Date>(
-        new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()),
+        new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate())
     );
 
     const [player1Name, setPlayer1Name] = useState<string>("");
@@ -230,28 +265,28 @@ export const MatchSubmission = React.memo(function MatchSubmission() {
             name: player1Name,
             commander: player1Commander,
             turnOrder: 1,
-            rank: player1Rank,
+            rank: player1Rank
         };
 
         const player2 = {
             name: player2Name,
             commander: player2Commander,
             turnOrder: 2,
-            rank: player2Rank,
+            rank: player2Rank
         };
 
         const player3 = {
             name: player3Name,
             commander: player3Commander,
             turnOrder: 3,
-            rank: player3Rank,
+            rank: player3Rank
         };
 
         const player4 = {
             name: player4Name,
             commander: player4Commander,
             turnOrder: 4,
-            rank: player4Rank,
+            rank: player4Rank
         };
 
         const result = await submitMatch(date, player1, player2, player3, player4, turnCount, notes);
@@ -276,8 +311,10 @@ export const MatchSubmission = React.memo(function MatchSubmission() {
         player4Name,
         player4Commander,
         player4Rank,
+        date,
         turnCount,
         notes,
+        navigate
     ]);
 
     // loop through all of players and create their matchSubmission cards
