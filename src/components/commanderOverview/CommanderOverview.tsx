@@ -19,7 +19,7 @@ export const CommanderOverview = React.memo(function MatchHistory() {
         (date: Date | undefined) => {
             setDateFilter(date);
         },
-        [setDateFilter],
+        [setDateFilter]
     );
 
     const allCommanders = useSelector(getCommanders);
@@ -34,45 +34,51 @@ export const CommanderOverview = React.memo(function MatchHistory() {
         (event: any) => {
             setSearchInput(event.target.value);
         },
-        [setSearchInput],
+        [setSearchInput]
     );
 
-    if (commanders === undefined) {
+    if (commanders === undefined || commanders.length === 0) {
         return <Loading text="Loading..." />;
     }
 
     let commandersArray = commanders.sort((a: Commander, b: Commander) => a.name.localeCompare(b.name));
     if (isFiltered && allCommanders) {
         commandersArray = commandersArray.filter(
-            (value: Commander) => allCommanders[value.id].matches.length >= COMMANDER_MINIMUM_GAMES_REQUIRED,
+            (value: Commander) => allCommanders[value.id].matches.length >= COMMANDER_MINIMUM_GAMES_REQUIRED
         );
     }
     if (searchInput.length > 0 && allCommanders) {
         commandersArray = commandersArray.filter((value: Commander) =>
-            allCommanders[value.id].name.toLowerCase().includes(searchInput.toLowerCase()),
+            allCommanders[value.id].name.toLowerCase().includes(searchInput.toLowerCase())
         );
     }
 
     return (
         <Flex direction="column" justify="center" align="center">
-            <Flex alignSelf={"center"} marginBottom={"16px"} alignItems={"center"}>
+            <Flex
+                alignSelf={"center"}
+                marginBottom={"16px"}
+                alignItems={"center"}
+                flexWrap={"wrap"}
+                justifyContent={"center"}
+            >
                 <DatePicker onChange={onDatePickerChange} />
                 <Tooltip
                     label={<p style={{ textAlign: "center" }}>Commanders play 5 games to be qualified.</p>}
                     hasArrow
                     arrowSize={15}
                 >
-                    <div>
+                    <div style={{ marginTop: "8px", marginBottom: "8px" }}>
                         <Checkbox isChecked={isFiltered} onChange={onFilterChange}>
                             {"Show only qualified"}
                         </Checkbox>
                     </div>
                 </Tooltip>
                 <div style={{ padding: 20 }}>
-                    <Input placeholder="Search..." onChange={onSearchChange} />
+                    <Input placeholder="Filter by..." onChange={onSearchChange} />
                 </div>
             </Flex>
-            {commandersArray.length ? (
+            {commandersArray.length > 0 ? (
                 <SortableTable
                     columns={commanderOverviewColumns}
                     data={commandersArray}
@@ -81,7 +87,7 @@ export const CommanderOverview = React.memo(function MatchHistory() {
                             onClick: () => {
                                 navigate(`/commanderOverview/${row.original.id}`);
                                 window.scrollTo(0, 0);
-                            },
+                            }
                         };
                     }}
                 />
