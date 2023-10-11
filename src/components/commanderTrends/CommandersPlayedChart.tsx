@@ -14,7 +14,7 @@ export const CommandersPlayedChart = React.memo(function MatchHistory({ matches 
                 commandersDictionary[commander] = commander;
             }
         }
-        return { x: match.id, y: Object.values(commandersDictionary).length };
+        return { x: Number(match.id) + 1, y: Object.values(commandersDictionary).length };
     });
 
     const tooltipTitleCallback = (item: TooltipItem<"line">[]) => {
