@@ -13,7 +13,7 @@ import {
     Text,
     useColorModeValue,
     useDisclosure,
-    VStack,
+    VStack
 } from "@chakra-ui/react";
 import { ReactNode, useCallback, useMemo } from "react";
 import { IconType } from "react-icons";
@@ -33,7 +33,7 @@ const LinkItems: Array<LinkItemProps> = [
     { name: "Commander Overview", icon: FiShield, route: "/commanderOverview" },
     { name: "Commander Trends", icon: FiBarChart, route: "/commanderTrends" },
     { name: "Match History", icon: FiCalendar, route: "/matchHistory" },
-    { name: "Match Trends", icon: FiTrendingUp, route: "/matchTrends" },
+    { name: "Match Trends", icon: FiTrendingUp, route: "/matchTrends" }
 ];
 
 export default function SidebarWithHeader({ children }: { children: ReactNode }) {
@@ -103,6 +103,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
             pos="fixed"
             h="full"
             {...rest}
+            boxShadow={"0px 12px 18px 2px rgba(0,0,0,0.3)"}
         >
             <Flex
                 h="20"
@@ -117,13 +118,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
                 </Text>
                 <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
             </Flex>
-            <VStack
-                spacing="24px"
-                align="stretch"
-                height={"100%"}
-                justify="flex-start"
-                boxShadow={"0px 12px 18px 2px rgba(0,0,0,0.3)"}
-            >
+            <VStack spacing="24px" align="stretch" height={"100%"} justify="flex-start">
                 {linkItems.map((link) => (
                     <NavItem
                         key={link.name}
