@@ -10,6 +10,7 @@ import { commanderList } from "../../services/commanderList";
 import { MatchDisplayPlayer } from "./types/MatchDisplayPlayer";
 import { MatchPlayerCard } from "./MatchPlayerCard";
 import { rankDictionary } from "../constants";
+import { primaryColor } from "../../themes/acorn";
 
 export async function loader(data: { params: any }) {
     return data.params.matchId;
@@ -25,7 +26,7 @@ export const MatchDetails = React.memo(function MatchDetails() {
         return <Loading text="" />;
     }
 
-    const title = `GAME ${match.id}`;
+    const title = `GAME ${Number(match.id) + 1}`;
 
     const playerCards = match.players.map((player) => {
         const matchPlayer: MatchDisplayPlayer = {
@@ -34,10 +35,10 @@ export const MatchDetails = React.memo(function MatchDetails() {
             commanders: player.commanders.map((commanderName: string) => {
                 return {
                     name: commanderName,
-                    id: commanderList[commanderName] ? commanderList[commanderName].id : undefined,
+                    id: commanderList[commanderName] ? commanderList[commanderName].id : undefined
                 };
             }),
-            isWinner: match.winner === player.name,
+            isWinner: match.winner === player.name
         };
 
         return <MatchPlayerCard player={matchPlayer} key={"MatchPlayerCard_" + player.name} />;
@@ -45,12 +46,37 @@ export const MatchDetails = React.memo(function MatchDetails() {
 
     return (
         <Flex direction="column" justify="center" align="center">
-            <Flex direction={"row"} flex={1} marginBottom={8} flexWrap={"wrap"}>
+            <Flex direction={"row"} flex={1} marginBottom={8} flexWrap={"wrap"} justify={"center"}>
                 {playerCards}
             </Flex>
-            <Heading size="md">{title}</Heading>
-            {match.winner ? <Text>{`Winner: ${match.winner}`}</Text> : null}
-            {match.numberOfTurns ? <Text>{`Number of turns: ${match.numberOfTurns}`}</Text> : null}
+            <Flex
+                direction={"column"}
+                justify="center"
+                align="center"
+                borderTopRadius={"8px"}
+                minWidth={"300px"}
+                backgroundColor={primaryColor["500"]}
+            >
+                <Heading size="md" color={"white"} padding={"8px"}>
+                    {title}
+                </Heading>
+                {match.winner ? (
+                    <Text
+                        alignSelf={"stretch"}
+                        borderWidth={1}
+                        padding={"8px"}
+                        background={"white"}
+                    >{`Winner: ${match.winner}`}</Text>
+                ) : null}
+                {match.numberOfTurns ? (
+                    <Text
+                        alignSelf={"stretch"}
+                        borderWidth={1}
+                        padding={"8px"}
+                        background={"white"}
+                    >{`Number of turns: ${match.numberOfTurns}`}</Text>
+                ) : null}
+            </Flex>
         </Flex>
     );
 });

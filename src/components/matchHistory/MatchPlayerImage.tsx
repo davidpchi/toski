@@ -9,7 +9,7 @@ import {
     ModalFooter,
     ModalHeader,
     ModalOverlay,
-    useDisclosure,
+    useDisclosure
 } from "@chakra-ui/react";
 import React, { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
@@ -51,7 +51,12 @@ export const MatchPlayerImage = React.memo(function MatchPlayerImage({ player }:
                 alignSelf={"stretch"}
             >
                 {commanderList[value.name] ? (
-                    <Image key={value.id} src={commanderList[value.name].image} />
+                    <Image
+                        key={value.id}
+                        src={commanderList[value.name].image}
+                        borderRadius={"4%"}
+                        boxShadow={"0px 12px 18px 2px rgba(0,0,0,0.3)"}
+                    />
                 ) : (
                     <Flex width={200} alignContent="center">
                         <p
@@ -59,7 +64,7 @@ export const MatchPlayerImage = React.memo(function MatchPlayerImage({ player }:
                                 fontStyle: "italic",
                                 fontWeight: "bold",
                                 wordBreak: "break-word",
-                                whiteSpace: "normal",
+                                whiteSpace: "normal"
                             }}
                         >
                             {value.name}
@@ -83,7 +88,12 @@ export const MatchPlayerImage = React.memo(function MatchPlayerImage({ player }:
                 size="md"
             >
                 {commanderList[player.commanders[0].name] ? (
-                    <Image src={commanderList[player.commanders[0].name].image} />
+                    <Image
+                        height={player.isWinner ? "100%" : "85%"}
+                        src={commanderList[player.commanders[0].name].image}
+                        borderRadius={"4%"}
+                        boxShadow={"0px 12px 18px 2px rgba(0,0,0,0.3)"}
+                    />
                 ) : (
                     <Flex width={200} alignContent="center">
                         <p
@@ -91,7 +101,7 @@ export const MatchPlayerImage = React.memo(function MatchPlayerImage({ player }:
                                 fontStyle: "italic",
                                 fontWeight: "bold",
                                 wordBreak: "break-word",
-                                whiteSpace: "normal",
+                                whiteSpace: "normal"
                             }}
                         >
                             {player.commanders[0].name}
@@ -115,7 +125,11 @@ export const MatchPlayerImage = React.memo(function MatchPlayerImage({ player }:
                     <div style={{ display: "grid" }}>
                         <div style={{ gridRowStart: 1, gridColumnStart: 1 }}>
                             {commanderList[player.commanders[1].name] ? (
-                                <Image src={commanderList[player.commanders[1].name].image} />
+                                <Image
+                                    src={commanderList[player.commanders[1].name].image}
+                                    borderRadius={"4%"}
+                                    boxShadow={"0px 12px 18px 2px rgba(0,0,0,0.3)"}
+                                />
                             ) : (
                                 <Flex width={200} alignContent="center">
                                     <p
@@ -123,7 +137,7 @@ export const MatchPlayerImage = React.memo(function MatchPlayerImage({ player }:
                                             fontStyle: "italic",
                                             fontWeight: "bold",
                                             wordBreak: "break-word",
-                                            whiteSpace: "normal",
+                                            whiteSpace: "normal"
                                         }}
                                     >
                                         {player.commanders[1].name}
@@ -133,7 +147,11 @@ export const MatchPlayerImage = React.memo(function MatchPlayerImage({ player }:
                         </div>
                         <div style={{ gridRowStart: 1, gridColumnStart: 1, paddingTop: "20%" }}>
                             {commanderList[player.commanders[0].name] ? (
-                                <Image src={commanderList[player.commanders[0].name].image} />
+                                <Image
+                                    src={commanderList[player.commanders[0].name].image}
+                                    borderRadius={"4%"}
+                                    boxShadow={"0px 12px 18px 2px rgba(0,0,0,0.3)"}
+                                />
                             ) : (
                                 <Flex width={200} alignContent="center">
                                     <p
@@ -141,7 +159,7 @@ export const MatchPlayerImage = React.memo(function MatchPlayerImage({ player }:
                                             fontStyle: "italic",
                                             fontWeight: "bold",
                                             wordBreak: "break-word",
-                                            whiteSpace: "normal",
+                                            whiteSpace: "normal"
                                         }}
                                     >
                                         {player.commanders[0].name}
@@ -152,7 +170,12 @@ export const MatchPlayerImage = React.memo(function MatchPlayerImage({ player }:
                         {player.commanders[2] !== undefined ? (
                             <div style={{ gridRowStart: 1, gridColumnStart: 1, paddingTop: "90%" }}>
                                 {commanderList[player.commanders[2].name] ? (
-                                    <Image src={commanderList[player.commanders[2].name].image} width={"50%"} />
+                                    <Image
+                                        src={commanderList[player.commanders[2].name].image}
+                                        width={"50%"}
+                                        borderRadius={"4%"}
+                                        boxShadow={"0px 12px 18px 2px rgba(0,0,0,0.3)"}
+                                    />
                                 ) : (
                                     <Flex width={200} alignContent="center">
                                         <p
@@ -160,7 +183,7 @@ export const MatchPlayerImage = React.memo(function MatchPlayerImage({ player }:
                                                 fontStyle: "italic",
                                                 fontWeight: "bold",
                                                 wordBreak: "break-word",
-                                                whiteSpace: "normal",
+                                                whiteSpace: "normal"
                                             }}
                                         >
                                             {player.commanders[2].name}
