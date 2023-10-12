@@ -2,7 +2,6 @@ import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import React, { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiLoader } from "react-icons/fi";
-import { primaryColor } from "../../themes/acorn";
 import { MatchDisplayPlayer } from "./types/MatchDisplayPlayer";
 import { MatchPlayerImage } from "./MatchPlayerImage";
 
@@ -10,7 +9,7 @@ export const MatchPlayerCard = React.memo(function MatchPlayerCard({
     player,
     textColor,
     backgroundColor,
-    borderColor,
+    borderColor
 }: {
     player: MatchDisplayPlayer;
     textColor?: string;
@@ -31,8 +30,6 @@ export const MatchPlayerCard = React.memo(function MatchPlayerCard({
             flexDirection={"column"}
             minWidth={160}
             maxWidth={250}
-            borderWidth={5}
-            borderColor={player.isWinner ? primaryColor[400] : "transparent"}
             borderRadius={8}
         >
             <MatchPlayerImage player={player} />
@@ -45,12 +42,11 @@ export const MatchPlayerCard = React.memo(function MatchPlayerCard({
                 size="md"
                 flexDirection="row"
             >
-                {player.isWinner ? <FiLoader height={32} /> : <Box height="32" />}
                 <Text
                     style={{
                         fontStyle: "italic",
                         fontWeight: "bold",
-                        color: textColor,
+                        color: textColor
                     }}
                     onClick={playerNav}
                     marginLeft={4}
@@ -58,7 +54,6 @@ export const MatchPlayerCard = React.memo(function MatchPlayerCard({
                 >
                     {`${player.name.toUpperCase()} - ${player.rank}`}
                 </Text>
-                {player.isWinner ? <FiLoader height={32} /> : <Box height="32" />}
             </Button>
         </Flex>
     );
