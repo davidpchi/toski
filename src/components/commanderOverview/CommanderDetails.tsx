@@ -2,7 +2,7 @@ import { TooltipItem } from "chart.js";
 import React, { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLoaderData, useNavigate } from "react-router-dom";
-import { Flex, Image, Input, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
+import { Flex, Heading, Image, Input, Tab, TabList, TabPanel, TabPanels, Tabs, Text, Thead } from "@chakra-ui/react";
 
 import { AppState } from "../../redux/rootReducer";
 import { getCommander, getMatchesByCommanderName, getPlayersByCommanderName } from "../../redux/statsSelectors";
@@ -18,6 +18,7 @@ import { playerOverviewColumns } from "../playerOverview/playerOverviewColumnHel
 import { COMMANDER_MINIMUM_GAMES_REQUIRED } from "../constants";
 import { DatePicker } from "../common/DatePicker";
 import { MatchPlacementBarChart } from "./MatchPlacementBarChart";
+import { primaryColor } from "../../themes/acorn";
 
 export async function loader(data: { params: any }) {
     return data.params.commanderId;
@@ -33,7 +34,7 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
         (date: Date | undefined) => {
             setDateFilter(date);
         },
-        [setDateFilter],
+        [setDateFilter]
     );
 
     const [searchInput, setSearchInput] = useState("");
@@ -41,14 +42,14 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
         (event: any) => {
             setSearchInput(event.target.value);
         },
-        [setSearchInput],
+        [setSearchInput]
     );
 
     const matches = useSelector((state: AppState) =>
-        getMatchesByCommanderName(state, commander ? commander.name : "", dateFilter),
+        getMatchesByCommanderName(state, commander ? commander.name : "", dateFilter)
     );
     const commanderPlayers: Player[] = useSelector((state: AppState) =>
-        getPlayersByCommanderName(state, commander ? commander.name : "", dateFilter),
+        getPlayersByCommanderName(state, commander ? commander.name : "", dateFilter)
     );
     commanderPlayers.sort((a: Player, b: Player) => b.matches.length - a.matches.length);
 
@@ -109,26 +110,87 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                 direction="row"
                 maxWidth={"1024px"}
                 alignSelf={"center"}
-                justify="center"
+                justifyContent={"center"}
+                alignItems={"center"}
                 align="start"
                 flexWrap="wrap"
                 marginBottom="32px"
             >
-                {commanderList[commander.name] ? <Image width={300} src={commanderList[commander.name].image} /> : null}
-                <Flex direction="column" padding="16px">
-                    <Text>{`Total Number of Games: ${commander.matches.length}`}</Text>
-                    <Text>{`Wins: ${commander.wins}`}</Text>
-                    <Text>
+                {commanderList[commander.name] ? (
+                    <Image
+                        width={300}
+                        src={commanderList[commander.name].image}
+                        boxShadow={"0px 12px 18px 2px rgba(0,0,0,0.3)"}
+                        borderRadius={"4%"}
+                    />
+                ) : null}
+                <Flex
+                    direction="column"
+                    paddingTop={"16px"}
+                    paddingRight={"16px"}
+                    paddingLeft={{ base: "16px", md: 0 }}
+                    paddingBottom={"16px"}
+                    marginLeft={"-8px"}
+                    zIndex={-1}
+                >
+                    <Heading
+                        size={"sm"}
+                        textTransform={"uppercase"}
+                        paddingRight={"16px"}
+                        paddingLeft={"16px"}
+                        paddingTop={"8px"}
+                        paddingBottom={"8px"}
+                        borderWidth={1}
+                        borderTopRadius={"8px"}
+                        backgroundColor={primaryColor["500"]}
+                        color={"white"}
+                    >
+                        {commander.name}
+                    </Heading>
+                    <Text
+                        paddingLeft={"16px"}
+                        paddingRight={"16px"}
+                        paddingTop={"8px"}
+                        paddingBottom={"8px"}
+                        borderLeftWidth={1}
+                        borderRightWidth={1}
+                        borderBottomWidth={1}
+                    >{`Total Games: ${commander.matches.length}`}</Text>
+                    <Text
+                        paddingLeft={"16px"}
+                        paddingRight={"16px"}
+                        paddingTop={"8px"}
+                        paddingBottom={"8px"}
+                        borderLeftWidth={1}
+                        borderRightWidth={1}
+                        borderBottomWidth={1}
+                    >{`Wins: ${commander.wins}`}</Text>
+                    <Text
+                        paddingLeft={"16px"}
+                        paddingRight={"16px"}
+                        paddingTop={"8px"}
+                        paddingBottom={"8px"}
+                        borderLeftWidth={1}
+                        borderRightWidth={1}
+                        borderBottomWidth={1}
+                    >
                         {`Winrate: ${
                             commander.matches.length > 0
                                 ? Math.round((commander.wins / commander.matches.length) * 100)
                                 : 0
                         }%`}
                     </Text>
-                    <Text>{`Qualified: ${
+                    <Text
+                        paddingLeft={"16px"}
+                        paddingRight={"16px"}
+                        paddingTop={"8px"}
+                        paddingBottom={"8px"}
+                        borderLeftWidth={1}
+                        borderRightWidth={1}
+                        borderBottomWidth={1}
+                    >{`Qualified: ${
                         commander.matches.length >= COMMANDER_MINIMUM_GAMES_REQUIRED ? "Yes" : "No"
                     }`}</Text>
-                    <Text>{`Color Identity: ${commander.colorIdentity}`}</Text>
                 </Flex>
             </Flex>
             <Flex direction={"column"}>
@@ -137,7 +199,7 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                     <Input placeholder="Search..." onChange={onSearchChange} />
                 </div>
             </Flex>
-            <Tabs isFitted={true} width={"100%"} paddingRight={"10%"} paddingLeft={"10%"}>
+            <Tabs isFitted={true} width={"100%"} flexWrap={"wrap"}>
                 <TabList>
                     <Tab>
                         <Text>Match History</Text>
@@ -163,7 +225,7 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                                         onClick: () => {
                                             navigate(`/matchHistory/${row.original.id}`);
                                             window.scrollTo(0, 0);
-                                        },
+                                        }
                                     };
                                 }}
                             />
@@ -198,7 +260,7 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                                         onClick: () => {
                                             navigate(`/playerOverview/${row.original.name}`);
                                             window.scrollTo(0, 0);
-                                        },
+                                        }
                                     };
                                 }}
                             />
