@@ -34,10 +34,10 @@ export const MatchDetails = React.memo(function MatchDetails() {
             commanders: player.commanders.map((commanderName: string) => {
                 return {
                     name: commanderName,
-                    id: commanderList[commanderName] ? commanderList[commanderName].id : undefined,
+                    id: commanderList[commanderName] ? commanderList[commanderName].id : undefined
                 };
             }),
-            isWinner: match.winner === player.name,
+            isWinner: match.winner === player.name
         };
 
         return <MatchPlayerCard player={matchPlayer} key={"MatchPlayerCard_" + player.name} />;
@@ -45,7 +45,7 @@ export const MatchDetails = React.memo(function MatchDetails() {
 
     return (
         <Flex direction="column" justify="center" align="center">
-            <Flex direction={"row"} flex={1} marginBottom={8} flexWrap={"wrap"}>
+            <Flex direction={"row"} flex={1} justify="center" align="center" marginBottom={8} flexWrap={"wrap"}>
                 {playerCards}
             </Flex>
             <Heading size="md">{title}</Heading>

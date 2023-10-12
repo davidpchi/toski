@@ -10,7 +10,7 @@ export const MatchPlayerCard = React.memo(function MatchPlayerCard({
     player,
     textColor,
     backgroundColor,
-    borderColor,
+    borderColor
 }: {
     player: MatchDisplayPlayer;
     textColor?: string;
@@ -25,17 +25,19 @@ export const MatchPlayerCard = React.memo(function MatchPlayerCard({
 
     return (
         <Flex
+            // Player tile, which contains commander card button and player button
             flex={1}
+            flexDirection={"column"}
             align={"center"}
             justifyContent={"center"}
-            flexDirection={"column"}
-            minWidth={160}
-            maxWidth={250}
+            minWidth={player.isWinner ? 200 : 160}
+            maxWidth={player.isWinner ? 300 : 250}
             borderWidth={5}
-            borderColor={player.isWinner ? primaryColor[400] : "transparent"}
+            borderColor={"transparent"}
             borderRadius={8}
         >
             <MatchPlayerImage player={player} />
+
             <Button
                 variant="ghost"
                 onClick={playerNav}
@@ -50,7 +52,7 @@ export const MatchPlayerCard = React.memo(function MatchPlayerCard({
                     style={{
                         fontStyle: "italic",
                         fontWeight: "bold",
-                        color: textColor,
+                        color: textColor
                     }}
                     onClick={playerNav}
                     marginLeft={4}
