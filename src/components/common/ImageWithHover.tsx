@@ -10,7 +10,7 @@ export const ImageWithHover = React.memo(function ImageWithHover({
     label,
     width = 40,
     image,
-    alt,
+    alt
 }: {
     /**
      * Text to be displayed when this image is hovered
@@ -31,7 +31,7 @@ export const ImageWithHover = React.memo(function ImageWithHover({
                 width: "auto",
                 height: "auto",
                 borderRadius: "8px",
-                overflow: "hidden",
+                boxShadow: "5px 5px 10px 2px rgba(0,0,0,0.3)"
             }}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
@@ -43,7 +43,7 @@ export const ImageWithHover = React.memo(function ImageWithHover({
                 borderRadius={8}
                 style={{
                     filter: hovered ? "brightness(50%)" : "none",
-                    transition: "filter 0.3s",
+                    transition: "filter 0.3s"
                 }}
             />
             <div
@@ -61,7 +61,7 @@ export const ImageWithHover = React.memo(function ImageWithHover({
                     textAlign: "center",
                     fontSize: "12px",
                     width: "100%",
-                    textOverflow: "ellipsis",
+                    textOverflow: "ellipsis"
                 }}
             >
                 {label}

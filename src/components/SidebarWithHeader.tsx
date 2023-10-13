@@ -105,20 +105,27 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
             {...rest}
             boxShadow={"0px 12px 18px 2px rgba(0,0,0,0.3)"}
         >
-            <Flex
-                h="20"
-                align="center"
-                paddingRight={"8px"}
-                paddingLeft={"8px"}
-                justifyContent="space-between"
-                backgroundColor={"white"}
-            >
-                <Text fontSize="20" fontWeight="bold" textTransform="uppercase" color="gray.600" noOfLines={1}>
+            <Flex h="20" align="center" paddingRight={"8px"} paddingLeft={"20px"} backgroundColor={"white"}>
+                <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
+                <Text
+                    fontSize="20"
+                    fontWeight="bold"
+                    textTransform="uppercase"
+                    color="gray.600"
+                    noOfLines={1}
+                    paddingLeft={"16px"}
+                >
                     Project Toski
                 </Text>
-                <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
             </Flex>
-            <VStack spacing="24px" align="stretch" height={"100%"} justify="flex-start">
+            <VStack
+                spacing="24px"
+                align="stretch"
+                height={"100%"}
+                justify="flex-start"
+                paddingTop={"24px"}
+                paddingBottom={"24px"}
+            >
                 {linkItems.map((link) => (
                     <NavItem
                         key={link.name}

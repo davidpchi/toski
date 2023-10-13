@@ -10,9 +10,10 @@ import {
     Header,
     Row,
     SortingState,
-    useReactTable,
+    useReactTable
 } from "@tanstack/react-table";
 import React from "react";
+import { primaryColor } from "../../themes/acorn";
 
 const defaultPropGetter = () => ({});
 
@@ -23,7 +24,7 @@ export function SortableTable({
     getHeaderProps = defaultPropGetter,
     getColumnProps = defaultPropGetter,
     getRowProps = defaultPropGetter,
-    getCellProps = defaultPropGetter,
+    getCellProps = defaultPropGetter
 }: {
     columns: any;
     data: any;
@@ -41,8 +42,8 @@ export function SortableTable({
         onSortingChange: setSorting,
         getSortedRowModel: getSortedRowModel(),
         state: {
-            sorting,
-        },
+            sorting
+        }
     });
 
     return (
@@ -66,6 +67,8 @@ export function SortableTable({
                                         isNumeric={meta?.isNumeric}
                                         {...getHeaderProps(header)}
                                         role={"button"}
+                                        backgroundColor={primaryColor["500"]}
+                                        color={"white"}
                                     >
                                         {flexRender(header.column.columnDef.header, header.getContext())}
 
