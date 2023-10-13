@@ -196,7 +196,7 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
             <Flex direction={"column"}>
                 <DatePicker onChange={onDatePickerChange} />
                 <div style={{ padding: 20 }}>
-                    <Input placeholder="Search..." onChange={onSearchChange} />
+                    <Input placeholder="Filter by..." onChange={onSearchChange} />
                 </div>
             </Flex>
             <Tabs isFitted={true} width={"100%"} flexWrap={"wrap"}>
