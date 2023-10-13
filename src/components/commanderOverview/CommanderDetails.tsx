@@ -130,7 +130,7 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                     paddingRight={"16px"}
                     paddingLeft={{ base: "16px", md: 0 }}
                     paddingBottom={"16px"}
-                    marginLeft={"-8px"}
+                    marginLeft={{ base: 0, md: "-8px" }}
                     zIndex={-1}
                 >
                     <Heading

@@ -8,7 +8,7 @@ import {
     getCommandersByPlayerName,
     getFavoriteCommanderForPlayer,
     getMatchesByPlayerName,
-    getPlayer,
+    getPlayer
 } from "../../redux/statsSelectors";
 import { AppState } from "../../redux/rootReducer";
 import { matchHistoryColumns } from "../matchHistory/matchHistoryColumnHelper";
@@ -24,6 +24,7 @@ import { PieGraph } from "../dataVisualizations/PieGraph";
 import { DatePicker } from "../common/DatePicker";
 import { getAverageWinTurn, getWinRatePercentage } from "../../logic/utils";
 import { commanderList } from "../../services/commanderList";
+import { primaryColor } from "../../themes/acorn";
 
 export async function loader(data: { params: any }) {
     return data.params.playerId;
@@ -41,20 +42,20 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
         (date: Date | undefined) => {
             setDateFilter(date);
         },
-        [setDateFilter],
+        [setDateFilter]
     );
 
     const commanders = useSelector((state: AppState) => getCommanders(state));
     const favoriteCommander = useSelector((state: AppState) => getFavoriteCommanderForPlayer(state, playerId));
 
     const matches = useSelector((state: AppState) =>
-        getMatchesByPlayerName(state, playerId ? playerId : "", dateFilter),
+        getMatchesByPlayerName(state, playerId ? playerId : "", dateFilter)
     );
     matches.sort((a: Match, b: Match) => Number(b.id) - Number(a.id));
 
     // Get array of commanders played and sort by game count
     const playedCommanders: Commander[] = useSelector((state: AppState) =>
-        getCommandersByPlayerName(state, playerId ? playerId : "", dateFilter),
+        getCommandersByPlayerName(state, playerId ? playerId : "", dateFilter)
     );
     playedCommanders.sort((a: Commander, b: Commander) => b.matches.length - a.matches.length);
 
@@ -74,16 +75,7 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
 
     return (
         <Flex direction="column" justify="center" align="center">
-            <Heading>{player.name}</Heading>
-
-            <Flex
-                direction="row"
-                justify="space-evenly"
-                align="center"
-                gap="20px"
-                flexWrap={"wrap"}
-                marginBottom={"16px"}
-            >
+            <Flex direction="row" justifyContent="center" alignItems={"center"} flexWrap={"wrap"} marginBottom={"16px"}>
                 {favoriteCommander ? (
                     <Link
                         to={`/commanderOverview/${favoriteCommander.id}`}
@@ -91,21 +83,61 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
                     >
                         <ImageWithHover
                             label={`Favorite Commander: ${favoriteCommander.name}`}
-                            width={200}
+                            width={300}
                             image={favCommanderImage}
                         />
                     </Link>
                 ) : null}
                 <Flex
                     direction="column"
-                    padding="16px"
-                    minWidth={"200px"}
-                    justifyContent={"center"}
-                    alignItems={"center"}
+                    paddingTop={"16px"}
+                    paddingRight={"16px"}
+                    paddingLeft={{ base: "16px", md: 0 }}
+                    paddingBottom={"16px"}
+                    marginLeft={{ base: 0, md: "-8px" }}
+                    zIndex={-1}
                 >
-                    <Text>{`Games played: ${player.matches.length}`}</Text>
-                    <Text>{`Winrate: ${getWinRatePercentage(player.wins, player.matches.length)}%`}</Text>
-                    <Text>{`Avg. win turn: ${getAverageWinTurn(player)}`}</Text>
+                    <Heading
+                        size={"sm"}
+                        textTransform={"uppercase"}
+                        paddingRight={"16px"}
+                        paddingLeft={"16px"}
+                        paddingTop={"8px"}
+                        paddingBottom={"8px"}
+                        borderWidth={1}
+                        borderTopRadius={"8px"}
+                        backgroundColor={primaryColor["500"]}
+                        color={"white"}
+                    >
+                        {player.name}
+                    </Heading>
+                    <Text
+                        paddingLeft={"16px"}
+                        paddingRight={"16px"}
+                        paddingTop={"8px"}
+                        paddingBottom={"8px"}
+                        borderLeftWidth={1}
+                        borderRightWidth={1}
+                        borderBottomWidth={1}
+                    >{`Games played: ${player.matches.length}`}</Text>
+                    <Text
+                        paddingLeft={"16px"}
+                        paddingRight={"16px"}
+                        paddingTop={"8px"}
+                        paddingBottom={"8px"}
+                        borderLeftWidth={1}
+                        borderRightWidth={1}
+                        borderBottomWidth={1}
+                    >{`Winrate: ${getWinRatePercentage(player.wins, player.matches.length)}%`}</Text>
+                    <Text
+                        paddingLeft={"16px"}
+                        paddingRight={"16px"}
+                        paddingTop={"8px"}
+                        paddingBottom={"8px"}
+                        borderLeftWidth={1}
+                        borderRightWidth={1}
+                        borderBottomWidth={1}
+                    >{`Avg. win turn: ${getAverageWinTurn(player)}`}</Text>
                 </Flex>
 
                 <Flex maxWidth={175} maxHeight={175}>
@@ -119,7 +151,7 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
                 </Flex>
             </Flex>
             <DatePicker onChange={onDatePickerChange} />
-            <Tabs isFitted={true} width={"100%"} paddingRight={"10%"} paddingLeft={"10%"}>
+            <Tabs isFitted={true} width={"100%"}>
                 <TabList>
                     <Tab>
                         <Text>Match History</Text>
@@ -142,7 +174,7 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
                                         onClick: () => {
                                             navigate(`/matchHistory/${row.original.id}`);
                                             window.scrollTo(0, 0);
-                                        },
+                                        }
                                     };
                                 }}
                             />
@@ -166,7 +198,7 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
                                     onClick: () => {
                                         navigate(`/commanderOverview/${row.original.id}`);
                                         window.scrollTo(0, 0);
-                                    },
+                                    }
                                 };
                             }}
                         />
