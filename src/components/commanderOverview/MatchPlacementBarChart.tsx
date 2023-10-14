@@ -1,6 +1,6 @@
 import { TooltipItem } from "chart.js";
 import React from "react";
-import { Flex, Text } from "@chakra-ui/react";
+import { Flex, Heading, Text } from "@chakra-ui/react";
 
 import { Loading } from "../Loading";
 import { Match } from "../../types/domain/Match";
@@ -8,7 +8,7 @@ import { BarGraph } from "../dataVisualizations/BarGraph";
 
 export const MatchPlacementBarChart = React.memo(function MatchPlacementBarChart({
     matches,
-    commanderName,
+    commanderName
 }: {
     matches: Match[];
     commanderName: string;
@@ -46,12 +46,9 @@ export const MatchPlacementBarChart = React.memo(function MatchPlacementBarChart
         return ``;
     };
 
-    // cannot directly mutate state, copy to new array first
-    const sortedMatches = matches.slice().sort((a: Match, b: Match) => Number(a.id) - Number(b.id));
-
     return (
         <Flex flexDirection={"column"} justifyContent={"center"} alignItems={"center"} padding="8px">
-            <Text>Match Placements</Text>
+            <Heading size="md">Match Placements</Heading>
             <BarGraph
                 dataLabel={"Match Placement Count"}
                 data={matchPlacementData}

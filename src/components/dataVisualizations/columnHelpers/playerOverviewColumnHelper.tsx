@@ -1,7 +1,7 @@
 import { Box, Flex, Image } from "@chakra-ui/react";
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 
-import { Player } from "../../types/domain/Player";
+import { Player } from "../../../types/domain/Player";
 
 const columnHelper = createColumnHelper<Player>();
 
@@ -17,17 +17,17 @@ export const playerOverviewColumns: ColumnDef<Player, any>[] = [
                 </Flex>
             );
         },
-        header: () => <span>Name</span>,
+        header: () => <span>Name</span>
     }),
     columnHelper.accessor((row) => row.matches, {
         id: "gameCount",
         cell: (info) => info.row.original.matches.length,
-        header: () => <span>Game Count</span>,
+        header: () => <span>Game Count</span>
     }),
     columnHelper.accessor((row) => row.wins, {
         id: "wins",
         cell: (info) => info.row.original.wins,
-        header: () => <span>Wins</span>,
+        header: () => <span>Wins</span>
     }),
     columnHelper.accessor((row) => (row.matches.length > 0 ? Math.round((row.wins / row.matches.length) * 100) : 0), {
         id: "winrate",
@@ -35,6 +35,6 @@ export const playerOverviewColumns: ColumnDef<Player, any>[] = [
             info.row.original.matches.length > 0
                 ? `${Math.round((info.row.original.wins / info.row.original.matches.length) * 100)}%`
                 : `0%`,
-        header: () => <span>Winrate</span>,
-    }),
+        header: () => <span>Winrate</span>
+    })
 ];

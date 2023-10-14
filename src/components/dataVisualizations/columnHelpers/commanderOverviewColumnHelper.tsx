@@ -1,8 +1,8 @@
 import { Box, Flex, Image } from "@chakra-ui/react";
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 
-import { commanderList } from "../../services/commanderList";
-import { Commander } from "../../types/domain/Commander";
+import { commanderList } from "../../../services/commanderList";
+import { Commander } from "../../../types/domain/Commander";
 
 const columnHelper = createColumnHelper<Commander>();
 
@@ -22,17 +22,17 @@ export const commanderOverviewColumns: ColumnDef<Commander, any>[] = [
                 </Flex>
             );
         },
-        header: () => <span>Name</span>,
+        header: () => <span>Name</span>
     }),
     columnHelper.accessor((row) => row.matches.length, {
         id: "gameCount",
         cell: (info) => info.row.original.matches.length,
-        header: () => <span>Game Count</span>,
+        header: () => <span>Game Count</span>
     }),
     columnHelper.accessor((row) => row.wins, {
         id: "wins",
         cell: (info) => info.row.original.wins,
-        header: () => <span>Wins</span>,
+        header: () => <span>Wins</span>
     }),
     columnHelper.accessor((row) => (row.matches.length > 0 ? Math.round((row.wins / row.matches.length) * 100) : 0), {
         id: "winrate",
@@ -40,6 +40,6 @@ export const commanderOverviewColumns: ColumnDef<Commander, any>[] = [
             info.row.original.matches.length > 0
                 ? `${Math.round((info.row.original.wins / info.row.original.matches.length) * 100)}%`
                 : `0%`,
-        header: () => <span>Winrate</span>,
-    }),
+        header: () => <span>Winrate</span>
+    })
 ];
