@@ -25,6 +25,7 @@ import { getPlayers } from "../../redux/statsSelectors";
 import { commanderList } from "../../services/commanderList";
 import { FiUserPlus, FiX } from "react-icons/fi";
 import { useNavigate } from "react-router";
+import { TriangleDownIcon, TriangleUpIcon } from "@chakra-ui/icons";
 
 const placeholderImage = "https://static.thenounproject.com/png/5425-200.png";
 
@@ -179,9 +180,17 @@ const MatchSubmissionPlayerCard = React.memo(function MatchSubmissionPlayerCard(
                     return <option value={option.name}>{option.name}</option>;
                 })}
             </Select>
-            <Checkbox isChecked={hasPartner} onChange={onHasPartnerChanged} marginTop={"8px"} alignSelf={"flex-end"}>
-                {"Has Partner"}
-            </Checkbox>
+            <Button
+                size={"sm"}
+                variant={"ghost"}
+                leftIcon={hasPartner ? <TriangleUpIcon /> : <TriangleDownIcon />}
+                marginTop={"8px"}
+                alignSelf={"flex-end"}
+                onClick={onHasPartnerChanged}
+                aria-label={hasPartner ? "Toggle Partner Off" : "Toggle Partner On"}
+            >
+                {"Toggle Partner"}
+            </Button>
             {hasPartner ? (
                 <>
                     <Text marginTop={"8px"}>Partner/Background Commander:</Text>
