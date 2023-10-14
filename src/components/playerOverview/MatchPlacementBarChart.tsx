@@ -1,14 +1,16 @@
 import { TooltipItem } from "chart.js";
 import React from "react";
-import { Flex, Text } from "@chakra-ui/react";
+import { Flex, Heading, Text } from "@chakra-ui/react";
 
 import { Loading } from "../Loading";
 import { Match } from "../../types/domain/Match";
 import { BarGraph } from "../dataVisualizations/BarGraph";
+import { PLAYER_MINIMUM_GAMES_REQUIRED } from "../constants";
+import { InsufficientData } from "./InsufficientData";
 
 export const MatchPlacementBarChart = React.memo(function MatchPlacementBarChart({
     matches,
-    playerId,
+    playerId
 }: {
     matches: Match[];
     playerId: string;
@@ -44,19 +46,20 @@ export const MatchPlacementBarChart = React.memo(function MatchPlacementBarChart
         return ``;
     };
 
-    // cannot directly mutate state, copy to new array first
-    const sortedMatches = matches.slice().sort((a: Match, b: Match) => Number(a.id) - Number(b.id));
-
     return (
         <Flex flexDirection={"column"} justifyContent={"center"} alignItems={"center"} padding="8px">
-            <Text>Match Placements</Text>
-            <BarGraph
-                dataLabel={"Match Placement Count"}
-                data={matchPlacementData}
-                tooltipTitleCallback={tooltipTitleCallback}
-                tooltipLabelCallback={tooltipLabelCallback}
-                maxY={matches.length}
-            />
+            <Heading size="md">Match Placements</Heading>
+            {matches.length >= PLAYER_MINIMUM_GAMES_REQUIRED ? (
+                <BarGraph
+                    dataLabel={"Match Placement Count"}
+                    data={matchPlacementData}
+                    tooltipTitleCallback={tooltipTitleCallback}
+                    tooltipLabelCallback={tooltipLabelCallback}
+                    maxY={matches.length}
+                />
+            ) : (
+                <InsufficientData description={"Not enough matches"} />
+            )}
         </Flex>
     );
 });

@@ -1,7 +1,7 @@
 import { Checkbox, Flex, Tooltip, Input } from "@chakra-ui/react";
 import React, { useCallback, useState } from "react";
 import { SortableTable } from "../dataVisualizations/SortableTable";
-import { commanderOverviewColumns } from "./commanderOverviewColumnHelper";
+import { commanderOverviewColumns } from "../dataVisualizations/columnHelpers/commanderOverviewColumnHelper";
 import { getCommanders, getCommandersByDate } from "../../redux/statsSelectors";
 import { useSelector } from "react-redux";
 import { Loading } from "../Loading";

@@ -1,7 +1,7 @@
 import { Flex, Image, Text } from "@chakra-ui/react";
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
-import { Match } from "../../types/domain/Match";
-import { commanderList } from "../../services/commanderList";
+import { Match } from "../../../types/domain/Match";
+import { commanderList } from "../../../services/commanderList";
 
 const columnHelper = createColumnHelper<Match>();
 
@@ -9,14 +9,14 @@ export const matchHistoryColumns: ColumnDef<Match, any>[] = [
     columnHelper.accessor((row) => row.id, {
         id: "id",
         cell: (info) => info.getValue(),
-        header: () => <span>Game Id</span>,
+        header: () => <span>Game Id</span>
     }),
     columnHelper.accessor((row) => row.date, {
         id: "date",
         cell: (info) => {
             return <div>{info.row.original.date.toDateString()}</div>;
         },
-        header: () => <span>Date</span>,
+        header: () => <span>Date</span>
     }),
     columnHelper.accessor((row) => row.players, {
         id: "players",
@@ -48,7 +48,7 @@ export const matchHistoryColumns: ColumnDef<Match, any>[] = [
                 </Flex>
             );
         },
-        header: () => <span>Players</span>,
+        header: () => <span>Players</span>
     }),
     columnHelper.accessor((row) => row.winner, {
         id: "winner",
@@ -68,6 +68,6 @@ export const matchHistoryColumns: ColumnDef<Match, any>[] = [
                 </Flex>
             );
         },
-        header: () => <span>Winner</span>,
-    }),
+        header: () => <span>Winner</span>
+    })
 ];

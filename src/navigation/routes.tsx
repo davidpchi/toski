@@ -9,7 +9,7 @@ import { MatchDetails, loader as matchLoader } from "../components/matchHistory/
 import { MatchHistory } from "../components/matchHistory/MatchHistory";
 import { PlayerOverview } from "../components/playerOverview/PlayerOverview";
 import { MatchTrends } from "../components/matchTrends/MatchTrends";
-import { PlayerDetails, loader as playerLoader } from "../components/playerOverview/PlayerDetails";
+import { PlayerDetails, loader as playerLoader } from "../components/playerOverview/playerDetails/PlayerDetails";
 import NewsOverview from "../components/news/NewsOverview";
 import { loader as newsLoader, NewsDetail } from "../components/news/NewsDetail";
 import { MatchSubmission } from "../components/matchHistory/MatchSubmission";
@@ -26,67 +26,67 @@ export const routes: { [path: string]: route } = {
     "/": {
         name: "Project Toski",
         path: "/",
-        element: <Home />,
+        element: <Home />
     },
     "/playerOverview": {
         name: "Player Overview",
         path: "/playerOverview",
-        element: <PlayerOverview />,
+        element: <PlayerOverview />
     },
     "/playerOverview/:playerId": {
         name: "Player Details",
         path: "/playerOverview/:playerId",
         loader: playerLoader,
-        element: <PlayerDetails />,
+        element: <PlayerDetails />
     },
     "/matchHistory": {
         name: "Match History",
         path: "/matchHistory",
-        element: <MatchHistory />,
+        element: <MatchHistory />
     },
     "/matchHistory/:matchId": {
         name: "Match Details",
         path: "/matchHistory/:matchId",
         loader: matchLoader,
-        element: <MatchDetails />,
+        element: <MatchDetails />
     },
     "/matchTrends": {
         name: "Match Trends",
         path: "/matchTrends",
-        element: <MatchTrends />,
+        element: <MatchTrends />
     },
     "/commanderOverview": {
         name: "Commander Overview",
         path: "/commanderOverview",
-        element: <CommanderOverview />,
+        element: <CommanderOverview />
     },
     "/commanderTrends": {
         name: "Commander Trends",
         path: "/commanderTrends",
-        element: <CommanderTrends />,
+        element: <CommanderTrends />
     },
     "/commanderOverview/:commanderId": {
         name: "Commander Details",
         path: "/commanderOverview/:commanderId",
         loader: commanderLoader,
-        element: <CommanderDetails />,
+        element: <CommanderDetails />
     },
     "/articles": {
         name: "Articles",
         path: "/articles",
-        element: <NewsOverview />,
+        element: <NewsOverview />
     },
     "/articles/:newsId": {
         name: "Articles",
         path: "/articles/:newsId",
         loader: newsLoader,
-        element: <NewsDetail />,
+        element: <NewsDetail />
     },
     "/matchHistory/submit": {
         name: "Match History Submission",
         path: "/matchHistory/submit",
-        element: <MatchSubmission />,
-    },
+        element: <MatchSubmission />
+    }
 };
 
 export const router = createHashRouter([
@@ -94,6 +94,6 @@ export const router = createHashRouter([
         path: "/",
         element: <Root />,
         errorElement: <Error error={"Whoops! Made a wrong turn!"} />,
-        children: Object.values(routes),
-    },
+        children: Object.values(routes)
+    }
 ]);

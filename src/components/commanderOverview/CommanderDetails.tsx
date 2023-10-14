@@ -9,12 +9,12 @@ import { getCommander, getMatchesByCommanderName, getPlayersByCommanderName } fr
 import { Loading } from "../Loading";
 import { commanderList } from "../../services/commanderList";
 import { SortableTable } from "../dataVisualizations/SortableTable";
-import { matchHistoryColumns } from "../matchHistory/matchHistoryColumnHelper";
+import { matchHistoryColumns } from "../dataVisualizations/columnHelpers/matchHistoryColumnHelper";
 import { Match } from "../../types/domain/Match";
 import { MatchPlayer } from "../../types/domain/MatchPlayer";
 import { LineGraph } from "../dataVisualizations/LineGraph";
 import { Player } from "../../types/domain/Player";
-import { playerOverviewColumns } from "../playerOverview/playerOverviewColumnHelper";
+import { playerOverviewColumns } from "../dataVisualizations/columnHelpers/playerOverviewColumnHelper";
 import { COMMANDER_MINIMUM_GAMES_REQUIRED } from "../constants";
 import { DatePicker } from "../common/DatePicker";
 import { MatchPlacementBarChart } from "./MatchPlacementBarChart";
@@ -211,7 +211,7 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                         <Text>Top Players</Text>
                     </Tab>
                     <Tab>
-                        <Text>Match Placement</Text>
+                        <Text>Match Trends</Text>
                     </Tab>
                 </TabList>
                 <TabPanels>
