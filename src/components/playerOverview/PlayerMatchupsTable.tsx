@@ -40,7 +40,7 @@ export const PlayerMatchupsTable = React.memo(function PlayerMatchupsTable({
                         : { ...potentialPlayer, matchCount: potentialPlayer.matchCount + 1 };
 
                 // check to see if the winner of the match is player we are getting matchups for
-                if (player.name === match.winner) {
+                if (playerId === match.winner) {
                     playerMatchup.winCount += 1;
                 }
 
