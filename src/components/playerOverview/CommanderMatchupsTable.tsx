@@ -42,7 +42,7 @@ export const CommanderMatchupsTable = React.memo(function CommanderMatchupsTable
                             : { ...potentialCommander, matchCount: potentialCommander.matchCount + 1 };
 
                     // check to see if the winner of the match is player we are getting matchups for
-                    if (player.name === match.winner) {
+                    if (playerId === match.winner) {
                         commanderMatchup.winCount += 1;
                     }
 

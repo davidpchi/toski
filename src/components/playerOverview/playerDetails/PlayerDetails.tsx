@@ -16,7 +16,7 @@ import { CommanderHistoryTable } from "../CommanderHistoryTable";
 import { InsufficientData } from "../InsufficientData";
 import { CommanderMatchupsTable } from "../CommanderMatchupsTable";
 import { PlayerMatchupsTable } from "../PlayerMatchupsTable";
-import { primaryColor, secondaryColor } from "../../../themes/acorn";
+import { primaryColor } from "../../../themes/acorn";
 
 export async function loader(data: { params: any }) {
     return data.params.playerId;
