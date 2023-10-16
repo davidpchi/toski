@@ -1,7 +1,6 @@
-import { Box, Button, Flex, Text } from "@chakra-ui/react";
+import { Button, Flex, Text } from "@chakra-ui/react";
 import React, { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { FiLoader } from "react-icons/fi";
 import { MatchDisplayPlayer } from "./types/MatchDisplayPlayer";
 import { MatchPlayerImage } from "./MatchPlayerImage";
 

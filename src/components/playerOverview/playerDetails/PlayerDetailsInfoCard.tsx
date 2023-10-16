@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Flex, Heading, Text } from "@chakra-ui/react";
 
-import { getFavoriteCommanderForPlayer, getPlayer } from "../../../redux/statsSelectors";
+import { getFavoriteCommanderForPlayer, getPlayer } from "../../../redux/stats/statsSelectors";
 import { AppState } from "../../../redux/rootReducer";
 import { MTG_COLORS } from "../../constants";
 import { ImageWithHover } from "../../common/ImageWithHover";

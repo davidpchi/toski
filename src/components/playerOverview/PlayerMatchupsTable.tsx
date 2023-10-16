@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { SortableTable } from "../dataVisualizations/SortableTable";
 import { AppState } from "../../redux/rootReducer";
-import { getMatchesByPlayerName } from "../../redux/statsSelectors";
+import { getMatchesByPlayerName } from "../../redux/stats/statsSelectors";
 import {
     PlayerMatchupItem,
     playerMatchupsColumns

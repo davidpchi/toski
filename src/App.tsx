@@ -8,7 +8,7 @@ import { Match } from "./types/domain/Match";
 import { useEffect, useState } from "react";
 import { sheetRowToMatch } from "./types/service/dataMappers";
 import { Provider, useDispatch } from "react-redux";
-import { StatsAction } from "./redux/statsActions";
+import { StatsAction } from "./redux/stats/statsActions";
 import { createStore } from "@reduxjs/toolkit";
 import { rootReducer } from "./redux/rootReducer";
 

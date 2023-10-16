@@ -5,7 +5,7 @@ import { useLoaderData, useNavigate } from "react-router-dom";
 import { Flex, Heading, Image, Input, Tab, TabList, TabPanel, TabPanels, Tabs, Text, Thead } from "@chakra-ui/react";
 
 import { AppState } from "../../redux/rootReducer";
-import { getCommander, getMatchesByCommanderName, getPlayersByCommanderName } from "../../redux/statsSelectors";
+import { getCommander, getMatchesByCommanderName, getPlayersByCommanderName } from "../../redux/stats/statsSelectors";
 import { Loading } from "../Loading";
 import { commanderList } from "../../services/commanderList";
 import { SortableTable } from "../dataVisualizations/SortableTable";

@@ -14,6 +14,7 @@ import NewsOverview from "../components/news/NewsOverview";
 import { loader as newsLoader, NewsDetail } from "../components/news/NewsDetail";
 import { MatchSubmission } from "../components/matchHistory/MatchSubmission";
 import { CommanderTrends } from "../components/commanderTrends/CommanderTrends";
+import { loader as loginLoader, Login } from "../components/home/Login";
 
 type route = {
     name: string;

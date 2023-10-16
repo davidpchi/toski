@@ -2,7 +2,7 @@ import { Checkbox, Flex, Heading, Tooltip } from "@chakra-ui/react";
 import React, { useCallback, useState } from "react";
 import { SortableTable } from "../dataVisualizations/SortableTable";
 import { playerOverviewColumns } from "../dataVisualizations/columnHelpers/playerOverviewColumnHelper";
-import { getPlayers, getPlayersByDate } from "../../redux/statsSelectors";
+import { getPlayers, getPlayersByDate } from "../../redux/stats/statsSelectors";
 import { useSelector } from "react-redux";
 import { Loading } from "../Loading";
 import { Player } from "../../types/domain/Player";

@@ -1,9 +1,9 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { Match } from "../types/domain/Match";
+import { Match } from "../../types/domain/Match";
 import { StatsAction } from "./statsActions";
-import { Commander } from "../types/domain/Commander";
-import { Player } from "../types/domain/Player";
-import { matchesToCommanderHelper, matchesToPlayersHelper } from "../logic/dictionaryUtils";
+import { Commander } from "../../types/domain/Commander";
+import { Player } from "../../types/domain/Player";
+import { matchesToCommanderHelper, matchesToPlayersHelper } from "../../logic/dictionaryUtils";
 
 /**
  * State containing all game history data
@@ -28,7 +28,7 @@ export type StatsState = Readonly<{
 const initialState: StatsState = {
     matches: undefined,
     commanders: undefined,
-    players: undefined,
+    players: undefined
 };
 
 export const statsReducer = createReducer(initialState, (builder) => {
