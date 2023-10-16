@@ -1,4 +1,4 @@
-import { PLAYER_MINIMUM_GAMES_REQUIRED, PLAYER_MINIMUM_WINS_REQUIRED } from "../components/constants";
+import { NEW_PLAYER_HIGHLIGHT_DAYS, PLAYER_MINIMUM_GAMES_REQUIRED, PLAYER_MINIMUM_WINS_REQUIRED } from "../components/constants";
 import { Player } from "../types/domain/Player";
 
 export function getWinRatePercentage(winCount: number, totalCount: number) {
@@ -35,4 +35,13 @@ export function getAverageWinTurn(player: Player) {
 
     // Return as string rounded to nearest tenth
     return average.toFixed(1);
+}
+
+export function isNewlyQualifiedPlayer(player: Player) {
+    const dateOffset = new Date();
+    dateOffset.setDate(dateOffset.getDate() - NEW_PLAYER_HIGHLIGHT_DAYS)
+    const lastIndex = player.matches.length - 1
+    if (PLAYER_MINIMUM_GAMES_REQUIRED <= player.matches.length && player.matches.length <= 15 && dateOffset < player.matches[lastIndex].date) {
+        return true;
+    }
 }
