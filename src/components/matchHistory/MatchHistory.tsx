@@ -2,7 +2,7 @@ import { Flex } from "@chakra-ui/react";
 import React from "react";
 import { SortableTable } from "../dataVisualizations/SortableTable";
 import { matchHistoryColumns } from "../dataVisualizations/columnHelpers/matchHistoryColumnHelper";
-import { getMatches } from "../../redux/statsSelectors";
+import { getMatches } from "../../redux/stats/statsSelectors";
 import { useSelector } from "react-redux";
 import { Loading } from "../Loading";
 import { useNavigate } from "react-router-dom";

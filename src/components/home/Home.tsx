@@ -1,6 +1,8 @@
 import { Flex } from "@chakra-ui/react";
+
 import { HomeNewsSection } from "./HomeNewsSection";
 import { FF_IS_NEWS_ENABLED } from "../../services/featureFlagService";
+
 const backgroundVideo =
     "https://cdn.discordapp.com/attachments/983610720316977193/1144864732914925620/Editor115_VP9.webm";
 
@@ -13,7 +15,7 @@ export default function Home() {
             style={{
                 minHeight: "90vh",
                 margin: -16,
-                position: "relative",
+                position: "relative"
             }}
             flexDirection="column"
         >
@@ -21,7 +23,7 @@ export default function Home() {
                 <div
                     style={{
                         position: "relative",
-                        width: "100%",
+                        width: "100%"
                     }}
                 >
                     <video
@@ -36,7 +38,7 @@ export default function Home() {
                             top: 0,
                             width: "100%",
                             height: "100%",
-                            objectFit: "cover",
+                            objectFit: "cover"
                         }}
                     >
                         <source type="video/webm" src={backgroundVideo} />
@@ -50,7 +52,7 @@ export default function Home() {
                             display: "flex",
                             flexDirection: "column",
                             alignItems: "center",
-                            justifyContent: "center",
+                            justifyContent: "center"
                         }}
                     >
                         <img src={generalLogo} style={{ height: "40%", objectFit: "scale-down" }} alt="MNC Logo" />

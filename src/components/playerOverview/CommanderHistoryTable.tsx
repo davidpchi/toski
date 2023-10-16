@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { AppState } from "../../redux/rootReducer";
 import { Commander } from "../../types/domain/Commander";
-import { getCommandersByPlayerName } from "../../redux/statsSelectors";
+import { getCommandersByPlayerName } from "../../redux/stats/statsSelectors";
 import { SortableTable } from "../dataVisualizations/SortableTable";
 import { commanderOverviewColumns } from "../dataVisualizations/columnHelpers/commanderOverviewColumnHelper";
 

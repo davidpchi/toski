@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 
 import "./Root.css";
-import SidebarWithHeader from "../components/SidebarWithHeader";
+import AppFrame from "../components/navigation/AppFrame";
 import { useMatchHistory } from "../services/matchHistoryService";
 
 export default function Root() {
@@ -9,8 +9,8 @@ export default function Root() {
     useMatchHistory();
 
     return (
-        <SidebarWithHeader>
+        <AppFrame>
             <Outlet />
-        </SidebarWithHeader>
+        </AppFrame>
     );
 }

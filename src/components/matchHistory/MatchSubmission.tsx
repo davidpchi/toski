@@ -21,7 +21,7 @@ import {
 import { submitMatch } from "../../services/matchHistoryService";
 import { CreatableSelect, SingleValue } from "chakra-react-select";
 import { useSelector } from "react-redux";
-import { getPlayers } from "../../redux/statsSelectors";
+import { getPlayers } from "../../redux/stats/statsSelectors";
 import { commanderList } from "../../services/commanderList";
 import { FiUserPlus, FiX } from "react-icons/fi";
 import { useNavigate } from "react-router";

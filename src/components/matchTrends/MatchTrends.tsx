@@ -2,7 +2,7 @@ import React from "react";
 import { Flex } from "@chakra-ui/react";
 
 import { MatchLengthLineChart } from "./MatchLengthLineChart";
-import { getMatches, getPlayersByDate } from "../../redux/statsSelectors";
+import { getMatches, getPlayersByDate } from "../../redux/stats/statsSelectors";
 import { useSelector } from "react-redux";
 import { Loading } from "../Loading";
 import { Match } from "../../types/domain/Match";

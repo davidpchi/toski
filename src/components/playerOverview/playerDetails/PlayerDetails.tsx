@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { Flex, Heading, Switch, Tab, TabList, TabPanel, TabPanels, Tabs, Text, Tooltip } from "@chakra-ui/react";
 
-import { getCommanders, getMatchesByPlayerName, getPlayer } from "../../../redux/statsSelectors";
+import { getCommanders, getMatchesByPlayerName, getPlayer } from "../../../redux/stats/statsSelectors";
 import { AppState } from "../../../redux/rootReducer";
 import { matchHistoryColumns } from "../../dataVisualizations/columnHelpers/matchHistoryColumnHelper";
 import { SortableTable } from "../../dataVisualizations/SortableTable";
@@ -19,7 +19,7 @@ import { PlayerMatchupsTable } from "../PlayerMatchupsTable";
 import { primaryColor } from "../../../themes/acorn";
 
 export async function loader(data: { params: any }) {
-    return data.params.playerId;
+    return data.params;
 }
 
 export const PlayerDetails = React.memo(function PlayerDetails() {

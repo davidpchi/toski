@@ -4,7 +4,7 @@ import { Flex, Heading, Image, Text } from "@chakra-ui/react";
 
 import { AppState } from "../../redux/rootReducer";
 import { useSelector } from "react-redux";
-import { getMatch } from "../../redux/statsSelectors";
+import { getMatch } from "../../redux/stats/statsSelectors";
 import { Loading } from "../Loading";
 import { commanderList } from "../../services/commanderList";
 import { MatchDisplayPlayer } from "./types/MatchDisplayPlayer";

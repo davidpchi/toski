@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 
 import { Match } from "../types/domain/Match";
 import { sheetRowToMatch } from "../types/service/dataMappers";
-import { StatsAction } from "../redux/statsActions";
+import { StatsAction } from "../redux/stats/statsActions";
 import { useEffect } from "react";
 
 const matchHistoryDataEndpoint =
@@ -67,7 +67,7 @@ export const submitMatch = async (
     player3?: MatchSubmissionPlayer,
     player4?: MatchSubmissionPlayer,
     turnCount?: number,
-    extraNotes?: string,
+    extraNotes?: string
 ) => {
     var body: { [fieldName: string]: string } = {};
     body["entry.1178471159"] = date.toISOString().split("T")[0];
@@ -114,7 +114,7 @@ export const submitMatch = async (
         await axios
             .post(matchHistorySubmitEndpoint, body, {
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                withCredentials: false,
+                withCredentials: false
             })
             .then((res) => {
                 console.log(res);
