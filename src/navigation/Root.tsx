@@ -2,11 +2,11 @@ import { Outlet } from "react-router-dom";
 
 import "./Root.css";
 import AppFrame from "../components/navigation/AppFrame";
-import { useMatchHistory } from "../services/matchHistoryService";
+import { MatchHistoryService } from "../services/MatchHistoryService2";
 
 export default function Root() {
     // kick off the initial data hydration
-    useMatchHistory();
+    MatchHistoryService.useMatchHistory();
 
     return (
         <AppFrame>
