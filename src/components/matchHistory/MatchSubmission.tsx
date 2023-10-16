@@ -23,7 +23,7 @@ import {
 } from "@chakra-ui/react";
 import { TriangleDownIcon, TriangleUpIcon } from "@chakra-ui/icons";
 
-import { MatchHistoryService } from "../../services/MatchHistoryService2";
+import { MatchHistoryService } from "../../services/MatchHistoryService";
 import { getPlayers } from "../../redux/stats/statsSelectors";
 import { commanderList } from "../../services/commanderList";
 
