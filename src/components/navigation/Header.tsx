@@ -28,7 +28,7 @@ import {
 import React, { useEffect, useMemo, useState } from "react";
 import { FiMenu, FiBell, FiChevronDown } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { AuthAction } from "../../redux/auth/authActions";
 import { getTokenType, getAccessToken, getIsFirstLogin } from "../../redux/auth/authSelectors";
 import { UserSelectors } from "../../redux/user/userSelectors";
@@ -73,13 +73,15 @@ const useHeaderTitle = () => {
 // the md layout is used for normal
 // the base layout is used for mobile view
 export const Header = ({ onProfileIconClick, ...rest }: HeaderProps) => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const headerTitle = useHeaderTitle();
     const location = useLocation();
     const isHome = location.pathname === "/";
 
     const finalRef = React.useRef(null);
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const dispatch = useDispatch();
 
     const username = useSelector(UserSelectors.getUsername);
     const userAvatar = useSelector(UserSelectors.getAvatar);
@@ -146,6 +148,8 @@ export const Header = ({ onProfileIconClick, ...rest }: HeaderProps) => {
     const signOut = () => {
         localStorage.clear();
         dispatch(AuthAction.LogOut());
+        navigate("/");
+        window.scrollTo(0, 0);
     };
 
     return (
@@ -169,7 +173,11 @@ export const Header = ({ onProfileIconClick, ...rest }: HeaderProps) => {
                 icon={<FiMenu />}
             />
 
-            <Flex alignItems={"flex-start"} display={{ base: "fixed", md: isHome ? "none" : "fixed" }}>
+            <Flex
+                alignItems={"flex-start"}
+                display={{ base: "fixed", md: isHome ? "none" : "fixed" }}
+                marginLeft={"8px"}
+            >
                 <Text fontSize="20" fontWeight="bold" textTransform="uppercase" color="gray.600">
                     {headerTitle}
                 </Text>
@@ -178,7 +186,7 @@ export const Header = ({ onProfileIconClick, ...rest }: HeaderProps) => {
             <HStack spacing={{ base: "0", md: "6" }} flex={1} justifyContent={"flex-end"}>
                 {FF_IS_LOGIN_ENABLED ? (
                     <>
-                        <IconButton size="lg" variant="ghost" aria-label="open menu" icon={<FiBell />} />
+                        {/* <IconButton size="lg" variant="ghost" aria-label="open menu" icon={<FiBell />} /> */}
                         <Flex alignItems={"center"}>
                             <Menu>
                                 <MenuButton py={2} transition="all 0.3s" _focus={{ boxShadow: "none" }}>
@@ -188,7 +196,7 @@ export const Header = ({ onProfileIconClick, ...rest }: HeaderProps) => {
                                             src={
                                                 userPic !== undefined
                                                     ? userPic
-                                                    : "https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
+                                                    : "https://static.thenounproject.com/png/2062361-200.png"
                                             }
                                         />
                                         <VStack
@@ -198,7 +206,12 @@ export const Header = ({ onProfileIconClick, ...rest }: HeaderProps) => {
                                             ml="2"
                                         >
                                             {username !== undefined ? (
-                                                <Text fontSize="sm">{username}</Text>
+                                                <>
+                                                    <Text fontSize="sm">{username}</Text>
+                                                    <Text fontSize="xs" color="gray.600">
+                                                        Welcome!
+                                                    </Text>
+                                                </>
                                             ) : (
                                                 <>
                                                     <Text fontSize="sm">No User Signed In</Text>
@@ -218,10 +231,14 @@ export const Header = ({ onProfileIconClick, ...rest }: HeaderProps) => {
                                 // borderColor={useColorModeValue("gray.200", "gray.700")}
                                 >
                                     {username === undefined ? <MenuItem onClick={signIn}>Sign In</MenuItem> : null}
-                                    {username !== undefined ? <MenuItem>Profile</MenuItem> : null}
-                                    <MenuItem>Settings</MenuItem>
-                                    <MenuDivider />
-                                    <MenuItem onClick={signOut}>Sign out</MenuItem>
+                                    {username !== undefined ? (
+                                        <>
+                                            <MenuItem>Profile</MenuItem>
+                                            <MenuItem>Settings</MenuItem>
+                                            <MenuDivider />
+                                            <MenuItem onClick={signOut}>Sign out</MenuItem>
+                                        </>
+                                    ) : null}
                                 </MenuList>
                             </Menu>
                         </Flex>
