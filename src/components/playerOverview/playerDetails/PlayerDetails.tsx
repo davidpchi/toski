@@ -19,7 +19,7 @@ import { PlayerMatchupsTable } from "../PlayerMatchupsTable";
 import { primaryColor } from "../../../themes/acorn";
 
 export async function loader(data: { params: any }) {
-    return data.params;
+    return data.params.playerId;
 }
 
 export const PlayerDetails = React.memo(function PlayerDetails() {

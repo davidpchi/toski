@@ -41,7 +41,8 @@ export const getPlayer = createSelector(
     getPlayers,
     (_state: AppState, id: string) => id,
     (players: { [id: string]: Player } | undefined, id: string) => {
-        return players ? players[id] : undefined;
+        const temp = players ? players[id] : undefined;
+        return temp;
     }
 );
 
