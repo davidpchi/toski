@@ -11,6 +11,21 @@ import { Player } from "../types/domain/Player";
  * @param endDate
  * @returns
  */
+
+export function filterMatchesBySeatCount(matches: Match[], seats: number): Match[] {
+    const result = [];
+
+    for (const match of matches) {
+        if (match.players.length != seats) {
+            continue;
+        }
+
+        result.push(match);
+    }
+
+    return result;
+}
+
 export function filterMatchesByDate(matches: Match[], startDate?: Date, endDate?: Date): Match[] {
     const result = [];
 
@@ -40,12 +55,13 @@ export function matchesToCommanderHelper(
     playerNameFilter?: string,
     startDate?: Date,
 ): { [id: string]: Commander } {
-    const filteredMatches = filterMatchesByDate(matches, startDate);
+    const filteredMatches = filterMatchesBySeatCount(filterMatchesByDate(matches, startDate), 4);
 
     const playedCommanderDictionary: { [id: string]: Commander } = {};
     for (const currentMatch of filteredMatches) {
         // iterate through each player, and add those commanders to our commander dictionary
         for (const player of currentMatch.players) {
+
             // apply our filters
             if (playerNameFilter !== undefined && player.name !== playerNameFilter) {
                 // we have an active playerName filter-- if the player name is not a match, then we skip it
@@ -104,7 +120,7 @@ export function matchesToPlayersHelper(
     commanderNameFilter?: string,
     startDate?: Date,
 ): { [id: string]: Player } {
-    const filteredMatches = filterMatchesByDate(matches, startDate);
+    const filteredMatches = filterMatchesBySeatCount(filterMatchesByDate(matches, startDate), 4);
 
     const playerDictionary: { [id: string]: Player } = {};
     for (const currentMatch of filteredMatches) {

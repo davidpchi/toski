@@ -19,8 +19,8 @@ export function getAverageWinTurn(player: Player) {
 
     // Get win turn for every match win
     for (const match of player.matches) {
-        if (player.name === match.winner) {
-            // Exclude wins without turns data
+        if (player.name === match.winner && match.players.length == 4) {
+            // Exclude wins without turns data or fewer than 4 players
             if (Number(match.numberOfTurns) > 0) {
                 winTurns.push(Number(match.numberOfTurns));
             }
