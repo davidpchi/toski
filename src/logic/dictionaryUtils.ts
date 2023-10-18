@@ -4,19 +4,18 @@ import { Match } from "../types/domain/Match";
 import { Player } from "../types/domain/Player";
 
 /**
- * Given a collection of Matches, filters them to matches after a certain date.
- * Optionally, provide an end date as well.
- * @param matches
- * @param startDate
- * @param endDate
- * @returns
+ * Given a collection of Matches, filter out games that don't have the desired number of players
+ * "Seats" refers to the desired number of seats in matches to keep (usually 4)
+ * @param matches 
+ * @param seats 
+ * @returns 
  */
 
 export function filterMatchesBySeatCount(matches: Match[], seats: number): Match[] {
     const result = [];
 
     for (const match of matches) {
-        if (match.players.length != seats) {
+        if (match.players.length !== seats) {
             continue;
         }
 
@@ -25,6 +24,15 @@ export function filterMatchesBySeatCount(matches: Match[], seats: number): Match
 
     return result;
 }
+
+/**
+ * Given a collection of Matches, filters them to matches after a certain date.
+ * Optionally, provide an end date as well.
+ * @param matches
+ * @param startDate
+ * @param endDate
+ * @returns
+ */
 
 export function filterMatchesByDate(matches: Match[], startDate?: Date, endDate?: Date): Match[] {
     const result = [];
