@@ -2,7 +2,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 
 import { useEffect } from "react";
-import { getAccessToken } from "../redux/auth/authSelectors";
+import { AuthSelectors } from "../redux/auth/authSelectors";
 import { UserSelectors } from "../redux/user/userSelectors";
 import { ChatterfangProfile } from "../types/service/ProfileService/ChatterfangProfile";
 import { Profile } from "../types/domain/Profile";
@@ -12,7 +12,7 @@ import { ProfilesAction } from "../redux/profiles/profilesActions";
 const useProfiles = () => {
     const dispatch = useDispatch();
 
-    const accessToken = useSelector(getAccessToken);
+    const accessToken = useSelector(AuthSelectors.getAccessToken);
     const userId = useSelector(UserSelectors.getId);
 
     const endpoint = "https://chatterfang.onrender.com/profiles";

@@ -122,9 +122,6 @@ export const PlayerDetailsInfoCard = React.memo(function PlayerDetailsInfoCard({
                     />
                 </div>
             </Flex>
-            {isCurrentUser ? (
-                <IconButton onClick={() => {}} variant="outline" aria-label="open menu" icon={<FiEdit />} />
-            ) : null}
         </Flex>
     );
 });
