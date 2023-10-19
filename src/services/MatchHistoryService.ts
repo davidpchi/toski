@@ -13,7 +13,7 @@ const matchHistoryDataEndpoint =
 const matchHistorySubmitEndpoint =
     "https://docs.google.com/forms/d/e/1FAIpQLScguPsS2TOxaABYLtbCDZ5zPXec2av9AI2kPI2JFwYqmghBYQ/formResponse";
 
-export const useMatchHistory = () => {
+const useMatchHistory = () => {
     // Do the initial data hydration here
     const dispatch = useDispatch();
 
@@ -36,7 +36,7 @@ export const useMatchHistory = () => {
     }, []);
 };
 
-export function mapObjectoMatches(resultObj: any): Match[] | undefined {
+function mapObjectoMatches(resultObj: any): Match[] | undefined {
     const matches: Match[] = [];
 
     if (resultObj.table === undefined || resultObj.table.rows === undefined) {
@@ -60,7 +60,7 @@ export type MatchSubmissionPlayer = {
     rank: number;
 };
 
-export const submitMatch = async (
+const submitMatch = async (
     date: Date,
     player1?: MatchSubmissionPlayer,
     player2?: MatchSubmissionPlayer,
@@ -127,4 +127,9 @@ export const submitMatch = async (
     }
 
     return false;
+};
+
+export const MatchHistoryService = {
+    useMatchHistory,
+    submitMatch
 };

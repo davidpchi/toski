@@ -35,7 +35,7 @@ export default function Article_6() {
                 More changes donw the line, so stay tunned for those!
             </p>
             <h1 style={{ fontSize: 20, fontWeight: "bold", marginTop: 16 }}>
-                Partenrs & Backgrounds in Match Submission Tool
+                Partners & Backgrounds in Match Submission Tool
             </h1>
             <p style={paragraphStyle}>
                 Something we quickly realized after releasing the Match Submission tool was that you were unable to add
