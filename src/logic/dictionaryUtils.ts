@@ -1,3 +1,5 @@
+import { match } from "assert";
+import { NUMBER_OF_PLAYERS_FOR_VALID_GAME } from "../components/constants";
 import { commanderList } from "../services/commanderList";
 import { Commander } from "../types/domain/Commander";
 import { Match } from "../types/domain/Match";
@@ -5,17 +7,15 @@ import { Player } from "../types/domain/Player";
 
 /**
  * Given a collection of Matches, filter out games that don't have the desired number of players
- * "Seats" refers to the desired number of seats in matches to keep (usually 4)
  * @param matches 
- * @param seats 
+ * @param playerCount "Seats" refers to the desired number of seats in matches to keep (usually 4)
  * @returns 
  */
-
-export function filterMatchesBySeatCount(matches: Match[], seats: number): Match[] {
+export function filterMatchesByPlayerCount(matches: Match[], playerCount: number): Match[] {
     const result = [];
 
     for (const match of matches) {
-        if (match.players.length !== seats) {
+        if (match.players.length !== playerCount) {
             continue;
         }
 
@@ -33,7 +33,6 @@ export function filterMatchesBySeatCount(matches: Match[], seats: number): Match
  * @param endDate
  * @returns
  */
-
 export function filterMatchesByDate(matches: Match[], startDate?: Date, endDate?: Date): Match[] {
     const result = [];
 
@@ -63,7 +62,10 @@ export function matchesToCommanderHelper(
     playerNameFilter?: string,
     startDate?: Date,
 ): { [id: string]: Commander } {
-    const filteredMatches = filterMatchesBySeatCount(filterMatchesByDate(matches, startDate), 4);
+
+    const filteredMatches = filterMatchesByDate(matches, startDate);
+
+    const filteredMatchesByPC = filterMatchesByPlayerCount(filteredMatches, 4);
 
     const playedCommanderDictionary: { [id: string]: Commander } = {};
     for (const currentMatch of filteredMatches) {
@@ -102,13 +104,15 @@ export function matchesToCommanderHelper(
                         name: currentCommanderName,
                         colorIdentity: commander.color_identity,
                         matches: [currentMatch.id],
-                        wins: player.rank === "1" ? 1 : 0,
+                        validMatches: currentMatch.players.length === NUMBER_OF_PLAYERS_FOR_VALID_GAME ? 1 : 0,
+                        wins: player.rank === "1" && currentMatch.players.length === NUMBER_OF_PLAYERS_FOR_VALID_GAME ? 1 : 0,
                     };
                 } else {
                     // since this commander exists, update the currentMatch count
                     playedCommanderDictionary[potentialCommanderObj.id].matches.push(currentMatch.id);
-                    if (player.rank === "1") {
+                    if (player.rank === "1" && currentMatch.players.length === NUMBER_OF_PLAYERS_FOR_VALID_GAME) {
                         playedCommanderDictionary[potentialCommanderObj.id].wins++;
+                        playedCommanderDictionary[potentialCommanderObj.id].validMatches++;
                     }
                 }
             }
@@ -128,7 +132,7 @@ export function matchesToPlayersHelper(
     commanderNameFilter?: string,
     startDate?: Date,
 ): { [id: string]: Player } {
-    const filteredMatches = filterMatchesBySeatCount(filterMatchesByDate(matches, startDate), 4);
+    const filteredMatches = filterMatchesByDate(matches, startDate);
 
     const playerDictionary: { [id: string]: Player } = {};
     for (const currentMatch of filteredMatches) {
@@ -166,13 +170,15 @@ export function matchesToPlayersHelper(
                     playerDictionary[player.name] = {
                         name: player.name,
                         matches: [currentMatch],
-                        wins: player.rank === "1" ? 1 : 0,
+                        validMatches: currentMatch.players.length === NUMBER_OF_PLAYERS_FOR_VALID_GAME ? 1 : 0,
+                        wins: player.rank === "1" && currentMatch.players.length === NUMBER_OF_PLAYERS_FOR_VALID_GAME ? 1 : 0,
                         colorProfile: colorProfile,
                     };
                 } else {
                     // since this player exists, update the currentMatch count
                     playerDictionary[player.name].matches.push(currentMatch);
-                    if (player.rank === "1") {
+                    if (player.rank === "1" && currentMatch.players.length === NUMBER_OF_PLAYERS_FOR_VALID_GAME) {
+                        playerDictionary[player.name].validMatches++;
                         playerDictionary[player.name].wins++;
                     }
 
