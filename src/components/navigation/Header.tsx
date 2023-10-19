@@ -26,13 +26,12 @@ import {
     Text
 } from "@chakra-ui/react";
 import React, { useEffect, useMemo, useState } from "react";
-import { FiMenu, FiBell, FiChevronDown } from "react-icons/fi";
+import { FiMenu, FiChevronDown } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AuthAction } from "../../redux/auth/authActions";
 import { getTokenType, getAccessToken, getIsFirstLogin } from "../../redux/auth/authSelectors";
 import { UserSelectors } from "../../redux/user/userSelectors";
-import { DiscordService } from "../../services/DiscordService";
 import { routes } from "../../navigation/routes";
 import { FF_IS_LOGIN_ENABLED } from "../../services/featureFlagService";
 
@@ -95,9 +94,6 @@ export const Header = ({ onProfileIconClick, ...rest }: HeaderProps) => {
 
     const userPic = username ? `https://cdn.discordapp.com/avatars/${userId}/${userAvatar}.png` : undefined;
 
-    // initiates the hydration of the discord info for the current user
-    DiscordService.useCurrentUserInfo();
-
     /**
      * When the app starts, we check to see if there's an existing access token already saved via local storage.
      * If there is, use that instead of showing the user as not signed in.
@@ -125,7 +121,7 @@ export const Header = ({ onProfileIconClick, ...rest }: HeaderProps) => {
     /**
      * When the user closes the modal, if they have selected "remember me", we save the access token to local storage
      */
-    const handleLoginModalClose = () => {
+    const handleLoginModalConfirm = () => {
         if (isRememberMe) {
             if (tokenType) {
                 localStorage.setItem("tokenType", tokenType);
@@ -138,6 +134,11 @@ export const Header = ({ onProfileIconClick, ...rest }: HeaderProps) => {
         }
 
         dispatch(AuthAction.FirstLoginComplete());
+        onClose();
+    };
+
+    const handleLoginModalCancel = () => {
+        signOut();
         onClose();
     };
 
@@ -245,10 +246,10 @@ export const Header = ({ onProfileIconClick, ...rest }: HeaderProps) => {
                     </>
                 ) : null}
             </HStack>
-            <Modal finalFocusRef={finalRef} isOpen={isOpen} onClose={handleLoginModalClose}>
+            <Modal finalFocusRef={finalRef} isOpen={isOpen} onClose={handleLoginModalCancel}>
                 <ModalOverlay />
                 <ModalContent maxW={"500px"}>
-                    <ModalHeader>Is this you?</ModalHeader>
+                    <ModalHeader>Confirm Login</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
                         <Flex direction={"column"} justifyContent={"center"} flexWrap={"wrap"} alignItems={"center"}>
@@ -268,13 +269,16 @@ export const Header = ({ onProfileIconClick, ...rest }: HeaderProps) => {
                                     setIsRememberMe(!isRememberMe);
                                 }}
                             >
-                                Remember me
+                                Remember Me
                             </Checkbox>
                         </Flex>
                     </ModalBody>
                     <ModalFooter>
-                        <Button mr={3} onClick={handleLoginModalClose}>
-                            Let's Jam!
+                        <Button mr={3} onClick={handleLoginModalConfirm}>
+                            Confirm
+                        </Button>
+                        <Button mr={3} onClick={handleLoginModalCancel} variant={"outline"}>
+                            Cancel
                         </Button>
                     </ModalFooter>
                 </ModalContent>

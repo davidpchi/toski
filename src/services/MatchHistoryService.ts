@@ -2,7 +2,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 
 import { Match } from "../types/domain/Match";
-import { sheetRowToMatch } from "../types/service/dataMappers";
+import { sheetRowToMatch } from "../types/service/MatchHistory/dataMappers";
 import { StatsAction } from "../redux/stats/statsActions";
 import { useEffect } from "react";
 

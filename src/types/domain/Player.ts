@@ -1,5 +1,8 @@
 import { Match } from "./Match";
 
+/**
+ * Represents a person participating in games
+ */
 export type Player = {
     name: string;
     matches: Match[];

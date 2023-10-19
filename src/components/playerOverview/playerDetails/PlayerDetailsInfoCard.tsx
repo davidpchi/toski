@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Flex, Heading, Text } from "@chakra-ui/react";
+import { Flex, Heading, IconButton, Text } from "@chakra-ui/react";
 
 import { getFavoriteCommanderForPlayer, getPlayer } from "../../../redux/stats/statsSelectors";
 import { AppState } from "../../../redux/rootReducer";
@@ -11,19 +11,37 @@ import { PieGraph } from "../../dataVisualizations/PieGraph";
 import { getAverageWinTurn, getWinRatePercentage } from "../../../logic/utils";
 import { commanderList } from "../../../services/commanderList";
 import { primaryColor } from "../../../themes/acorn";
+import { UserSelectors } from "../../../redux/user/userSelectors";
+import { FiEdit } from "react-icons/fi";
+import { ProfileSelectors } from "../../../redux/profiles/profilesSelectors";
 
 export const PlayerDetailsInfoCard = React.memo(function PlayerDetailsInfoCard({ playerId }: { playerId: string }) {
     const player = useSelector((state: AppState) => getPlayer(state, playerId));
     const favoriteCommander = useSelector((state: AppState) => getFavoriteCommanderForPlayer(state, playerId));
 
-    // Get image for most played commander
-    const favCommanderImage = favoriteCommander
-        ? commanderList[favoriteCommander.name].image.replace("normal", "art_crop")
-        : "";
+    const profiles = useSelector(ProfileSelectors.getProfiles);
+
+    // check to see if this is the player's own profile
+    const currentUserName = useSelector(UserSelectors.getUsername);
+    const currentUserId: string | undefined = useSelector(UserSelectors.getId);
 
     if (player === undefined) {
         return null;
     }
+
+    // TODO: there is this weird issue where the currentUserId is getting converted to a number...
+    const profile = profiles && currentUserId ? profiles[Number(currentUserId)] : undefined;
+    const favoriteCommanderId = profile && profile.favoriteCommanderId ? profile.favoriteCommanderId : "";
+    const themeCommander = Object.values(commanderList).find((value) => value.id === favoriteCommanderId);
+    const themeCommanderImage = themeCommander?.image.replace("normal", "art_crop");
+
+    // Get image for most played commander
+    const favCommanderImage = favoriteCommander
+        ? themeCommanderImage ?? commanderList[favoriteCommander.name].image.replace("normal", "art_crop")
+        : "";
+
+    // TODO: we need a better way of determining this
+    const isCurrentUser = currentUserName ? currentUserName.toLowerCase() === player.name.toLowerCase() : false;
 
     const colorsPlayedArray: number[] = [];
     for (const colorObj of MTG_COLORS) {
@@ -95,7 +113,6 @@ export const PlayerDetailsInfoCard = React.memo(function PlayerDetailsInfoCard({
                     borderBottomWidth={1}
                 >{`Avg. win turn: ${getAverageWinTurn(player)}`}</Text>
             </Flex>
-
             <Flex maxWidth={175} maxHeight={175}>
                 <div style={{ flex: 1, display: "flex", width: "100%", height: "100%" }}>
                     <PieGraph
@@ -105,6 +122,9 @@ export const PlayerDetailsInfoCard = React.memo(function PlayerDetailsInfoCard({
                     />
                 </div>
             </Flex>
+            {isCurrentUser ? (
+                <IconButton onClick={() => {}} variant="outline" aria-label="open menu" icon={<FiEdit />} />
+            ) : null}
         </Flex>
     );
 });

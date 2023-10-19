@@ -24,7 +24,13 @@ const useCurrentUserInfo = () => {
                 })
                 .then((res) => {
                     const data: any = res.data as any;
-                    dispatch(UserAction.SetUserComplete({ username: data.username, id: data.id, avatar: data.avatar }));
+                    dispatch(
+                        UserAction.SetUserComplete({
+                            username: data.username,
+                            id: data.id.toString(),
+                            avatar: data.avatar
+                        })
+                    );
                 });
         }
     }, [accessToken, authTokenType, dispatch, isUserSignedIn]);
