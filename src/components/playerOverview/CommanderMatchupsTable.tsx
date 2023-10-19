@@ -9,6 +9,7 @@ import {
     CommanderMatchupItem,
     commanderMatchupsColumns
 } from "../dataVisualizations/columnHelpers/commanderMatchupsColumnHelper";
+import { commanderList } from "../../services/commanderList";
 
 export const CommanderMatchupsTable = React.memo(function CommanderMatchupsTable({
     playerId,
@@ -35,6 +36,7 @@ export const CommanderMatchupsTable = React.memo(function CommanderMatchupsTable
                     const commanderMatchup =
                         potentialCommander === undefined
                             ? {
+                                  id: commanderList[commander].id,
                                   name: commander,
                                   matchCount: 1,
                                   winCount: 0
