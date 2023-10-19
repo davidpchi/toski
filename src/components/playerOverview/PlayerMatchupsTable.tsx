@@ -58,7 +58,7 @@ export const PlayerMatchupsTable = React.memo(function PlayerMatchupsTable({
             getRowProps={(row: any) => {
                 return {
                     onClick: () => {
-                        navigate(`/playerOverview/${row.original.id}`);
+                        navigate(`/playerOverview/${row.original.name}`);
                         window.scrollTo(0, 0);
                     }
                 };

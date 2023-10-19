@@ -4,6 +4,7 @@ import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import { commanderList } from "../../../services/commanderList";
 
 export type CommanderMatchupItem = {
+    id: string;
     name: string;
     matchCount: number;
     winCount: number;
