@@ -7,7 +7,7 @@ import { Player } from "../types/domain/Player";
 /**
  * Given a collection of Matches, filter out games that don't have the desired number of players.
  * @param matches 
- * @param playerCount "playerCount" refers to the desired number of players in matches to keep (usually 4).
+ * @param playerCount The number of players in the match that matches will be filtered by.
  * @returns 
  */
 export function filterMatchesByPlayerCount(matches: Match[], playerCount: number): Match[] {
