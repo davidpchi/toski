@@ -1,5 +1,11 @@
 import { AppState } from "../rootReducer";
 
-export const getTokenType = (state: AppState) => state.auth.tokenType;
-export const getAccessToken = (state: AppState) => state.auth.accessToken;
-export const getIsFirstLogin = (state: AppState) => state.auth.isFirstLogin;
+const getTokenType = (state: AppState) => state.auth.tokenType;
+const getAccessToken = (state: AppState) => state.auth.accessToken;
+const getIsFirstLogin = (state: AppState) => state.auth.isFirstLogin;
+
+export const AuthSelectors = {
+    getTokenType,
+    getAccessToken,
+    getIsFirstLogin
+};

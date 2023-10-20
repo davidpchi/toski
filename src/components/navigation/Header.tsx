@@ -1,5 +1,9 @@
+import React, { useEffect, useMemo } from "react";
+import { FiMenu, FiChevronDown } from "react-icons/fi";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+
 import {
-    useDisclosure,
     Flex,
     useColorModeValue,
     IconButton,
@@ -12,29 +16,17 @@ import {
     MenuList,
     MenuItem,
     MenuDivider,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalCloseButton,
-    ModalBody,
-    Heading,
-    Checkbox,
-    ModalFooter,
-    Button,
     FlexProps,
     Text
 } from "@chakra-ui/react";
-import React, { useEffect, useMemo, useState } from "react";
-import { FiMenu, FiBell, FiChevronDown } from "react-icons/fi";
-import { useDispatch, useSelector } from "react-redux";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+
 import { AuthAction } from "../../redux/auth/authActions";
-import { getTokenType, getAccessToken, getIsFirstLogin } from "../../redux/auth/authSelectors";
 import { UserSelectors } from "../../redux/user/userSelectors";
-import { DiscordService } from "../../services/DiscordService";
 import { routes } from "../../navigation/routes";
 import { FF_IS_LOGIN_ENABLED } from "../../services/featureFlagService";
+import { LoginModal } from "../auth/LoginModal";
+import { SettingsMenuItem } from "../auth/SettingsMenuItem";
+import { ProfileService } from "../../services/ProfileService";
 
 interface HeaderProps extends FlexProps {
     onProfileIconClick: () => void;
@@ -81,22 +73,12 @@ export const Header = ({ onProfileIconClick, ...rest }: HeaderProps) => {
     const isHome = location.pathname === "/";
 
     const finalRef = React.useRef(null);
-    const { isOpen, onOpen, onClose } = useDisclosure();
 
     const username = useSelector(UserSelectors.getUsername);
     const userAvatar = useSelector(UserSelectors.getAvatar);
     const userId = useSelector(UserSelectors.getId);
 
-    const tokenType = useSelector(getTokenType);
-    const accessToken = useSelector(getAccessToken);
-    const isFirstLogin = useSelector(getIsFirstLogin);
-
-    const [isRememberMe, setIsRememberMe] = useState<boolean>(true);
-
     const userPic = username ? `https://cdn.discordapp.com/avatars/${userId}/${userAvatar}.png` : undefined;
-
-    // initiates the hydration of the discord info for the current user
-    DiscordService.useCurrentUserInfo();
 
     /**
      * When the app starts, we check to see if there's an existing access token already saved via local storage.
@@ -111,36 +93,6 @@ export const Header = ({ onProfileIconClick, ...rest }: HeaderProps) => {
         }
     }, [dispatch]);
 
-    /**
-     * This effects handles if we should be showing the modal after the user logs in.
-     * The primary reason for this is to allow the user to decline the "remember me", which opts them out of local storage.
-     */
-    useEffect(() => {
-        if (username !== undefined && isFirstLogin) {
-            onOpen();
-            window.scroll(0, 0);
-        }
-    }, [dispatch, isFirstLogin, onOpen, username]);
-
-    /**
-     * When the user closes the modal, if they have selected "remember me", we save the access token to local storage
-     */
-    const handleLoginModalClose = () => {
-        if (isRememberMe) {
-            if (tokenType) {
-                localStorage.setItem("tokenType", tokenType);
-            }
-            if (accessToken) {
-                localStorage.setItem("accessToken", accessToken);
-            }
-        } else {
-            localStorage.clear();
-        }
-
-        dispatch(AuthAction.FirstLoginComplete());
-        onClose();
-    };
-
     const signIn = () => {
         window.location.href = `https://discord.com/oauth2/authorize?response_type=token&client_id=${"1163345338376138773"}&state=15773059ghq9183habn&scope=identify`;
     };
@@ -150,6 +102,15 @@ export const Header = ({ onProfileIconClick, ...rest }: HeaderProps) => {
         dispatch(AuthAction.LogOut());
         navigate("/");
         window.scrollTo(0, 0);
+    };
+
+    const navigateToProfile = () => {
+        // find the player name based on their discord id
+        const playerName = ProfileService.getPlayerName(userId ?? "");
+        if (playerName) {
+            navigate(`/playerOverview/${playerName}`);
+            window.scrollTo(0, 0);
+        }
     };
 
     return (
@@ -233,8 +194,8 @@ export const Header = ({ onProfileIconClick, ...rest }: HeaderProps) => {
                                     {username === undefined ? <MenuItem onClick={signIn}>Sign In</MenuItem> : null}
                                     {username !== undefined ? (
                                         <>
-                                            <MenuItem>Profile</MenuItem>
-                                            <MenuItem>Settings</MenuItem>
+                                            <MenuItem onClick={navigateToProfile}>Profile</MenuItem>
+                                            <SettingsMenuItem finalRef={finalRef} />
                                             <MenuDivider />
                                             <MenuItem onClick={signOut}>Sign out</MenuItem>
                                         </>
@@ -245,40 +206,7 @@ export const Header = ({ onProfileIconClick, ...rest }: HeaderProps) => {
                     </>
                 ) : null}
             </HStack>
-            <Modal finalFocusRef={finalRef} isOpen={isOpen} onClose={handleLoginModalClose}>
-                <ModalOverlay />
-                <ModalContent maxW={"500px"}>
-                    <ModalHeader>Is this you?</ModalHeader>
-                    <ModalCloseButton />
-                    <ModalBody>
-                        <Flex direction={"column"} justifyContent={"center"} flexWrap={"wrap"} alignItems={"center"}>
-                            <Heading>{username}</Heading>
-                            <Avatar
-                                size={"2xl"}
-                                src={
-                                    userPic !== undefined
-                                        ? userPic
-                                        : "https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
-                                }
-                            />
-                            <Checkbox
-                                marginTop={"16px"}
-                                isChecked={isRememberMe}
-                                onChange={() => {
-                                    setIsRememberMe(!isRememberMe);
-                                }}
-                            >
-                                Remember me
-                            </Checkbox>
-                        </Flex>
-                    </ModalBody>
-                    <ModalFooter>
-                        <Button mr={3} onClick={handleLoginModalClose}>
-                            Let's Jam!
-                        </Button>
-                    </ModalFooter>
-                </ModalContent>
-            </Modal>
+            <LoginModal onSignOut={signOut} finalRef={finalRef} />
         </Flex>
     );
 };

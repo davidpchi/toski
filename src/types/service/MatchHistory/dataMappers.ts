@@ -1,5 +1,5 @@
-import { Match } from "../domain/Match";
-import { MatchPlayer } from "../domain/MatchPlayer";
+import { Match } from "../../domain/Match";
+import { MatchPlayer } from "../../domain/MatchPlayer";
 import { SheetRow } from "./SheetData";
 
 function matchPlayerHelper(
@@ -7,7 +7,7 @@ function matchPlayerHelper(
     nameIndex: number,
     commanderIndex: number,
     positionIndex: number,
-    rankIndex: number,
+    rankIndex: number
 ): MatchPlayer {
     const nameData = cell.c[nameIndex];
     const commanderData = cell.c[commanderIndex];
@@ -20,7 +20,7 @@ function matchPlayerHelper(
         name: nameData ? nameData.v.toString() : "",
         commanders: commanders,
         rank: rankData ? rankData.v.toString() : "",
-        turnPosition: turnData ? turnData.v.toString() : "",
+        turnPosition: turnData ? turnData.v.toString() : ""
     };
 
     return player;
@@ -80,7 +80,7 @@ export function sheetRowToMatch(cell: SheetRow, id: string): Match {
         id,
         numberOfTurns: numberOfTurns ? numberOfTurns.v.toString() : "",
         players: players,
-        winner: winnerName,
+        winner: winnerName
     };
 }
 

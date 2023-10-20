@@ -1,7 +1,6 @@
-import { Flex } from "@chakra-ui/layout";
-import { Image } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+
+import { Image } from "@chakra-ui/react";
 
 /**
  * Image with hover effect: image is dimmed and white text appears
@@ -27,7 +26,6 @@ export const ImageWithHover = React.memo(function ImageWithHover({
         <div
             style={{
                 position: "relative",
-                cursor: "pointer",
                 width: "auto",
                 height: "auto",
                 borderRadius: "8px",

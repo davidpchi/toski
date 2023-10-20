@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+
 import { Flex, Heading, Text } from "@chakra-ui/react";
 
 import { getFavoriteCommanderForPlayer, getPlayer } from "../../../redux/stats/statsSelectors";
@@ -11,19 +11,34 @@ import { PieGraph } from "../../dataVisualizations/PieGraph";
 import { getAverageWinTurn, getWinRatePercentage } from "../../../logic/utils";
 import { commanderList } from "../../../services/commanderList";
 import { primaryColor } from "../../../themes/acorn";
+import { ProfileSelectors } from "../../../redux/profiles/profilesSelectors";
+import { ProfileService } from "../../../services/ProfileService";
 
 export const PlayerDetailsInfoCard = React.memo(function PlayerDetailsInfoCard({ playerId }: { playerId: string }) {
     const player = useSelector((state: AppState) => getPlayer(state, playerId));
     const favoriteCommander = useSelector((state: AppState) => getFavoriteCommanderForPlayer(state, playerId));
 
-    // Get image for most played commander
-    const favCommanderImage = favoriteCommander
-        ? commanderList[favoriteCommander.name].image.replace("normal", "art_crop")
-        : "";
+    const profileId = player ? ProfileService.getProfileId(player.name) : "";
+    const profile = useSelector((state: AppState) => ProfileSelectors.getProfile(state, profileId));
 
     if (player === undefined) {
         return null;
     }
+
+    const favoriteCommanderId = profile && profile.favoriteCommanderId ? profile.favoriteCommanderId : "";
+    // TODO: commanderList probably needs to the value and not just the key
+    const fixedCommanderList = Object.keys(commanderList).map((key) => {
+        return { ...commanderList[key], name: key };
+    });
+    const themeCommander = fixedCommanderList.find((value) => value.id === favoriteCommanderId);
+    const themeCommanderImage = themeCommander?.image.replace("normal", "art_crop");
+    const themeCommanderName = themeCommander?.name;
+
+    // if the user has selected a favorite commander, use that, otherwise, default to their most played commander
+    const favCommanderImage = favoriteCommander
+        ? themeCommanderImage ?? commanderList[favoriteCommander.name].image.replace("normal", "art_crop")
+        : "";
+    const favCommanderName = themeCommanderName ?? favoriteCommander?.name;
 
     const colorsPlayedArray: number[] = [];
     for (const colorObj of MTG_COLORS) {
@@ -33,16 +48,11 @@ export const PlayerDetailsInfoCard = React.memo(function PlayerDetailsInfoCard({
     return (
         <Flex direction="row" justifyContent="center" alignItems={"center"} flexWrap={"wrap"} marginBottom={"16px"}>
             {favoriteCommander ? (
-                <Link
-                    to={`/commanderOverview/${favoriteCommander.id}`}
-                    style={{ color: "blue", textDecoration: "underline" }}
-                >
-                    <ImageWithHover
-                        label={`Favorite Commander: ${favoriteCommander.name}`}
-                        width={300}
-                        image={favCommanderImage}
-                    />
-                </Link>
+                <ImageWithHover
+                    label={`Favorite Commander: ${favCommanderName}`}
+                    width={300}
+                    image={favCommanderImage}
+                />
             ) : null}
             <Flex
                 direction="column"
@@ -95,7 +105,6 @@ export const PlayerDetailsInfoCard = React.memo(function PlayerDetailsInfoCard({
                     borderBottomWidth={1}
                 >{`Avg. win turn: ${getAverageWinTurn(player)}`}</Text>
             </Flex>
-
             <Flex maxWidth={175} maxHeight={175}>
                 <div style={{ flex: 1, display: "flex", width: "100%", height: "100%" }}>
                     <PieGraph

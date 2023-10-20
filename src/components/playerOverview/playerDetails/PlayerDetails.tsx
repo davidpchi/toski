@@ -24,12 +24,12 @@ export async function loader(data: { params: any }) {
 
 export const PlayerDetails = React.memo(function PlayerDetails() {
     const navigate = useNavigate();
-
-    const [showCommanderMatchups, setShowCommanderMatchups] = useState<boolean>(false);
-
     // Player variables
     const playerId = useLoaderData() as string;
     const player = useSelector((state: AppState) => getPlayer(state, playerId));
+    const commanders = useSelector((state: AppState) => getCommanders(state));
+
+    const [showCommanderMatchups, setShowCommanderMatchups] = useState<boolean>(false);
 
     const [dateFilter, setDateFilter] = useState<Date | undefined>(undefined);
     const onDatePickerChange = useCallback(
@@ -39,8 +39,7 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
         [setDateFilter]
     );
 
-    const commanders = useSelector((state: AppState) => getCommanders(state));
-
+    // needs to come after we initialize the date filter
     const matches = useSelector((state: AppState) =>
         getMatchesByPlayerName(state, playerId ? playerId : "", dateFilter)
     );
