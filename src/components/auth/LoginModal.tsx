@@ -101,7 +101,7 @@ export const LoginModal = React.memo(function LoginModal({
                                 setIsRememberMe(!isRememberMe);
                             }}
                         >
-                            Remember Me
+                            Keep me signed in
                         </Checkbox>
                     </Flex>
                 </ModalBody>

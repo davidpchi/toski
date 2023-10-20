@@ -7,6 +7,8 @@ import { DiscordService } from "../services/DiscordService";
 import { ProfileService } from "../services/ProfileService";
 
 export default function Root() {
+    const hydrateProfiles = ProfileService.useHydrateProfiles();
+
     // kick off the initial data hydration
     MatchHistoryService.useMatchHistory();
 
@@ -14,7 +16,7 @@ export default function Root() {
     DiscordService.useCurrentUserInfo();
 
     // make the initial call to hydrate profiles
-    ProfileService.useProfiles();
+    hydrateProfiles();
 
     return (
         <AppFrame>

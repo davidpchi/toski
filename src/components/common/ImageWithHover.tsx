@@ -26,7 +26,6 @@ export const ImageWithHover = React.memo(function ImageWithHover({
         <div
             style={{
                 position: "relative",
-                cursor: "pointer",
                 width: "auto",
                 height: "auto",
                 borderRadius: "8px",
