@@ -6,6 +6,11 @@ import { AuthSelectors } from "../redux/auth/authSelectors";
 import { UserAction } from "../redux/user/userActions";
 import { UserSelectors } from "../redux/user/userSelectors";
 
+export const getDiscordLoginEndpoint = () => {
+    const redirectUri = encodeURIComponent("http://" + window.location.host + "/toski");
+    return `https://discord.com/api/oauth2/authorize?client_id=1163345338376138773&redirect_uri=${redirectUri}&response_type=token&scope=identify`;
+};
+
 const useCurrentUserInfo = () => {
     const dispatch = useDispatch();
 
