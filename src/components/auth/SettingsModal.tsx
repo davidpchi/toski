@@ -1,5 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { FiLink } from "react-icons/fi";
+import { useSelector } from "react-redux";
 
+import { CheckIcon, WarningTwoIcon } from "@chakra-ui/icons";
 import {
     Modal,
     ModalOverlay,
@@ -20,15 +23,13 @@ import {
     Text,
     Divider
 } from "@chakra-ui/react";
-import { useSelector } from "react-redux";
+
 import { UserSelectors } from "../../redux/user/userSelectors";
 import { AuthSelectors } from "../../redux/auth/authSelectors";
 import { ProfileSelectors } from "../../redux/profiles/profilesSelectors";
 import { AppState } from "../../redux/rootReducer";
 import { commanderList } from "../../services/commanderList";
 import { ProfileService } from "../../services/ProfileService";
-import { FiLink } from "react-icons/fi";
-import { CheckIcon, WarningTwoIcon } from "@chakra-ui/icons";
 
 const placeholderImage = "https://static.thenounproject.com/png/5425-200.png";
 
@@ -66,21 +67,21 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
     const accessTokenFromState = localStorage.getItem("tokenType");
 
     const [isRememberMe, setIsRememberMe] = useState<boolean>(accessTokenFromState !== null);
-    const favoriteCommanderId = profile && profile.favoriteCommanderId ? profile.favoriteCommanderId : "";
-    const [commanderSelectValue, setCommanderSelectValue] = useState<string>(favoriteCommanderId);
+    const favoriteCommanderId = profile && profile.favoriteCommanderId ? profile.favoriteCommanderId : "no value";
+    const [commanderSelectValue, setCommanderSelectValue] = useState<string>(() => favoriteCommanderId);
 
-    const commanderImage = Object.values(commanderList)
-        .find((commander) => commander.id === commanderSelectValue)
-        ?.image.replace("normal", "art_crop");
+    const commanderImage = useMemo(() => {
+        return Object.values(commanderList)
+            .find((commander) => commander.id === commanderSelectValue)
+            ?.image.replace("normal", "art_crop");
+    }, [commanderSelectValue]);
 
     const onCommanderSelectChange = (event: any) => {
         const commander = event.target.value;
         setCommanderSelectValue(commander);
     };
 
-    /**
-     * When the user closes the modal, if they have selected "remember me", we save the access token to local storage
-     */
+    // When the user closes the modal, if they have selected "remember me", we save the access token to local storage
     const toggleRememberMe = () => {
         if (isRememberMe) {
             // turn off remember me if it is on
@@ -97,6 +98,15 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
         setIsRememberMe(!isRememberMe);
     };
 
+    // TODO: we should figure out a way that hiding the modal forces an unmount of this entire component instead of just tying it to the menu item.
+    const openModal = () => {
+        // because the modal always exists and we are just toggling the visibiltiy of the modal,
+        // the initial value the commanderSelectValue will always be "" because the profile hasn't hydrated yet.
+        // hence, force a hydration of the commanderSelectValue everytime the modal opens for the first time.
+        setCommanderSelectValue(favoriteCommanderId);
+        onOpen();
+    };
+
     const closeModal = () => {
         onClose();
     };
@@ -108,7 +118,7 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
 
     return (
         <>
-            <MenuItem onClick={() => onOpen()}>Settings</MenuItem>
+            <MenuItem onClick={openModal}>Settings</MenuItem>
             <Modal finalFocusRef={finalRef} isOpen={isOpen} onClose={closeModal}>
                 <ModalOverlay />
                 <ModalContent maxW={"500px"}>
@@ -136,11 +146,14 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
                                         placeholder={"Use most played commander"}
                                     >
                                         {commandersArray.map((option) => {
-                                            return <option value={option.id}>{option.name}</option>;
+                                            return (
+                                                <option value={option.id} key={option.id}>
+                                                    {option.name}
+                                                </option>
+                                            );
                                         })}
                                     </Select>
                                 </Flex>
-
                                 {commanderImage !== undefined ? (
                                     <Image src={commanderImage} height={20} borderRadius={8} />
                                 ) : (

@@ -25,8 +25,9 @@ import { UserSelectors } from "../../redux/user/userSelectors";
 import { routes } from "../../navigation/routes";
 import { FF_IS_LOGIN_ENABLED } from "../../services/featureFlagService";
 import { LoginModal } from "../auth/LoginModal";
-import { SettingsMenuItem } from "../auth/SettingsMenuItem";
+import { SettingsMenuItem } from "../auth/SettingsModal";
 import { ProfileService } from "../../services/ProfileService";
+import { getDiscordLoginEndpoint } from "../../services/DiscordService";
 
 interface HeaderProps extends FlexProps {
     onProfileIconClick: () => void;
@@ -94,7 +95,7 @@ export const Header = ({ onProfileIconClick, ...rest }: HeaderProps) => {
     }, [dispatch]);
 
     const signIn = () => {
-        window.location.href = `https://discord.com/oauth2/authorize?response_type=token&client_id=${"1163345338376138773"}&state=15773059ghq9183habn&scope=identify`;
+        window.location.href = getDiscordLoginEndpoint();
     };
 
     const signOut = () => {
