@@ -105,8 +105,10 @@ export function matchesToCommanderHelper(
                 } else {
                     // since this commander exists, update the currentMatch count
                     playedCommanderDictionary[potentialCommanderObj.id].matches.push(currentMatch.id);
-                    if (player.rank === "1" && currentMatch.players.length === NUMBER_OF_PLAYERS_FOR_VALID_MATCH) {
-                        playedCommanderDictionary[potentialCommanderObj.id].wins++;
+                    if (currentMatch.players.length === NUMBER_OF_PLAYERS_FOR_VALID_MATCH) {
+                        if(player.rank === "1") {
+                            playedCommanderDictionary[potentialCommanderObj.id].wins++;
+                        }
                         playedCommanderDictionary[potentialCommanderObj.id].validMatchesCount++;
                     }
                 }
@@ -172,9 +174,11 @@ export function matchesToPlayersHelper(
                 } else {
                     // since this player exists, update the currentMatch count
                     playerDictionary[player.name].matches.push(currentMatch);
-                    if (player.rank === "1" && currentMatch.players.length === NUMBER_OF_PLAYERS_FOR_VALID_MATCH) {
+                    if (currentMatch.players.length === NUMBER_OF_PLAYERS_FOR_VALID_MATCH) {
+                        if (player.rank === "1") {
+                            playerDictionary[player.name].wins++;
+                        }
                         playerDictionary[player.name].validMatchesCount++;
-                        playerDictionary[player.name].wins++;
                     }
 
                     // compute the players color profile
