@@ -2,6 +2,7 @@ export const PLAYER_MINIMUM_GAMES_REQUIRED = 10;
 export const PLAYER_MINIMUM_WINS_REQUIRED = 5; // Used for average win turn
 export const COMMANDER_MINIMUM_GAMES_REQUIRED = 5;
 export const NEW_PLAYER_HIGHLIGHT_DAYS = 7; // Used for highlighting newly qualified players in the playerOverview list
+export const NUMBER_OF_PLAYERS_FOR_VALID_MATCH = 4; // Used for filtering out matches without 4 players
 
 export const MTG_COLORS: { name: string; id: string; rgb: string }[] = [
     { name: "Black", id: "B", rgb: "rgb(166, 159, 157)" },
