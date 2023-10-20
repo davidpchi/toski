@@ -25,7 +25,8 @@ import { UserSelectors } from "../../redux/user/userSelectors";
 import { routes } from "../../navigation/routes";
 import { FF_IS_LOGIN_ENABLED } from "../../services/featureFlagService";
 import { LoginModal } from "../auth/LoginModal";
-import { SetingsMenuItem } from "../auth/SettingsMenuItem";
+import { SettingsMenuItem } from "../auth/SettingsMenuItem";
+import { ProfileService } from "../../services/ProfileService";
 
 interface HeaderProps extends FlexProps {
     onProfileIconClick: () => void;
@@ -104,8 +105,10 @@ export const Header = ({ onProfileIconClick, ...rest }: HeaderProps) => {
     };
 
     const navigateToProfile = () => {
-        if (userId === "230904033915830272") {
-            navigate("/playerOverview/Doomgeek");
+        // find the player name based on their discord id
+        const playerName = ProfileService.getPlayerName(userId ?? "");
+        if (playerName) {
+            navigate(`/playerOverview/${playerName}`);
             window.scrollTo(0, 0);
         }
     };
@@ -192,7 +195,7 @@ export const Header = ({ onProfileIconClick, ...rest }: HeaderProps) => {
                                     {username !== undefined ? (
                                         <>
                                             <MenuItem onClick={navigateToProfile}>Profile</MenuItem>
-                                            <SetingsMenuItem finalRef={finalRef} />
+                                            <SettingsMenuItem finalRef={finalRef} />
                                             <MenuDivider />
                                             <MenuItem onClick={signOut}>Sign out</MenuItem>
                                         </>

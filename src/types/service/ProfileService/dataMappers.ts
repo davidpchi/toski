@@ -5,7 +5,7 @@ function profileDataMapper(profile: ChatterfangProfile): Profile | undefined {
     // check to see if the chatterfang profile has all the fields defined
     if (profile.userId) {
         return {
-            id: profile.userId,
+            id: profile.userId.toString(),
             favoriteCommanderId: profile.favoriteCommander ? profile.favoriteCommander : undefined
         };
     }

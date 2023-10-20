@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import {
     Modal,
@@ -27,10 +27,12 @@ import { ProfileSelectors } from "../../redux/profiles/profilesSelectors";
 import { AppState } from "../../redux/rootReducer";
 import { commanderList } from "../../services/commanderList";
 import { ProfileService } from "../../services/ProfileService";
+import { FiLink } from "react-icons/fi";
+import { CheckIcon, WarningTwoIcon } from "@chakra-ui/icons";
 
 const placeholderImage = "https://static.thenounproject.com/png/5425-200.png";
 
-export const SetingsMenuItem = React.memo(function SetingsMenuItem({ finalRef }: { finalRef: any }) {
+export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef }: { finalRef: any }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const setFavoriteCommander = ProfileService.useSetFavoriteCommander();
 
@@ -42,7 +44,18 @@ export const SetingsMenuItem = React.memo(function SetingsMenuItem({ finalRef }:
     const userId = useSelector(UserSelectors.getId);
     const userPic = username ? `https://cdn.discordapp.com/avatars/${userId}/${userAvatar}.png` : undefined;
 
+    const profiles = useSelector(ProfileSelectors.getProfiles);
+    useEffect(() => {
+        // if profiles are hydrated AND we don't see our current user in the profiles list, kick off an "initialization" request to get this user into the db
+        if (profiles !== undefined && userId !== undefined && profiles[userId] === undefined) {
+            console.log("Initialized user in chatterfang:" + userId);
+            setFavoriteCommander("");
+        }
+    }, [profiles, setFavoriteCommander, userId]);
+
     const profile = useSelector((state: AppState) => ProfileSelectors.getProfile(state, userId ?? ""));
+
+    const toskiPlayer = ProfileService.getPlayerName(profile ? profile.id : "");
 
     const commandersArray = useMemo(() => {
         return Object.keys(commanderList).map((commanderName) => {
@@ -139,22 +152,71 @@ export const SetingsMenuItem = React.memo(function SetingsMenuItem({ finalRef }:
                             Linked Discord Account
                         </Heading>
                         <Divider marginBottom={"16px"} />
-                        <Flex direction={"row"} justifyContent={"flex-start"} alignItems={"center"}>
-                            <Avatar
-                                size={"md"}
-                                src={
-                                    userPic !== undefined
-                                        ? userPic
-                                        : "https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
-                                }
+                        <Flex direction={"row"} justifyContent={"center"} alignItems={"center"} marginBottom={"16px"}>
+                            <Flex
+                                direction={"row"}
+                                justifyContent={"flex-start"}
+                                alignItems={"center"}
                                 marginRight={"16px"}
-                            />
-                            <Text size={"sm"} padding={0}>
-                                {username}
-                            </Text>
+                            >
+                                <Avatar
+                                    size={"md"}
+                                    src={
+                                        userPic !== undefined
+                                            ? userPic
+                                            : "https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
+                                    }
+                                    marginRight={"16px"}
+                                />
+                                <Flex direction={"column"}>
+                                    <Text size={"sm"} padding={0}>
+                                        {username}
+                                    </Text>
+                                    <Text fontSize="xs" color="gray.600">
+                                        Discord
+                                    </Text>
+                                </Flex>
+                            </Flex>
+                            <FiLink size={32} />
+
+                            <Flex
+                                direction={"row"}
+                                justifyContent={"flex-start"}
+                                alignItems={"center"}
+                                marginLeft={"16px"}
+                            >
+                                <Flex direction={"column"}>
+                                    <Text size={"sm"} padding={0}>
+                                        {toskiPlayer ?? "???"}
+                                    </Text>
+                                    <Text fontSize="xs" color="gray.600">
+                                        Project Toski Player
+                                    </Text>
+                                </Flex>
+                            </Flex>
                         </Flex>
+                        <Flex
+                            fontSize="xs"
+                            color="gray.600"
+                            alignSelf={"stretch"}
+                            justifyContent={"center"}
+                            alignItems={"center"}
+                        >
+                            {toskiPlayer === undefined ? (
+                                <>
+                                    <WarningTwoIcon color={"red"} marginRight={"8px"} />
+                                    <Text color={"red"}>Failed to link Discord Profile to Toski Player</Text>
+                                </>
+                            ) : (
+                                <>
+                                    <CheckIcon color={"green"} marginRight={"8px"} />
+                                    <Text color={"green"}>Discord Profile successfully linked to Toski Player</Text>
+                                </>
+                            )}
+                        </Flex>
+
                         <Checkbox
-                            marginTop={"16px"}
+                            marginTop={"32px"}
                             isChecked={isRememberMe}
                             onChange={toggleRememberMe}
                             marginBottom={"64px"}

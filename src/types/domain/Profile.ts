@@ -5,7 +5,7 @@ export type Profile = {
     /**
      * The discord id of the user
      */
-    id: number;
+    id: string;
 
     /**
      * The user's favorite commander represented by commander Id

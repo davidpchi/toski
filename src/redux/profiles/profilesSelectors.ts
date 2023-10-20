@@ -15,7 +15,7 @@ export const getProfile = createSelector(
         // there is this weird javascript issue where a string property key on an object that is
         // is a number gets simplified to a number, hence we have to cast the string we pass in to a number
         // so the lookup succeeds.
-        return profiles ? profiles[Number(id)] : undefined;
+        return profiles ? profiles[id] : undefined;
     }
 );
 
