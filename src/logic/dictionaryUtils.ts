@@ -1,4 +1,3 @@
-import { match } from "assert";
 import { NUMBER_OF_PLAYERS_FOR_VALID_MATCH } from "../components/constants";
 import { commanderList } from "../services/commanderList";
 import { Commander } from "../types/domain/Commander";
@@ -6,9 +5,9 @@ import { Match } from "../types/domain/Match";
 import { Player } from "../types/domain/Player";
 
 /**
- * Given a collection of Matches, filter out games that don't have the desired number of players
+ * Given a collection of Matches, filter out games that don't have the desired number of players.
  * @param matches 
- * @param playerCount "Seats" refers to the desired number of seats in matches to keep (usually 4)
+ * @param playerCount "playerCount" refers to the desired number of players in matches to keep (usually 4).
  * @returns 
  */
 export function filterMatchesByPlayerCount(matches: Match[], playerCount: number): Match[] {

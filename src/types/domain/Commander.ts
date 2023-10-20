@@ -7,11 +7,13 @@ export type Commander = {
      */
     matches: string[];
     /**
-     * Number of games we want to take into account when calculating stats (i.e. 4 player pods).
+     * Number of matches we want to take into account when calculating stats.
+     * This number is determined after removing all games that don't match the minimum
+     * criteria to be considered for stats (for example: having the correct number of players).
      */
     validMatchesCount: number;
     /**
-     * The number of wins across all this player's VALID matches (i.e. 4 player pods).
+     * Valid matches are those determined by some minimum criteria. For example: having the correct number of players.
      */
     wins: number;
 };

@@ -7,7 +7,9 @@ export type Player = {
      */
     matches: Match[];
     /**
-     * Number of games we want to take into account when calculating stats (i.e. 4 player pods).
+     * Number of matches we want to take into account when calculating stats.
+     * This number is determined after removing all games that don't match the minimum
+     * criteria to be considered for stats (for example: having the correct number of players).
      */
     validMatchesCount: number;
     /**
