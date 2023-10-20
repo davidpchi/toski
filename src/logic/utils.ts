@@ -12,7 +12,7 @@ export function getWinRatePercentage(winCount: number, totalCount: number) {
 export function getAverageWinTurn(player: Player) {
     // Early exit conditions
     // Don't show if player has fewer than 10 matches or 5 wins all time
-    if (player.validMatches < PLAYER_MINIMUM_GAMES_REQUIRED) {
+    if (player.validMatchesCount < PLAYER_MINIMUM_GAMES_REQUIRED) {
         return "Not enough games played";
     } else if (player.wins < PLAYER_MINIMUM_WINS_REQUIRED) {
         return "Not enough wins";

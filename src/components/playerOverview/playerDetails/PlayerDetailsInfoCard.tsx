@@ -84,7 +84,7 @@ export const PlayerDetailsInfoCard = React.memo(function PlayerDetailsInfoCard({
                     borderLeftWidth={1}
                     borderRightWidth={1}
                     borderBottomWidth={1}
-                >{`Winrate: ${getWinRatePercentage(player.wins, player.validMatches)}%`}</Text>
+                >{`Winrate: ${getWinRatePercentage(player.wins, player.validMatchesCount)}%`}</Text>
                 <Text
                     paddingLeft={"16px"}
                     paddingRight={"16px"}

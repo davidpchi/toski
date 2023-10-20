@@ -37,7 +37,7 @@ describe("getAverageWinTurn", () => {
         player = {
             name: "John",
             matches: matches,
-            validMatches: 10,
+            validMatchesCount: 10,
             wins: 7,
             colorProfile: {},
         };

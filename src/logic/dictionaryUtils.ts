@@ -1,5 +1,5 @@
 import { match } from "assert";
-import { NUMBER_OF_PLAYERS_FOR_VALID_GAME } from "../components/constants";
+import { NUMBER_OF_PLAYERS_FOR_VALID_MATCH } from "../components/constants";
 import { commanderList } from "../services/commanderList";
 import { Commander } from "../types/domain/Commander";
 import { Match } from "../types/domain/Match";
@@ -62,16 +62,12 @@ export function matchesToCommanderHelper(
     playerNameFilter?: string,
     startDate?: Date,
 ): { [id: string]: Commander } {
-
     const filteredMatches = filterMatchesByDate(matches, startDate);
-
-    const filteredMatchesByPC = filterMatchesByPlayerCount(filteredMatches, 4);
 
     const playedCommanderDictionary: { [id: string]: Commander } = {};
     for (const currentMatch of filteredMatches) {
         // iterate through each player, and add those commanders to our commander dictionary
         for (const player of currentMatch.players) {
-
             // apply our filters
             if (playerNameFilter !== undefined && player.name !== playerNameFilter) {
                 // we have an active playerName filter-- if the player name is not a match, then we skip it
@@ -104,15 +100,15 @@ export function matchesToCommanderHelper(
                         name: currentCommanderName,
                         colorIdentity: commander.color_identity,
                         matches: [currentMatch.id],
-                        validMatches: currentMatch.players.length === NUMBER_OF_PLAYERS_FOR_VALID_GAME ? 1 : 0,
-                        wins: player.rank === "1" && currentMatch.players.length === NUMBER_OF_PLAYERS_FOR_VALID_GAME ? 1 : 0,
+                        validMatchesCount: currentMatch.players.length === NUMBER_OF_PLAYERS_FOR_VALID_MATCH ? 1 : 0,
+                        wins: player.rank === "1" && currentMatch.players.length === NUMBER_OF_PLAYERS_FOR_VALID_MATCH ? 1 : 0,
                     };
                 } else {
                     // since this commander exists, update the currentMatch count
                     playedCommanderDictionary[potentialCommanderObj.id].matches.push(currentMatch.id);
-                    if (player.rank === "1" && currentMatch.players.length === NUMBER_OF_PLAYERS_FOR_VALID_GAME) {
+                    if (player.rank === "1" && currentMatch.players.length === NUMBER_OF_PLAYERS_FOR_VALID_MATCH) {
                         playedCommanderDictionary[potentialCommanderObj.id].wins++;
-                        playedCommanderDictionary[potentialCommanderObj.id].validMatches++;
+                        playedCommanderDictionary[potentialCommanderObj.id].validMatchesCount++;
                     }
                 }
             }
@@ -170,15 +166,15 @@ export function matchesToPlayersHelper(
                     playerDictionary[player.name] = {
                         name: player.name,
                         matches: [currentMatch],
-                        validMatches: currentMatch.players.length === NUMBER_OF_PLAYERS_FOR_VALID_GAME ? 1 : 0,
-                        wins: player.rank === "1" && currentMatch.players.length === NUMBER_OF_PLAYERS_FOR_VALID_GAME ? 1 : 0,
+                        validMatchesCount: currentMatch.players.length === NUMBER_OF_PLAYERS_FOR_VALID_MATCH ? 1 : 0,
+                        wins: player.rank === "1" && currentMatch.players.length === NUMBER_OF_PLAYERS_FOR_VALID_MATCH ? 1 : 0,
                         colorProfile: colorProfile,
                     };
                 } else {
                     // since this player exists, update the currentMatch count
                     playerDictionary[player.name].matches.push(currentMatch);
-                    if (player.rank === "1" && currentMatch.players.length === NUMBER_OF_PLAYERS_FOR_VALID_GAME) {
-                        playerDictionary[player.name].validMatches++;
+                    if (player.rank === "1" && currentMatch.players.length === NUMBER_OF_PLAYERS_FOR_VALID_MATCH) {
+                        playerDictionary[player.name].validMatchesCount++;
                         playerDictionary[player.name].wins++;
                     }
 
