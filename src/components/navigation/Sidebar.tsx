@@ -42,7 +42,7 @@ export const Sidebar = ({ onClose, ...rest }: SidebarProps) => {
             {...rest}
             boxShadow={"0px 12px 18px 2px rgba(0,0,0,0.3)"}
         >
-            <Flex h="20" align="center" paddingRight={"8px"} paddingLeft={"20px"} backgroundColor={"white"}>
+            <Flex h="56px" align="center" paddingRight={"8px"} paddingLeft={"20px"} backgroundColor={"white"}>
                 <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
                 <Text
                     fontSize="20"

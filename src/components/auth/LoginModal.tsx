@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
     Modal,
@@ -15,10 +16,11 @@ import {
     Button,
     useDisclosure
 } from "@chakra-ui/react";
-import { useDispatch, useSelector } from "react-redux";
-import { UserSelectors } from "../../redux/user/userSelectors";
+
 import { AuthAction } from "../../redux/auth/authActions";
 import { AuthSelectors } from "../../redux/auth/authSelectors";
+import { useUserInfo } from "../../logic/hooks/userHooks";
+import { useAuthInfo } from "../../logic/hooks/authHooks";
 
 export const LoginModal = React.memo(function LoginModal({
     finalRef,
@@ -28,17 +30,11 @@ export const LoginModal = React.memo(function LoginModal({
     onSignOut: () => void;
 }) {
     const dispatch = useDispatch();
-
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const { accessToken, tokenType } = useAuthInfo();
+    const { userPic, username } = useUserInfo();
 
-    const tokenType = useSelector(AuthSelectors.getTokenType);
-    const accessToken = useSelector(AuthSelectors.getAccessToken);
     const isFirstLogin = useSelector(AuthSelectors.getIsFirstLogin);
-
-    const username = useSelector(UserSelectors.getUsername);
-    const userAvatar = useSelector(UserSelectors.getAvatar);
-    const userId = useSelector(UserSelectors.getId);
-    const userPic = username ? `https://cdn.discordapp.com/avatars/${userId}/${userAvatar}.png` : undefined;
 
     const [isRememberMe, setIsRememberMe] = useState<boolean>(true);
 
@@ -56,7 +52,7 @@ export const LoginModal = React.memo(function LoginModal({
     /**
      * When the user closes the modal, if they have selected "remember me", we save the access token to local storage
      */
-    const handleLoginModalConfirm = () => {
+    const handleLoginModalConfirm = useCallback(() => {
         if (isRememberMe) {
             if (tokenType) {
                 localStorage.setItem("tokenType", tokenType);
@@ -70,12 +66,12 @@ export const LoginModal = React.memo(function LoginModal({
 
         dispatch(AuthAction.FirstLoginComplete());
         onClose();
-    };
+    }, [accessToken, dispatch, isRememberMe, onClose, tokenType]);
 
-    const handleLoginModalCancel = () => {
+    const handleLoginModalCancel = useCallback(() => {
         onSignOut();
         onClose();
-    };
+    }, [onClose, onSignOut]);
 
     return (
         <Modal finalFocusRef={finalRef} isOpen={isOpen} onClose={handleLoginModalCancel}>
@@ -86,14 +82,7 @@ export const LoginModal = React.memo(function LoginModal({
                 <ModalBody>
                     <Flex direction={"column"} justifyContent={"center"} flexWrap={"wrap"} alignItems={"center"}>
                         <Heading>{username}</Heading>
-                        <Avatar
-                            size={"2xl"}
-                            src={
-                                userPic !== undefined
-                                    ? userPic
-                                    : "https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
-                            }
-                        />
+                        <Avatar size={"2xl"} src={userPic ?? ""} />
                         <Checkbox
                             marginTop={"16px"}
                             isChecked={isRememberMe}

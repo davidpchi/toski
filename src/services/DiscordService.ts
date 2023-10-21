@@ -2,20 +2,23 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 
 import { useEffect } from "react";
-import { AuthSelectors } from "../redux/auth/authSelectors";
 import { UserAction } from "../redux/user/userActions";
 import { UserSelectors } from "../redux/user/userSelectors";
+import { useAuthInfo } from "../logic/hooks/authHooks";
 
 export const getDiscordLoginEndpoint = () => {
     const redirectUri = encodeURIComponent("http://" + window.location.host + "/toski");
     return `https://discord.com/api/oauth2/authorize?client_id=1163345338376138773&redirect_uri=${redirectUri}&response_type=token&scope=identify`;
 };
 
+export const getDiscordAvatarImage = (userId: string, userAvatar: string) => {
+    return `https://cdn.discordapp.com/avatars/${userId}/${userAvatar}.png`;
+};
+
 const useCurrentUserInfo = () => {
     const dispatch = useDispatch();
+    const { accessToken, tokenType } = useAuthInfo();
 
-    const authTokenType = useSelector(AuthSelectors.getTokenType);
-    const accessToken = useSelector(AuthSelectors.getAccessToken);
     const isUserSignedIn = useSelector(UserSelectors.getUsername) !== undefined;
 
     const endpoint = "https://discord.com/api/users/@me";
@@ -25,7 +28,7 @@ const useCurrentUserInfo = () => {
         if (accessToken !== undefined && isUserSignedIn === false) {
             axios
                 .get<string>(endpoint, {
-                    headers: { authorization: `${authTokenType} ${accessToken}` }
+                    headers: { authorization: `${tokenType} ${accessToken}` }
                 })
                 .then((res) => {
                     const data: any = res.data as any;
@@ -38,7 +41,7 @@ const useCurrentUserInfo = () => {
                     );
                 });
         }
-    }, [accessToken, authTokenType, dispatch, isUserSignedIn]);
+    }, [accessToken, tokenType, dispatch, isUserSignedIn]);
 };
 
 export const DiscordService = {

@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { FiLink } from "react-icons/fi";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { FiLink, FiRepeat } from "react-icons/fi";
 import { useSelector } from "react-redux";
 
 import { CheckIcon, WarningTwoIcon } from "@chakra-ui/icons";
@@ -24,28 +24,33 @@ import {
     Divider
 } from "@chakra-ui/react";
 
-import { UserSelectors } from "../../redux/user/userSelectors";
-import { AuthSelectors } from "../../redux/auth/authSelectors";
 import { ProfileSelectors } from "../../redux/profiles/profilesSelectors";
 import { AppState } from "../../redux/rootReducer";
 import { commanderList } from "../../services/commanderList";
 import { ProfileService } from "../../services/ProfileService";
+import { useAuthInfo } from "../../logic/hooks/authHooks";
+import { useUserInfo } from "../../logic/hooks/userHooks";
 
 const placeholderImage = "https://static.thenounproject.com/png/5425-200.png";
 
 export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef }: { finalRef: any }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const setFavoriteCommander = ProfileService.useSetFavoriteCommander();
+    const getPlayerName = ProfileService.useGetPlayerName();
+    const { accessToken, tokenType } = useAuthInfo();
+    const { userId, userPic, username } = useUserInfo();
 
-    const tokenType = useSelector(AuthSelectors.getTokenType);
-    const accessToken = useSelector(AuthSelectors.getAccessToken);
+    const accessTokenFromState = localStorage.getItem("tokenType");
 
-    const username = useSelector(UserSelectors.getUsername);
-    const userAvatar = useSelector(UserSelectors.getAvatar);
-    const userId = useSelector(UserSelectors.getId);
-    const userPic = username ? `https://cdn.discordapp.com/avatars/${userId}/${userAvatar}.png` : undefined;
+    const profile = useSelector((state: AppState) => ProfileSelectors.getProfile(state, userId ?? ""));
+    const toskiPlayer = getPlayerName(profile ? profile.id : "");
+
+    const favoriteCommanderId = profile && profile.favoriteCommanderId ? profile.favoriteCommanderId : "no value";
+    const [commanderSelectValue, setCommanderSelectValue] = useState<string>(() => favoriteCommanderId);
+    const [isRememberMe, setIsRememberMe] = useState<boolean>(accessTokenFromState !== null);
 
     const profiles = useSelector(ProfileSelectors.getProfiles);
+
     useEffect(() => {
         // if profiles are hydrated AND we don't see our current user in the profiles list, kick off an "initialization" request to get this user into the db
         if (profiles !== undefined && userId !== undefined && profiles[userId] === undefined) {
@@ -54,21 +59,11 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
         }
     }, [profiles, setFavoriteCommander, userId]);
 
-    const profile = useSelector((state: AppState) => ProfileSelectors.getProfile(state, userId ?? ""));
-
-    const toskiPlayer = ProfileService.getPlayerName(profile ? profile.id : "");
-
     const commandersArray = useMemo(() => {
         return Object.keys(commanderList).map((commanderName) => {
             return { id: commanderList[commanderName].id, name: commanderName };
         });
     }, []);
-
-    const accessTokenFromState = localStorage.getItem("tokenType");
-
-    const [isRememberMe, setIsRememberMe] = useState<boolean>(accessTokenFromState !== null);
-    const favoriteCommanderId = profile && profile.favoriteCommanderId ? profile.favoriteCommanderId : "no value";
-    const [commanderSelectValue, setCommanderSelectValue] = useState<string>(() => favoriteCommanderId);
 
     const commanderImage = useMemo(() => {
         return Object.values(commanderList)
@@ -76,13 +71,16 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
             ?.image.replace("normal", "art_crop");
     }, [commanderSelectValue]);
 
-    const onCommanderSelectChange = (event: any) => {
-        const commander = event.target.value;
-        setCommanderSelectValue(commander);
-    };
+    const onCommanderSelectChange = useCallback(
+        (event: any) => {
+            const commander = event.target.value;
+            setCommanderSelectValue(commander);
+        },
+        [setCommanderSelectValue]
+    );
 
     // When the user closes the modal, if they have selected "remember me", we save the access token to local storage
-    const toggleRememberMe = () => {
+    const toggleRememberMe = useCallback(() => {
         if (isRememberMe) {
             // turn off remember me if it is on
             localStorage.clear();
@@ -96,25 +94,25 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
         }
 
         setIsRememberMe(!isRememberMe);
-    };
+    }, [accessToken, isRememberMe, tokenType]);
 
     // TODO: we should figure out a way that hiding the modal forces an unmount of this entire component instead of just tying it to the menu item.
-    const openModal = () => {
+    const openModal = useCallback(() => {
         // because the modal always exists and we are just toggling the visibiltiy of the modal,
         // the initial value the commanderSelectValue will always be "" because the profile hasn't hydrated yet.
         // hence, force a hydration of the commanderSelectValue everytime the modal opens for the first time.
         setCommanderSelectValue(favoriteCommanderId);
         onOpen();
-    };
+    }, [favoriteCommanderId, onOpen]);
 
-    const closeModal = () => {
+    const closeModal = useCallback(() => {
         onClose();
-    };
+    }, [onClose]);
 
-    const onSave = () => {
+    const onSave = useCallback(() => {
         setFavoriteCommander(commanderSelectValue);
         closeModal();
-    };
+    }, [closeModal, commanderSelectValue, setFavoriteCommander]);
 
     return (
         <>
@@ -190,7 +188,7 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
                                     </Text>
                                 </Flex>
                             </Flex>
-                            <FiLink size={32} />
+                            <FiRepeat size={32} />
 
                             <Flex
                                 direction={"row"}
