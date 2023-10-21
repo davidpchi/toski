@@ -1,7 +1,7 @@
 import React from "react";
 import { Flex, Heading } from "@chakra-ui/react";
 
-import { getMatches, getPlayersByDate } from "../../redux/stats/statsSelectors";
+import { StatsSelectors } from "../../redux/stats/statsSelectors";
 import { useSelector } from "react-redux";
 import { Loading } from "../Loading";
 import { Match } from "../../types/domain/Match";
@@ -12,8 +12,8 @@ import { PieGraph } from "../dataVisualizations/PieGraph";
 import { AppState } from "../../redux/rootReducer";
 
 export const CommanderTrends = React.memo(function CommanderTrends() {
-    const matches = useSelector(getMatches);
-    const players: Player[] = useSelector((state: AppState) => getPlayersByDate(state));
+    const matches = useSelector(StatsSelectors.getMatches);
+    const players: Player[] = useSelector((state: AppState) => StatsSelectors.getPlayersByDate(state));
 
     if (matches === undefined || players === undefined) {
         return <Loading text="" />;

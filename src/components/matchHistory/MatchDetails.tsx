@@ -1,10 +1,10 @@
 import React from "react";
 import { useLoaderData } from "react-router-dom";
-import { Flex, Heading, Image, Text } from "@chakra-ui/react";
+import { Flex, Heading, Text } from "@chakra-ui/react";
 
 import { AppState } from "../../redux/rootReducer";
 import { useSelector } from "react-redux";
-import { getMatch } from "../../redux/stats/statsSelectors";
+import { StatsSelectors } from "../../redux/stats/statsSelectors";
 import { Loading } from "../Loading";
 import { commanderList } from "../../services/commanderList";
 import { MatchDisplayPlayer } from "./types/MatchDisplayPlayer";
@@ -20,7 +20,7 @@ export const MatchDetails = React.memo(function MatchDetails() {
     const matchId = useLoaderData() as string;
 
     // look up this matchId in the matchHistory
-    const match = useSelector((state: AppState) => getMatch(state, matchId));
+    const match = useSelector((state: AppState) => StatsSelectors.getMatch(state, matchId));
 
     if (match === undefined) {
         return <Loading text="" />;

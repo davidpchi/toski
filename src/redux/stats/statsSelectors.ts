@@ -5,16 +5,16 @@ import { Match } from "../../types/domain/Match";
 import { Player } from "../../types/domain/Player";
 import { AppState } from "../rootReducer";
 
-export const getMatches = (state: AppState) => state.stats.matches;
+const getMatches = (state: AppState) => state.stats.matches;
 
-export const getCommanders = (state: AppState) => state.stats.commanders;
+const getCommanders = (state: AppState) => state.stats.commanders;
 
-export const getPlayers = (state: AppState) => state.stats.players;
+const getPlayers = (state: AppState) => state.stats.players;
 
 /**
  * Gets a specific match based on matchId. matchId is the index in which it is in the array.
  */
-export const getMatch = createSelector(
+const getMatch = createSelector(
     getMatches,
     (_state: AppState, matchId: string) => matchId,
     (matches: Match[] | undefined, matchId: string) => {
@@ -26,7 +26,7 @@ export const getMatch = createSelector(
 /**
  * Gets a specific commander based on commanderId.
  */
-export const getCommander = createSelector(
+const getCommander = createSelector(
     getCommanders,
     (_state: AppState, id: string) => id,
     (commanders: { [id: string]: Commander } | undefined, id: string) => {
@@ -37,7 +37,7 @@ export const getCommander = createSelector(
 /**
  * Gets a specific player based on playerId.
  */
-export const getPlayer = createSelector(
+const getPlayer = createSelector(
     getPlayers,
     (_state: AppState, id: string) => id,
     (players: { [id: string]: Player } | undefined, id: string) => {
@@ -48,7 +48,7 @@ export const getPlayer = createSelector(
 /**
  * Returns a collection matches in chronological order given a commander NAME. Note that this is not searching using commander id.
  */
-export const getMatchesByCommanderName = createSelector(
+const getMatchesByCommanderName = createSelector(
     getMatches,
     (_state: AppState, commanderName: string) => commanderName,
     (_state: AppState, _commanderName: string, startDate?: Date) => startDate,
@@ -87,7 +87,7 @@ export const getMatchesByCommanderName = createSelector(
 /**
  * Returns a collection matches in chronological order given a player NAME
  */
-export const getMatchesByPlayerName = createSelector(
+const getMatchesByPlayerName = createSelector(
     getMatches,
     (_state: AppState, playerName: string) => playerName,
     (_state: AppState, _playerName: string, startDate?: Date) => startDate,
@@ -112,7 +112,7 @@ export const getMatchesByPlayerName = createSelector(
     }
 );
 
-export const getCommandersByDate = createSelector(
+const getCommandersByDate = createSelector(
     getMatches,
     getCommanders,
     (_state: AppState, startDate?: Date) => startDate,
@@ -132,7 +132,7 @@ export const getCommandersByDate = createSelector(
 /**
  * Returns a collection commanders in chronological order given a player name
  */
-export const getCommandersByPlayerName = createSelector(
+const getCommandersByPlayerName = createSelector(
     getMatches,
     getCommanders,
     (_state: AppState, playerName: string) => playerName,
@@ -151,13 +151,13 @@ export const getCommandersByPlayerName = createSelector(
     }
 );
 
-export const getFavoriteCommanderForPlayer = createSelector(getCommandersByPlayerName, (commanders: Commander[]) => {
+const getFavoriteCommanderForPlayer = createSelector(getCommandersByPlayerName, (commanders: Commander[]) => {
     return commanders !== undefined && commanders.length > 0
         ? commanders.sort((a, b) => b.matches.length - a.matches.length)[0]!
         : undefined;
 });
 
-export const getPlayersByDate = createSelector(
+const getPlayersByDate = createSelector(
     getMatches,
     getCommanders,
     (_state: AppState, startDate?: Date) => startDate,
@@ -173,7 +173,7 @@ export const getPlayersByDate = createSelector(
 /**
  * Returns a collection of players in chronological order based on commander NAME
  */
-export const getPlayersByCommanderName = createSelector(
+const getPlayersByCommanderName = createSelector(
     getMatches,
     getCommanders,
     (_state: AppState, commanderName: string) => commanderName,
@@ -191,3 +191,19 @@ export const getPlayersByCommanderName = createSelector(
         return Object.values(matchesToPlayersHelper(matches, commanderName, startDate));
     }
 );
+
+export const StatsSelectors = {
+    getMatches,
+    getCommanders,
+    getPlayers,
+    getMatch,
+    getCommander,
+    getPlayer,
+    getMatchesByCommanderName,
+    getMatchesByPlayerName,
+    getCommandersByDate,
+    getCommandersByPlayerName,
+    getFavoriteCommanderForPlayer,
+    getPlayersByDate,
+    getPlayersByCommanderName
+};

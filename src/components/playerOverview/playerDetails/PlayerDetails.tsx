@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { Flex, Heading, Switch, Tab, TabList, TabPanel, TabPanels, Tabs, Text, Tooltip } from "@chakra-ui/react";
 
-import { getCommanders, getMatchesByPlayerName, getPlayer } from "../../../redux/stats/statsSelectors";
+import { StatsSelectors } from "../../../redux/stats/statsSelectors";
 import { AppState } from "../../../redux/rootReducer";
 import { matchHistoryColumns } from "../../dataVisualizations/columnHelpers/matchHistoryColumnHelper";
 import { SortableTable } from "../../dataVisualizations/SortableTable";
@@ -26,8 +26,8 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
     const navigate = useNavigate();
     // Player variables
     const playerId = useLoaderData() as string;
-    const player = useSelector((state: AppState) => getPlayer(state, playerId));
-    const commanders = useSelector((state: AppState) => getCommanders(state));
+    const player = useSelector((state: AppState) => StatsSelectors.getPlayer(state, playerId));
+    const commanders = useSelector((state: AppState) => StatsSelectors.getCommanders(state));
 
     const [showCommanderMatchups, setShowCommanderMatchups] = useState<boolean>(false);
 
@@ -41,7 +41,7 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
 
     // needs to come after we initialize the date filter
     const matches = useSelector((state: AppState) =>
-        getMatchesByPlayerName(state, playerId ? playerId : "", dateFilter)
+        StatsSelectors.getMatchesByPlayerName(state, playerId ? playerId : "", dateFilter)
     );
     matches.sort((a: Match, b: Match) => Number(b.id) - Number(a.id));
 

@@ -1,8 +1,8 @@
-import { Checkbox, Flex, Heading, Tooltip } from "@chakra-ui/react";
+import { Checkbox, Flex, Tooltip } from "@chakra-ui/react";
 import React, { useCallback, useState } from "react";
 import { SortableTable } from "../dataVisualizations/SortableTable";
 import { playerOverviewColumns } from "../dataVisualizations/columnHelpers/playerOverviewColumnHelper";
-import { getPlayers, getPlayersByDate } from "../../redux/stats/statsSelectors";
+import { StatsSelectors } from "../../redux/stats/statsSelectors";
 import { useSelector } from "react-redux";
 import { Loading } from "../Loading";
 import { Player } from "../../types/domain/Player";
@@ -25,8 +25,8 @@ export const PlayerOverview = React.memo(function MatchHistory() {
         [setDateFilter]
     );
 
-    const allPlayers: { [id: string]: Player } | undefined = useSelector(getPlayers);
-    const players: Player[] = useSelector((state: AppState) => getPlayersByDate(state, dateFilter));
+    const allPlayers: { [id: string]: Player } | undefined = useSelector(StatsSelectors.getPlayers);
+    const players: Player[] = useSelector((state: AppState) => StatsSelectors.getPlayersByDate(state, dateFilter));
 
     const [isFiltered, setIsFiltered] = useState<boolean>(true);
     const onFilterChange = () => {

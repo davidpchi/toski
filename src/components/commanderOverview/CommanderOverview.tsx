@@ -2,7 +2,7 @@ import { Checkbox, Flex, Tooltip, Input } from "@chakra-ui/react";
 import React, { useCallback, useState } from "react";
 import { SortableTable } from "../dataVisualizations/SortableTable";
 import { commanderOverviewColumns } from "../dataVisualizations/columnHelpers/commanderOverviewColumnHelper";
-import { getCommanders, getCommandersByDate } from "../../redux/stats/statsSelectors";
+import { StatsSelectors } from "../../redux/stats/statsSelectors";
 import { useSelector } from "react-redux";
 import { Loading } from "../Loading";
 import { Commander } from "../../types/domain/Commander";
@@ -22,8 +22,10 @@ export const CommanderOverview = React.memo(function MatchHistory() {
         [setDateFilter]
     );
 
-    const allCommanders = useSelector(getCommanders);
-    const commanders: Commander[] = useSelector((state: AppState) => getCommandersByDate(state, dateFilter));
+    const allCommanders = useSelector(StatsSelectors.getCommanders);
+    const commanders: Commander[] = useSelector((state: AppState) =>
+        StatsSelectors.getCommandersByDate(state, dateFilter)
+    );
     const [isFiltered, setIsFiltered] = useState<boolean>(true);
     const onFilterChange = () => {
         setIsFiltered(!isFiltered);
