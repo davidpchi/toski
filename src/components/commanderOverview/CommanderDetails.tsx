@@ -2,10 +2,10 @@ import { TooltipItem } from "chart.js";
 import React, { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLoaderData, useNavigate } from "react-router-dom";
-import { Flex, Heading, Image, Input, Tab, TabList, TabPanel, TabPanels, Tabs, Text, Thead } from "@chakra-ui/react";
+import { Flex, Heading, Image, Input, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
 
 import { AppState } from "../../redux/rootReducer";
-import { getCommander, getMatchesByCommanderName, getPlayersByCommanderName } from "../../redux/stats/statsSelectors";
+import { StatsSelectors } from "../../redux/stats/statsSelectors";
 import { Loading } from "../Loading";
 import { commanderList } from "../../services/commanderList";
 import { SortableTable } from "../dataVisualizations/SortableTable";
@@ -27,7 +27,7 @@ export async function loader(data: { params: any }) {
 export const CommanderDetails = React.memo(function CommanderDetails() {
     const navigate = useNavigate();
     const commanderId = useLoaderData() as string;
-    const commander = useSelector((state: AppState) => getCommander(state, commanderId));
+    const commander = useSelector((state: AppState) => StatsSelectors.getCommander(state, commanderId));
 
     const [dateFilter, setDateFilter] = useState<Date | undefined>(undefined);
     const onDatePickerChange = useCallback(
@@ -46,10 +46,10 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
     );
 
     const matches = useSelector((state: AppState) =>
-        getMatchesByCommanderName(state, commander ? commander.name : "", dateFilter)
+        StatsSelectors.getMatchesByCommanderName(state, commander ? commander.name : "", dateFilter)
     );
     const commanderPlayers: Player[] = useSelector((state: AppState) =>
-        getPlayersByCommanderName(state, commander ? commander.name : "", dateFilter)
+        StatsSelectors.getPlayersByCommanderName(state, commander ? commander.name : "", dateFilter)
     );
     commanderPlayers.sort((a: Player, b: Player) => b.matches.length - a.matches.length);
 

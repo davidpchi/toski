@@ -2,7 +2,7 @@ import React from "react";
 import { Flex } from "@chakra-ui/react";
 
 import { MatchLengthLineChart } from "./MatchLengthLineChart";
-import { getMatches, getPlayersByDate } from "../../redux/stats/statsSelectors";
+import { StatsSelectors } from "../../redux/stats/statsSelectors";
 import { useSelector } from "react-redux";
 import { Loading } from "../Loading";
 import { Match } from "../../types/domain/Match";
@@ -13,8 +13,8 @@ import { MTG_COLORS } from "../constants";
 import { AppState } from "../../redux/rootReducer";
 
 export const MatchTrends = React.memo(function MatchHistory() {
-    const matches = useSelector(getMatches);
-    const players: Player[] = useSelector((state: AppState) => getPlayersByDate(state));
+    const matches = useSelector(StatsSelectors.getMatches);
+    const players: Player[] = useSelector((state: AppState) => StatsSelectors.getPlayersByDate(state));
 
     if (matches === undefined || players === undefined) {
         return <Loading text="" />;

@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 import { Flex, Heading, Text } from "@chakra-ui/react";
 
-import { getFavoriteCommanderForPlayer, getPlayer } from "../../../redux/stats/statsSelectors";
+import { StatsSelectors } from "../../../redux/stats/statsSelectors";
 import { AppState } from "../../../redux/rootReducer";
 import { MTG_COLORS } from "../../constants";
 import { ImageWithHover } from "../../common/ImageWithHover";
@@ -15,8 +15,10 @@ import { ProfileSelectors } from "../../../redux/profiles/profilesSelectors";
 import { ProfileService } from "../../../services/ProfileService";
 
 export const PlayerDetailsInfoCard = React.memo(function PlayerDetailsInfoCard({ playerId }: { playerId: string }) {
-    const player = useSelector((state: AppState) => getPlayer(state, playerId));
-    const favoriteCommander = useSelector((state: AppState) => getFavoriteCommanderForPlayer(state, playerId));
+    const player = useSelector((state: AppState) => StatsSelectors.getPlayer(state, playerId));
+    const favoriteCommander = useSelector((state: AppState) =>
+        StatsSelectors.getFavoriteCommanderForPlayer(state, playerId)
+    );
 
     const getProfileId = ProfileService.useGetProfileId();
     const potentialProfileId = player ? getProfileId(player.name) : undefined;

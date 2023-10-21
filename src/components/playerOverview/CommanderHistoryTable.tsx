@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { AppState } from "../../redux/rootReducer";
 import { Commander } from "../../types/domain/Commander";
-import { getCommandersByPlayerName } from "../../redux/stats/statsSelectors";
+import { StatsSelectors } from "../../redux/stats/statsSelectors";
 import { SortableTable } from "../dataVisualizations/SortableTable";
 import { commanderOverviewColumns } from "../dataVisualizations/columnHelpers/commanderOverviewColumnHelper";
 
@@ -19,7 +19,7 @@ export const CommanderHistoryTable = React.memo(function CommanderHistoryTable({
 
     // Get array of commanders played and sort by game count
     const playedCommanders: Commander[] = useSelector((state: AppState) =>
-        getCommandersByPlayerName(state, playerId ? playerId : "", dateFilter)
+        StatsSelectors.getCommandersByPlayerName(state, playerId ? playerId : "", dateFilter)
     );
     playedCommanders.sort((a: Commander, b: Commander) => b.matches.length - a.matches.length);
 

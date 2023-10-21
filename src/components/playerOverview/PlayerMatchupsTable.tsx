@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { SortableTable } from "../dataVisualizations/SortableTable";
 import { AppState } from "../../redux/rootReducer";
-import { getMatchesByPlayerName } from "../../redux/stats/statsSelectors";
+import { StatsSelectors } from "../../redux/stats/statsSelectors";
 import {
     PlayerMatchupItem,
     playerMatchupsColumns
@@ -20,7 +20,9 @@ export const PlayerMatchupsTable = React.memo(function PlayerMatchupsTable({
     const navigate = useNavigate();
 
     // get all the matches of the player has participated in
-    const matches = useSelector((state: AppState) => getMatchesByPlayerName(state, playerId, dateFilter));
+    const matches = useSelector((state: AppState) =>
+        StatsSelectors.getMatchesByPlayerName(state, playerId, dateFilter)
+    );
     const playerMatchups: { [playerId: string]: PlayerMatchupItem } = {};
 
     for (const match of matches) {

@@ -24,7 +24,7 @@ import {
 import { TriangleDownIcon, TriangleUpIcon } from "@chakra-ui/icons";
 
 import { MatchHistoryService } from "../../services/MatchHistoryService";
-import { getPlayers } from "../../redux/stats/statsSelectors";
+import { StatsSelectors } from "../../redux/stats/statsSelectors";
 import { commanderList } from "../../services/commanderList";
 
 const placeholderImage = "https://static.thenounproject.com/png/5425-200.png";
@@ -51,7 +51,7 @@ const MatchSubmissionPlayerCard = React.memo(function MatchSubmissionPlayerCard(
     setPlayerRank: (val: number) => void;
     onClose?: () => void;
 }) {
-    const players = useSelector(getPlayers);
+    const players = useSelector(StatsSelectors.getPlayers);
     const playersArray = players
         ? Object.values(players)
               .sort((a, b) => a.name.localeCompare(b.name))
