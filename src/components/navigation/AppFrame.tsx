@@ -1,5 +1,7 @@
-import { Box, Drawer, DrawerContent, Flex, useDisclosure } from "@chakra-ui/react";
 import { ReactNode } from "react";
+
+import { Box, Drawer, DrawerContent, Flex, useDisclosure } from "@chakra-ui/react";
+
 import { Header } from "./Header";
 import { Sidebar } from "./Sidebar";
 

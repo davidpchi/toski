@@ -74,8 +74,10 @@ const useSetFavoriteCommander = () => {
 /**
  * Given a player name (not discord screen name), return the discord id
  */
-const getProfileId = (playerName: string): string => {
-    return profileMap[playerName] ?? "";
+const useGetProfileId = (): ((playerName: string) => string | undefined) => {
+    return useCallback((playerName: string) => {
+        return profileMap[playerName] ?? "";
+    }, []);
 };
 
 /**
@@ -83,13 +85,15 @@ const getProfileId = (playerName: string): string => {
  * @param profileId The discord Id to search from
  * @returns The player name (not the discord screen name). Returns undefined if the mapping doesn't exist.
  */
-const getPlayerName = (profileId: string): string | undefined => {
-    return Object.keys(profileMap).find((name) => profileMap[name] === profileId);
+const useGetPlayerName = (): ((profileId: string) => string | undefined) => {
+    return useCallback((profileId: string) => {
+        return Object.keys(profileMap).find((name) => profileMap[name] === profileId);
+    }, []);
 };
 
 export const ProfileService = {
     useHydrateProfiles,
     useSetFavoriteCommander,
-    getProfileId,
-    getPlayerName
+    useGetProfileId,
+    useGetPlayerName
 };

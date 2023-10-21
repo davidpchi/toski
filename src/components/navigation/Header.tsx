@@ -1,6 +1,6 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { FiMenu, FiChevronDown } from "react-icons/fi";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import {
@@ -21,13 +21,15 @@ import {
 } from "@chakra-ui/react";
 
 import { AuthAction } from "../../redux/auth/authActions";
-import { UserSelectors } from "../../redux/user/userSelectors";
 import { routes } from "../../navigation/routes";
 import { FF_IS_LOGIN_ENABLED } from "../../services/featureFlagService";
 import { LoginModal } from "../auth/LoginModal";
 import { SettingsMenuItem } from "../auth/SettingsModal";
 import { ProfileService } from "../../services/ProfileService";
 import { getDiscordLoginEndpoint } from "../../services/DiscordService";
+import { useUserInfo } from "../../logic/hooks/userHooks";
+
+const placeholderImage = "https://static.thenounproject.com/png/5425-200.png";
 
 interface HeaderProps extends FlexProps {
     onProfileIconClick: () => void;
@@ -68,6 +70,7 @@ const useHeaderTitle = () => {
 export const Header = ({ onProfileIconClick, ...rest }: HeaderProps) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const getPlayerName = ProfileService.useGetPlayerName();
 
     const headerTitle = useHeaderTitle();
     const location = useLocation();
@@ -75,11 +78,7 @@ export const Header = ({ onProfileIconClick, ...rest }: HeaderProps) => {
 
     const finalRef = React.useRef(null);
 
-    const username = useSelector(UserSelectors.getUsername);
-    const userAvatar = useSelector(UserSelectors.getAvatar);
-    const userId = useSelector(UserSelectors.getId);
-
-    const userPic = username ? `https://cdn.discordapp.com/avatars/${userId}/${userAvatar}.png` : undefined;
+    const { userId, userPic, username } = useUserInfo();
 
     /**
      * When the app starts, we check to see if there's an existing access token already saved via local storage.
@@ -94,25 +93,25 @@ export const Header = ({ onProfileIconClick, ...rest }: HeaderProps) => {
         }
     }, [dispatch]);
 
-    const signIn = () => {
+    const signIn = useCallback(() => {
         window.location.href = getDiscordLoginEndpoint();
-    };
+    }, []);
 
-    const signOut = () => {
+    const signOut = useCallback(() => {
         localStorage.clear();
         dispatch(AuthAction.LogOut());
         navigate("/");
         window.scrollTo(0, 0);
-    };
+    }, [dispatch, navigate]);
 
-    const navigateToProfile = () => {
+    const navigateToProfile = useCallback(() => {
         // find the player name based on their discord id
-        const playerName = ProfileService.getPlayerName(userId ?? "");
+        const playerName = getPlayerName(userId ?? "");
         if (playerName) {
             navigate(`/playerOverview/${playerName}`);
             window.scrollTo(0, 0);
         }
-    };
+    }, [getPlayerName, navigate, userId]);
 
     return (
         <Flex
@@ -134,7 +133,6 @@ export const Header = ({ onProfileIconClick, ...rest }: HeaderProps) => {
                 aria-label="open menu"
                 icon={<FiMenu />}
             />
-
             <Flex
                 alignItems={"flex-start"}
                 display={{ base: "fixed", md: isHome ? "none" : "fixed" }}
@@ -144,7 +142,6 @@ export const Header = ({ onProfileIconClick, ...rest }: HeaderProps) => {
                     {headerTitle}
                 </Text>
             </Flex>
-
             <HStack spacing={{ base: "0", md: "6" }} flex={1} justifyContent={"flex-end"}>
                 {FF_IS_LOGIN_ENABLED ? (
                     <>
@@ -153,14 +150,7 @@ export const Header = ({ onProfileIconClick, ...rest }: HeaderProps) => {
                             <Menu>
                                 <MenuButton py={2} transition="all 0.3s" _focus={{ boxShadow: "none" }}>
                                     <HStack>
-                                        <Avatar
-                                            size={"sm"}
-                                            src={
-                                                userPic !== undefined
-                                                    ? userPic
-                                                    : "https://static.thenounproject.com/png/2062361-200.png"
-                                            }
-                                        />
+                                        <Avatar size={"sm"} src={userPic !== undefined ? userPic : placeholderImage} />
                                         <VStack
                                             display={{ base: "none", md: "flex" }}
                                             alignItems="flex-start"

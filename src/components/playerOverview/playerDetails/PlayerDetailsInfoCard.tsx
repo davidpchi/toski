@@ -18,7 +18,9 @@ export const PlayerDetailsInfoCard = React.memo(function PlayerDetailsInfoCard({
     const player = useSelector((state: AppState) => getPlayer(state, playerId));
     const favoriteCommander = useSelector((state: AppState) => getFavoriteCommanderForPlayer(state, playerId));
 
-    const profileId = player ? ProfileService.getProfileId(player.name) : "";
+    const getProfileId = ProfileService.useGetProfileId();
+    const potentialProfileId = player ? getProfileId(player.name) : undefined;
+    const profileId = potentialProfileId ?? "";
     const profile = useSelector((state: AppState) => ProfileSelectors.getProfile(state, profileId));
 
     if (player === undefined) {
