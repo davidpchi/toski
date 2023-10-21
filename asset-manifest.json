@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/toski/static/css/main.1ebfa900.css",
-    "main.js": "/toski/static/js/main.efc91a6c.js",
+    "main.js": "/toski/static/js/main.8348a6e9.js",
     "static/js/787.5938f32d.chunk.js": "/toski/static/js/787.5938f32d.chunk.js",
     "index.html": "/toski/index.html",
     "main.1ebfa900.css.map": "/toski/static/css/main.1ebfa900.css.map",
-    "main.efc91a6c.js.map": "/toski/static/js/main.efc91a6c.js.map",
+    "main.8348a6e9.js.map": "/toski/static/js/main.8348a6e9.js.map",
     "787.5938f32d.chunk.js.map": "/toski/static/js/787.5938f32d.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.1ebfa900.css",
-    "static/js/main.efc91a6c.js"
+    "static/js/main.8348a6e9.js"
   ]
 }
