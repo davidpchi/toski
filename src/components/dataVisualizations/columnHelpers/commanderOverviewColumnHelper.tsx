@@ -24,9 +24,9 @@ export const commanderOverviewColumns: ColumnDef<Commander, any>[] = [
         },
         header: () => <span>Name</span>
     }),
-    columnHelper.accessor((row) => row.matches.length, {
+    columnHelper.accessor((row) => row.validMatchesCount, {
         id: "gameCount",
-        cell: (info) => info.row.original.matches.length,
+        cell: (info) => info.row.original.validMatchesCount,
         header: () => <span>Game Count</span>
     }),
     columnHelper.accessor((row) => row.wins, {
@@ -34,12 +34,12 @@ export const commanderOverviewColumns: ColumnDef<Commander, any>[] = [
         cell: (info) => info.row.original.wins,
         header: () => <span>Wins</span>
     }),
-    columnHelper.accessor((row) => (row.matches.length > 0 ? Math.round((row.wins / row.matches.length) * 100) : 0), {
+    columnHelper.accessor((row) => (row.validMatchesCount > 0 ? Math.round((row.wins / row.validMatchesCount) * 100) : 0), {
         id: "winrate",
         cell: (info) =>
-            info.row.original.matches.length > 0
-                ? `${Math.round((info.row.original.wins / info.row.original.matches.length) * 100)}%`
-                : `0%`,
+            info.row.original.validMatchesCount > 0
+                ? `${Math.round((info.row.original.wins / info.row.original.validMatchesCount) * 100)}%`
+                : `N/A`,
         header: () => <span>Winrate</span>
     })
 ];

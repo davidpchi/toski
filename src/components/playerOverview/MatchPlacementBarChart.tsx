@@ -7,6 +7,7 @@ import { Match } from "../../types/domain/Match";
 import { BarGraph } from "../dataVisualizations/BarGraph";
 import { PLAYER_MINIMUM_GAMES_REQUIRED } from "../constants";
 import { InsufficientData } from "./InsufficientData";
+import { filterMatchesByPlayerCount } from "../../logic/dictionaryUtils";
 
 export const MatchPlacementBarChart = React.memo(function MatchPlacementBarChart({
     matches,
@@ -20,8 +21,13 @@ export const MatchPlacementBarChart = React.memo(function MatchPlacementBarChart
     }
 
     const matchPlacementDictionary: { [rank: string]: number } = {};
+    const validMatches = filterMatchesByPlayerCount(matches, 4);
 
-    for (const match of matches) {
+    if (filterMatchesByPlayerCount(validMatches, 4) === undefined) {
+        return <Text textAlign={"center"}>No valid matches to display.</Text>
+    }
+
+    for (const match of validMatches) {
         for (const player of match.players) {
             if (player.name === playerId) {
                 if (matchPlacementDictionary[player.rank] === undefined) {
@@ -49,13 +55,13 @@ export const MatchPlacementBarChart = React.memo(function MatchPlacementBarChart
     return (
         <Flex flexDirection={"column"} justifyContent={"center"} alignItems={"center"} padding="8px">
             <Heading size="md">Match Placements</Heading>
-            {matches.length >= PLAYER_MINIMUM_GAMES_REQUIRED ? (
+            {validMatches.length >= PLAYER_MINIMUM_GAMES_REQUIRED ? (
                 <BarGraph
                     dataLabel={"Match Placement Count"}
                     data={matchPlacementData}
                     tooltipTitleCallback={tooltipTitleCallback}
                     tooltipLabelCallback={tooltipLabelCallback}
-                    maxY={matches.length}
+                    maxY={validMatches.length}
                 />
             ) : (
                 <InsufficientData description={"Not enough matches"} />

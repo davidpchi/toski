@@ -89,7 +89,7 @@ export const PlayerDetailsInfoCard = React.memo(function PlayerDetailsInfoCard({
                     borderLeftWidth={1}
                     borderRightWidth={1}
                     borderBottomWidth={1}
-                >{`Games played: ${player.matches.length}`}</Text>
+                >{`Games played: ${player.validMatchesCount}`}</Text>
                 <Text
                     paddingLeft={"16px"}
                     paddingRight={"16px"}

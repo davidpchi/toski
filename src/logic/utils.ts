@@ -44,10 +44,10 @@ export function getAverageWinTurn(player: Player) {
 export function isNewlyQualifiedPlayer(player: Player) {
     const dateOffset = new Date();
     dateOffset.setDate(dateOffset.getDate() - NEW_PLAYER_HIGHLIGHT_DAYS);
-    const lastIndex = player.matches.length - 1;
+    const lastIndex = player.validMatchesCount - 1;
     if (
-        PLAYER_MINIMUM_GAMES_REQUIRED <= player.matches.length &&
-        player.matches.length <= 15 &&
+        PLAYER_MINIMUM_GAMES_REQUIRED <= player.validMatchesCount &&
+        player.validMatchesCount <= 15 &&
         dateOffset < player.matches[lastIndex].date
     ) {
         return true;

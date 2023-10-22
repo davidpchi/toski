@@ -19,6 +19,7 @@ import { DatePicker } from "../common/DatePicker";
 import { MatchPlacementBarChart } from "./MatchPlacementBarChart";
 import { primaryColor } from "../../themes/acorn";
 import { topPlayersColumns } from "../dataVisualizations/columnHelpers/topPlayersColumnHelper";
+import { filterMatchesByPlayerCount } from "../../logic/dictionaryUtils";
 
 export async function loader(data: { params: any }) {
     return data.params.commanderId;
@@ -48,10 +49,13 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
     const matches = useSelector((state: AppState) =>
         StatsSelectors.getMatchesByCommanderName(state, commander ? commander.name : "", dateFilter)
     );
+    const matchesFilteredByPlayerCount = filterMatchesByPlayerCount(useSelector((state: AppState) =>
+    StatsSelectors.getMatchesByCommanderName(state, commander ? commander.name : "", dateFilter)), 4
+    );
     const commanderPlayers: Player[] = useSelector((state: AppState) =>
         StatsSelectors.getPlayersByCommanderName(state, commander ? commander.name : "", dateFilter)
     );
-    commanderPlayers.sort((a: Player, b: Player) => b.matches.length - a.matches.length);
+    commanderPlayers.sort((a: Player, b: Player) => b.validMatchesCount - a.validMatchesCount);
 
     if (commander === undefined) {
         return <Loading text="" />;
@@ -76,7 +80,7 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
 
     let numberOfWins = 0;
 
-    const winratePerMatch = matches.map((match: Match, index: number) => {
+    const winratePerMatch = matchesFilteredByPlayerCount.map((match: Match, index: number) => {
         const winningPlayer = match.players.find((player: MatchPlayer) => player.rank === "1");
 
         let currentWinRate = 0;
@@ -155,7 +159,7 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                         borderLeftWidth={1}
                         borderRightWidth={1}
                         borderBottomWidth={1}
-                    >{`Total Games: ${commander.matches.length}`}</Text>
+                    >{`Total Games: ${commander.validMatchesCount}`}</Text>
                     <Text
                         paddingLeft={"16px"}
                         paddingRight={"16px"}
@@ -175,8 +179,8 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                         borderBottomWidth={1}
                     >
                         {`Winrate: ${
-                            commander.matches.length > 0
-                                ? Math.round((commander.wins / commander.matches.length) * 100)
+                            commander.validMatchesCount > 0
+                                ? Math.round((commander.wins / commander.validMatchesCount) * 100)
                                 : 0
                         }%`}
                     </Text>
@@ -189,7 +193,7 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                         borderRightWidth={1}
                         borderBottomWidth={1}
                     >{`Qualified: ${
-                        commander.matches.length >= COMMANDER_MINIMUM_GAMES_REQUIRED ? "Yes" : "No"
+                        commander.validMatchesCount >= COMMANDER_MINIMUM_GAMES_REQUIRED ? "Yes" : "No"
                     }`}</Text>
                 </Flex>
             </Flex>
@@ -235,7 +239,7 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                     </TabPanel>
                     <TabPanel>
                         <Flex flexDirection={"column"} justifyContent={"center"} alignItems={"center"} padding="8px">
-                            {matches.length >= COMMANDER_MINIMUM_GAMES_REQUIRED ? (
+                            {matchesFilteredByPlayerCount.length >= COMMANDER_MINIMUM_GAMES_REQUIRED ? (
                                 <LineGraph
                                     dataLabel={"Winrate"}
                                     data={winratePerMatch}
