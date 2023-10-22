@@ -9,7 +9,7 @@ import { NUMBER_OF_PLAYERS_FOR_VALID_MATCH } from "../constants";
 import { filterMatchesByPlayerCount } from "../../logic/dictionaryUtils";
 
 export const MatchPlacementBarChart = React.memo(function MatchPlacementBarChart({
-    matches: matches,
+    matches,
     commanderName
 }: {
     matches: Match[];

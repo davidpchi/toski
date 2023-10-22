@@ -14,7 +14,7 @@ import { Match } from "../../types/domain/Match";
 import { MatchPlayer } from "../../types/domain/MatchPlayer";
 import { LineGraph } from "../dataVisualizations/LineGraph";
 import { Player } from "../../types/domain/Player";
-import { COMMANDER_MINIMUM_GAMES_REQUIRED } from "../constants";
+import { COMMANDER_MINIMUM_GAMES_REQUIRED, NUMBER_OF_PLAYERS_FOR_VALID_MATCH } from "../constants";
 import { DatePicker } from "../common/DatePicker";
 import { MatchPlacementBarChart } from "./MatchPlacementBarChart";
 import { primaryColor } from "../../themes/acorn";
@@ -50,7 +50,7 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
         StatsSelectors.getMatchesByCommanderName(state, commander ? commander.name : "", dateFilter)
     );
     const matchesFilteredByPlayerCount = filterMatchesByPlayerCount(useSelector((state: AppState) =>
-    StatsSelectors.getMatchesByCommanderName(state, commander ? commander.name : "", dateFilter)), 4
+    StatsSelectors.getMatchesByCommanderName(state, commander ? commander.name : "", dateFilter)), NUMBER_OF_PLAYERS_FOR_VALID_MATCH
     );
     const commanderPlayers: Player[] = useSelector((state: AppState) =>
         StatsSelectors.getPlayersByCommanderName(state, commander ? commander.name : "", dateFilter)

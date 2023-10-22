@@ -5,7 +5,7 @@ import { Flex, Heading, Text } from "@chakra-ui/react";
 import { Loading } from "../Loading";
 import { Match } from "../../types/domain/Match";
 import { BarGraph } from "../dataVisualizations/BarGraph";
-import { PLAYER_MINIMUM_GAMES_REQUIRED } from "../constants";
+import { NUMBER_OF_PLAYERS_FOR_VALID_MATCH, PLAYER_MINIMUM_GAMES_REQUIRED } from "../constants";
 import { InsufficientData } from "./InsufficientData";
 import { filterMatchesByPlayerCount } from "../../logic/dictionaryUtils";
 
@@ -21,9 +21,9 @@ export const MatchPlacementBarChart = React.memo(function MatchPlacementBarChart
     }
 
     const matchPlacementDictionary: { [rank: string]: number } = {};
-    const validMatches = filterMatchesByPlayerCount(matches, 4);
+    const validMatches = filterMatchesByPlayerCount(matches, NUMBER_OF_PLAYERS_FOR_VALID_MATCH);
 
-    if (filterMatchesByPlayerCount(validMatches, 4) === undefined) {
+    if (validMatches === undefined) {
         return <Text textAlign={"center"}>No valid matches to display.</Text>
     }
 
