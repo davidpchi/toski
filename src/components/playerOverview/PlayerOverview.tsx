@@ -40,7 +40,7 @@ export const PlayerOverview = React.memo(function MatchHistory() {
     let playersArray = players.sort((a: Player, b: Player) => a.name.localeCompare(b.name));
     if (isFiltered) {
         playersArray = playersArray.filter(
-            (value: Player) => allPlayers[value.name].matches.length >= PLAYER_MINIMUM_GAMES_REQUIRED
+            (value: Player) => allPlayers[value.name].validMatchesCount >= PLAYER_MINIMUM_GAMES_REQUIRED
         );
     }
 

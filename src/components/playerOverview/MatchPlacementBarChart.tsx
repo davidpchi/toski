@@ -23,8 +23,8 @@ export const MatchPlacementBarChart = React.memo(function MatchPlacementBarChart
     const matchPlacementDictionary: { [rank: string]: number } = {};
     const validMatches = filterMatchesByPlayerCount(matches, NUMBER_OF_PLAYERS_FOR_VALID_MATCH);
 
-    if (validMatches === undefined) {
-        return <Text textAlign={"center"}>No valid matches to display.</Text>
+    if (validMatches.length === 0) {
+        return <Text textAlign={"center"}>No valid matches</Text>
     }
 
     for (const match of validMatches) {

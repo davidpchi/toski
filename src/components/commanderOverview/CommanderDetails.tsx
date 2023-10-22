@@ -3,7 +3,6 @@ import React, { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { Flex, Heading, Image, Input, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
-
 import { AppState } from "../../redux/rootReducer";
 import { StatsSelectors } from "../../redux/stats/statsSelectors";
 import { Loading } from "../Loading";
@@ -46,10 +45,14 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
         [setSearchInput]
     );
 
+    // Get all matches to display in Match History of the Commander Overview
     const matches = useSelector((state: AppState) =>
         StatsSelectors.getMatchesByCommanderName(state, commander ? commander.name : "", dateFilter)
     );
-    const matchesFilteredByPlayerCount = filterMatchesByPlayerCount(useSelector((state: AppState) =>
+
+    // Get matches filtered by player count to use in statistical calculations
+    // These matches are considered "valid" because they all have the same number of players
+    const validMatches = filterMatchesByPlayerCount(useSelector((state: AppState) =>
     StatsSelectors.getMatchesByCommanderName(state, commander ? commander.name : "", dateFilter)), NUMBER_OF_PLAYERS_FOR_VALID_MATCH
     );
     const commanderPlayers: Player[] = useSelector((state: AppState) =>
@@ -80,7 +83,7 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
 
     let numberOfWins = 0;
 
-    const winratePerMatch = matchesFilteredByPlayerCount.map((match: Match, index: number) => {
+    const winratePerMatch = validMatches.map((match: Match, index: number) => {
         const winningPlayer = match.players.find((player: MatchPlayer) => player.rank === "1");
 
         let currentWinRate = 0;
@@ -102,7 +105,7 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
     });
 
     const tooltipTitleCallback = (item: TooltipItem<"line">[]) => {
-        return `Match Id: ${matches[item[0].dataIndex].id}`;
+        return `Match ID: ${validMatches[item[0].dataIndex].id}`;
     };
     const tooltipLabelCallback = (item: TooltipItem<"line">) => {
         return `Winrate: ${item.formattedValue}%`;
@@ -239,7 +242,7 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                     </TabPanel>
                     <TabPanel>
                         <Flex flexDirection={"column"} justifyContent={"center"} alignItems={"center"} padding="8px">
-                            {matchesFilteredByPlayerCount.length >= COMMANDER_MINIMUM_GAMES_REQUIRED ? (
+                            {validMatches.length >= COMMANDER_MINIMUM_GAMES_REQUIRED ? (
                                 <LineGraph
                                     dataLabel={"Winrate"}
                                     data={winratePerMatch}
