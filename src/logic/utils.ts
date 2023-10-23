@@ -10,8 +10,8 @@ import { Player } from "../types/domain/Player";
 
 /**
  * Gets the win rate as a percentage (number, without the "%").
- * @param winCount Wins - most likely valid wins.
- * @param totalCount Number of matches to consider - most likely valid matches.
+ * @param winCount Wins - use wins (valid wins).
+ * @param totalCount Number of matches to consider - use valid matches where appropriate.
  * @returns A whole number from 0 to 100.
  */
 export function getWinRatePercentage(winCount: number, totalCount: number) {
