@@ -85,6 +85,12 @@ export function sheetRowToMatch(cell: SheetRow, id: string): Match {
     };
 }
 
+/**
+ * Gets the winrate of a player from a collection of matches
+ * @param matches Automatically filtered to valid matches (by player count)
+ * @param playerName 
+ * @returns Player name, winrate and loserate as whole numbers from 0 to 100
+ */
 export function getPlayerWinRate(matches: Match[], playerName: string): { name: string; winR: number; loseR: number } {
     // Games counter
     let validMatches = 0;
@@ -102,6 +108,7 @@ export function getPlayerWinRate(matches: Match[], playerName: string): { name: 
 
         // Loop through match players
         for (let j = 0; j < currentMatch.players.length; j++) {
+
             // If player is in the game and the game had a valid number of players, increment game
             if (playerName === currentMatch.players[j].name && currentMatch.players.length === NUMBER_OF_PLAYERS_FOR_VALID_MATCH) {
                 validMatches++;

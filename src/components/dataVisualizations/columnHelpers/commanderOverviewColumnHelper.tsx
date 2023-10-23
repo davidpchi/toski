@@ -1,6 +1,6 @@
 import { Box, Flex, Image } from "@chakra-ui/react";
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
-
+import { getWinRatePercentage } from "../../../logic/utils";
 import { commanderList } from "../../../services/commanderList";
 import { Commander } from "../../../types/domain/Commander";
 
@@ -34,11 +34,11 @@ export const commanderOverviewColumns: ColumnDef<Commander, any>[] = [
         cell: (info) => info.row.original.wins,
         header: () => <span>Wins</span>
     }),
-    columnHelper.accessor((row) => (row.validMatchesCount > 0 ? Math.round((row.wins / row.validMatchesCount) * 100) : 0), {
+    columnHelper.accessor((row) => (row.validMatchesCount > 0 ? getWinRatePercentage(row.wins, row.validMatchesCount) : 0), {
         id: "winrate",
         cell: (info) =>
             info.row.original.validMatchesCount > 0 // A commander may exist with 0 valid matches - prevent division by 0
-                ? `${Math.round((info.row.original.wins / info.row.original.validMatchesCount) * 100)}%`
+                ? `${getWinRatePercentage(info.row.original.wins, info.row.original.validMatchesCount)}%`
                 : `N/A`, // Display N/A if the commander has no valid matches
         header: () => <span>Winrate</span>
     })

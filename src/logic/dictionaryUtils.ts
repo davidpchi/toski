@@ -27,7 +27,7 @@ export function filterMatchesByPlayerCount(matches: Match[], playerCount: number
 /**
  * Given a collection of Matches, filters them to matches after a certain date.
  * Optionally, provide an end date as well.
- * @param matches
+ * @param matches Matches to consider. Only filters by date! Not validness
  * @param startDate
  * @param endDate
  * @returns
@@ -52,7 +52,7 @@ export function filterMatchesByDate(matches: Match[], startDate?: Date, endDate?
 
 /**
  * Given a collection of matches, create a dictionary of commanders with optional filters
- * @param matches The collection of matches to build the dictionary from
+ * @param matches The collection of matches to build the dictionary from. For stats it filters out matches with incorrect player counts
  * @param playerId An optional player name to filter the commanders by (will only return commanders the player has played)
  * @returns A dictionary of commanders keyed by commanderId
  */
@@ -120,7 +120,7 @@ export function matchesToCommanderHelper(
 
 /**
  * Given a collection of matches, create a dictionary of players with optional filters
- * @param matches The collection of matches to build the dictionary from
+ * @param matches The collection of matches to build the dictionary from. For stats it filters out matches with incorrect player counts
  * @param commanderName An optional commander name to filter the users by (the user must have played this commander)
  * @returns A dictionary of player keyed by playerId
  */

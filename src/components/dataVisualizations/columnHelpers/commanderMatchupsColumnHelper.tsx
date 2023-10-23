@@ -45,7 +45,7 @@ export const commanderMatchupsColumns: ColumnDef<CommanderMatchupItem, any>[] = 
         cell: (info) =>
             info.row.original.matchCount > 0
                 ? `${Math.round((info.row.original.winCount / info.row.original.matchCount) * 100)}%`
-                : `0%`,
+                : `N/A`,
         header: () => <span>Winrate Against</span>
     })
 ];

@@ -19,6 +19,7 @@ import { MatchPlacementBarChart } from "./MatchPlacementBarChart";
 import { primaryColor } from "../../themes/acorn";
 import { topPlayersColumns } from "../dataVisualizations/columnHelpers/topPlayersColumnHelper";
 import { filterMatchesByPlayerCount } from "../../logic/dictionaryUtils";
+import { getWinRatePercentage } from "../../logic/utils";
 
 export async function loader(data: { params: any }) {
     return data.params.commanderId;
@@ -183,7 +184,7 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                     >
                         {`Winrate: ${
                             commander.validMatchesCount > 0
-                                ? Math.round((commander.wins / commander.validMatchesCount) * 100)
+                                ? getWinRatePercentage(commander.wins, commander.validMatchesCount)
                                 : 0
                         }%`}
                     </Text>
