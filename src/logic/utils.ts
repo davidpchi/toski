@@ -19,8 +19,8 @@ export function getWinRatePercentage(winCount: number, totalCount: number) {
 }
 
 /**
- * Gets the average win turn of a player.
- * @param player Has to be type Player. Filters out automatically matches that don't meet the player count requirement.
+ * Gets the average win turn of a player. Filters out automatically matches that don't meet the player count requirement.
+ * @param player Has to be type Player.
  * @returns A number rounded up to one decimal.
  */
 export function getAverageWinTurn(player: Player) {
@@ -57,9 +57,9 @@ export function getAverageWinTurn(player: Player) {
 }
 
 /**
- * Used to define what highlights a newly qualified player.
+ * Given a player returns whether they're considered to be a newcomer on the stats or not. Counts valid matches only.
  * @param player 
- * @returns True / False
+ * @returns
  */
 export function isNewlyQualifiedPlayer(player: Player) {
     const dateOffset = new Date();

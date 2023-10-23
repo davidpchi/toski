@@ -87,7 +87,7 @@ export function sheetRowToMatch(cell: SheetRow, id: string): Match {
 
 /**
  * Gets the winrate of a player from a collection of matches
- * @param matches Automatically filtered to valid matches (by player count)
+ * @param matches The collection of matches to determine the win rate against.
  * @param playerName 
  * @returns Player name, winrate and loserate as whole numbers from 0 to 100
  */

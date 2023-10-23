@@ -1,4 +1,5 @@
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
+import { getWinRatePercentage } from "../../../logic/utils";
 
 export type PlayerMatchupItem = {
     name: string;
@@ -24,12 +25,12 @@ export const playerMatchupsColumns: ColumnDef<PlayerMatchupItem, any>[] = [
         cell: (info) => info.row.original.winCount,
         header: () => <span>Wins Against</span>
     }),
-    columnHelper.accessor((row) => (row.matchCount > 0 ? Math.round((row.winCount / row.matchCount) * 100) : 0), {
+    columnHelper.accessor((row) => (row.matchCount > 0 ? getWinRatePercentage(row.winCount, row.matchCount) : 0), {
         id: "winrate",
         cell: (info) =>
             info.row.original.matchCount > 0
-                ? `${Math.round((info.row.original.winCount / info.row.original.matchCount) * 100)}%`
-                : `N/A`,
+                ? `${getWinRatePercentage(info.row.original.winCount, info.row.original.matchCount)}%`
+                : `N/A`, // This should never happen since matchCount is checked to be >0
         header: () => <span>Winrate Against</span>
     })
 ];
