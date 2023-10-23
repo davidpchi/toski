@@ -9,18 +9,19 @@ import { Player } from "../types/domain/Player";
 
 
 /**
- * Gets the win rate as a percentage (number, without the "%").
+ * Gets the win rate as a percentage. When calling this function make sure "winCount" and "totalCount" refer to the same set of matches.
  * @param winCount Wins - use wins (valid wins).
- * @param totalCount Number of matches to consider - use valid matches where appropriate.
- * @returns A whole number from 0 to 100.
+ * @param totalCount Number of matches to consider - use valid matches if appropriate.
+ * @returns An integer from 0 to 100.
  */
 export function getWinRatePercentage(winCount: number, totalCount: number) {
     return totalCount > 0 ? Math.round((winCount / totalCount) * 100) : 0;
 }
 
 /**
- * Gets the average win turn of a player. Filters out automatically matches that don't meet the player count requirement.
- * @param player Has to be type Player.
+ * Given a player gets the average win turn of a player.
+ * Filters out automatically matches that don't meet the player count requirement.
+ * @param player
  * @returns A number rounded up to one decimal.
  */
 export function getAverageWinTurn(player: Player) {
@@ -57,7 +58,7 @@ export function getAverageWinTurn(player: Player) {
 }
 
 /**
- * Given a player returns whether they're considered to be a newcomer on the stats or not. Counts valid matches only.
+ * Given a player returns whether they're considered to be a newly qualified player. Counts valid matches only.
  * @param player 
  * @returns
  */

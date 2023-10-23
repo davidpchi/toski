@@ -86,13 +86,13 @@ export function sheetRowToMatch(cell: SheetRow, id: string): Match {
 }
 
 /**
- * Gets the winrate of a player from a collection of matches
- * @param matches The collection of matches to determine the win rate against.
+ * Gets the winrate of a player from a collection of matches without considering invalid matches.
+ * @param matches The collection of matches can be a mix of valid and invalid matches.
  * @param playerName 
- * @returns Player name, winrate and loserate as whole numbers from 0 to 100
+ * @returns Player name, winrate and loserate as whole numbers from 0 to 100.
  */
 export function getPlayerWinRate(matches: Match[], playerName: string): { name: string; winR: number; loseR: number } {
-    // Games counter
+    // Valid matches counter
     let validMatches = 0;
 
     // Wins counter
