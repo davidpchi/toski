@@ -3,15 +3,25 @@ import { Player } from "../types/domain/Player";
 import { getAverageWinTurn, getWinRatePercentage } from "./utils";
 
 describe("getWinRatePercentage", function () {
-    it("given win number and total games, provide win rate (as whole number)", function () {
+    it("given win number and total number of matches, provide win rate", function () {
         expect(getWinRatePercentage(5, 10)).toEqual(50);
         expect(getWinRatePercentage(1, 3)).toEqual(33);
         expect(getWinRatePercentage(0, 10)).toEqual(0);
         expect(getWinRatePercentage(10, 10)).toEqual(100);
     });
 
-    it("given no games, handles this case", function () {
-        expect(getWinRatePercentage(0, 0)).toEqual(0);
+    it("should return -1 if number of matches or wins is somehow invalid", function () {
+        expect(getWinRatePercentage(3, 0)).toEqual(-1); // Division by zero throws the "error" -1
+        expect(getWinRatePercentage(-1, 4)).toEqual(-1); // Negative wins throws the "error" -1
+        expect(getWinRatePercentage(3, -9)).toEqual(-1); // Negative match count throws the "error" -1
+    });
+
+    it("should give rounded numbers given some decimal places as an optional parameter", function () {
+        expect(getWinRatePercentage(1, 3)).toEqual(33); // Default behaviour is zero decimal places when no parameter is given
+        expect(getWinRatePercentage(1, 3, 2)).toEqual(33.33); // Two decimal places
+        expect(getWinRatePercentage(1, 3, -1)).toEqual(1 / 3); // Full floating number
+        expect(getWinRatePercentage(1, 3, -75)).toEqual(1 / 3); // Also full floating number
+        expect(getWinRatePercentage(4, 8, 0.2)).toEqual(-1); // Non-integer number of decimal places throws the "error" -1
     });
 });
 

@@ -10,12 +10,33 @@ import { Player } from "../types/domain/Player";
 
 /**
  * Gets the win rate as a percentage. When calling this function make sure "winCount" and "totalCount" refer to the same set of matches.
- * @param winCount Wins - use wins (valid wins).
- * @param totalCount Number of matches to consider - use valid matches if appropriate.
- * @returns An integer from 0 to 100.
+ * @param winCount
+ * @param matchesCount
+ * @param decimalPlaces The number of decimal places to round to. Default is 0 decimal places. Use -1 to return the full float.
+ * @returns Returns the winrate as a percentage from 0 to 100. Returns -1 if there's an error.
  */
-export function getWinRatePercentage(winCount: number, totalCount: number) {
-    return totalCount > 0 ? Math.round((winCount / totalCount) * 100) : 0;
+export function getWinRatePercentage(winCount: number, matchesCount: number, decimalPlaces: number | undefined = 0): number {
+    if (winCount < 0 || matchesCount <= 0) {
+        console.error("getWinRatePercentage winCount was negative or matchesCount was 0 or negative.");
+        return -1;
+    } 
+    if (!Number.isInteger(decimalPlaces)) {
+        console.error("getWinRatePercentage tried to round by a non-integer.");
+        return -1;
+    }
+    // Technically any negative integer will do, to get the float, but instructions tell you to use -1. This is intended.
+    const winrate = winCount / matchesCount * 100;
+    if (decimalPlaces < 0){
+        return winrate;
+    }
+    // For lack of a better rounding function we take the full float winrate and multiply that
+    // by 10 to the power of the desired number of decimal places.
+    // Then we round to the nearest whole number. Then we divide again with the same number we multiplied with.
+    // This way we get an actual rounding on the decimal places and something like 35.9 will round to 36 and not 35,
+    // which would not happen if you used a .toFixed method.
+    // Interestingly, you could pass negative integer decimalPlaces through this to get rounded to the nearest ten (-1) or a hundred (-2) etc.
+    // As of now that functionality is NOT implemented but the possibility exists.
+    return Math.round(winrate * Math.pow(10, decimalPlaces)) / Math.pow(10, decimalPlaces);
 }
 
 /**
