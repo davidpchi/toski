@@ -21,7 +21,7 @@ export const CommanderHistoryTable = React.memo(function CommanderHistoryTable({
     const playedCommanders: Commander[] = useSelector((state: AppState) =>
         StatsSelectors.getCommandersByPlayerName(state, playerId ? playerId : "", dateFilter)
     );
-    playedCommanders.sort((a: Commander, b: Commander) => b.matches.length - a.matches.length);
+    playedCommanders.sort((a: Commander, b: Commander) => b.validMatchesCount - a.validMatchesCount);
 
     return (
         <SortableTable
