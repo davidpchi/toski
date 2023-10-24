@@ -11,4 +11,9 @@ export type Profile = {
      * The user's favorite commander represented by commander Id
      */
     favoriteCommanderId?: string;
+
+    /**
+     * The user's Moxfield profile Id
+     */
+    moxfieldId?: string;
 };

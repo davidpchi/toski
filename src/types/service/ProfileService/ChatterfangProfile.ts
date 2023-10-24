@@ -4,4 +4,5 @@
 export type ChatterfangProfile = {
     userId: number;
     favoriteCommander: string;
+    moxfieldId?: string;
 };

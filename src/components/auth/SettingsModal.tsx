@@ -21,7 +21,8 @@ import {
     Select,
     Image,
     Text,
-    Divider
+    Divider,
+    Input
 } from "@chakra-ui/react";
 
 import { ProfileSelectors } from "../../redux/profiles/profilesSelectors";
@@ -48,6 +49,7 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
     const favoriteCommanderId = profile && profile.favoriteCommanderId ? profile.favoriteCommanderId : "no value";
     const [commanderSelectValue, setCommanderSelectValue] = useState<string>(() => favoriteCommanderId);
     const [isRememberMe, setIsRememberMe] = useState<boolean>(accessTokenFromState !== null);
+    const [showMoxfieldLinker, setShowMoxfieldLinker] = useState<boolean>(false);
 
     const profiles = useSelector(ProfileSelectors.getProfiles);
 
@@ -107,12 +109,19 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
 
     const closeModal = useCallback(() => {
         onClose();
+        if (showMoxfieldLinker) {
+            moxfieldLinkerToggle();
+        }
     }, [onClose]);
 
     const onSave = useCallback(() => {
         setFavoriteCommander(commanderSelectValue);
         closeModal();
     }, [closeModal, commanderSelectValue, setFavoriteCommander]);
+
+    function moxfieldLinkerToggle() {
+        setShowMoxfieldLinker(!showMoxfieldLinker);
+    }
 
     return (
         <>
@@ -128,7 +137,7 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
                             justifyContent={"center"}
                             flexWrap={"wrap"}
                             alignItems={"flex-start"}
-                            marginBottom={"64px"}
+                            marginBottom={"20px"}
                         >
                             <Heading size={"md"} padding={0} marginBottom={"8px"}>
                                 My Profile
@@ -158,6 +167,28 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
                                     <Image src={placeholderImage} height={"80px"} borderRadius={8} />
                                 )}
                             </Flex>
+                        </Flex>
+                        <Flex marginBottom={"64px"} justifyContent={"Center"}>
+                            {showMoxfieldLinker ? (
+                                <Flex>
+                                    <Flex flexDirection={"column"}>
+                                        <Text>Moxfield ID: </Text>
+                                        <Input placeholder={"Your Moxfield Id"} />
+                                    </Flex>
+                                    <Image
+                                        src={
+                                            "https://pbs.twimg.com/profile_images/1674989472839094273/p7a37K9W_400x400.jpg"
+                                        }
+                                        alt="Moxfield logo"
+                                        height={"80px"}
+                                        borderRadius={8}
+                                    />
+                                </Flex>
+                            ) : (
+                                <Button mr={3} onClick={moxfieldLinkerToggle}>
+                                    Add or Change Linked Moxfield Account
+                                </Button>
+                            )}
                         </Flex>
                         <Heading size={"md"} padding={0} marginBottom={"8px"}>
                             Linked Discord Account
