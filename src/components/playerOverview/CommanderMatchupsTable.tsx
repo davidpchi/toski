@@ -10,6 +10,8 @@ import {
     commanderMatchupsColumns
 } from "../dataVisualizations/columnHelpers/commanderMatchupsColumnHelper";
 import { commanderList } from "../../services/commanderList";
+import { filterMatchesByPlayerCount } from "../../logic/dictionaryUtils";
+import { NUMBER_OF_PLAYERS_FOR_VALID_MATCH } from "../constants";
 
 export const CommanderMatchupsTable = React.memo(function CommanderMatchupsTable({
     playerId,
@@ -21,9 +23,9 @@ export const CommanderMatchupsTable = React.memo(function CommanderMatchupsTable
     const navigate = useNavigate();
 
     // get all the matches of the player has participated in
-    const matches = useSelector((state: AppState) =>
+    const matches = filterMatchesByPlayerCount(useSelector((state: AppState) =>
         StatsSelectors.getMatchesByPlayerName(state, playerId, dateFilter)
-    );
+    ), NUMBER_OF_PLAYERS_FOR_VALID_MATCH);
     const commanderMatchups: { [commanderId: string]: CommanderMatchupItem } = {};
 
     for (const match of matches) {

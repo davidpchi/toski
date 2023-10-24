@@ -9,6 +9,8 @@ import {
     PlayerMatchupItem,
     playerMatchupsColumns
 } from "../dataVisualizations/columnHelpers/playerMatchupsColumnHelper";
+import { filterMatchesByPlayerCount } from "../../logic/dictionaryUtils";
+import { NUMBER_OF_PLAYERS_FOR_VALID_MATCH } from "../constants";
 
 export const PlayerMatchupsTable = React.memo(function PlayerMatchupsTable({
     playerId,
@@ -19,10 +21,10 @@ export const PlayerMatchupsTable = React.memo(function PlayerMatchupsTable({
 }) {
     const navigate = useNavigate();
 
-    // get all the matches of the player has participated in
-    const matches = useSelector((state: AppState) =>
+    // get all the valid matches the player has participated in
+    const matches = filterMatchesByPlayerCount(useSelector((state: AppState) =>
         StatsSelectors.getMatchesByPlayerName(state, playerId, dateFilter)
-    );
+    ), NUMBER_OF_PLAYERS_FOR_VALID_MATCH);
     const playerMatchups: { [playerId: string]: PlayerMatchupItem } = {};
 
     for (const match of matches) {

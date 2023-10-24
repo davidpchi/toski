@@ -34,7 +34,7 @@ export const topPlayersColumns: ColumnDef<Player, any>[] = [
         cell: (info) =>
             info.row.original.validMatchesCount > 0
                 ? `${getWinRatePercentage(info.row.original.wins, info.row.original.validMatchesCount)}%`
-                : `N/A`,
+                : `N/A`, // Displays N/A if the player has no valid matches
         header: () => <span>Winrate</span>
     })
 ];
