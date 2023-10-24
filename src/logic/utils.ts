@@ -5,8 +5,29 @@ import {
 } from "../components/constants";
 import { Player } from "../types/domain/Player";
 
-export function getWinRatePercentage(winCount: number, totalCount: number) {
-    return totalCount > 0 ? Math.round((winCount / totalCount) * 100) : 0;
+
+/**
+ * Gets the win rate as a percentage. When calling this function make sure "winCount" and "totalCount" refer to the same set of matches.
+ * @param winCount
+ * @param matchesCount
+ * @param decimalPlaces The number of decimal places to round to. Default is 0 decimal places. Use -1 to return the full float.
+ * @returns Returns the winrate as a percentage from 0 to 100. Returns -1 if there's an error.
+ */
+export function getWinRatePercentage(winCount: number, matchesCount: number, decimalPlaces: number | undefined = 0): number {
+    if (matchesCount === 0) {
+        console.error("getWinRatePercentage tried to divide by 0: matchesCount cannot be 0.");
+        return -1;
+    } 
+    if (!Number.isInteger(decimalPlaces)) {
+        console.error("getWinRatePercentage tried to round by a non-integer.");
+        return -1;
+    }
+    const winrate = winCount / matchesCount * 100;
+    if (decimalPlaces < 0){
+        return winrate;
+    }
+    // 
+    return Math.round(winrate * Math.pow(10, decimalPlaces)) / Math.pow(10, decimalPlaces);
 }
 
 export function getAverageWinTurn(player: Player) {
