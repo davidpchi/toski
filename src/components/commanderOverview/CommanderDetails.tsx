@@ -188,7 +188,7 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                         {`Winrate: ${
                             commander.validMatchesCount > 0
                                 ? `${getWinRatePercentage(commander.wins, commander.validMatchesCount)}%`
-                                : "N/A"
+                                : "N/A" // Displays N/A if the commander has no valid matches
                         }`}
                     </Text>
                     <Text

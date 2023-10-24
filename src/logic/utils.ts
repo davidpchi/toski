@@ -52,7 +52,7 @@ export function getAverageWinTurn(player: Player) {
     // Early exit conditions
     // Don't show if player has fewer than 10 matches or 5 wins all time
     if (player.validMatchesCount < PLAYER_MINIMUM_GAMES_REQUIRED) {
-        return "Not enough games played";
+        return "Not enough games";
     } else if (player.wins < PLAYER_MINIMUM_WINS_REQUIRED) {
         return "Not enough wins";
     }

@@ -1,8 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-
 import { Flex, Heading, Text } from "@chakra-ui/react";
-
 import { StatsSelectors } from "../../../redux/stats/statsSelectors";
 import { AppState } from "../../../redux/rootReducer";
 import { MTG_COLORS } from "../../constants";
@@ -98,7 +96,12 @@ export const PlayerDetailsInfoCard = React.memo(function PlayerDetailsInfoCard({
                     borderLeftWidth={1}
                     borderRightWidth={1}
                     borderBottomWidth={1}
-                >{`Winrate: ${getWinRatePercentage(player.wins, player.validMatchesCount)}%`}</Text>
+                >{`Winrate: ${
+                    player.validMatchesCount > 0
+                        ? `${getWinRatePercentage(player.wins, player.validMatchesCount)}%`
+                        : "N/A" // Displays N/A if the player has no valid matches
+                }`}
+                </Text>
                 <Text
                     paddingLeft={"16px"}
                     paddingRight={"16px"}
