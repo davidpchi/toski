@@ -46,7 +46,7 @@ export const CommanderOverview = React.memo(function MatchHistory() {
     let commandersArray = commanders.sort((a: Commander, b: Commander) => a.name.localeCompare(b.name));
     if (isFiltered && allCommanders) {
         commandersArray = commandersArray.filter(
-            (value: Commander) => allCommanders[value.id].matches.length >= COMMANDER_MINIMUM_GAMES_REQUIRED
+            (value: Commander) => allCommanders[value.id].validMatchesCount >= COMMANDER_MINIMUM_GAMES_REQUIRED
         );
     }
     if (searchInput.length > 0 && allCommanders) {

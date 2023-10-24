@@ -1,14 +1,29 @@
 import {
     NEW_PLAYER_HIGHLIGHT_DAYS,
+    NUMBER_OF_PLAYERS_FOR_VALID_MATCH,
+    PLAYER_MAXIMUM_GAMES_AS_NEW_PLAYER,
     PLAYER_MINIMUM_GAMES_REQUIRED,
     PLAYER_MINIMUM_WINS_REQUIRED
 } from "../components/constants";
 import { Player } from "../types/domain/Player";
 
+
+/**
+ * Gets the win rate as a percentage. When calling this function make sure "winCount" and "totalCount" refer to the same set of matches.
+ * @param winCount Wins - use wins (valid wins).
+ * @param totalCount Number of matches to consider - use valid matches if appropriate.
+ * @returns An integer from 0 to 100.
+ */
 export function getWinRatePercentage(winCount: number, totalCount: number) {
     return totalCount > 0 ? Math.round((winCount / totalCount) * 100) : 0;
 }
 
+/**
+ * Given a player gets the average win turn of a player.
+ * Filters out automatically matches that don't meet the player count requirement.
+ * @param player
+ * @returns A number rounded up to one decimal.
+ */
 export function getAverageWinTurn(player: Player) {
     // Early exit conditions
     // Don't show if player has fewer than 10 matches or 5 wins all time
@@ -23,8 +38,9 @@ export function getAverageWinTurn(player: Player) {
 
     // Get win turn for every match win
     for (const match of player.matches) {
-        if (player.name === match.winner && match.players.length == 4) {
-            // Exclude wins without turns data or fewer than 4 players
+        // Exclude matches where player isn't a winner and player count requirement isn't filled
+        if (player.name === match.winner && match.players.length === NUMBER_OF_PLAYERS_FOR_VALID_MATCH) {
+            // Exclude wins without turns data
             if (Number(match.numberOfTurns) > 0) {
                 winTurns.push(Number(match.numberOfTurns));
             }
@@ -41,13 +57,18 @@ export function getAverageWinTurn(player: Player) {
     return average.toFixed(1);
 }
 
+/**
+ * Given a player returns whether they're considered to be a newly qualified player. Counts valid matches only.
+ * @param player 
+ * @returns
+ */
 export function isNewlyQualifiedPlayer(player: Player) {
     const dateOffset = new Date();
     dateOffset.setDate(dateOffset.getDate() - NEW_PLAYER_HIGHLIGHT_DAYS);
-    const lastIndex = player.matches.length - 1;
+    const lastIndex = player.validMatchesCount - 1;
     if (
-        PLAYER_MINIMUM_GAMES_REQUIRED <= player.matches.length &&
-        player.matches.length <= 15 &&
+        PLAYER_MINIMUM_GAMES_REQUIRED <= player.validMatchesCount &&
+        player.validMatchesCount <= PLAYER_MAXIMUM_GAMES_AS_NEW_PLAYER &&
         dateOffset < player.matches[lastIndex].date
     ) {
         return true;

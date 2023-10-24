@@ -1,3 +1,4 @@
+import { NUMBER_OF_PLAYERS_FOR_VALID_MATCH } from "../../../components/constants";
 import { Match } from "../../domain/Match";
 import { MatchPlayer } from "../../domain/MatchPlayer";
 import { SheetRow } from "./SheetData";
@@ -84,9 +85,15 @@ export function sheetRowToMatch(cell: SheetRow, id: string): Match {
     };
 }
 
+/**
+ * Gets the winrate of a player from a collection of matches without considering invalid matches.
+ * @param matches The collection of matches can be a mix of valid and invalid matches.
+ * @param playerName 
+ * @returns Player name, winrate and loserate as whole numbers from 0 to 100.
+ */
 export function getPlayerWinRate(matches: Match[], playerName: string): { name: string; winR: number; loseR: number } {
-    // Games counter
-    let games = 0;
+    // Valid matches counter
+    let validMatches = 0;
 
     // Wins counter
     let wins = 0;
@@ -101,9 +108,10 @@ export function getPlayerWinRate(matches: Match[], playerName: string): { name: 
 
         // Loop through match players
         for (let j = 0; j < currentMatch.players.length; j++) {
-            // If player is in the game, increment game
-            if (playerName === currentMatch.players[j].name) {
-                games++;
+
+            // If player is in the game and the game had a valid number of players, increment game
+            if (playerName === currentMatch.players[j].name && currentMatch.players.length === NUMBER_OF_PLAYERS_FOR_VALID_MATCH) {
+                validMatches++;
 
                 // If player won the game, increment wins
                 if (playerName === currentMatch.winner) {
@@ -113,5 +121,5 @@ export function getPlayerWinRate(matches: Match[], playerName: string): { name: 
         }
     }
 
-    return { name: playerName, winR: wins / games, loseR: 1 - wins / games };
+    return { name: playerName, winR: wins / validMatches, loseR: 1 - wins / validMatches };
 }
