@@ -7,7 +7,6 @@ import {
 } from "../components/constants";
 import { Player } from "../types/domain/Player";
 
-
 /**
  * Gets the win rate as a percentage. When calling this function make sure "winCount" and "totalCount" refer to the same set of matches.
  * @param winCount
@@ -15,18 +14,22 @@ import { Player } from "../types/domain/Player";
  * @param decimalPlaces The number of decimal places to round to. Default is 0 decimal places. Use -1 to return the full float.
  * @returns Returns the winrate as a percentage from 0 to 100. Returns -1 if there's an error.
  */
-export function getWinRatePercentage(winCount: number, matchesCount: number, decimalPlaces: number | undefined = 0): number {
+export function getWinRatePercentage(
+    winCount: number,
+    matchesCount: number,
+    decimalPlaces: number | undefined = 0
+): number {
     if (winCount < 0 || matchesCount <= 0) {
         console.error("getWinRatePercentage winCount was negative or matchesCount was 0 or negative.");
         return -1;
-    } 
+    }
     if (!Number.isInteger(decimalPlaces)) {
         console.error("getWinRatePercentage tried to round by a non-integer.");
         return -1;
     }
     // Technically any negative integer will do, to get the float, but instructions tell you to use -1. This is intended.
-    const winrate = winCount / matchesCount * 100;
-    if (decimalPlaces < 0){
+    const winrate = (winCount / matchesCount) * 100;
+    if (decimalPlaces < 0) {
         return winrate;
     }
     // For lack of a better rounding function we take the full float winrate and multiply that
@@ -80,7 +83,7 @@ export function getAverageWinTurn(player: Player) {
 
 /**
  * Given a player returns whether they're considered to be a newly qualified player. Counts valid matches only.
- * @param player 
+ * @param player
  * @returns
  */
 export function isNewlyQualifiedPlayer(player: Player) {

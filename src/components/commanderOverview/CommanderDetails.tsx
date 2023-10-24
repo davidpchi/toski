@@ -53,8 +53,11 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
 
     // Get matches filtered by player count to use in statistical calculations
     // These matches are considered "valid" because they all have the same number of players
-    const validMatches = filterMatchesByPlayerCount(useSelector((state: AppState) =>
-    StatsSelectors.getMatchesByCommanderName(state, commander ? commander.name : "", dateFilter)), NUMBER_OF_PLAYERS_FOR_VALID_MATCH
+    const validMatches = filterMatchesByPlayerCount(
+        useSelector((state: AppState) =>
+            StatsSelectors.getMatchesByCommanderName(state, commander ? commander.name : "", dateFilter)
+        ),
+        NUMBER_OF_PLAYERS_FOR_VALID_MATCH
     );
     const commanderPlayers: Player[] = useSelector((state: AppState) =>
         StatsSelectors.getPlayersByCommanderName(state, commander ? commander.name : "", dateFilter)
@@ -184,9 +187,9 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                     >
                         {`Winrate: ${
                             commander.validMatchesCount > 0
-                                ? getWinRatePercentage(commander.wins, commander.validMatchesCount)
-                                : 0
-                        }%`}
+                                ? `${getWinRatePercentage(commander.wins, commander.validMatchesCount)}%`
+                                : "N/A"
+                        }`}
                     </Text>
                     <Text
                         paddingLeft={"16px"}
