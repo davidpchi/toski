@@ -6,7 +6,8 @@ function profileDataMapper(profile: ChatterfangProfile): Profile | undefined {
     if (profile.userId) {
         return {
             id: profile.userId.toString(),
-            favoriteCommanderId: profile.favoriteCommander ? profile.favoriteCommander : undefined
+            favoriteCommanderId: profile.favoriteCommander ? profile.favoriteCommander : undefined,
+            moxfieldId: undefined
         };
     }
 
