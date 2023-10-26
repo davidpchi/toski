@@ -11,10 +11,12 @@ export const MatchLengthBarChart = React.memo(function MatchHistory({ matches }:
     const matchesLengthDictionary: { [numberOfTurns: string]: number } = {};
 
     for (const match of matchesWithLengths) {
-        if (matchesLengthDictionary[match.numberOfTurns] === undefined) {
-            matchesLengthDictionary[match.numberOfTurns] = 1;
-        } else {
-            matchesLengthDictionary[match.numberOfTurns] += 1;
+        if (match.numberOfTurns) {
+            if (matchesLengthDictionary[match.numberOfTurns] === undefined) {
+                matchesLengthDictionary[match.numberOfTurns] = 1;
+            } else {
+                matchesLengthDictionary[match.numberOfTurns] += 1;
+            }
         }
     }
 

@@ -5,63 +5,63 @@ const matches: Match[] = [
     {
         date: new Date(2022, 1, 1),
         id: "1",
-        numberOfTurns: "4",
+        numberOfTurns: 4,
         players: [
             {
                 commanders: ["elesh norn"],
                 name: "tom",
                 rank: "1",
-                turnPosition: "1",
+                turnPosition: "1"
             },
             {
                 commanders: ["toski"],
                 name: "bob",
                 rank: "2",
-                turnPosition: "2",
-            },
+                turnPosition: "2"
+            }
         ],
-        winner: "tom",
+        winner: "tom"
     },
     {
         date: new Date(2023, 1, 1),
         id: "2",
-        numberOfTurns: "4",
+        numberOfTurns: 4,
         players: [
             {
                 commanders: ["elesh norn"],
                 name: "tom",
                 rank: "1",
-                turnPosition: "1",
+                turnPosition: "1"
             },
             {
                 commanders: ["toski"],
                 name: "bob",
                 rank: "2",
-                turnPosition: "2",
-            },
+                turnPosition: "2"
+            }
         ],
-        winner: "tom",
+        winner: "tom"
     },
     {
         date: new Date(2024, 1, 1),
         id: "3",
-        numberOfTurns: "4",
+        numberOfTurns: 4,
         players: [
             {
                 commanders: ["elesh norn"],
                 name: "tom",
                 rank: "1",
-                turnPosition: "1",
+                turnPosition: "1"
             },
             {
                 commanders: ["toski"],
                 name: "bob",
                 rank: "2",
-                turnPosition: "2",
-            },
+                turnPosition: "2"
+            }
         ],
-        winner: "tom",
-    },
+        winner: "tom"
+    }
 ];
 
 describe("filterMatchesByDate", function () {
