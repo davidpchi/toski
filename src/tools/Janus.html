@@ -18,15 +18,15 @@
     <!-- Copy and paste script results into ~/src/services/commanderList.ts -->
     <script>
         async function run() {
-            document.getElementById("commanderList").value = `export const commanderList: { [friendlyName: string]: { id: string, image: string, color_identity: string[] } } = {`;
+            document.getElementById("commanderList").value = `export const commanderList: { [friendlyName: string]: { id: string, image: string, colorIdentity: string[], name: string, scryfallUri: string } } = {`;
 
             const delay = async (ms) => new Promise(res => setTimeout(res, ms));
 
             const getCommanderData = (item) => {
                 if (item.image_uris === undefined || item.image_uris.normal === undefined) {
-                    return `"${item.name.replaceAll('"', "\\\"")}": { id: "${item.id}", image: "${item.card_faces[0].image_uris.normal}", color_identity: ["${item.color_identity.join(`","`)}"] },${"\r\n"}`;
+                    return `"${item.name.replaceAll('"', "\\\"")}": { id: "${item.id}", image: "${item.card_faces[0].image_uris.normal}", colorIdentity: ["${item.color_identity.join(`","`)}"], scryfallUri: "${item.scryfall_uri}", name: "${item.name}" },${"\r\n"}`;
                 } else {
-                    return `"${item.name.replaceAll('"', "\\\"")}": { id: "${item.id}", image: "${item.image_uris.normal}", color_identity: ["${item.color_identity.join(`","`)}"] }, ${"\r\n"}`;
+                    return `"${item.name.replaceAll('"', "\\\"")}": { id: "${item.id}", image: "${item.image_uris.normal}", colorIdentity: ["${item.color_identity.join(`","`)}"], scryfallUri: "${item.scryfall_uri}", name: "${item.name}" }, ${"\r\n"}`;
                 }
             }
 
