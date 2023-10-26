@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Tag, TagLabel } from "@chakra-ui/react";
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 
 import { Player } from "../../../types/domain/Player";
@@ -17,7 +17,11 @@ export const playerOverviewColumns: ColumnDef<Player, any>[] = [
             return (
                 <Flex direction={"row"} alignItems={"center"}>
                     <Box padding="2">{player}</Box>
-                    {isNewlyQualified ? <Text fontWeight={"bold"}>*NEW*</Text> : null}
+                    {isNewlyQualified ? (
+                        <Tag size={"sm"} rounded={"full"} variant={"solid"}>
+                            <TagLabel>NEW</TagLabel>
+                        </Tag>
+                    ) : null}
                 </Flex>
             );
         },
@@ -33,12 +37,15 @@ export const playerOverviewColumns: ColumnDef<Player, any>[] = [
         cell: (info) => info.row.original.wins,
         header: () => <span>Wins</span>
     }),
-    columnHelper.accessor((row) => (row.validMatchesCount > 0 ? getWinRatePercentage(row.wins, row.validMatchesCount) : 0), {
-        id: "winrate",
-        cell: (info) =>
-            info.row.original.validMatchesCount > 0
-                ? `${getWinRatePercentage(info.row.original.wins, info.row.original.validMatchesCount)}%`
-                : `N/A`,
-        header: () => <span>Winrate</span>
-    })
+    columnHelper.accessor(
+        (row) => (row.validMatchesCount > 0 ? getWinRatePercentage(row.wins, row.validMatchesCount) : 0),
+        {
+            id: "winrate",
+            cell: (info) =>
+                info.row.original.validMatchesCount > 0
+                    ? `${getWinRatePercentage(info.row.original.wins, info.row.original.validMatchesCount)}%`
+                    : `N/A`, // Displays N/A if the player has no valid matches
+            header: () => <span>Winrate</span>
+        }
+    )
 ];
