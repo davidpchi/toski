@@ -30,7 +30,7 @@ export const playerMatchupsColumns: ColumnDef<PlayerMatchupItem, any>[] = [
         cell: (info) =>
             info.row.original.matchCount > 0
                 ? `${getWinRatePercentage(info.row.original.winCount, info.row.original.matchCount)}%`
-                : `N/A`, // This should never happen since matchCount is checked to be >0
+                : `N/A`, // This shouldn't happen
         header: () => <span>Winrate Against</span>
     })
 ];

@@ -37,9 +37,9 @@ export const commanderOverviewColumns: ColumnDef<Commander, any>[] = [
     columnHelper.accessor((row) => (row.validMatchesCount > 0 ? getWinRatePercentage(row.wins, row.validMatchesCount) : 0), {
         id: "winrate",
         cell: (info) =>
-            info.row.original.validMatchesCount > 0 // A commander may exist with 0 valid matches - prevent division by 0
+            info.row.original.validMatchesCount > 0
                 ? `${getWinRatePercentage(info.row.original.wins, info.row.original.validMatchesCount)}%`
-                : `N/A`, // Display N/A if the commander has no valid matches
+                : `N/A`, // Displays N/A if the commander has no valid matches
         header: () => <span>Winrate</span>
     })
 ];
