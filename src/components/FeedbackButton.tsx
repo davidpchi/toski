@@ -1,5 +1,4 @@
 import { EditIcon } from "@chakra-ui/icons";
-
 import {
     Modal,
     ModalOverlay,
@@ -18,7 +17,6 @@ import {
 import React from "react";
 
 import { submitFeedback } from "../services/feedbackService";
-import { primaryColor } from "../themes/acorn";
 
 export function FeedbackButton() {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -31,6 +29,11 @@ export function FeedbackButton() {
     };
 
     const submitForm = async () => {
+        if (feedbackString === "") {
+            alert("Cannot submit empty feedback");
+            return;
+        }
+
         await submitFeedback(feedbackString);
 
         // Communicate that feedback is submit

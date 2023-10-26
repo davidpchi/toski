@@ -70,40 +70,40 @@ export const submitMatch = async (
     turnCount?: number,
     extraNotes?: string
 ) => {
-    var body: { [fieldName: string]: string } = {};
-    body["entry.1178471159"] = date.toISOString().split("T")[0];
+    var formData: { [fieldName: string]: string } = {};
+    formData["1178471159"] = date.toISOString().split("T")[0];
 
     if (player1) {
-        body["entry.2132042053"] = player1.name;
-        body["entry.961836116"] = player1.commander;
-        body["entry.1252336227"] = player1.turnOrder.toString();
-        body["entry.147625596"] = player1.rank.toString();
+        formData["2132042053"] = player1.name;
+        formData["961836116"] = player1.commander;
+        formData["1252336227"] = player1.turnOrder.toString();
+        formData["147625596"] = player1.rank.toString();
     }
 
     if (player2) {
-        body["entry.840407098"] = player2.name;
-        body["entry.493870522"] = player2.commander;
-        body["entry.898724110"] = player2.turnOrder.toString();
-        body["entry.531480374"] = player2.rank.toString();
+        formData["840407098"] = player2.name;
+        formData["493870522"] = player2.commander;
+        formData["898724110"] = player2.turnOrder.toString();
+        formData["531480374"] = player2.rank.toString();
     }
 
     if (player3) {
-        body["entry.2099339267"] = player3.name;
-        body["entry.1961193649"] = player3.commander;
-        body["entry.87571757"] = player3.turnOrder.toString();
-        body["entry.807216034"] = player3.rank.toString();
+        formData["2099339267"] = player3.name;
+        formData["1961193649"] = player3.commander;
+        formData["87571757"] = player3.turnOrder.toString();
+        formData["807216034"] = player3.rank.toString();
     }
 
     if (player4) {
-        body["entry.575868019"] = player4.name;
-        body["entry.270994715"] = player4.commander;
-        body["entry.153957972"] = player4.turnOrder.toString();
-        body["entry.652184592"] = player4.rank.toString();
+        formData["575868019"] = player4.name;
+        formData["270994715"] = player4.commander;
+        formData["153957972"] = player4.turnOrder.toString();
+        formData["652184592"] = player4.rank.toString();
     }
 
-    body["entry.676929187"] = turnCount !== undefined ? turnCount.toString() : "";
+    formData["676929187"] = turnCount !== undefined ? turnCount.toString() : "";
 
-    body["entry.2043626966"] = extraNotes !== undefined ? extraNotes : "";
+    formData["2043626966"] = extraNotes !== undefined ? extraNotes : "";
 
-    return sendDataToGoogleSheets({ body, submitEndpoint: matchHistoryDataEndpoint });
+    return sendDataToGoogleSheets({ formData, submitEndpoint: matchHistoryDataEndpoint });
 };
