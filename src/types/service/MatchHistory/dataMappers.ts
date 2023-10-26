@@ -79,7 +79,7 @@ export function sheetRowToMatch(cell: SheetRow, id: string): Match {
     return {
         date: date && date.f ? new Date(date.f) : new Date(),
         id,
-        numberOfTurns: numberOfTurns ? numberOfTurns.v.toString() : "",
+        numberOfTurns: numberOfTurns ? Number(numberOfTurns.v.toString()) : undefined,
         players: players,
         winner: winnerName
     };
@@ -88,7 +88,7 @@ export function sheetRowToMatch(cell: SheetRow, id: string): Match {
 /**
  * Gets the winrate of a player from a collection of matches without considering invalid matches.
  * @param matches The collection of matches can be a mix of valid and invalid matches.
- * @param playerName 
+ * @param playerName
  * @returns Player name, winrate and loserate as whole numbers from 0 to 100.
  */
 export function getPlayerWinRate(matches: Match[], playerName: string): { name: string; winR: number; loseR: number } {
@@ -108,9 +108,11 @@ export function getPlayerWinRate(matches: Match[], playerName: string): { name: 
 
         // Loop through match players
         for (let j = 0; j < currentMatch.players.length; j++) {
-
             // If player is in the game and the game had a valid number of players, increment game
-            if (playerName === currentMatch.players[j].name && currentMatch.players.length === NUMBER_OF_PLAYERS_FOR_VALID_MATCH) {
+            if (
+                playerName === currentMatch.players[j].name &&
+                currentMatch.players.length === NUMBER_OF_PLAYERS_FOR_VALID_MATCH
+            ) {
                 validMatches++;
 
                 // If player won the game, increment wins

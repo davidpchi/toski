@@ -32,16 +32,16 @@ describe("getAverageWinTurn", () => {
     beforeEach(() => {
         // Reset data to test against
         matches = [
-            { id: "1", date: new Date(), players: [], numberOfTurns: "7", winner: "John" },
-            { id: "2", date: new Date(), players: [], numberOfTurns: "8", winner: "John" },
-            { id: "3", date: new Date(), players: [], numberOfTurns: "11", winner: "John" },
-            { id: "4", date: new Date(), players: [], numberOfTurns: "0", winner: "John" }, // Invalid: turns
-            { id: "5", date: new Date(), players: [], numberOfTurns: "0", winner: "John" }, // Invalid: turns
-            { id: "6", date: new Date(), players: [], numberOfTurns: "4", winner: "Sara" }, // Invalid: lost
-            { id: "7", date: new Date(), players: [], numberOfTurns: "10", winner: "John" },
-            { id: "8", date: new Date(), players: [], numberOfTurns: "3", winner: "Jane" }, // Invalid: lost
-            { id: "9", date: new Date(), players: [], numberOfTurns: "9", winner: "Bret" }, // Invalid: lost
-            { id: "10", date: new Date(), players: [], numberOfTurns: "9", winner: "John" },
+            { id: "1", date: new Date(), players: [], numberOfTurns: 7, winner: "John" },
+            { id: "2", date: new Date(), players: [], numberOfTurns: 8, winner: "John" },
+            { id: "3", date: new Date(), players: [], numberOfTurns: 11, winner: "John" },
+            { id: "4", date: new Date(), players: [], numberOfTurns: 0, winner: "John" }, // Invalid: turns
+            { id: "5", date: new Date(), players: [], numberOfTurns: 0, winner: "John" }, // Invalid: turns
+            { id: "6", date: new Date(), players: [], numberOfTurns: 4, winner: "Sara" }, // Invalid: lost
+            { id: "7", date: new Date(), players: [], numberOfTurns: 10, winner: "John" },
+            { id: "8", date: new Date(), players: [], numberOfTurns: 3, winner: "Jane" }, // Invalid: lost
+            { id: "9", date: new Date(), players: [], numberOfTurns: 9, winner: "Bret" }, // Invalid: lost
+            { id: "10", date: new Date(), players: [], numberOfTurns: 9, winner: "John" }
         ];
 
         player = {
@@ -49,7 +49,7 @@ describe("getAverageWinTurn", () => {
             matches: matches,
             validMatchesCount: 10,
             wins: 7,
-            colorProfile: {},
+            colorProfile: {}
         };
     });
 
@@ -58,7 +58,7 @@ describe("getAverageWinTurn", () => {
     });
 
     it("should handle rounding average win turn correctly", () => {
-        player.matches[0].numberOfTurns = "99.4";
+        player.matches[0].numberOfTurns = 99.4;
         expect(getAverageWinTurn(player)).toBe("27.5"); // (99.4+8+11+10+9)/5 = 27.48
     });
 
