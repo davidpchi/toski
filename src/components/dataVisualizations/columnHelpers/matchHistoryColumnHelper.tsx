@@ -69,5 +69,12 @@ export const matchHistoryColumns: ColumnDef<Match, any>[] = [
             );
         },
         header: () => <span>Winner</span>
+    }),
+    columnHelper.accessor((row) => row.numberOfTurns, {
+        id: "numberOfTurns",
+        cell: (info) => {
+            return <div>{info.row.original.numberOfTurns}</div>;
+        },
+        header: () => <span>Turn Count</span>
     })
 ];

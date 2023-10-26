@@ -175,19 +175,12 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                         borderLeftWidth={1}
                         borderRightWidth={1}
                         borderBottomWidth={1}
-                    >{`Wins: ${commander.wins}`}</Text>
-                    <Text
-                        paddingLeft={"16px"}
-                        paddingRight={"16px"}
-                        paddingTop={"8px"}
-                        paddingBottom={"8px"}
-                        borderLeftWidth={1}
-                        borderRightWidth={1}
-                        borderBottomWidth={1}
                     >
                         {`Winrate: ${
                             commander.validMatchesCount > 0
-                                ? `${getWinRatePercentage(commander.wins, commander.validMatchesCount)}%`
+                                ? `${getWinRatePercentage(commander.wins, commander.validMatchesCount)}% (${
+                                      commander.wins
+                                  } win${commander.wins > 1 ? "s" : ""})`
                                 : "N/A" // Displays N/A if the commander has no valid matches
                         }`}
                     </Text>

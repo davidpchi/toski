@@ -96,11 +96,14 @@ export const PlayerDetailsInfoCard = React.memo(function PlayerDetailsInfoCard({
                     borderLeftWidth={1}
                     borderRightWidth={1}
                     borderBottomWidth={1}
-                >{`Winrate: ${
-                    player.validMatchesCount > 0
-                        ? `${getWinRatePercentage(player.wins, player.validMatchesCount)}%`
-                        : "N/A" // Displays N/A if the player has no valid matches
-                }`}
+                >
+                    {`Winrate: ${
+                        player.validMatchesCount > 0
+                            ? `${getWinRatePercentage(player.wins, player.validMatchesCount)}% (${player.wins} win${
+                                  player.wins > 1 ? "s" : ""
+                              })`
+                            : "N/A" // Displays N/A if the player has no valid matches
+                    }`}
                 </Text>
                 <Text
                     paddingLeft={"16px"}
