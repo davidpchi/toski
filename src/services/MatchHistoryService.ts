@@ -68,7 +68,7 @@ export const submitMatch = async (
     turnCount?: number,
     extraNotes?: string
 ) => {
-    var formData: { [fieldName: string]: string } = {};
+    const formData: { [fieldName: string]: string } = {};
     formData["1178471159"] = date.toISOString().split("T")[0];
 
     if (player1) {

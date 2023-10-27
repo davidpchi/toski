@@ -17,10 +17,12 @@ import {
 import React from "react";
 
 import { submitFeedback } from "../services/FeedbackService";
+import { primaryColor, secondaryColor } from "../themes/acorn";
 
 export function FeedbackButton() {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [feedbackString, setFeedbackString] = React.useState<string>("");
+    const [isEmptySubmit, setIsEmptySubmit] = React.useState<boolean>(false);
     const [isFeedbackSubmit, setIsFeedbackSubmit] = React.useState<boolean>(false);
 
     const handleInputChange = (e: any) => {
@@ -30,7 +32,7 @@ export function FeedbackButton() {
 
     const submitForm = async () => {
         if (feedbackString === "") {
-            alert("Cannot submit empty feedback");
+            setIsEmptySubmit(true);
             return;
         }
 
@@ -39,8 +41,9 @@ export function FeedbackButton() {
         // Communicate that feedback is submit
         setIsFeedbackSubmit(true);
 
-        // Clear feedback and close
+        // Clear feedback, reset empty submit tracker, and close
         setFeedbackString("");
+        setIsEmptySubmit(false);
     };
 
     const customOnClose = () => {
@@ -70,6 +73,11 @@ export function FeedbackButton() {
                     placeholder="Tell us what you think!"
                     size="md"
                 />
+                {isEmptySubmit && feedbackString === "" && (
+                    <Text fontSize="small" color={secondaryColor[600]}>
+                        Required
+                    </Text>
+                )}
             </ModalBody>
             <ModalFooter>
                 <Button colorScheme="primary" mr={1} onClick={submitForm}>
