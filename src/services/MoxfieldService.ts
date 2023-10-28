@@ -12,6 +12,7 @@ const useGetMoxfieldProfile = () => {
                 })
                 .then((_res) => {
                     console.log(_res);
+                    return _res;
                 });
         } catch (err) {
             console.log(err);

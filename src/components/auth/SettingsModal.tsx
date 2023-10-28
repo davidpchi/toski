@@ -52,6 +52,9 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
     const [isRememberMe, setIsRememberMe] = useState<boolean>(accessTokenFromState !== null);
     const [showMoxfieldLinker, setShowMoxfieldLinker] = useState<boolean>(false);
     const [moxfieldInputValue, setMoxfieldInputValue] = useState<string>("");
+    const [moxfieldImageUrl, setMoxfieldImageUrl] = useState<string>(
+        "https://pbs.twimg.com/profile_images/1674989472839094273/p7a37K9W_400x400.jpg"
+    );
 
     const profiles = useSelector(ProfileSelectors.getProfiles);
 
@@ -130,7 +133,13 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
         setMoxfieldInputValue(event.target.value);
     }
 
-    const getMoxfieldProfile = MoxfieldService;
+    const MoxfieldProfileFinder = MoxfieldService.useGetMoxfieldProfile();
+    const getMoxfieldProfile = async () => {
+        const moxfieldProfileObj = await MoxfieldProfileFinder(moxfieldInputValue);
+        if (moxfieldProfileObj.data.profileImageType !== "none") {
+            setMoxfieldImageUrl(moxfieldProfileObj.data.profileImageUrl);
+        }
+    };
 
     return (
         <>
@@ -178,16 +187,23 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
                             </Flex>
                         </Flex>
                         <Flex marginBottom={"64px"} justifyContent={"Center"}>
+                            {
+                                // LOOK HERE
+                            }
+
                             {showMoxfieldLinker ? (
                                 <Flex>
                                     <Flex flexDirection={"column"}>
                                         <Text>Moxfield ID: </Text>
-                                        <Input placeholder={"Your Moxfield Id"} />
+                                        <Input
+                                            value={moxfieldInputValue}
+                                            onChange={updateMoxfieldInputValue}
+                                            onBlur={getMoxfieldProfile}
+                                            placeholder={"Your Moxfield Id"}
+                                        />
                                     </Flex>
                                     <Image
-                                        src={
-                                            "https://pbs.twimg.com/profile_images/1674989472839094273/p7a37K9W_400x400.jpg"
-                                        }
+                                        src={moxfieldImageUrl}
                                         alt="Moxfield logo"
                                         height={"80px"}
                                         borderRadius={8}
