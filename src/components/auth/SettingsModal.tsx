@@ -31,6 +31,7 @@ import { commanderList } from "../../services/commanderList";
 import { ProfileService } from "../../services/ProfileService";
 import { useAuthInfo } from "../../logic/hooks/authHooks";
 import { useUserInfo } from "../../logic/hooks/userHooks";
+import { MoxfieldService } from "../../services/MoxfieldService";
 
 const placeholderImage = "https://static.thenounproject.com/png/5425-200.png";
 
@@ -116,12 +117,15 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
 
     const onSave = useCallback(() => {
         setFavoriteCommander(commanderSelectValue);
+
         closeModal();
     }, [closeModal, commanderSelectValue, setFavoriteCommander]);
 
     function moxfieldLinkerToggle() {
         setShowMoxfieldLinker(!showMoxfieldLinker);
     }
+
+    const getMoxfieldProfile = MoxfieldService;
 
     return (
         <>
