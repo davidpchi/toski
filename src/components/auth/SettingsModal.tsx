@@ -51,6 +51,7 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
     const [commanderSelectValue, setCommanderSelectValue] = useState<string>(() => favoriteCommanderId);
     const [isRememberMe, setIsRememberMe] = useState<boolean>(accessTokenFromState !== null);
     const [showMoxfieldLinker, setShowMoxfieldLinker] = useState<boolean>(false);
+    const [moxfieldInputValue, setMoxfieldInputValue] = useState<string>("");
 
     const profiles = useSelector(ProfileSelectors.getProfiles);
 
@@ -123,6 +124,10 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
 
     function moxfieldLinkerToggle() {
         setShowMoxfieldLinker(!showMoxfieldLinker);
+    }
+
+    function updateMoxfieldInputValue(event: any) {
+        setMoxfieldInputValue(event.target.value);
     }
 
     const getMoxfieldProfile = MoxfieldService;
