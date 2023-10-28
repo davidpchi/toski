@@ -28,11 +28,7 @@ export const PlayerDetailsInfoCard = React.memo(function PlayerDetailsInfoCard({
     }
 
     const favoriteCommanderId = profile && profile.favoriteCommanderId ? profile.favoriteCommanderId : "";
-    // TODO: commanderList probably needs to the value and not just the key
-    const fixedCommanderList = Object.keys(commanderList).map((key) => {
-        return { ...commanderList[key], name: key };
-    });
-    const themeCommander = fixedCommanderList.find((value) => value.id === favoriteCommanderId);
+    const themeCommander = Object.values(commanderList).find((value) => value.id === favoriteCommanderId);
     const themeCommanderImage = themeCommander?.image.replace("normal", "art_crop");
     const themeCommanderName = themeCommander?.name;
 

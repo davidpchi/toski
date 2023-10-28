@@ -2,7 +2,7 @@ import { TooltipItem } from "chart.js";
 import React, { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLoaderData, useNavigate } from "react-router-dom";
-import { Flex, Heading, Image, Input, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
+import { Flex, Heading, Image, Input, Link, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
 import { AppState } from "../../redux/rootReducer";
 import { StatsSelectors } from "../../redux/stats/statsSelectors";
 import { Loading } from "../Loading";
@@ -20,6 +20,7 @@ import { primaryColor } from "../../themes/acorn";
 import { topPlayersColumns } from "../dataVisualizations/columnHelpers/topPlayersColumnHelper";
 import { filterMatchesByPlayerCount } from "../../logic/dictionaryUtils";
 import { getWinRatePercentage } from "../../logic/utils";
+import { ExternalLinkIcon } from "@chakra-ui/icons";
 
 export async function loader(data: { params: any }) {
     return data.params.commanderId;
@@ -68,7 +69,7 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
         return <Loading text="" />;
     }
 
-    let matchesArray: Match[] = matches;
+    let matchesArray: Match[] = matches.sort((a, b) => b.date.getTime() - a.date.getTime());
     if (searchInput.length > 0 && matches) {
         matchesArray = matches.filter((match: Match) => {
             for (let player of match.players) {
@@ -133,6 +134,7 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                         src={commanderList[commander.name].image}
                         boxShadow={"0px 12px 18px 2px rgba(0,0,0,0.3)"}
                         borderRadius={"4%"}
+                        zIndex={1}
                     />
                 ) : null}
                 <Flex
@@ -142,7 +144,6 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                     paddingLeft={{ base: "16px", md: 0 }}
                     paddingBottom={"16px"}
                     marginLeft={{ base: 0, md: "-8px" }}
-                    zIndex={-1}
                 >
                     <Heading
                         size={"sm"}
@@ -195,6 +196,21 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                     >{`Qualified: ${
                         commander.validMatchesCount >= COMMANDER_MINIMUM_GAMES_REQUIRED ? "Yes" : "No"
                     }`}</Text>
+                    {commanderList[commander.name] ? (
+                        <Link
+                            paddingLeft={"16px"}
+                            paddingRight={"16px"}
+                            paddingTop={"8px"}
+                            paddingBottom={"8px"}
+                            borderLeftWidth={1}
+                            borderRightWidth={1}
+                            borderBottomWidth={1}
+                            href={commanderList[commander.name].scryfallUri}
+                            isExternal
+                        >
+                            View on Scryfall <ExternalLinkIcon mx="2px" marginBottom={"5px"} />
+                        </Link>
+                    ) : null}
                 </Flex>
             </Flex>
             <Flex direction={"column"}>
