@@ -11,6 +11,7 @@ import { MatchFrequencyLineChart } from "./MatchFrequencyLineChart";
 import { Player } from "../../types/domain/Player";
 import { MTG_COLORS } from "../constants";
 import { AppState } from "../../redux/rootReducer";
+import { MatchPositionWinsBarChart } from "./MatchPositionWinsBarChart";
 
 export const MatchTrends = React.memo(function MatchHistory() {
     const matches = useSelector(StatsSelectors.getMatches);
@@ -45,6 +46,7 @@ export const MatchTrends = React.memo(function MatchHistory() {
             <MatchLengthBarChart matches={sortedMatches} />
             <MatchLengthLineChart matches={sortedMatches} />
             <MatchFrequencyLineChart matches={sortedMatches} />
+            <MatchPositionWinsBarChart matches={sortedMatches} />
         </Flex>
     );
 });
