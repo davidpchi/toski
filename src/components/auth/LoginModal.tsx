@@ -31,7 +31,7 @@ export const LoginModal = React.memo(function LoginModal({
 }) {
     const dispatch = useDispatch();
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const { accessToken, tokenType } = useAuthInfo();
+    const { accessToken, tokenType, expirationDate } = useAuthInfo();
     const { userPic, username } = useUserInfo();
 
     const isFirstLogin = useSelector(AuthSelectors.getIsFirstLogin);
@@ -60,13 +60,16 @@ export const LoginModal = React.memo(function LoginModal({
             if (accessToken) {
                 localStorage.setItem("accessToken", accessToken);
             }
+            if (expirationDate) {
+                localStorage.setItem("expirationDate", expirationDate.getTime().toString());
+            }
         } else {
             localStorage.clear();
         }
 
         dispatch(AuthAction.FirstLoginComplete());
         onClose();
-    }, [accessToken, dispatch, isRememberMe, onClose, tokenType]);
+    }, [accessToken, dispatch, expirationDate, isRememberMe, onClose, tokenType]);
 
     const handleLoginModalCancel = useCallback(() => {
         onSignOut();

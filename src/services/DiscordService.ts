@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 
-import { useEffect } from "react";
+import { useCallback } from "react";
 import { UserAction } from "../redux/user/userActions";
 import { UserSelectors } from "../redux/user/userSelectors";
 import { useAuthInfo } from "../logic/hooks/authHooks";
@@ -15,7 +15,7 @@ export const getDiscordAvatarImage = (userId: string, userAvatar: string) => {
     return `https://cdn.discordapp.com/avatars/${userId}/${userAvatar}.png`;
 };
 
-const useCurrentUserInfo = () => {
+const useGetCurrentUserInfo = () => {
     const dispatch = useDispatch();
     const { accessToken, tokenType } = useAuthInfo();
 
@@ -23,7 +23,7 @@ const useCurrentUserInfo = () => {
 
     const endpoint = "https://discord.com/api/users/@me";
 
-    useEffect(() => {
+    return useCallback(() => {
         // if the user is signed in but we don't have the discord information for that user, request that information
         if (accessToken !== undefined && isUserSignedIn === false) {
             axios
@@ -45,5 +45,5 @@ const useCurrentUserInfo = () => {
 };
 
 export const DiscordService = {
-    useCurrentUserInfo
+    useGetCurrentUserInfo
 };

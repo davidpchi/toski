@@ -38,7 +38,7 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
     const { isOpen, onOpen, onClose } = useDisclosure();
     const setFavoriteCommander = ProfileService.useSetFavoriteCommander();
     const getPlayerName = ProfileService.useGetPlayerName();
-    const { accessToken, tokenType } = useAuthInfo();
+    const { accessToken, tokenType, expirationDate } = useAuthInfo();
     const { userId, userPic, username } = useUserInfo();
 
     const accessTokenFromState = localStorage.getItem("tokenType");
@@ -93,10 +93,13 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
             if (accessToken) {
                 localStorage.setItem("accessToken", accessToken);
             }
+            if (expirationDate) {
+                localStorage.setItem("expirationDate", expirationDate.getTime().toString());
+            }
         }
 
         setIsRememberMe(!isRememberMe);
-    }, [accessToken, isRememberMe, tokenType]);
+    }, [accessToken, expirationDate, isRememberMe, tokenType]);
 
     // TODO: we should figure out a way that hiding the modal forces an unmount of this entire component instead of just tying it to the menu item.
     const openModal = useCallback(() => {
