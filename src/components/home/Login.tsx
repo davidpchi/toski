@@ -30,7 +30,8 @@ export const Login = React.memo(function Login({ hash }: { hash: string }) {
     dispatch(
         AuthAction.GetAuthComplete({
             tokenType: fragmentParts["token_type"],
-            accessToken: fragmentParts["access_token"]
+            accessToken: fragmentParts["access_token"],
+            expirationTimeInSeconds: Number(fragmentParts["expires_in"])
         })
     );
 

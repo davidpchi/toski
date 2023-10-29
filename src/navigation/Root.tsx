@@ -8,12 +8,13 @@ import { ProfileService } from "../services/ProfileService";
 
 export default function Root() {
     const hydrateProfiles = ProfileService.useHydrateProfiles();
+    const getCurrentUserInfo = DiscordService.useGetCurrentUserInfo();
 
     // kick off the initial data hydration
     MatchHistoryService.useMatchHistory();
 
     // initiates the hydration of the discord info for the current user
-    DiscordService.useCurrentUserInfo();
+    getCurrentUserInfo();
 
     // make the initial call to hydrate profiles
     hydrateProfiles();

@@ -13,14 +13,14 @@ export enum AuthActionType {
 export const AuthAction = {
     GetAuthComplete: createAction(
         AuthActionType.GetAuthComplete,
-        (data: { tokenType: string; accessToken: string }) => ({
+        (data: { tokenType: string; accessToken: string; expirationTimeInSeconds: number }) => ({
             type: AuthActionType.GetAuthComplete,
             payload: data
         })
     ),
     LoadAuthComplete: createAction(
         AuthActionType.LoadAuthComplete,
-        (data: { tokenType: string; accessToken: string }) => ({
+        (data: { tokenType: string; accessToken: string; expirationDate: Date }) => ({
             type: AuthActionType.LoadAuthComplete,
             payload: data
         })

@@ -26,7 +26,7 @@ import { FF_IS_LOGIN_ENABLED } from "../../services/featureFlagService";
 import { LoginModal } from "../auth/LoginModal";
 import { SettingsMenuItem } from "../auth/SettingsModal";
 import { ProfileService } from "../../services/ProfileService";
-import { getDiscordLoginEndpoint } from "../../services/DiscordService";
+import { DiscordService, getDiscordLoginEndpoint } from "../../services/DiscordService";
 import { useUserInfo } from "../../logic/hooks/userHooks";
 
 const placeholderImage = "https://static.thenounproject.com/png/5425-200.png";
@@ -83,13 +83,27 @@ export const Header = ({ onProfileIconClick, ...rest }: HeaderProps) => {
     /**
      * When the app starts, we check to see if there's an existing access token already saved via local storage.
      * If there is, use that instead of showing the user as not signed in.
-     * TODO: here, we need to validate if the token has expired
      */
     useEffect(() => {
         const tokenTypeVal = localStorage.getItem("tokenType");
         const accessTokenVal = localStorage.getItem("accessToken");
-        if (tokenTypeVal !== null && accessTokenVal !== null) {
-            dispatch(AuthAction.LoadAuthComplete({ tokenType: tokenTypeVal, accessToken: accessTokenVal }));
+        // this is the date stored in EPOCH seconds
+        const expirationDateVal = localStorage.getItem("expirationDate");
+
+        if (tokenTypeVal !== null && accessTokenVal !== null && expirationDateVal !== null) {
+            const expirationDate = new Date(Number(expirationDateVal));
+
+            // if the expiration date hasn't happened yet (within a day), load the auth
+            const currentTime = new Date();
+            if (currentTime.getTime() <= expirationDate.getTime() - 24 * 60 * 60 * 1000) {
+                dispatch(
+                    AuthAction.LoadAuthComplete({
+                        tokenType: tokenTypeVal,
+                        accessToken: accessTokenVal,
+                        expirationDate: expirationDate
+                    })
+                );
+            }
         }
     }, [dispatch]);
 
