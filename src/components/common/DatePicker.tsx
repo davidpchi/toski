@@ -7,7 +7,7 @@ enum DatePickerOptions {
     Weeks2 = "week2",
     Months1 = "month1",
     Months6 = "month6",
-    Year1 = "year1",
+    Year1 = "year1"
 }
 
 export const DatePicker = React.memo(function DatePicker({ onChange }: { onChange: (date: Date | undefined) => void }) {
