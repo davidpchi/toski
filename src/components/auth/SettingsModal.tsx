@@ -46,15 +46,15 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
 
     const profile = useSelector((state: AppState) => ProfileSelectors.getProfile(state, userId ?? ""));
     const toskiPlayer = getPlayerName(profile ? profile.id : "");
+    const defaultMoxfieldLogo = "https://pbs.twimg.com/profile_images/1674989472839094273/p7a37K9W_400x400.jpg";
+    const errorMoxfieldLogo = "https://upload.wikimedia.org/wikipedia/commons/4/4e/OOjs_UI_icon_error-destructive.svg";
 
     const favoriteCommanderId = profile && profile.favoriteCommanderId ? profile.favoriteCommanderId : "no value";
     const [commanderSelectValue, setCommanderSelectValue] = useState<string>(() => favoriteCommanderId);
     const [isRememberMe, setIsRememberMe] = useState<boolean>(accessTokenFromState !== null);
     const [showMoxfieldLinker, setShowMoxfieldLinker] = useState<boolean>(false);
     const [moxfieldInputValue, setMoxfieldInputValue] = useState<string>("");
-    const [moxfieldImageUrl, setMoxfieldImageUrl] = useState<string>(
-        "https://pbs.twimg.com/profile_images/1674989472839094273/p7a37K9W_400x400.jpg"
-    );
+    const [moxfieldImageUrl, setMoxfieldImageUrl] = useState<string>(defaultMoxfieldLogo);
 
     const profiles = useSelector(ProfileSelectors.getProfiles);
 
@@ -138,10 +138,32 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
         const moxfieldProfileObj = await MoxfieldProfileFinder(moxfieldInputValue);
         console.log(moxfieldProfileObj);
 
+        if (!moxfieldProfileObj) {
+            setMoxfieldImageUrl(errorMoxfieldLogo);
+        }
+
         if (moxfieldProfileObj && moxfieldProfileObj.profileImageType !== "none") {
             setMoxfieldImageUrl(moxfieldProfileObj.profileImageUrl);
         }
     };
+
+    function renderMoxfieldValidation() {
+        if (moxfieldImageUrl === errorMoxfieldLogo) {
+            return (
+                <>
+                    <WarningTwoIcon color={"red"} marginRight={"8px"} />
+                    <Text color={"red"}>Failed to locate Moxfield profile</Text>
+                </>
+            );
+        } else if (moxfieldImageUrl !== defaultMoxfieldLogo) {
+            return (
+                <>
+                    <CheckIcon color={"green"} marginRight={"8px"} />
+                    <Text color={"green"}>Moxfield profile located</Text>
+                </>
+            );
+        } else return null;
+    }
 
     return (
         <>
@@ -203,6 +225,15 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
                                             onBlur={getMoxfieldProfile}
                                             placeholder={"Your Moxfield Id"}
                                         />
+                                        <Flex
+                                            fontSize="xs"
+                                            color="gray.600"
+                                            alignSelf={"stretch"}
+                                            justifyContent={"center"}
+                                            alignItems={"center"}
+                                        >
+                                            {renderMoxfieldValidation()}
+                                        </Flex>
                                     </Flex>
                                     <Image
                                         src={moxfieldImageUrl}
