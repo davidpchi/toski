@@ -136,7 +136,9 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
     const MoxfieldProfileFinder = MoxfieldService.useGetMoxfieldProfile();
     const getMoxfieldProfile = async () => {
         const moxfieldProfileObj = await MoxfieldProfileFinder(moxfieldInputValue);
-        if (moxfieldProfileObj.data.profileImageType !== "none") {
+        console.log(moxfieldProfileObj);
+
+        if (moxfieldProfileObj && moxfieldProfileObj.data.profileImageType !== "none") {
             setMoxfieldImageUrl(moxfieldProfileObj.data.profileImageUrl);
         }
     };
