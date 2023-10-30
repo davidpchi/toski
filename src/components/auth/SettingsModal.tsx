@@ -138,8 +138,8 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
         const moxfieldProfileObj = await MoxfieldProfileFinder(moxfieldInputValue);
         console.log(moxfieldProfileObj);
 
-        if (moxfieldProfileObj && moxfieldProfileObj.data.profileImageType !== "none") {
-            setMoxfieldImageUrl(moxfieldProfileObj.data.profileImageUrl);
+        if (moxfieldProfileObj && moxfieldProfileObj.profileImageType !== "none") {
+            setMoxfieldImageUrl(moxfieldProfileObj.profileImageUrl);
         }
     };
 

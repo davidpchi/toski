@@ -9,7 +9,7 @@ const useGetMoxfieldProfile = () => {
             const _res = await axios.get<MoxfieldResponse>(endpoint + moxfieldId, {
                 headers: { "Content-Type": "application/json" }
             });
-            return _res;
+            return _res.data;
         } catch (err) {
             console.log(err);
         }
@@ -33,4 +33,15 @@ export type MoxfieldResponse = {
         badges: any[];
     };
     [key: string]: any; // This allows any other properties
+};
+
+export type MoxfieldResponseData = {
+    userName: string;
+    profileImageType: string;
+    profileImageUrl: string;
+    followerCount: number;
+    followingCount: number;
+    deckCount: number;
+    userSinceUtc: string;
+    badges: any[];
 };
