@@ -7,4 +7,5 @@ export type NewsArticle = {
     content: JSX.Element;
     note?: string;
     originalLink?: string;
+    image: string;
 };

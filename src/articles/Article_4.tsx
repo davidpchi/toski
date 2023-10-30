@@ -3,11 +3,12 @@ import { NewsArticle } from "../types/domain/NewsArticle";
 
 export const article_4: NewsArticle = {
     id: "4",
-    title: "Project Toski Update Notes 09.28",
+    title: "The Power of Search",
     author: "doomgeek",
     date: "September 28, 2023",
     summary: "Adding search functionality and commander trends!",
     content: <Article_4 />,
+    image: "https://media.discordapp.net/attachments/1095034595377942670/1134162561290473552/OIG.png?ex=654d0ab2&is=653a95b2&hm=2ce3c78c9513f6eb24882726532dd80729a5ca82f2a78fc01221d2d6655b423a&=&width=676&height=676"
 };
 
 export default function Article_4() {

@@ -26,7 +26,7 @@ import { FF_IS_LOGIN_ENABLED } from "../../services/featureFlagService";
 import { LoginModal } from "../auth/LoginModal";
 import { SettingsMenuItem } from "../auth/SettingsModal";
 import { ProfileService } from "../../services/ProfileService";
-import { DiscordService, getDiscordLoginEndpoint } from "../../services/DiscordService";
+import { getDiscordLoginEndpoint } from "../../services/DiscordService";
 import { useUserInfo } from "../../logic/hooks/userHooks";
 
 const placeholderImage = "https://static.thenounproject.com/png/5425-200.png";
@@ -51,7 +51,7 @@ const useHeaderTitle = () => {
         } else if (path.includes("playerOverview")) {
             title = "Player Overview";
         } else if (path.includes("articles")) {
-            title = "Articles";
+            title = "Updates";
         } else {
             const route = routes[path];
 
