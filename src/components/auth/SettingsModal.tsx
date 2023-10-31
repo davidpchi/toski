@@ -216,13 +216,9 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
                             </Flex>
                         </Flex>
                         <Flex marginBottom={"64px"} justifyContent={"Center"}>
-                            {
-                                // LOOK HERE
-                            }
-
                             {showMoxfieldLinker ? (
-                                <Flex>
-                                    <Flex flexDirection={"column"}>
+                                <>
+                                    <Flex flexDirection={"column"} flex={1} marginRight={"8px"}>
                                         <Text>Moxfield ID: </Text>
                                         <Input
                                             value={moxfieldIdInputValue}
@@ -245,8 +241,9 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
                                         alt="Moxfield logo"
                                         height={"80px"}
                                         borderRadius={8}
+                                        flex={0}
                                     />
-                                </Flex>
+                                </>
                             ) : (
                                 <Button mr={3} onClick={moxfieldLinkerToggle}>
                                     Add or Change Linked Moxfield Account
