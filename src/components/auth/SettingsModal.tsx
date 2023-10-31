@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { FiLink, FiRepeat } from "react-icons/fi";
+import { FiRepeat } from "react-icons/fi";
 import { useSelector } from "react-redux";
 
 import { CheckIcon, WarningTwoIcon } from "@chakra-ui/icons";
@@ -31,8 +31,13 @@ import { commanderList } from "../../services/commanderList";
 import { ProfileService } from "../../services/ProfileService";
 import { useAuthInfo } from "../../logic/hooks/authHooks";
 import { useUserInfo } from "../../logic/hooks/userHooks";
+import { MoxfieldService } from "../../services/MoxfieldService";
+import { MoxfieldProfile } from "../../types/domain/MoxfieldProfile";
 
 const placeholderImage = "https://static.thenounproject.com/png/5425-200.png";
+const defaultMoxfieldLogo = "https://pbs.twimg.com/profile_images/1674989472839094273/p7a37K9W_400x400.jpg";
+const errorMoxfieldLogo = "https://upload.wikimedia.org/wikipedia/commons/4/4e/OOjs_UI_icon_error-destructive.svg";
+const missingMoxfieldProfileImage = "https://upload.wikimedia.org/wikipedia/commons/e/e7/Ico_user_profile_blank.png";
 
 export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef }: { finalRef: any }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -40,6 +45,7 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
     const getPlayerName = ProfileService.useGetPlayerName();
     const { accessToken, tokenType, expirationDate } = useAuthInfo();
     const { userId, userPic, username } = useUserInfo();
+    const getMoxfieldProfile = MoxfieldService.useGetMoxfieldProfile();
 
     const accessTokenFromState = localStorage.getItem("tokenType");
 
@@ -50,6 +56,8 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
     const [commanderSelectValue, setCommanderSelectValue] = useState<string>(() => favoriteCommanderId);
     const [isRememberMe, setIsRememberMe] = useState<boolean>(accessTokenFromState !== null);
     const [showMoxfieldLinker, setShowMoxfieldLinker] = useState<boolean>(false);
+    const [moxfieldIdInputValue, setMoxfieldIdInputValue] = useState<string>("");
+    const [moxfieldImageUrl, setMoxfieldImageUrl] = useState<string>(defaultMoxfieldLogo);
 
     const profiles = useSelector(ProfileSelectors.getProfiles);
 
@@ -101,6 +109,10 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
         setIsRememberMe(!isRememberMe);
     }, [accessToken, expirationDate, isRememberMe, tokenType]);
 
+    const moxfieldLinkerToggle = useCallback(() => {
+        setShowMoxfieldLinker(!showMoxfieldLinker);
+    }, [showMoxfieldLinker]);
+
     // TODO: we should figure out a way that hiding the modal forces an unmount of this entire component instead of just tying it to the menu item.
     const openModal = useCallback(() => {
         // because the modal always exists and we are just toggling the visibiltiy of the modal,
@@ -115,15 +127,50 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
         if (showMoxfieldLinker) {
             moxfieldLinkerToggle();
         }
-    }, [onClose]);
+    }, [moxfieldLinkerToggle, onClose, showMoxfieldLinker]);
 
     const onSave = useCallback(() => {
         setFavoriteCommander(commanderSelectValue);
+
         closeModal();
     }, [closeModal, commanderSelectValue, setFavoriteCommander]);
 
-    function moxfieldLinkerToggle() {
-        setShowMoxfieldLinker(!showMoxfieldLinker);
+    function updateMoxfieldIdInputValue(event: any) {
+        setMoxfieldIdInputValue(event.target.value);
+    }
+
+    const onMoxfieldInputBlur = async () => {
+        const moxfieldProfileObj: MoxfieldProfile | undefined = await getMoxfieldProfile(moxfieldIdInputValue);
+        console.log(moxfieldProfileObj); // TODO: Remove before merge
+
+        if (moxfieldProfileObj === undefined) {
+            setMoxfieldImageUrl(errorMoxfieldLogo);
+            return;
+        }
+
+        if (moxfieldProfileObj.imageUrl) {
+            setMoxfieldImageUrl(moxfieldProfileObj.imageUrl);
+        } else {
+            setMoxfieldImageUrl(missingMoxfieldProfileImage);
+        }
+    };
+
+    function renderMoxfieldValidation() {
+        if (moxfieldImageUrl === errorMoxfieldLogo) {
+            return (
+                <>
+                    <WarningTwoIcon color={"red"} marginRight={"8px"} />
+                    <Text color={"red"}>Failed to locate Moxfield profile</Text>
+                </>
+            );
+        } else if (moxfieldImageUrl !== defaultMoxfieldLogo) {
+            return (
+                <>
+                    <CheckIcon color={"green"} marginRight={"8px"} />
+                    <Text color={"green"}>Moxfield profile located</Text>
+                </>
+            );
+        } else return null;
     }
 
     return (
@@ -173,20 +220,33 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
                         </Flex>
                         <Flex marginBottom={"64px"} justifyContent={"Center"}>
                             {showMoxfieldLinker ? (
-                                <Flex>
-                                    <Flex flexDirection={"column"}>
+                                <>
+                                    <Flex flexDirection={"column"} flex={1} marginRight={"8px"}>
                                         <Text>Moxfield ID: </Text>
-                                        <Input placeholder={"Your Moxfield Id"} />
+                                        <Input
+                                            value={moxfieldIdInputValue}
+                                            onChange={updateMoxfieldIdInputValue}
+                                            onBlur={onMoxfieldInputBlur}
+                                            placeholder={"Your Moxfield Id"}
+                                        />
+                                        <Flex
+                                            fontSize="xs"
+                                            color="gray.600"
+                                            alignSelf={"stretch"}
+                                            justifyContent={"center"}
+                                            alignItems={"center"}
+                                        >
+                                            {renderMoxfieldValidation()}
+                                        </Flex>
                                     </Flex>
                                     <Image
-                                        src={
-                                            "https://pbs.twimg.com/profile_images/1674989472839094273/p7a37K9W_400x400.jpg"
-                                        }
+                                        src={moxfieldImageUrl}
                                         alt="Moxfield logo"
                                         height={"80px"}
                                         borderRadius={8}
+                                        flex={0}
                                     />
-                                </Flex>
+                                </>
                             ) : (
                                 <Button mr={3} onClick={moxfieldLinkerToggle}>
                                     Add or Change Linked Moxfield Account
