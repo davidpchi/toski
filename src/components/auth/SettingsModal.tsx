@@ -41,7 +41,7 @@ const missingMoxfieldProfileImage = "https://upload.wikimedia.org/wikipedia/comm
 
 export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef }: { finalRef: any }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const setFavoriteCommander = ProfileService.useSetFavoriteCommander();
+    const setServerProfile = ProfileService.useSetServerProfile();
     const getPlayerName = ProfileService.useGetPlayerName();
     const { accessToken, tokenType, expirationDate } = useAuthInfo();
     const { userId, userPic, username } = useUserInfo();
@@ -65,9 +65,9 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
         // if profiles are hydrated AND we don't see our current user in the profiles list, kick off an "initialization" request to get this user into the db
         if (profiles !== undefined && userId !== undefined && profiles[userId] === undefined) {
             console.log("Initialized user in chatterfang:" + userId);
-            setFavoriteCommander("");
+            setServerProfile("");
         }
-    }, [profiles, setFavoriteCommander, userId]);
+    }, [profiles, setServerProfile, userId]);
 
     const commandersArray = useMemo(() => {
         return Object.keys(commanderList).map((commanderName) => {
@@ -130,10 +130,12 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
     }, [moxfieldLinkerToggle, onClose, showMoxfieldLinker]);
 
     const onSave = useCallback(() => {
-        setFavoriteCommander(commanderSelectValue);
+        if (moxfieldIdInputValue.length > 1) {
+            setServerProfile(commanderSelectValue, moxfieldIdInputValue);
+        } else setServerProfile(commanderSelectValue);
 
         closeModal();
-    }, [closeModal, commanderSelectValue, setFavoriteCommander]);
+    }, [closeModal, commanderSelectValue, setServerProfile]);
 
     function updateMoxfieldIdInputValue(event: any) {
         setMoxfieldIdInputValue(event.target.value);
