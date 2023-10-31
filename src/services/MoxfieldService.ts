@@ -1,15 +1,22 @@
 import axios from "axios";
 import { useCallback } from "react";
+import { MoxfieldProfile } from "../types/domain/MoxfieldProfile";
+import { MoxfieldResponseData } from "../types/service/MoxfieldService/MoxfieldResponse";
 
 const useGetMoxfieldProfile = () => {
     const endpoint = "https://chatterfang.onrender.com/moxfield/";
 
-    return useCallback(async (moxfieldId: string) => {
+    return useCallback(async (moxfieldId: string): Promise<MoxfieldProfile | undefined> => {
         try {
-            const _res = await axios.get<MoxfieldResponse>(endpoint + moxfieldId, {
+            const _res = await axios.get<MoxfieldResponseData>(endpoint + moxfieldId, {
                 headers: { "Content-Type": "application/json" }
             });
-            return _res.data;
+            const serviceObj: MoxfieldResponseData = _res.data;
+            let newMoxfieldProfile: MoxfieldProfile = {
+                userName: serviceObj.userName,
+                imageUrl: serviceObj.profileImageUrl ? serviceObj.profileImageUrl : undefined
+            };
+            return newMoxfieldProfile;
         } catch (err) {
             console.log(err);
         }
@@ -19,29 +26,4 @@ const useGetMoxfieldProfile = () => {
 
 export const MoxfieldService = {
     useGetMoxfieldProfile
-};
-
-export type MoxfieldResponse = {
-    data: {
-        userName: string;
-        profileImageType: string;
-        profileImageUrl: string;
-        followerCount: number;
-        followingCount: number;
-        deckCount: number;
-        userSinceUtc: string;
-        badges: any[];
-    };
-    [key: string]: any; // This allows any other properties
-};
-
-export type MoxfieldResponseData = {
-    userName: string;
-    profileImageType: string;
-    profileImageUrl: string;
-    followerCount: number;
-    followingCount: number;
-    deckCount: number;
-    userSinceUtc: string;
-    badges: any[];
 };

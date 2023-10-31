@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { FiLink, FiRepeat } from "react-icons/fi";
+import { FiRepeat } from "react-icons/fi";
 import { useSelector } from "react-redux";
 
 import { CheckIcon, WarningTwoIcon } from "@chakra-ui/icons";
@@ -32,8 +32,12 @@ import { ProfileService } from "../../services/ProfileService";
 import { useAuthInfo } from "../../logic/hooks/authHooks";
 import { useUserInfo } from "../../logic/hooks/userHooks";
 import { MoxfieldService } from "../../services/MoxfieldService";
+import { MoxfieldProfile } from "../../types/domain/MoxfieldProfile";
 
 const placeholderImage = "https://static.thenounproject.com/png/5425-200.png";
+const defaultMoxfieldLogo = "https://pbs.twimg.com/profile_images/1674989472839094273/p7a37K9W_400x400.jpg";
+const errorMoxfieldLogo = "https://upload.wikimedia.org/wikipedia/commons/4/4e/OOjs_UI_icon_error-destructive.svg";
+const missingMoxfieldProfileImage = "https://upload.wikimedia.org/wikipedia/commons/e/e7/Ico_user_profile_blank.png";
 
 export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef }: { finalRef: any }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -41,19 +45,18 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
     const getPlayerName = ProfileService.useGetPlayerName();
     const { accessToken, tokenType } = useAuthInfo();
     const { userId, userPic, username } = useUserInfo();
+    const getMoxfieldProfile = MoxfieldService.useGetMoxfieldProfile();
 
     const accessTokenFromState = localStorage.getItem("tokenType");
 
     const profile = useSelector((state: AppState) => ProfileSelectors.getProfile(state, userId ?? ""));
     const toskiPlayer = getPlayerName(profile ? profile.id : "");
-    const defaultMoxfieldLogo = "https://pbs.twimg.com/profile_images/1674989472839094273/p7a37K9W_400x400.jpg";
-    const errorMoxfieldLogo = "https://upload.wikimedia.org/wikipedia/commons/4/4e/OOjs_UI_icon_error-destructive.svg";
 
     const favoriteCommanderId = profile && profile.favoriteCommanderId ? profile.favoriteCommanderId : "no value";
     const [commanderSelectValue, setCommanderSelectValue] = useState<string>(() => favoriteCommanderId);
     const [isRememberMe, setIsRememberMe] = useState<boolean>(accessTokenFromState !== null);
     const [showMoxfieldLinker, setShowMoxfieldLinker] = useState<boolean>(false);
-    const [moxfieldInputValue, setMoxfieldInputValue] = useState<string>("");
+    const [moxfieldIdInputValue, setMoxfieldIdInputValue] = useState<string>("");
     const [moxfieldImageUrl, setMoxfieldImageUrl] = useState<string>(defaultMoxfieldLogo);
 
     const profiles = useSelector(ProfileSelectors.getProfiles);
@@ -103,6 +106,10 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
         setIsRememberMe(!isRememberMe);
     }, [accessToken, isRememberMe, tokenType]);
 
+    const moxfieldLinkerToggle = useCallback(() => {
+        setShowMoxfieldLinker(!showMoxfieldLinker);
+    }, [showMoxfieldLinker]);
+
     // TODO: we should figure out a way that hiding the modal forces an unmount of this entire component instead of just tying it to the menu item.
     const openModal = useCallback(() => {
         // because the modal always exists and we are just toggling the visibiltiy of the modal,
@@ -117,7 +124,7 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
         if (showMoxfieldLinker) {
             moxfieldLinkerToggle();
         }
-    }, [onClose]);
+    }, [moxfieldLinkerToggle, onClose, showMoxfieldLinker]);
 
     const onSave = useCallback(() => {
         setFavoriteCommander(commanderSelectValue);
@@ -125,25 +132,23 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
         closeModal();
     }, [closeModal, commanderSelectValue, setFavoriteCommander]);
 
-    function moxfieldLinkerToggle() {
-        setShowMoxfieldLinker(!showMoxfieldLinker);
+    function updateMoxfieldIdInputValue(event: any) {
+        setMoxfieldIdInputValue(event.target.value);
     }
 
-    function updateMoxfieldInputValue(event: any) {
-        setMoxfieldInputValue(event.target.value);
-    }
+    const onMoxfieldInputBlur = async () => {
+        const moxfieldProfileObj: MoxfieldProfile | undefined = await getMoxfieldProfile(moxfieldIdInputValue);
+        console.log(moxfieldProfileObj); // TODO: Remove before merge
 
-    const MoxfieldProfileFinder = MoxfieldService.useGetMoxfieldProfile();
-    const getMoxfieldProfile = async () => {
-        const moxfieldProfileObj = await MoxfieldProfileFinder(moxfieldInputValue);
-        console.log(moxfieldProfileObj);
-
-        if (!moxfieldProfileObj) {
+        if (moxfieldProfileObj === undefined) {
             setMoxfieldImageUrl(errorMoxfieldLogo);
+            return;
         }
 
-        if (moxfieldProfileObj && moxfieldProfileObj.profileImageType !== "none") {
-            setMoxfieldImageUrl(moxfieldProfileObj.profileImageUrl);
+        if (moxfieldProfileObj.imageUrl) {
+            setMoxfieldImageUrl(moxfieldProfileObj.imageUrl);
+        } else {
+            setMoxfieldImageUrl(missingMoxfieldProfileImage);
         }
     };
 
@@ -220,9 +225,9 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
                                     <Flex flexDirection={"column"}>
                                         <Text>Moxfield ID: </Text>
                                         <Input
-                                            value={moxfieldInputValue}
-                                            onChange={updateMoxfieldInputValue}
-                                            onBlur={getMoxfieldProfile}
+                                            value={moxfieldIdInputValue}
+                                            onChange={updateMoxfieldIdInputValue}
+                                            onBlur={onMoxfieldInputBlur}
                                             placeholder={"Your Moxfield Id"}
                                         />
                                         <Flex
