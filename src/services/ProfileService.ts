@@ -55,6 +55,8 @@ const useSetServerProfile = () => {
                       userId: userId,
                       favoriteCommander: commanderId
                   };
+            console.log("line 58"); // TODO: Remove before merge
+            console.log(newProfile);
 
             if (accessToken !== undefined && userId !== undefined) {
                 axios
@@ -64,6 +66,7 @@ const useSetServerProfile = () => {
                     .then((_res) => {
                         // kick off a rehydrate of our profiles
                         hydrateProfiles();
+                        console.log("line 68"); // TODO: Remove before merge
                         console.log(newProfile);
                     });
             }

@@ -130,8 +130,11 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
     }, [moxfieldLinkerToggle, onClose, showMoxfieldLinker]);
 
     const onSave = useCallback(() => {
+        console.log(moxfieldIdInputValue.length);
         if (moxfieldIdInputValue.length > 1) {
             setServerProfile(commanderSelectValue, moxfieldIdInputValue);
+            console.log("onSave"); // TODO: Remove before merge
+            console.log(moxfieldIdInputValue);
         } else setServerProfile(commanderSelectValue);
 
         closeModal();
