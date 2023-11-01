@@ -58,6 +58,7 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
     const [showMoxfieldLinker, setShowMoxfieldLinker] = useState<boolean>(false);
     const [moxfieldIdInputValue, setMoxfieldIdInputValue] = useState<string>("");
     const [moxfieldImageUrl, setMoxfieldImageUrl] = useState<string>(defaultMoxfieldLogo);
+    const [moxfieldImageValidated, setMoxfieldImageValidated] = useState<boolean>(false);
 
     const profiles = useSelector(ProfileSelectors.getProfiles);
 
@@ -113,9 +114,28 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
         setShowMoxfieldLinker(!showMoxfieldLinker);
     }, [showMoxfieldLinker]);
 
+    const onMoxfieldInputBlur = useCallback(async () => {
+        const moxfieldProfileObj: MoxfieldProfile | undefined = await getMoxfieldProfile(moxfieldIdInputValue);
+        console.log(moxfieldProfileObj); // TODO: Remove before merge
+
+        if (moxfieldProfileObj === undefined) {
+            setMoxfieldImageUrl(errorMoxfieldLogo);
+            setMoxfieldImageValidated(false);
+            return;
+        }
+
+        if (moxfieldProfileObj.imageUrl) {
+            setMoxfieldImageUrl(moxfieldProfileObj.imageUrl);
+            setMoxfieldImageValidated(true);
+        } else {
+            setMoxfieldImageUrl(missingMoxfieldProfileImage);
+            setMoxfieldImageValidated(false);
+        }
+    }, [getMoxfieldProfile, moxfieldIdInputValue]);
+
     // TODO: we should figure out a way that hiding the modal forces an unmount of this entire component instead of just tying it to the menu item.
     const openModal = useCallback(() => {
-        // because the modal always exists and we are just toggling the visibiltiy of the modal,
+        // because the modal always exists and we are just toggling the visibility of the modal,
         // the initial value the commanderSelectValue will always be "" because the profile hasn't hydrated yet.
         // hence, force a hydration of the commanderSelectValue everytime the modal opens for the first time.
         setCommanderSelectValue(favoriteCommanderId);
@@ -131,34 +151,26 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
 
     const onSave = useCallback(() => {
         console.log(moxfieldIdInputValue.length);
-        if (moxfieldIdInputValue.length > 1) {
+        onMoxfieldInputBlur();
+        if (moxfieldIdInputValue.length > 1 && moxfieldImageValidated) {
             setServerProfile(commanderSelectValue, moxfieldIdInputValue);
             console.log("onSave"); // TODO: Remove before merge
             console.log(moxfieldIdInputValue);
         } else setServerProfile(commanderSelectValue);
 
         closeModal();
-    }, [closeModal, commanderSelectValue, moxfieldIdInputValue, setServerProfile]);
+    }, [
+        closeModal,
+        commanderSelectValue,
+        moxfieldIdInputValue,
+        moxfieldImageValidated,
+        onMoxfieldInputBlur,
+        setServerProfile
+    ]);
 
     function updateMoxfieldIdInputValue(event: any) {
         setMoxfieldIdInputValue(event.target.value);
     }
-
-    const onMoxfieldInputBlur = async () => {
-        const moxfieldProfileObj: MoxfieldProfile | undefined = await getMoxfieldProfile(moxfieldIdInputValue);
-        console.log(moxfieldProfileObj); // TODO: Remove before merge
-
-        if (moxfieldProfileObj === undefined) {
-            setMoxfieldImageUrl(errorMoxfieldLogo);
-            return;
-        }
-
-        if (moxfieldProfileObj.imageUrl) {
-            setMoxfieldImageUrl(moxfieldProfileObj.imageUrl);
-        } else {
-            setMoxfieldImageUrl(missingMoxfieldProfileImage);
-        }
-    };
 
     function renderMoxfieldValidation() {
         if (moxfieldImageUrl === errorMoxfieldLogo) {
