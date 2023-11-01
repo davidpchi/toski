@@ -41,7 +41,7 @@ const missingMoxfieldProfileImage = "https://upload.wikimedia.org/wikipedia/comm
 
 export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef }: { finalRef: any }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const setServerProfile = ProfileService.useSetServerProfile();
+    const updateProfile = ProfileService.useUpdateProfile();
     const getPlayerName = ProfileService.useGetPlayerName();
     const { accessToken, tokenType, expirationDate } = useAuthInfo();
     const { userId, userPic, username } = useUserInfo();
@@ -66,9 +66,9 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
         // if profiles are hydrated AND we don't see our current user in the profiles list, kick off an "initialization" request to get this user into the db
         if (profiles !== undefined && userId !== undefined && profiles[userId] === undefined) {
             console.log("Initialized user in chatterfang:" + userId);
-            setServerProfile("");
+            updateProfile("");
         }
-    }, [profiles, setServerProfile, userId]);
+    }, [profiles, updateProfile, userId]);
 
     const commandersArray = useMemo(() => {
         return Object.keys(commanderList).map((commanderName) => {
@@ -118,18 +118,23 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
         const moxfieldProfileObj: MoxfieldProfile | undefined = await getMoxfieldProfile(moxfieldIdInputValue);
         console.log(moxfieldProfileObj); // TODO: Remove before merge
 
+        // Case: Moxfield ID does not validate
         if (moxfieldProfileObj === undefined) {
             setMoxfieldImageUrl(errorMoxfieldLogo);
             setMoxfieldImageValidated(false);
             return;
         }
 
+        // Case: Moxfield ID validates AND has a profile image
         if (moxfieldProfileObj.imageUrl) {
             setMoxfieldImageUrl(moxfieldProfileObj.imageUrl);
             setMoxfieldImageValidated(true);
-        } else {
+        }
+
+        // Case: Moxfield ID validates but does NOT have a profile image
+        else {
             setMoxfieldImageUrl(missingMoxfieldProfileImage);
-            setMoxfieldImageValidated(false);
+            setMoxfieldImageValidated(true);
         }
     }, [getMoxfieldProfile, moxfieldIdInputValue]);
 
@@ -137,7 +142,7 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
     const openModal = useCallback(() => {
         // because the modal always exists and we are just toggling the visibility of the modal,
         // the initial value the commanderSelectValue will always be "" because the profile hasn't hydrated yet.
-        // hence, force a hydration of the commanderSelectValue everytime the modal opens for the first time.
+        // hence, force a hydration of the commanderSelectValue every time the modal opens for the first time.
         setCommanderSelectValue(favoriteCommanderId);
         onOpen();
     }, [favoriteCommanderId, onOpen]);
@@ -153,10 +158,10 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
         console.log(moxfieldIdInputValue.length);
         onMoxfieldInputBlur();
         if (moxfieldIdInputValue.length > 1 && moxfieldImageValidated) {
-            setServerProfile(commanderSelectValue, moxfieldIdInputValue);
+            updateProfile(commanderSelectValue, moxfieldIdInputValue);
             console.log("onSave"); // TODO: Remove before merge
             console.log(moxfieldIdInputValue);
-        } else setServerProfile(commanderSelectValue);
+        } else updateProfile(commanderSelectValue);
 
         closeModal();
     }, [
@@ -165,7 +170,7 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
         moxfieldIdInputValue,
         moxfieldImageValidated,
         onMoxfieldInputBlur,
-        setServerProfile
+        updateProfile
     ]);
 
     function updateMoxfieldIdInputValue(event: any) {

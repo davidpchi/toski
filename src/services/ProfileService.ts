@@ -39,7 +39,7 @@ const useHydrateProfiles = () => {
     }, [accessToken, userId, dispatch]);
 };
 
-const useSetServerProfile = () => {
+const useUpdateProfile = () => {
     const hydrateProfiles = useHydrateProfiles();
 
     const accessToken = useSelector(AuthSelectors.getAccessToken);
@@ -97,7 +97,7 @@ const useGetPlayerName = (): ((profileId: string) => string | undefined) => {
 
 export const ProfileService = {
     useHydrateProfiles,
-    useSetServerProfile,
+    useUpdateProfile,
     useGetProfileId,
     useGetPlayerName
 };
