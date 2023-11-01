@@ -118,8 +118,8 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
         const moxfieldProfileObj: MoxfieldProfile | undefined = await getMoxfieldProfile(moxfieldIdInputValue);
         console.log(moxfieldProfileObj); // TODO: Remove before merge
 
-        // Case: Moxfield ID does not validate
-        if (moxfieldProfileObj === undefined) {
+        // Case: Moxfield ID does not validate (case-sensitive)
+        if (moxfieldProfileObj === undefined || moxfieldProfileObj.userName !== moxfieldIdInputValue) {
             setMoxfieldImageUrl(errorMoxfieldLogo);
             setMoxfieldImageValidated(false);
             return;
@@ -182,7 +182,9 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
             return (
                 <>
                     <WarningTwoIcon color={"red"} marginRight={"8px"} />
-                    <Text color={"red"}>Failed to locate Moxfield profile</Text>
+                    <Text color={"red"}>
+                        Failed to locate Moxfield profile. Note that Moxfield IDs are case sensitive
+                    </Text>
                 </>
             );
         } else if (moxfieldImageUrl !== defaultMoxfieldLogo) {
