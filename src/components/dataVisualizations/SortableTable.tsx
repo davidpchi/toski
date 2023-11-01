@@ -17,7 +17,7 @@ import { primaryColor } from "../../themes/acorn";
 
 const defaultPropGetter = () => ({});
 
-export function SortableTable({
+export const SortableTable = React.memo(function SortableTable({
     columns,
     data,
     defaultSort = [],
@@ -115,4 +115,4 @@ export function SortableTable({
             </Table>
         </TableContainer>
     );
-}
+});
