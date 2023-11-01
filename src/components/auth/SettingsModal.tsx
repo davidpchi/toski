@@ -138,7 +138,7 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
         } else setServerProfile(commanderSelectValue);
 
         closeModal();
-    }, [closeModal, commanderSelectValue, setServerProfile]);
+    }, [closeModal, commanderSelectValue, moxfieldIdInputValue, setServerProfile]);
 
     function updateMoxfieldIdInputValue(event: any) {
         setMoxfieldIdInputValue(event.target.value);
