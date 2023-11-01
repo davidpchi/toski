@@ -1,4 +1,4 @@
-import { Checkbox, Flex, Tooltip } from "@chakra-ui/react";
+import { Checkbox, Flex, Input, Tooltip } from "@chakra-ui/react";
 import React, { useCallback, useState } from "react";
 import { SortableTable } from "../dataVisualizations/SortableTable";
 import { playerOverviewColumns } from "../dataVisualizations/columnHelpers/playerOverviewColumnHelper";
@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { PLAYER_MINIMUM_GAMES_REQUIRED } from "../constants";
 import { AppState } from "../../redux/rootReducer";
 import { DatePicker } from "../common/DatePicker";
+import { useTableFilters } from "../../logic/hooks/tableHooks";
 
 /**
  * Component showing all the players in a big list
@@ -17,30 +18,26 @@ import { DatePicker } from "../common/DatePicker";
 export const PlayerOverview = React.memo(function MatchHistory() {
     const navigate = useNavigate();
 
-    const [dateFilter, setDateFilter] = useState<Date | undefined>(undefined);
-    const onDatePickerChange = useCallback(
-        (date: Date | undefined) => {
-            setDateFilter(date);
-        },
-        [setDateFilter]
-    );
+    const { dateFilter, showOnlyQualfied, searchInput, onDatePickerChange, onShowOnlyQualifiedChange, onSearchChange } =
+        useTableFilters();
 
     const allPlayers: { [id: string]: Player } | undefined = useSelector(StatsSelectors.getPlayers);
     const players: Player[] = useSelector((state: AppState) => StatsSelectors.getPlayersByDate(state, dateFilter));
-
-    const [isFiltered, setIsFiltered] = useState<boolean>(true);
-    const onFilterChange = () => {
-        setIsFiltered(!isFiltered);
-    };
 
     if (allPlayers === undefined) {
         return <Loading text="Loading..." />;
     }
 
     let playersArray = players.sort((a: Player, b: Player) => a.name.localeCompare(b.name));
-    if (isFiltered) {
+    if (showOnlyQualfied) {
         playersArray = playersArray.filter(
             (value: Player) => allPlayers[value.name].validMatchesCount >= PLAYER_MINIMUM_GAMES_REQUIRED
+        );
+    }
+
+    if (searchInput.length > 0 && allPlayers) {
+        playersArray = playersArray.filter((value: Player) =>
+            allPlayers[value.name].name.toLowerCase().includes(searchInput.toLowerCase())
         );
     }
 
@@ -54,11 +51,14 @@ export const PlayerOverview = React.memo(function MatchHistory() {
                     arrowSize={15}
                 >
                     <div>
-                        <Checkbox isChecked={isFiltered} onChange={onFilterChange}>
+                        <Checkbox isChecked={showOnlyQualfied} onChange={onShowOnlyQualifiedChange}>
                             {"Show only qualified"}
                         </Checkbox>
                     </div>
                 </Tooltip>
+                <div style={{ padding: 20 }}>
+                    <Input placeholder="Filter by..." onChange={onSearchChange} value={searchInput} />
+                </div>
             </Flex>
             <SortableTable
                 columns={playerOverviewColumns}
