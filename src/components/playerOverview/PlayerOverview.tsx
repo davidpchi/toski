@@ -1,5 +1,5 @@
 import { Checkbox, Flex, Input, Tooltip } from "@chakra-ui/react";
-import React, { useCallback, useState } from "react";
+import React from "react";
 import { SortableTable } from "../dataVisualizations/SortableTable";
 import { playerOverviewColumns } from "../dataVisualizations/columnHelpers/playerOverviewColumnHelper";
 import { StatsSelectors } from "../../redux/stats/statsSelectors";
@@ -43,8 +43,14 @@ export const PlayerOverview = React.memo(function MatchHistory() {
 
     return (
         <Flex direction="column" justify="center" align="center">
-            <Flex alignSelf={"center"} marginBottom={"16px"} alignItems={"center"}>
-                <DatePicker onChange={onDatePickerChange} />
+            <Flex
+                alignSelf={"center"}
+                marginBottom={"16px"}
+                alignItems={"center"}
+                flexWrap={"wrap"}
+                justifyContent={"center"}
+            >
+                <DatePicker onChange={onDatePickerChange} value={dateFilter} />
                 <Tooltip
                     label={<p style={{ textAlign: "center" }}>Players play 10 games to be qualified.</p>}
                     hasArrow

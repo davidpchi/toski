@@ -50,10 +50,7 @@ export const CommanderOverview = React.memo(function MatchHistory() {
                 flexWrap={"wrap"}
                 justifyContent={"center"}
             >
-                {
-                    // TODO: The date picker needs to properly intialize to what the url parameter is
-                }
-                <DatePicker onChange={onDatePickerChange} />
+                <DatePicker onChange={onDatePickerChange} value={dateFilter} />
                 <Tooltip
                     label={<p style={{ textAlign: "center" }}>Commanders play 5 games to be qualified.</p>}
                     hasArrow
