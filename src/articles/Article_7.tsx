@@ -6,7 +6,7 @@ export const article_7: NewsArticle = {
     title: "The Doctor",
     author: "doomgeek",
     date: "October 17, 2023",
-    summary: "Support for Doctor Who and Matchups",
+    summary: "Support for Doctor Who and matchups",
     content: <Article_7 />,
     image: "https://media.discordapp.net/attachments/1095034595377942670/1123500680175419452/OIG.png?ex=654b2b0b&is=6538b60b&hm=7dc68943bbdb5058dd4d972657cbf94fb1b53eeeeaf2ec2a9981d34bf1f99a18&=&width=676&height=676"
 };

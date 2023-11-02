@@ -32,8 +32,8 @@ export const NewsCard = React.memo(function NewsCard({
             onClick={onClick}
         >
             <Flex flexDirection="column" alignItems={"flex-start"} height="100%" width={"100%"}>
-                <Flex height={"200px"} position={"relative"}>
-                    {/* <Box
+                <Flex height={"200px"} position={"relative"} width={"100%"}>
+                    <Box
                         position={"absolute"}
                         bottom={0}
                         right={0}
@@ -41,12 +41,12 @@ export const NewsCard = React.memo(function NewsCard({
                         height={"50%"}
                         width={"100%"}
                         backgroundImage={"linear-gradient(to bottom, rgba(255,0,0,0), #F8F9FA)"}
-                    /> */}
+                    />
                     <Image src={image} objectFit={"cover"} borderTopRadius={"4px"} width={"100%"} />
                 </Flex>
                 <Flex padding={"16px"} flexDirection={"column"} width={"100%"}>
                     <h1 style={{ fontSize: 12 }}>{`${date}- ${author}`}</h1>
-                    <h1 style={{ fontSize: 30 }}>{title}</h1>
+                    <h1 style={{ fontSize: 30, fontWeight: "bold" }}>{title}</h1>
                     <div
                         style={{
                             marginTop: 8,
