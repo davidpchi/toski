@@ -2,7 +2,7 @@ import React from "react";
 import { FiArrowLeft } from "react-icons/fi";
 import { useLoaderData, useNavigate } from "react-router-dom";
 
-import { Button, Flex, Link, Text } from "@chakra-ui/react";
+import { Button, Flex, Link, Text, Image, Box } from "@chakra-ui/react";
 
 import { Error } from "../Error";
 import { Articles } from "../../articles/Articles";
@@ -29,9 +29,31 @@ export const NewsDetail = React.memo(function NewsDetail() {
     return (
         <Flex flexDirection="column" alignItems="center" paddingBottom="16">
             <Flex flexDirection="column" maxWidth="750">
-                <h1 style={{ fontSize: 12 }}>{article.date}</h1>
-                <h1 style={{ fontSize: 30, fontWeight: "bold" }}>{article.title}</h1>
-                <Text fontStyle={"italic"}>{article.author}</Text>
+                <Flex height={"300px"} position={"relative"}>
+                    <Box
+                        position={"absolute"}
+                        bottom={0}
+                        right={0}
+                        left={0}
+                        height={"100%"}
+                        width={"100%"}
+                        backgroundImage={"linear-gradient(to bottom, rgba(255,0,0,0), #F8F9FA)"}
+                    />
+                    <Flex
+                        flexDirection={"column"}
+                        position={"absolute"}
+                        bottom={-1}
+                        right={0}
+                        left={0}
+                        width={"100%"}
+                        padding={"8px"}
+                    >
+                        <h1 style={{ fontSize: 12, fontWeight: "bold" }}>{article.date}</h1>
+                        <h1 style={{ fontSize: 30, fontWeight: "bold" }}>{article.title}</h1>
+                        <Text fontStyle={"italic"}>{article.author}</Text>
+                    </Flex>
+                    <Image src={article.image} objectFit={"cover"} borderRadius={"8px"} width={"100%"} />
+                </Flex>
                 {article.note !== undefined ? <Text fontStyle={"italic"}>{article.note}</Text> : null}
                 {article.originalLink !== undefined ? (
                     <Link href={article.originalLink}>Go to original article</Link>

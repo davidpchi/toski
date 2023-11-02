@@ -23,6 +23,7 @@ export const NewsCards = React.memo(function NewsCards() {
                         date={article.date}
                         author={article.author}
                         content={article.summary}
+                        image={article.image}
                     />
                 </Flex>
             );
