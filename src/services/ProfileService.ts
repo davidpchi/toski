@@ -39,7 +39,7 @@ const useHydrateProfiles = () => {
     }, [accessToken, userId, dispatch]);
 };
 
-const useSetFavoriteCommander = () => {
+const useUpdateProfile = () => {
     const hydrateProfiles = useHydrateProfiles();
 
     const accessToken = useSelector(AuthSelectors.getAccessToken);
@@ -48,22 +48,26 @@ const useSetFavoriteCommander = () => {
     const endpoint = "https://chatterfang.onrender.com/profiles";
 
     return useCallback(
-        (commanderId: string) => {
+        (commanderId: string, moxfieldId?: string) => {
+            const newProfile = moxfieldId
+                ? { userId: userId, favoriteCommander: commanderId, moxfieldId: moxfieldId }
+                : {
+                      userId: userId,
+                      favoriteCommander: commanderId
+                  };
+            console.log("line 58"); // TODO: Remove before merge
+            console.log(newProfile);
+
             if (accessToken !== undefined && userId !== undefined) {
                 axios
-                    .post<string>(
-                        endpoint,
-                        {
-                            userId: userId,
-                            favoriteCommander: commanderId
-                        },
-                        {
-                            headers: { "access-token": accessToken, "Content-Type": "application/json" }
-                        }
-                    )
+                    .post<string>(endpoint, newProfile, {
+                        headers: { "access-token": accessToken, "Content-Type": "application/json" }
+                    })
                     .then((_res) => {
                         // kick off a rehydrate of our profiles
                         hydrateProfiles();
+                        console.log("line 68"); // TODO: Remove before merge
+                        console.log(newProfile);
                     });
             }
         },
@@ -93,7 +97,7 @@ const useGetPlayerName = (): ((profileId: string) => string | undefined) => {
 
 export const ProfileService = {
     useHydrateProfiles,
-    useSetFavoriteCommander,
+    useUpdateProfile,
     useGetProfileId,
     useGetPlayerName
 };

@@ -10,7 +10,7 @@ export const PieGraph = React.memo(function PieGraph({
     data,
     tooltipTitleCallback,
     tooltipLabelCallback,
-    backgroundColors,
+    backgroundColors
 }: {
     dataLabel: string;
     data: number[] | string[];
@@ -29,11 +29,11 @@ export const PieGraph = React.memo(function PieGraph({
                     label: dataLabel,
                     data: data,
                     fill: true,
-                    backgroundColor: backgroundColors,
-                },
-            ],
+                    backgroundColor: backgroundColors
+                }
+            ]
         };
-    }, [data, dataLabel]);
+    }, [backgroundColors, data, dataLabel]);
 
     return (
         <Pie
@@ -41,16 +41,16 @@ export const PieGraph = React.memo(function PieGraph({
             options={{
                 plugins: {
                     legend: {
-                        display: false,
+                        display: false
                     },
                     tooltip: {
                         callbacks: {
                             title: tooltipTitleCallback ? (item) => tooltipTitleCallback(item) : undefined,
-                            label: tooltipLabelCallback ? (item) => tooltipLabelCallback(item) : undefined,
+                            label: tooltipLabelCallback ? (item) => tooltipLabelCallback(item) : undefined
                         },
-                        displayColors: true,
-                    },
-                },
+                        displayColors: true
+                    }
+                }
             }}
         />
     );

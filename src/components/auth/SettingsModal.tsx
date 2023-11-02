@@ -41,7 +41,7 @@ const missingMoxfieldProfileImage = "https://upload.wikimedia.org/wikipedia/comm
 
 export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef }: { finalRef: any }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const setFavoriteCommander = ProfileService.useSetFavoriteCommander();
+    const updateProfile = ProfileService.useUpdateProfile();
     const getPlayerName = ProfileService.useGetPlayerName();
     const { accessToken, tokenType, expirationDate } = useAuthInfo();
     const { userId, userPic, username } = useUserInfo();
@@ -58,6 +58,7 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
     const [showMoxfieldLinker, setShowMoxfieldLinker] = useState<boolean>(false);
     const [moxfieldIdInputValue, setMoxfieldIdInputValue] = useState<string>("");
     const [moxfieldImageUrl, setMoxfieldImageUrl] = useState<string>(defaultMoxfieldLogo);
+    const [moxfieldImageValidated, setMoxfieldImageValidated] = useState<boolean>(false);
 
     const profiles = useSelector(ProfileSelectors.getProfiles);
 
@@ -65,9 +66,9 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
         // if profiles are hydrated AND we don't see our current user in the profiles list, kick off an "initialization" request to get this user into the db
         if (profiles !== undefined && userId !== undefined && profiles[userId] === undefined) {
             console.log("Initialized user in chatterfang:" + userId);
-            setFavoriteCommander("");
+            updateProfile("");
         }
-    }, [profiles, setFavoriteCommander, userId]);
+    }, [profiles, updateProfile, userId]);
 
     const commandersArray = useMemo(() => {
         return Object.keys(commanderList).map((commanderName) => {
@@ -113,11 +114,35 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
         setShowMoxfieldLinker(!showMoxfieldLinker);
     }, [showMoxfieldLinker]);
 
+    const onMoxfieldInputBlur = useCallback(async () => {
+        const moxfieldProfileObj: MoxfieldProfile | undefined = await getMoxfieldProfile(moxfieldIdInputValue);
+        console.log(moxfieldProfileObj); // TODO: Remove before merge
+
+        // Case: Moxfield ID does not validate (case-sensitive)
+        if (moxfieldProfileObj === undefined || moxfieldProfileObj.userName !== moxfieldIdInputValue) {
+            setMoxfieldImageUrl(errorMoxfieldLogo);
+            setMoxfieldImageValidated(false);
+            return;
+        }
+
+        // Case: Moxfield ID validates AND has a profile image
+        if (moxfieldProfileObj.imageUrl) {
+            setMoxfieldImageUrl(moxfieldProfileObj.imageUrl);
+            setMoxfieldImageValidated(true);
+        }
+
+        // Case: Moxfield ID validates but does NOT have a profile image
+        else {
+            setMoxfieldImageUrl(missingMoxfieldProfileImage);
+            setMoxfieldImageValidated(true);
+        }
+    }, [getMoxfieldProfile, moxfieldIdInputValue]);
+
     // TODO: we should figure out a way that hiding the modal forces an unmount of this entire component instead of just tying it to the menu item.
     const openModal = useCallback(() => {
-        // because the modal always exists and we are just toggling the visibiltiy of the modal,
+        // because the modal always exists and we are just toggling the visibility of the modal,
         // the initial value the commanderSelectValue will always be "" because the profile hasn't hydrated yet.
-        // hence, force a hydration of the commanderSelectValue everytime the modal opens for the first time.
+        // hence, force a hydration of the commanderSelectValue every time the modal opens for the first time.
         setCommanderSelectValue(favoriteCommanderId);
         onOpen();
     }, [favoriteCommanderId, onOpen]);
@@ -130,37 +155,36 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
     }, [moxfieldLinkerToggle, onClose, showMoxfieldLinker]);
 
     const onSave = useCallback(() => {
-        setFavoriteCommander(commanderSelectValue);
+        console.log(moxfieldIdInputValue.length);
+        onMoxfieldInputBlur();
+        if (moxfieldIdInputValue.length > 1 && moxfieldImageValidated) {
+            updateProfile(commanderSelectValue, moxfieldIdInputValue);
+            console.log("onSave"); // TODO: Remove before merge
+            console.log(moxfieldIdInputValue);
+        } else updateProfile(commanderSelectValue);
 
         closeModal();
-    }, [closeModal, commanderSelectValue, setFavoriteCommander]);
+    }, [
+        closeModal,
+        commanderSelectValue,
+        moxfieldIdInputValue,
+        moxfieldImageValidated,
+        onMoxfieldInputBlur,
+        updateProfile
+    ]);
 
     function updateMoxfieldIdInputValue(event: any) {
         setMoxfieldIdInputValue(event.target.value);
     }
-
-    const onMoxfieldInputBlur = async () => {
-        const moxfieldProfileObj: MoxfieldProfile | undefined = await getMoxfieldProfile(moxfieldIdInputValue);
-        console.log(moxfieldProfileObj); // TODO: Remove before merge
-
-        if (moxfieldProfileObj === undefined) {
-            setMoxfieldImageUrl(errorMoxfieldLogo);
-            return;
-        }
-
-        if (moxfieldProfileObj.imageUrl) {
-            setMoxfieldImageUrl(moxfieldProfileObj.imageUrl);
-        } else {
-            setMoxfieldImageUrl(missingMoxfieldProfileImage);
-        }
-    };
 
     function renderMoxfieldValidation() {
         if (moxfieldImageUrl === errorMoxfieldLogo) {
             return (
                 <>
                     <WarningTwoIcon color={"red"} marginRight={"8px"} />
-                    <Text color={"red"}>Failed to locate Moxfield profile</Text>
+                    <Text color={"red"}>
+                        Failed to locate Moxfield profile. Note that Moxfield IDs are case sensitive
+                    </Text>
                 </>
             );
         } else if (moxfieldImageUrl !== defaultMoxfieldLogo) {
