@@ -72,7 +72,7 @@ export const NewsDetail = React.memo(function NewsDetail() {
                 >
                     <Flex alignItems="center">
                         <FiArrowLeft />
-                        <h1>Back to Articles</h1>
+                        <h1>Back to Updates</h1>
                     </Flex>
                 </Button>
             </Flex>

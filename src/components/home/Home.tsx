@@ -38,7 +38,8 @@ export default function Home() {
                             top: 0,
                             width: "100%",
                             height: "100%",
-                            objectFit: "cover"
+                            objectFit: "cover",
+                            borderRadius: "8px"
                         }}
                     >
                         <source type="video/webm" src={backgroundVideo} />
@@ -52,7 +53,8 @@ export default function Home() {
                             display: "flex",
                             flexDirection: "column",
                             alignItems: "center",
-                            justifyContent: "center"
+                            justifyContent: "center",
+                            borderRadius: "8px"
                         }}
                     >
                         <img src={generalLogo} style={{ height: "40%", objectFit: "scale-down" }} alt="MNC Logo" />

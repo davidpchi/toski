@@ -1,10 +1,9 @@
 import { IconType } from "react-icons";
-import { FiBarChart, FiCalendar, FiHome, FiRss, FiShield, FiTrendingUp, FiUsers } from "react-icons/fi";
+import { FiBarChart, FiCalendar, FiHome, FiShield, FiTrendingUp, FiUsers } from "react-icons/fi";
 
 import { Box, useColorModeValue, Flex, CloseButton, VStack, BoxProps, Text } from "@chakra-ui/react";
 
 import { SidebarNavItem } from "./SidebarNavItem";
-import { FF_IS_NEWS_ENABLED } from "../../services/featureFlagService";
 
 interface LinkItemProps {
     name: string;
@@ -26,10 +25,6 @@ interface SidebarProps extends BoxProps {
 
 export const Sidebar = ({ onClose, ...rest }: SidebarProps) => {
     const linkItems = [...LinkItems];
-
-    if (FF_IS_NEWS_ENABLED) {
-        linkItems.splice(1, 0, { name: "Updates", icon: FiRss, route: "/articles" });
-    }
 
     return (
         <Box
