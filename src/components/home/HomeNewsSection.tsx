@@ -27,7 +27,7 @@ export const HomeNewsSection = React.memo(function HomeNewsSection() {
                     onClick={navigateToArticles}
                 >
                     <Flex alignItems="center">
-                        <h1>All Articles</h1>
+                        <h1>All Updates</h1>
                         <FiArrowRight />
                     </Flex>
                 </Button>
