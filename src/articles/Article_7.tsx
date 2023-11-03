@@ -8,7 +8,7 @@ export const article_7: NewsArticle = {
     date: "October 17, 2023",
     summary: "Support for Doctor Who and matchups",
     content: <Article_7 />,
-    image: "https://media.discordapp.net/attachments/1095034595377942670/1123500680175419452/OIG.png?ex=654b2b0b&is=6538b60b&hm=7dc68943bbdb5058dd4d972657cbf94fb1b53eeeeaf2ec2a9981d34bf1f99a18&=&width=676&height=676"
+    image: "https://media.discordapp.net/attachments/1095034595377942670/1119364926864101386/OIG.png?ex=6557ced3&is=654559d3&hm=f94caa56abe9b1845e99dc12e1cd1aac354a43a8259363673f72f2a69cffc3cd&=&width=676&height=676"
 };
 
 export default function Article_7() {
