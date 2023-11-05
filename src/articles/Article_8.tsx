@@ -21,8 +21,7 @@ export default function Article_8() {
                 We've revamped it and have no made it specific to Project Toski updates! This should make it easier to
                 parse and brings more focus to the updates.
             </p>
-            <p style={paragraphStyle}>Lost Caverns of Ixalan</p>
-            <h1 style={{ fontSize: 20, fontWeight: "bold", marginTop: 16 }}>New Player & Commander Matchup Analysis</h1>
+            <h1 style={{ fontSize: 20, fontWeight: "bold", marginTop: 16 }}>Lost Caverns of Ixalan</h1>
             <p style={paragraphStyle}>
                 We've added support for the latest set, the Lost Caverns of Ixalan. You should be able to submit matches
                 with all the commanders in this set (as well as the associated commander sets).
