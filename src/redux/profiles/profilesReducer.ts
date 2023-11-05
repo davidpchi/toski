@@ -34,6 +34,7 @@ export const profilesReducer = createReducer(initialState, (builder) => {
             if (state.moxfieldProfiles === undefined) {
                 const result: { [id: string]: MoxfieldProfile } = {};
                 result[action.payload.userName] = action.payload;
+                state.moxfieldProfiles = result;
             } else {
                 state.moxfieldProfiles[action.payload.userName] = action.payload;
             }

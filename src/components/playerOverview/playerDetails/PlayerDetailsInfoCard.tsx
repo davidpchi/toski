@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
+
 import { useSelector } from "react-redux";
-import { Flex, Heading, Text } from "@chakra-ui/react";
+import { Flex, Heading, Text, Image } from "@chakra-ui/react";
 import { StatsSelectors } from "../../../redux/stats/statsSelectors";
 import { AppState } from "../../../redux/rootReducer";
 import { MTG_COLORS } from "../../constants";
@@ -11,8 +12,12 @@ import { commanderList } from "../../../services/commanderList";
 import { primaryColor } from "../../../themes/acorn";
 import { ProfileSelectors } from "../../../redux/profiles/profilesSelectors";
 import { ProfileService } from "../../../services/ProfileService";
+import { MoxfieldProfile } from "../../../types/domain/MoxfieldProfile";
+import { MoxfieldService } from "../../../services/MoxfieldService";
 
 export const PlayerDetailsInfoCard = React.memo(function PlayerDetailsInfoCard({ playerId }: { playerId: string }) {
+    const hydrateMoxfieldProfile = MoxfieldService.useHydrateMoxfieldProfile();
+
     const player = useSelector((state: AppState) => StatsSelectors.getPlayer(state, playerId));
     const favoriteCommander = useSelector((state: AppState) =>
         StatsSelectors.getFavoriteCommanderForPlayer(state, playerId)
@@ -22,6 +27,19 @@ export const PlayerDetailsInfoCard = React.memo(function PlayerDetailsInfoCard({
     const potentialProfileId = player ? getProfileId(player.name) : undefined;
     const profileId = potentialProfileId ?? "";
     const profile = useSelector((state: AppState) => ProfileSelectors.getProfile(state, profileId));
+
+    const moxfieldProfile: MoxfieldProfile | undefined = useSelector((state: AppState) => {
+        if (state.profiles.moxfieldProfiles !== undefined && profile?.moxfieldId !== undefined) {
+            return state.profiles.moxfieldProfiles[profile.moxfieldId];
+        }
+        return undefined;
+    });
+
+    useEffect(() => {
+        if (profile?.moxfieldId !== undefined && !moxfieldProfile) {
+            hydrateMoxfieldProfile(profile.moxfieldId);
+        }
+    }, [hydrateMoxfieldProfile, moxfieldProfile, profile]);
 
     if (player === undefined) {
         return null;
