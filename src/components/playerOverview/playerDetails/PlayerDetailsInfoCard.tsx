@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 
 import { useSelector } from "react-redux";
-import { Flex, Heading, Text, Image } from "@chakra-ui/react";
+import { Flex, Heading, Text } from "@chakra-ui/react";
 import { StatsSelectors } from "../../../redux/stats/statsSelectors";
 import { AppState } from "../../../redux/rootReducer";
 import { MTG_COLORS } from "../../constants";
@@ -36,6 +36,7 @@ export const PlayerDetailsInfoCard = React.memo(function PlayerDetailsInfoCard({
     });
 
     useEffect(() => {
+        // This useEffect ensures we don't call Chatterfang every time the page renders
         if (profile?.moxfieldId !== undefined && !moxfieldProfile) {
             hydrateMoxfieldProfile(profile.moxfieldId);
         }

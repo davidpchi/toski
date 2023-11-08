@@ -43,7 +43,7 @@ const useHydrateMoxfieldProfile = () => {
                 };
                 dispatch(ProfilesAction.HydrateMoxfieldProfileComplete(newMoxfieldProfile));
             } catch (err) {
-                console.log(err);
+                console.error("Error in Hydrate Moxfield Profile" + err);
             }
         },
         [dispatch]

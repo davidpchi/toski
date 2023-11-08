@@ -12,6 +12,9 @@ export type ProfilesState = Readonly<{
      * A map of all profiles where the ID is the discord id.
      */
     profiles: { [id: string]: Profile } | undefined;
+    /**
+     * A map of Moxfield profiles where the ID is the Moxfield username.
+     */
     moxfieldProfiles: { [id: string]: MoxfieldProfile } | undefined;
 }>;
 
@@ -29,7 +32,6 @@ export const profilesReducer = createReducer(initialState, (builder) => {
             }
             state.profiles = result;
         })
-
         .addCase(ProfilesAction.HydrateMoxfieldProfileComplete, (state, action) => {
             if (state.moxfieldProfiles === undefined) {
                 const result: { [id: string]: MoxfieldProfile } = {};

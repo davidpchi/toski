@@ -12,7 +12,6 @@ export const ProfilesAction = {
         type: ProfilesActionType.GetProfilesComplete,
         payload: data
     })),
-
     HydrateMoxfieldProfileComplete: createAction(
         ProfilesActionType.HydrateMoxfieldProfileComplete,
         (data: MoxfieldProfile) => ({
