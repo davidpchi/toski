@@ -9,8 +9,8 @@ import { sendDataToGoogleSheets } from "./GoogleFormsService";
 
 const matchHistoryDataEndpoint =
     "https://docs.google.com/spreadsheets/d/1FsjnGp3JPsqAEmlyWlxmYK5pSwGASqfIcDl9HvD-fuk/gviz/tq?gid=1885300192";
-// const matchHistorySubmitEndpoint = 'https://docs.google.com/forms/d/e/1FAIpQLScguPsS2TOxaABYLtbCDZ5zPXec2av9AI2kPI2JFwYqmghBYQ/formResponse?&submit=Submit?usp=pp_url&entry.1178471159=2023-09-27&entry.2132042053=player+1+name&entry.961836116=player+1+commander&entry.1252336227=1&entry.147625596=2&entry.840407098=player+2+name&entry.493870522=player+2+commander&entry.898724110=2&entry.531480374=3&entry.2099339267=player+3+name&entry.1961193649=player+3+commnader&entry.87571757=3&entry.807216034=4&entry.575868019=player+4+name&entry.270994715=player+4+commander&entry.153957972=4&entry.652184592=1&entry.2043626966=additional+comments';
-// const matchHistorySubmitEndpoint = 'https://docs.google.com/forms/d/e/1FAIpQLScguPsS2TOxaABYLtbCDZ5zPXec2av9AI2kPI2JFwYqmghBYQ/formResponse?usp=pp_url&entry.1178471159=2023-09-05&entry.2132042053=player+1+name&entry.961836116=player+1+commander&entry.1252336227=1&entry.147625596=2&entry.840407098=player+2+name&entry.493870522=player+2+commander&entry.898724110=2&entry.531480374=3&entry.2099339267=player+3+name&entry.1961193649=player+3+commander&entry.87571757=3&entry.807216034=4&entry.575868019=player+4+name&entry.270994715=player+4+commander&entry.153957972=4&entry.652184592=1&entry.2043626966=woiw+comments';
+const matchHistorySubmitEndpoint =
+    "https://docs.google.com/forms/d/e/1FAIpQLScguPsS2TOxaABYLtbCDZ5zPXec2av9AI2kPI2JFwYqmghBYQ/formResponse";
 
 const useMatchHistory = () => {
     // Do the initial data hydration here
@@ -109,7 +109,7 @@ export const submitMatch = async (
     // this will result in a 400.
 
     // TODO: need to figure out why we are running into CORs on local host.
-    return sendDataToGoogleSheets({ formData, submitEndpoint: matchHistoryDataEndpoint });
+    return sendDataToGoogleSheets({ formData, submitEndpoint: matchHistorySubmitEndpoint });
 };
 
 export const MatchHistoryService = {
