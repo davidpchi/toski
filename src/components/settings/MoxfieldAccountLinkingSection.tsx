@@ -14,6 +14,33 @@ const defaultMoxfieldLogo = "https://pbs.twimg.com/profile_images/16749894728390
 const errorMoxfieldLogo = "https://upload.wikimedia.org/wikipedia/commons/4/4e/OOjs_UI_icon_error-destructive.svg";
 const missingMoxfieldProfileImage = "https://upload.wikimedia.org/wikipedia/commons/e/e7/Ico_user_profile_blank.png";
 
+const MoxfieldAccountLinkingValidation = React.memo(function MoxfieldAccountLinkingValidation({
+    isValid,
+    moxfieldId
+}: {
+    isValid: boolean | undefined;
+    moxfieldId: string;
+}) {
+    if (isValid === false) {
+        return (
+            <>
+                <WarningTwoIcon color={"red"} marginRight={"8px"} />
+                <Text color={"red"}>Failed to locate Moxfield profile. Note that Moxfield IDs are case sensitive</Text>
+            </>
+        );
+    } else if (isValid === true && moxfieldId !== "") {
+        return (
+            <>
+                <CheckIcon color={"green"} marginRight={"8px"} />
+                <Text color={"green"}>Moxfield profile located</Text>
+            </>
+        );
+    }
+
+    // if the validationResult is undefined, that means validation has not occured yet
+    return null;
+});
+
 export const MoxfieldAccountLinkingSection = React.memo(function MoxfieldAccountLinkingSection({
     moxfieldId,
     setMoxfieldId,
@@ -28,13 +55,9 @@ export const MoxfieldAccountLinkingSection = React.memo(function MoxfieldAccount
     const { userId } = useUserInfo();
 
     const profile = useSelector((state: AppState) => ProfileSelectors.getProfile(state, userId ?? ""));
-    // TODO: let's move this to a selector
-    const moxfieldProfile: MoxfieldProfile | undefined = useSelector((state: AppState) => {
-        if (state.profiles.moxfieldProfiles !== undefined && profile?.moxfieldId !== undefined) {
-            return state.profiles.moxfieldProfiles[profile?.moxfieldId];
-        }
-        return undefined;
-    });
+    const moxfieldProfile: MoxfieldProfile | undefined = useSelector((state: AppState) =>
+        ProfileSelectors.getMoxfieldProfile(state, profile?.moxfieldId ?? "")
+    );
 
     // when we mount the component, validation has not occured yet
     const [isValid, setIsValid] = useState<boolean | undefined>(undefined);
@@ -98,25 +121,6 @@ export const MoxfieldAccountLinkingSection = React.memo(function MoxfieldAccount
         }
     }
 
-    // if the validationResult is not set to anything, that means validation has not occured yet
-    let validationResult = null;
-
-    if (isValid === false) {
-        validationResult = (
-            <>
-                <WarningTwoIcon color={"red"} marginRight={"8px"} />
-                <Text color={"red"}>Failed to locate Moxfield profile. Note that Moxfield IDs are case sensitive</Text>
-            </>
-        );
-    } else if (isValid === true && moxfieldId !== "") {
-        validationResult = (
-            <>
-                <CheckIcon color={"green"} marginRight={"8px"} />
-                <Text color={"green"}>Moxfield profile located</Text>
-            </>
-        );
-    }
-
     return (
         <Flex alignSelf={"stretch"}>
             <Flex flexDirection={"column"} flex={1} marginRight={"8px"}>
@@ -134,7 +138,7 @@ export const MoxfieldAccountLinkingSection = React.memo(function MoxfieldAccount
                     justifyContent={"center"}
                     alignItems={"center"}
                 >
-                    {validationResult}
+                    <MoxfieldAccountLinkingValidation isValid={isValid} moxfieldId={moxfieldId} />
                 </Flex>
             </Flex>
             <Flex width={"110px"} height={"80px"} borderRadius={8} justifyContent={"center"}>
