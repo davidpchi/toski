@@ -116,7 +116,6 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
 
     const onMoxfieldInputBlur = useCallback(async () => {
         const moxfieldProfileObj: MoxfieldProfile | undefined = await getMoxfieldProfile(moxfieldIdInputValue);
-        console.log(moxfieldProfileObj); // TODO: Remove before merge
 
         // Case: Moxfield ID does not validate (case-sensitive)
         if (moxfieldProfileObj === undefined || moxfieldProfileObj.userName !== moxfieldIdInputValue) {
@@ -155,12 +154,9 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
     }, [moxfieldLinkerToggle, onClose, showMoxfieldLinker]);
 
     const onSave = useCallback(() => {
-        console.log(moxfieldIdInputValue.length);
         onMoxfieldInputBlur();
         if (moxfieldIdInputValue.length > 1 && moxfieldImageValidated) {
             updateProfile(commanderSelectValue, moxfieldIdInputValue);
-            console.log("onSave"); // TODO: Remove before merge
-            console.log(moxfieldIdInputValue);
         } else updateProfile(commanderSelectValue);
 
         closeModal();
