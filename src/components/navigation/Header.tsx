@@ -24,7 +24,7 @@ import { AuthAction } from "../../redux/auth/authActions";
 import { routes } from "../../navigation/routes";
 import { FF_IS_LOGIN_ENABLED } from "../../services/featureFlagService";
 import { LoginModal } from "../auth/LoginModal";
-import { SettingsMenuItem } from "../auth/SettingsModal";
+import { SettingsMenuItem } from "../settings/SettingsModal";
 import { ProfileService } from "../../services/ProfileService";
 import { getDiscordLoginEndpoint } from "../../services/DiscordService";
 import { useUserInfo } from "../../logic/hooks/userHooks";
