@@ -46,6 +46,7 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
     const { accessToken, tokenType, expirationDate } = useAuthInfo();
     const { userId, userPic, username } = useUserInfo();
     const getMoxfieldProfile = MoxfieldService.useGetMoxfieldProfile();
+    const hydrateMoxfieldProfile = MoxfieldService.useHydrateMoxfieldProfile();
 
     const accessTokenFromState = localStorage.getItem("tokenType");
 
@@ -55,12 +56,23 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
     const favoriteCommanderId = profile && profile.favoriteCommanderId ? profile.favoriteCommanderId : "no value";
     const [commanderSelectValue, setCommanderSelectValue] = useState<string>(() => favoriteCommanderId);
     const [isRememberMe, setIsRememberMe] = useState<boolean>(accessTokenFromState !== null);
-    const [showMoxfieldLinker, setShowMoxfieldLinker] = useState<boolean>(false);
-    const [moxfieldIdInputValue, setMoxfieldIdInputValue] = useState<string>("");
-    const [moxfieldImageUrl, setMoxfieldImageUrl] = useState<string>(defaultMoxfieldLogo);
-    const [moxfieldImageValidated, setMoxfieldImageValidated] = useState<boolean>(false);
 
     const profiles = useSelector(ProfileSelectors.getProfiles);
+
+    // TODO: let's move this to a selector
+    const moxfieldProfile: MoxfieldProfile | undefined = useSelector((state: AppState) => {
+        if (state.profiles.moxfieldProfiles !== undefined && profile?.moxfieldId !== undefined) {
+            return state.profiles.moxfieldProfiles[profile.moxfieldId];
+        }
+        return undefined;
+    });
+
+    const [showMoxfieldLinker, setShowMoxfieldLinker] = useState<boolean>(false);
+    const [moxfieldIdInputValue, setMoxfieldIdInputValue] = useState<string>(
+        moxfieldProfile ? moxfieldProfile.userName : ""
+    );
+    const [moxfieldImageUrl, setMoxfieldImageUrl] = useState<string>(defaultMoxfieldLogo);
+    const [isMoxfieldProfileValidated, setIsMoxfieldProfileValidated] = useState<boolean>(false);
 
     useEffect(() => {
         // if profiles are hydrated AND we don't see our current user in the profiles list, kick off an "initialization" request to get this user into the db
@@ -69,6 +81,13 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
             updateProfile("");
         }
     }, [profiles, updateProfile, userId]);
+
+    useEffect(() => {
+        // This useEffect ensures we don't call Chatterfang every time the page renders
+        if (profile?.moxfieldId !== undefined && !moxfieldProfile) {
+            hydrateMoxfieldProfile(profile.moxfieldId);
+        }
+    }, [hydrateMoxfieldProfile, moxfieldProfile, profile]);
 
     const commandersArray = useMemo(() => {
         return Object.keys(commanderList).map((commanderName) => {
@@ -115,27 +134,39 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
     }, [showMoxfieldLinker]);
 
     const onMoxfieldInputBlur = useCallback(async () => {
+        // if the moxfield id is already validated, do not make the call
+        // this prevents repeated calls to the moxfield service
+        if (isMoxfieldProfileValidated) {
+            return;
+        }
+
+        // if the user clears their input, that means they want to remove the moxfield account link
+        if (moxfieldIdInputValue === "") {
+            setIsMoxfieldProfileValidated(true);
+            return;
+        }
+
         const moxfieldProfileObj: MoxfieldProfile | undefined = await getMoxfieldProfile(moxfieldIdInputValue);
 
         // Case: Moxfield ID does not validate (case-sensitive)
         if (moxfieldProfileObj === undefined || moxfieldProfileObj.userName !== moxfieldIdInputValue) {
             setMoxfieldImageUrl(errorMoxfieldLogo);
-            setMoxfieldImageValidated(false);
+            setIsMoxfieldProfileValidated(false);
             return;
         }
 
         // Case: Moxfield ID validates AND has a profile image
         if (moxfieldProfileObj.imageUrl) {
             setMoxfieldImageUrl(moxfieldProfileObj.imageUrl);
-            setMoxfieldImageValidated(true);
+            setIsMoxfieldProfileValidated(true);
         }
 
         // Case: Moxfield ID validates but does NOT have a profile image
         else {
             setMoxfieldImageUrl(missingMoxfieldProfileImage);
-            setMoxfieldImageValidated(true);
+            setIsMoxfieldProfileValidated(true);
         }
-    }, [getMoxfieldProfile, moxfieldIdInputValue]);
+    }, [getMoxfieldProfile, isMoxfieldProfileValidated, moxfieldIdInputValue]);
 
     // TODO: we should figure out a way that hiding the modal forces an unmount of this entire component instead of just tying it to the menu item.
     const openModal = useCallback(() => {
@@ -143,8 +174,19 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
         // the initial value the commanderSelectValue will always be "" because the profile hasn't hydrated yet.
         // hence, force a hydration of the commanderSelectValue every time the modal opens for the first time.
         setCommanderSelectValue(favoriteCommanderId);
+
+        // we also need to make sure the moxfield account is loading from the one we have saved in state
+        if (moxfieldProfile) {
+            setMoxfieldIdInputValue(moxfieldProfile.userName);
+            setMoxfieldImageUrl(moxfieldProfile.imageUrl ?? defaultMoxfieldLogo);
+            setIsMoxfieldProfileValidated(false);
+        } else {
+            setMoxfieldIdInputValue("");
+            setMoxfieldImageUrl(defaultMoxfieldLogo);
+        }
+
         onOpen();
-    }, [favoriteCommanderId, onOpen]);
+    }, [favoriteCommanderId, moxfieldProfile, onOpen]);
 
     const closeModal = useCallback(() => {
         onClose();
@@ -155,21 +197,26 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
 
     const onSave = useCallback(() => {
         onMoxfieldInputBlur();
-        if (moxfieldIdInputValue.length > 1 && moxfieldImageValidated) {
+        if (isMoxfieldProfileValidated) {
+            console.log("here");
             updateProfile(commanderSelectValue, moxfieldIdInputValue);
-        } else updateProfile(commanderSelectValue);
+        } else {
+            console.log("wow");
+            updateProfile(commanderSelectValue);
+        }
 
         closeModal();
     }, [
         closeModal,
         commanderSelectValue,
         moxfieldIdInputValue,
-        moxfieldImageValidated,
+        isMoxfieldProfileValidated,
         onMoxfieldInputBlur,
         updateProfile
     ]);
 
     function updateMoxfieldIdInputValue(event: any) {
+        setIsMoxfieldProfileValidated(false);
         setMoxfieldIdInputValue(event.target.value);
     }
 
@@ -190,7 +237,9 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
                     <Text color={"green"}>Moxfield profile located</Text>
                 </>
             );
-        } else return null;
+        } else {
+            return null;
+        }
     }
 
     return (
@@ -206,18 +255,96 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
                             direction={"column"}
                             justifyContent={"center"}
                             flexWrap={"wrap"}
+                            alignItems={"center"}
+                            marginBottom={"64px"}
+                        >
+                            <Heading size={"md"} padding={0} marginBottom={"8px"} alignSelf={"flex-start"}>
+                                Linked Discord Account
+                            </Heading>
+                            <Divider marginBottom={"16px"} />
+                            <Flex
+                                direction={"row"}
+                                justifyContent={"center"}
+                                alignItems={"center"}
+                                marginBottom={"16px"}
+                            >
+                                <Flex
+                                    direction={"row"}
+                                    justifyContent={"flex-start"}
+                                    alignItems={"center"}
+                                    marginRight={"16px"}
+                                >
+                                    <Avatar
+                                        size={"md"}
+                                        src={
+                                            userPic !== undefined
+                                                ? userPic
+                                                : "https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
+                                        }
+                                        marginRight={"16px"}
+                                    />
+                                    <Flex direction={"column"}>
+                                        <Text size={"sm"} padding={0}>
+                                            {username}
+                                        </Text>
+                                        <Text fontSize="xs" color="gray.600">
+                                            Discord
+                                        </Text>
+                                    </Flex>
+                                </Flex>
+                                <FiRepeat size={32} />
+                                <Flex
+                                    direction={"row"}
+                                    justifyContent={"flex-start"}
+                                    alignItems={"center"}
+                                    marginLeft={"16px"}
+                                >
+                                    <Flex direction={"column"}>
+                                        <Text size={"sm"} padding={0}>
+                                            {toskiPlayer ?? "???"}
+                                        </Text>
+                                        <Text fontSize="xs" color="gray.600">
+                                            Project Toski Player
+                                        </Text>
+                                    </Flex>
+                                </Flex>
+                            </Flex>
+                            <Flex
+                                fontSize="xs"
+                                color="gray.600"
+                                alignSelf={"stretch"}
+                                justifyContent={"center"}
+                                alignItems={"center"}
+                            >
+                                {toskiPlayer === undefined ? (
+                                    <>
+                                        <WarningTwoIcon color={"red"} marginRight={"8px"} />
+                                        <Text color={"red"}>Failed to link Discord Profile to Toski Player</Text>
+                                    </>
+                                ) : (
+                                    <>
+                                        <CheckIcon color={"green"} marginRight={"8px"} />
+                                        <Text color={"green"}>Discord Profile successfully linked to Toski Player</Text>
+                                    </>
+                                )}
+                            </Flex>
+                        </Flex>
+
+                        <Flex
+                            direction={"column"}
+                            justifyContent={"center"}
+                            flexWrap={"wrap"}
                             alignItems={"flex-start"}
-                            marginBottom={"20px"}
+                            marginBottom={"64px"}
                         >
                             <Heading size={"md"} padding={0} marginBottom={"8px"}>
                                 My Profile
                             </Heading>
                             <Divider marginBottom={"16px"} />
-                            <Flex flexDirection={"row"}>
+                            <Flex marginBottom={"16px"}>
                                 <Flex flexDirection={"column"} marginRight={"8px"}>
                                     <Text>Favorite Commander: </Text>
                                     <Select
-                                        size="lg"
                                         onChange={onCommanderSelectChange}
                                         value={commanderSelectValue}
                                         placeholder={"Use most played commander"}
@@ -237,107 +364,36 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
                                     <Image src={placeholderImage} height={"80px"} borderRadius={8} />
                                 )}
                             </Flex>
-                        </Flex>
-                        <Flex marginBottom={"64px"} justifyContent={"Center"}>
-                            {showMoxfieldLinker ? (
-                                <>
-                                    <Flex flexDirection={"column"} flex={1} marginRight={"8px"}>
-                                        <Text>Moxfield ID: </Text>
-                                        <Input
-                                            value={moxfieldIdInputValue}
-                                            onChange={updateMoxfieldIdInputValue}
-                                            onBlur={onMoxfieldInputBlur}
-                                            placeholder={"Your Moxfield Id"}
-                                        />
-                                        <Flex
-                                            fontSize="xs"
-                                            color="gray.600"
-                                            alignSelf={"stretch"}
-                                            justifyContent={"center"}
-                                            alignItems={"center"}
-                                        >
-                                            {renderMoxfieldValidation()}
-                                        </Flex>
+
+                            <Flex alignSelf={"stretch"}>
+                                <Flex flexDirection={"column"} flex={1} marginRight={"8px"}>
+                                    <Text>Linked Moxfield Account:</Text>
+                                    <Input
+                                        value={moxfieldIdInputValue}
+                                        onChange={updateMoxfieldIdInputValue}
+                                        onBlur={onMoxfieldInputBlur}
+                                        placeholder={"No Moxfield Account Linked"}
+                                    />
+                                    <Flex
+                                        fontSize="xs"
+                                        color="gray.600"
+                                        alignSelf={"stretch"}
+                                        justifyContent={"center"}
+                                        alignItems={"center"}
+                                    >
+                                        {renderMoxfieldValidation()}
                                     </Flex>
+                                </Flex>
+                                <Flex width={"110px"} height={"80px"} borderRadius={8} justifyContent={"center"}>
                                     <Image
                                         src={moxfieldImageUrl}
-                                        alt="Moxfield logo"
+                                        alt="moxfield account link"
                                         height={"80px"}
                                         borderRadius={8}
                                         flex={0}
                                     />
-                                </>
-                            ) : (
-                                <Button mr={3} onClick={moxfieldLinkerToggle}>
-                                    Add or Change Linked Moxfield Account
-                                </Button>
-                            )}
-                        </Flex>
-                        <Heading size={"md"} padding={0} marginBottom={"8px"}>
-                            Linked Discord Account
-                        </Heading>
-                        <Divider marginBottom={"16px"} />
-                        <Flex direction={"row"} justifyContent={"center"} alignItems={"center"} marginBottom={"16px"}>
-                            <Flex
-                                direction={"row"}
-                                justifyContent={"flex-start"}
-                                alignItems={"center"}
-                                marginRight={"16px"}
-                            >
-                                <Avatar
-                                    size={"md"}
-                                    src={
-                                        userPic !== undefined
-                                            ? userPic
-                                            : "https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
-                                    }
-                                    marginRight={"16px"}
-                                />
-                                <Flex direction={"column"}>
-                                    <Text size={"sm"} padding={0}>
-                                        {username}
-                                    </Text>
-                                    <Text fontSize="xs" color="gray.600">
-                                        Discord
-                                    </Text>
                                 </Flex>
                             </Flex>
-                            <FiRepeat size={32} />
-
-                            <Flex
-                                direction={"row"}
-                                justifyContent={"flex-start"}
-                                alignItems={"center"}
-                                marginLeft={"16px"}
-                            >
-                                <Flex direction={"column"}>
-                                    <Text size={"sm"} padding={0}>
-                                        {toskiPlayer ?? "???"}
-                                    </Text>
-                                    <Text fontSize="xs" color="gray.600">
-                                        Project Toski Player
-                                    </Text>
-                                </Flex>
-                            </Flex>
-                        </Flex>
-                        <Flex
-                            fontSize="xs"
-                            color="gray.600"
-                            alignSelf={"stretch"}
-                            justifyContent={"center"}
-                            alignItems={"center"}
-                        >
-                            {toskiPlayer === undefined ? (
-                                <>
-                                    <WarningTwoIcon color={"red"} marginRight={"8px"} />
-                                    <Text color={"red"}>Failed to link Discord Profile to Toski Player</Text>
-                                </>
-                            ) : (
-                                <>
-                                    <CheckIcon color={"green"} marginRight={"8px"} />
-                                    <Text color={"green"}>Discord Profile successfully linked to Toski Player</Text>
-                                </>
-                            )}
                         </Flex>
 
                         <Checkbox
