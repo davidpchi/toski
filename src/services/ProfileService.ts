@@ -13,7 +13,9 @@ const profileMap: { [name: string]: string } = {
     Doomgeek: "230904033915830272",
     "Aetherium Slinky": "226715073031176193",
     LumenAdi: "224315766042787840",
-    Wisecompany: "396390132988641281"
+    Wisecompany: "396390132988641281",
+    Shy: "563015313935826984",
+    Wrinklebuns: "187707404761169920"
 };
 
 const useHydrateProfiles = () => {
