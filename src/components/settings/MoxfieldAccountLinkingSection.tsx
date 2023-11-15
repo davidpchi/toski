@@ -37,7 +37,7 @@ const MoxfieldAccountLinkingValidation = React.memo(function MoxfieldAccountLink
         );
     }
 
-    // if the validationResult is undefined, that means validation has not occured yet
+    // if the validationResult is undefined, that means validation has not occurred yet
     return null;
 });
 
@@ -59,7 +59,7 @@ export const MoxfieldAccountLinkingSection = React.memo(function MoxfieldAccount
         ProfileSelectors.getMoxfieldProfile(state, profile?.moxfieldId ?? "")
     );
 
-    // when we mount the component, validation has not occured yet
+    // when we mount the component, validation has not ocurred yet
     const [isValid, setIsValid] = useState<boolean | undefined>(undefined);
     const [moxfieldImageUrl, setMoxfieldImageUrl] = useState<string>(defaultMoxfieldLogo);
 

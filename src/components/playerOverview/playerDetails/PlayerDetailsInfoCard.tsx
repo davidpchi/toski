@@ -81,7 +81,7 @@ export const PlayerDetailsInfoCard = React.memo(function PlayerDetailsInfoCard({
     }
 
     const moxfieldImage =
-        moxfieldProfile && isMoxfieldButtonHovered
+        moxfieldProfile && isMoxfieldButtonHovered && moxfieldProfile.imageUrl
             ? moxfieldProfile.imageUrl
             : "https://avatars.githubusercontent.com/u/65498797?s=200&v=4";
 
