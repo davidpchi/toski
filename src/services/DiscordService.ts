@@ -7,7 +7,13 @@ import { UserSelectors } from "../redux/user/userSelectors";
 import { useAuthInfo } from "../logic/hooks/authHooks";
 
 export const getDiscordLoginEndpoint = () => {
-    const redirectUri = encodeURIComponent("http://" + window.location.host + "/toski");
+    // we have to do this weird check because of how we are hosting the page in github pages. Note that if someone were to host
+    // this somewhere else, we would have to figure out a different work around (and hopefully not need to do this hacky thing)
+    const redirectUri =
+        window.location.host.indexOf("squirrelenest") > -1
+            ? encodeURIComponent("http://" + window.location.host)
+            : encodeURIComponent("http://" + window.location.host + "/toski");
+
     return `https://discord.com/api/oauth2/authorize?client_id=1163345338376138773&redirect_uri=${redirectUri}&response_type=token&scope=identify`;
 };
 
