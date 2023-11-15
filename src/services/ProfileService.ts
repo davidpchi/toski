@@ -51,12 +51,14 @@ const useUpdateProfile = () => {
 
     return useCallback(
         (commanderId: string, moxfieldId?: string) => {
-            const newProfile = moxfieldId
-                ? { userId: userId, favoriteCommander: commanderId, moxfieldId: moxfieldId }
-                : {
-                      userId: userId,
-                      favoriteCommander: commanderId
-                  };
+            const newProfile =
+                // specifically check against undefined because empty string moxfield id is valid (unlinking account)
+                moxfieldId !== undefined
+                    ? { userId: userId, favoriteCommander: commanderId, moxfieldId: moxfieldId }
+                    : {
+                          userId: userId,
+                          favoriteCommander: commanderId
+                      };
 
             if (accessToken !== undefined && userId !== undefined) {
                 axios
