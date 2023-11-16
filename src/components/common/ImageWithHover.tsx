@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import { Image } from "@chakra-ui/react";
+import { FiEdit } from "react-icons/fi";
 
 /**
  * Image with hover effect: image is dimmed and white text appears
@@ -64,6 +65,18 @@ export const ImageWithHover = React.memo(function ImageWithHover({
             >
                 {label}
             </div>
+            <FiEdit
+                style={{
+                    position: "absolute",
+                    top: 0,
+                    right: 0,
+                    opacity: hovered ? 1 : 0,
+                    color: "white",
+                    width: 32,
+                    height: 32,
+                    margin: "8px"
+                }}
+            />
         </div>
     );
 });
