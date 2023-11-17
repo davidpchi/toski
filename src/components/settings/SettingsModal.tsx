@@ -106,6 +106,12 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
                         </Flex>
                         <PersistSignInSection />
                     </ModalBody>
+                    {profile &&
+                        (profile.favoriteCommanderId !== commanderSelectValue || profile.moxfieldId !== moxfieldId) && (
+                            <Flex justifyContent={"center"} color={"red"} paddingBottom={"8px"}>
+                                You have unsaved profile changes!
+                            </Flex>
+                        )}
                     <ModalFooter>
                         <Button mr={3} onClick={onSave} isDisabled={hasErrors}>
                             Save
