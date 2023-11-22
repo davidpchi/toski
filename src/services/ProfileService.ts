@@ -14,7 +14,7 @@ const profileMap: { [name: string]: string } = {
     "Aetherium Slinky": "226715073031176193",
     LumenAdi: "224315766042787840",
     Wisecompany: "396390132988641281",
-    Shy: "563015313935826984",
+    Leon_Von_Kaktuus: "563015313935826984",
     Wrinklebuns: "187707404761169920"
 };
 
