@@ -21,24 +21,19 @@ const profileMap: { [name: string]: string } = {
 const useHydrateProfiles = () => {
     const dispatch = useDispatch();
 
-    const accessToken = useSelector(AuthSelectors.getAccessToken);
-    const userId = useSelector(UserSelectors.getId);
-
     const endpoint = "https://chatterfang.onrender.com/profiles";
 
     return useCallback(() => {
-        if (accessToken !== undefined && userId !== undefined) {
-            axios
-                .get<string>(endpoint, {
-                    headers: { "access-token": accessToken }
-                })
-                .then((res) => {
-                    const data: ChatterfangProfile[] = res.data as unknown as ChatterfangProfile[];
-                    const profiles: Profile[] = profilesDataMapper(data);
-                    dispatch(ProfilesAction.GetProfilesComplete(profiles));
-                });
-        }
-    }, [accessToken, userId, dispatch]);
+        axios
+            .get<string>(endpoint, {
+                headers: {}
+            })
+            .then((res) => {
+                const data: ChatterfangProfile[] = res.data as unknown as ChatterfangProfile[];
+                const profiles: Profile[] = profilesDataMapper(data);
+                dispatch(ProfilesAction.GetProfilesComplete(profiles));
+            });
+    }, [dispatch]);
 };
 
 const useUpdateProfile = () => {
