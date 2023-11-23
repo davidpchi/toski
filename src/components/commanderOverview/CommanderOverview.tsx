@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { Checkbox, Flex, Input, Tooltip } from "@chakra-ui/react";
+import { Box, Checkbox, Flex, Input, Tooltip } from "@chakra-ui/react";
 
 import { SortableTable } from "../dataVisualizations/SortableTable";
 import { commanderOverviewColumns } from "../dataVisualizations/columnHelpers/commanderOverviewColumnHelper";
@@ -56,15 +56,15 @@ export const CommanderOverview = React.memo(function MatchHistory() {
                     hasArrow
                     arrowSize={15}
                 >
-                    <div style={{ marginTop: "8px", marginBottom: "8px" }}>
+                    <Box padding={"8px"}>
                         <Checkbox isChecked={showOnlyQualfied} onChange={onShowOnlyQualifiedChange}>
                             {"Show only qualified"}
                         </Checkbox>
-                    </div>
+                    </Box>
                 </Tooltip>
-                <div style={{ padding: 20 }}>
+                <Box padding={"8px"}>
                     <Input placeholder="Filter by..." onChange={onSearchChange} value={searchInput} />
-                </div>
+                </Box>
             </Flex>
             {commandersArray.length > 0 ? (
                 <SortableTable
