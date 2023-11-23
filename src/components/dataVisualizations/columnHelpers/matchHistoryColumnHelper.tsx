@@ -43,7 +43,7 @@ export const matchHistoryColumns: ColumnDef<Match, any>[] = [
             });
 
             return (
-                <Flex align="start" flexDirection="column" flexWrap="wrap" maxWidth={"500px"}>
+                <Flex align="start" flexDirection="column" flexWrap="wrap" minWidth={"400px"} maxWidth={"500px"}>
                     {players}
                 </Flex>
             );
