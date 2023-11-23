@@ -15,7 +15,8 @@ const profileMap: { [name: string]: string } = {
     LumenAdi: "224315766042787840",
     Wisecompany: "396390132988641281",
     Leon_Von_Kaktuus: "563015313935826984",
-    Wrinklebuns: "187707404761169920"
+    Wrinklebuns: "187707404761169920",
+    WitchPHD: "71482669514366976"
 };
 
 const useHydrateProfiles = () => {
