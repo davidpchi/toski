@@ -87,13 +87,17 @@ export function getAverageWinTurn(player: Player) {
  * @returns
  */
 export function isNewlyQualifiedPlayer(player: Player) {
-    const dateOffset = new Date();
-    dateOffset.setDate(dateOffset.getDate() - NEW_PLAYER_HIGHLIGHT_DAYS);
-    const lastIndex = player.validMatchesCount - 1;
+    const currentDate = new Date();
+    const dateOffset = (currentDate.getTime() - NEW_PLAYER_HIGHLIGHT_DAYS * 24 * 60 * 60 * 1000);
+
+    // TODO: This logic does not gracefully handle matches that are not valid. We don't really run into this very often
+    // though, so we acknowledge this bug and will revisit it when it comes up (invalid matches are not really recorded anymore)
     if (
         PLAYER_MINIMUM_GAMES_REQUIRED <= player.validMatchesCount &&
         player.validMatchesCount <= PLAYER_MAXIMUM_GAMES_AS_NEW_PLAYER &&
-        dateOffset < player.matches[lastIndex].date
+        // we should only be looking at the match that qualified the player (aka the PLAYER_MINIMUM_GAMES_REQUIRED match) 
+        // to determine if we should render the label
+        dateOffset < player.matches[PLAYER_MINIMUM_GAMES_REQUIRED].date.getTime()
     ) {
         return true;
     } else {

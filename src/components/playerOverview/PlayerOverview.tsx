@@ -1,4 +1,4 @@
-import { Checkbox, Flex, Input, Tooltip } from "@chakra-ui/react";
+import { Box, Checkbox, Flex, Input, Tooltip } from "@chakra-ui/react";
 import React from "react";
 import { SortableTable } from "../dataVisualizations/SortableTable";
 import { playerOverviewColumns } from "../dataVisualizations/columnHelpers/playerOverviewColumnHelper";
@@ -56,15 +56,15 @@ export const PlayerOverview = React.memo(function MatchHistory() {
                     hasArrow
                     arrowSize={15}
                 >
-                    <div>
+                    <Box padding={"8px"}>
                         <Checkbox isChecked={showOnlyQualfied} onChange={onShowOnlyQualifiedChange}>
                             {"Show only qualified"}
                         </Checkbox>
-                    </div>
+                    </Box>
                 </Tooltip>
-                <div style={{ padding: 20 }}>
+                <Box padding={"8px"}>
                     <Input placeholder="Filter by..." onChange={onSearchChange} value={searchInput} />
-                </div>
+                </Box>
             </Flex>
             <SortableTable
                 columns={playerOverviewColumns}

@@ -3,7 +3,7 @@ import { NewsArticle } from "../types/domain/NewsArticle";
 
 export const article_9: NewsArticle = {
     id: "9",
-    title: "Profile Customization and Account Linking",
+    title: "Profile Customization & Account Linking",
     author: "doomgeek",
     date: "November 15th, 2023",
     summary: "New sign-in customization and account linking",

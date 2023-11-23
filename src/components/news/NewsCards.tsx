@@ -16,16 +16,14 @@ export const NewsCards = React.memo(function NewsCards() {
             };
 
             return (
-                <Flex marginBottom="4" flex="1" alignSelf="stretch" justifyContent="center" key={"flex" + article.id}>
-                    <NewsCard
-                        onClick={onClickNewsTile}
-                        title={article.title}
-                        date={article.date}
-                        author={article.author}
-                        content={article.summary}
-                        image={article.image}
-                    />
-                </Flex>
+                <NewsCard
+                    onClick={onClickNewsTile}
+                    title={article.title}
+                    date={article.date}
+                    author={article.author}
+                    content={article.summary}
+                    image={article.image}
+                />
             );
         });
 
