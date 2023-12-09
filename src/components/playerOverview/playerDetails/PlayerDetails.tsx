@@ -73,7 +73,7 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
                         <Tooltip
                             label={
                                 <p style={{ textAlign: "center" }}>
-                                    Stats for when this player played against a commander
+                                    Stats for when this player played against a commander or another player
                                 </p>
                             }
                             hasArrow
