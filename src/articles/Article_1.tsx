@@ -8,7 +8,7 @@ export const article_1: NewsArticle = {
     date: "September 22, 2023",
     summary: "Adding the articles section and new filters",
     content: <Article_1 />,
-    image: "https://media.discordapp.net/attachments/1095034595377942670/1143402141386543146/OIG.png?ex=6549bdb9&is=653748b9&hm=7f9e0296434fb199f7d958217af6780b21d51f1a05b3e785ae13943e8f00937c&=&width=676&height=676"
+    image: "https://media.discordapp.net/attachments/983610720316977193/1174627862502981662/alien-world-with-dark-skies-v0-x8rxh6edhbvb1.png"
 };
 
 export default function Article_1() {

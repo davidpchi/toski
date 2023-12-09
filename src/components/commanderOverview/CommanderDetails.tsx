@@ -2,7 +2,24 @@ import { TooltipItem } from "chart.js";
 import React, { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLoaderData, useNavigate } from "react-router-dom";
-import { Flex, Heading, Image, Input, Link, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
+
+import { ExternalLinkIcon } from "@chakra-ui/icons";
+import {
+    Flex,
+    Heading,
+    Image,
+    Input,
+    Link,
+    Switch,
+    Tab,
+    TabList,
+    TabPanel,
+    TabPanels,
+    Tabs,
+    Text,
+    Tooltip
+} from "@chakra-ui/react";
+
 import { AppState } from "../../redux/rootReducer";
 import { StatsSelectors } from "../../redux/stats/statsSelectors";
 import { Loading } from "../Loading";
@@ -20,7 +37,8 @@ import { primaryColor } from "../../themes/acorn";
 import { topPlayersColumns } from "../dataVisualizations/columnHelpers/topPlayersColumnHelper";
 import { filterMatchesByPlayerCount } from "../../logic/dictionaryUtils";
 import { getWinRatePercentage } from "../../logic/utils";
-import { ExternalLinkIcon } from "@chakra-ui/icons";
+import { CommanderMatchupsTable } from "./CommanderMatchupsTable";
+import { PlayerMatchupsTable } from "./PlayerMatchupsTable";
 
 export async function loader(data: { params: any }) {
     return data.params.commanderId;
@@ -30,6 +48,8 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
     const navigate = useNavigate();
     const commanderId = useLoaderData() as string;
     const commander = useSelector((state: AppState) => StatsSelectors.getCommander(state, commanderId));
+
+    const [showCommanderMatchups, setShowCommanderMatchups] = useState<boolean>(false);
 
     const [dateFilter, setDateFilter] = useState<Date | undefined>(undefined);
     const onDatePickerChange = useCallback(
@@ -231,6 +251,19 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                         <Text>Top Players</Text>
                     </Tab>
                     <Tab>
+                        <Tooltip
+                            label={
+                                <p style={{ textAlign: "center" }}>
+                                    Stats for when this commander played against another commander or player
+                                </p>
+                            }
+                            hasArrow
+                            arrowSize={15}
+                        >
+                            <Text>Matchups</Text>
+                        </Tooltip>
+                    </Tab>
+                    <Tab>
                         <Text>Match Trends</Text>
                     </Tab>
                 </TabList>
@@ -286,6 +319,39 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                             />
                         ) : (
                             <div style={{ textAlign: "center" }}>No data</div>
+                        )}
+                    </TabPanel>
+                    <TabPanel>
+                        <Flex
+                            alignSelf={"stretch"}
+                            justifyContent={"center"}
+                            alignItems={"stretch"}
+                            flexDirection={"row"}
+                        >
+                            <Heading size="sm" color={showCommanderMatchups ? undefined : primaryColor["500"]}>
+                                Player Matchups
+                            </Heading>
+                            <Switch
+                                size={"md"}
+                                onChange={() => setShowCommanderMatchups(!showCommanderMatchups)}
+                                paddingLeft={"8px"}
+                                paddingRight={"8px"}
+                                alignSelf={"center"}
+                                colorScheme="primary"
+                                sx={{
+                                    "span.chakra-switch__track:not([data-checked])": {
+                                        backgroundColor: primaryColor["500"]
+                                    }
+                                }}
+                            />
+                            <Heading size="sm" color={showCommanderMatchups ? primaryColor["500"] : undefined}>
+                                Commander Matchups
+                            </Heading>
+                        </Flex>
+                        {showCommanderMatchups ? (
+                            <CommanderMatchupsTable commanderName={commander.name} dateFilter={dateFilter} />
+                        ) : (
+                            <PlayerMatchupsTable commanderName={commander.name} dateFilter={dateFilter} />
                         )}
                     </TabPanel>
                     <TabPanel>
