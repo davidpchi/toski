@@ -97,7 +97,7 @@ export function isNewlyQualifiedPlayer(player: Player) {
         player.validMatchesCount <= PLAYER_MAXIMUM_GAMES_AS_NEW_PLAYER &&
         // we should only be looking at the match that qualified the player (aka the PLAYER_MINIMUM_GAMES_REQUIRED match) 
         // to determine if we should render the label
-        dateOffset < player.matches[PLAYER_MINIMUM_GAMES_REQUIRED].date.getTime()
+        dateOffset < player.matches[PLAYER_MINIMUM_GAMES_REQUIRED - 1].date.getTime()
     ) {
         return true;
     } else {
