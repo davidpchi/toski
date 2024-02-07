@@ -101,7 +101,7 @@ export const commanderList: {
     },
     "Admiral Brass, Unsinkable": {
         id: "bdc2d492-9d1e-4543-8b9c-c66ee67992ce",
-        image: "https://cards.scryfall.io/normal/front/b/d/bdc2d492-9d1e-4543-8b9c-c66ee67992ce.jpg?1698987703",
+        image: "https://cards.scryfall.io/normal/front/b/d/bdc2d492-9d1e-4543-8b9c-c66ee67992ce.jpg?1699972732",
         colorIdentity: ["B", "R", "U"],
         scryfallUri: "https://scryfall.com/card/lcc/1/admiral-brass-unsinkable?utm_source=api",
         name: "Admiral Brass, Unsinkable"
@@ -121,10 +121,10 @@ export const commanderList: {
         name: "Adric, Mathematical Genius"
     },
     "Adrix and Nev, Twincasters": {
-        id: "d495e084-92ec-4675-b6aa-8ade2775b796",
-        image: "https://cards.scryfall.io/normal/front/d/4/d495e084-92ec-4675-b6aa-8ade2775b796.jpg?1674185826",
+        id: "b9c11061-bb34-4904-b9f1-ea106b517bbe",
+        image: "https://cards.scryfall.io/normal/front/b/9/b9c11061-bb34-4904-b9f1-ea106b517bbe.jpg?1706240967",
         colorIdentity: ["G", "U"],
-        scryfallUri: "https://scryfall.com/card/c21/9/adrix-and-nev-twincasters?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/mkc/198/adrix-and-nev-twincasters?utm_source=api",
         name: "Adrix and Nev, Twincasters"
     },
     "Adun Oakenshield": {
@@ -183,6 +183,13 @@ export const commanderList: {
         scryfallUri: "https://scryfall.com/card/j22/1/agrus-kos-eternal-soldier?utm_source=api",
         name: "Agrus Kos, Eternal Soldier"
     },
+    "Agrus Kos, Spirit of Justice": {
+        id: "58aeac7c-1275-49d4-9915-7604ae4bfdff",
+        image: "https://cards.scryfall.io/normal/front/5/8/58aeac7c-1275-49d4-9915-7604ae4bfdff.jpg?1706242105",
+        colorIdentity: ["R", "W"],
+        scryfallUri: "https://scryfall.com/card/mkm/184/agrus-kos-spirit-of-justice?utm_source=api",
+        name: "Agrus Kos, Spirit of Justice"
+    },
     "Agrus Kos, Wojek Veteran": {
         id: "c2521942-0ecd-45a9-bac6-04267a2c29ed",
         image: "https://cards.scryfall.io/normal/front/c/2/c2521942-0ecd-45a9-bac6-04267a2c29ed.jpg?1598916720",
@@ -233,10 +240,10 @@ export const commanderList: {
         name: "Akiri, Line-Slinger"
     },
     "Akroma, Angel of Fury": {
-        id: "8c21655e-fda4-4852-a801-c5593644044a",
-        image: "https://cards.scryfall.io/normal/front/8/c/8c21655e-fda4-4852-a801-c5593644044a.jpg?1619396626",
+        id: "2a81f0b5-5116-4946-89fc-18479bf85305",
+        image: "https://cards.scryfall.io/normal/front/2/a/2a81f0b5-5116-4946-89fc-18479bf85305.jpg?1706240815",
         colorIdentity: ["R"],
-        scryfallUri: "https://scryfall.com/card/tsr/150/akroma-angel-of-fury?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/mkc/146/akroma-angel-of-fury?utm_source=api",
         name: "Akroma, Angel of Fury"
     },
     "Akroma, Angel of Wrath": {
@@ -261,10 +268,10 @@ export const commanderList: {
         name: "Akuta, Born of Ash"
     },
     "Alandra, Sky Dreamer": {
-        id: "61561585-f4fb-4e47-a65a-0c43a855ebcf",
-        image: "https://cards.scryfall.io/normal/front/6/1/61561585-f4fb-4e47-a65a-0c43a855ebcf.jpg?1675644405",
+        id: "54bf48d4-e350-4ca7-87da-ce04fefd4610",
+        image: "https://cards.scryfall.io/normal/front/5/4/54bf48d4-e350-4ca7-87da-ce04fefd4610.jpg?1706240667",
         colorIdentity: ["U"],
-        scryfallUri: "https://scryfall.com/card/j22/9/alandra-sky-dreamer?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/mkc/94/alandra-sky-dreamer?utm_source=api",
         name: "Alandra, Sky Dreamer"
     },
     "Alaundo the Seer": {
@@ -358,6 +365,13 @@ export const commanderList: {
         scryfallUri: "https://scryfall.com/card/clb/55/alora-merry-thief?utm_source=api",
         name: "Alora, Merry Thief"
     },
+    "Alquist Proft, Master Sleuth": {
+        id: "41129b44-4fa7-473b-b2b7-48c6a58be03c",
+        image: "https://cards.scryfall.io/normal/front/4/1/41129b44-4fa7-473b-b2b7-48c6a58be03c.jpg?1706242110",
+        colorIdentity: ["U", "W"],
+        scryfallUri: "https://scryfall.com/card/mkm/185/alquist-proft-master-sleuth?utm_source=api",
+        name: "Alquist Proft, Master Sleuth"
+    },
     "Alrund, God of the Cosmos // Hakka, Whispering Raven": {
         id: "5d131784-c1a3-463e-a37b-b720af67ab62",
         image: "https://cards.scryfall.io/normal/front/5/d/5d131784-c1a3-463e-a37b-b720af67ab62.jpg?1665157358",
@@ -413,6 +427,13 @@ export const commanderList: {
         colorIdentity: ["R"],
         scryfallUri: "https://scryfall.com/card/who/75/amy-pond?utm_source=api",
         name: "Amy Pond"
+    },
+    "Amzu, Swarm's Hunger": {
+        id: "634f6f70-347e-436f-abf9-4a573472e2c8",
+        image: "https://cards.scryfall.io/normal/front/6/3/634f6f70-347e-436f-abf9-4a573472e2c8.jpg?1706239624",
+        colorIdentity: ["B", "G"],
+        scryfallUri: "https://scryfall.com/card/clu/24/amzu-swarms-hunger?utm_source=api",
+        name: "Amzu, Swarm's Hunger"
     },
     "Anafenza, Kin-Tree Spirit": {
         id: "1717da7b-9e87-4694-873b-abd4e3bcd5e2",
@@ -534,11 +555,18 @@ export const commanderList: {
         name: "Anthousa, Setessan Hero"
     },
     "Anya, Merciless Angel": {
-        id: "01eb2243-bfe3-48c6-ab16-95672356858e",
-        image: "https://cards.scryfall.io/normal/front/0/1/01eb2243-bfe3-48c6-ab16-95672356858e.jpg?1562272006",
+        id: "0526277f-538b-42d0-8c75-c390f599b94e",
+        image: "https://cards.scryfall.io/normal/front/0/5/0526277f-538b-42d0-8c75-c390f599b94e.jpg?1706240970",
         colorIdentity: ["R", "W"],
-        scryfallUri: "https://scryfall.com/card/cm2/8/anya-merciless-angel?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/mkc/199/anya-merciless-angel?utm_source=api",
         name: "Anya, Merciless Angel"
+    },
+    "Anzrag, the Quake-Mole": {
+        id: "70e9d8b8-4b32-4414-b32f-1f47523239c5",
+        image: "https://cards.scryfall.io/normal/front/7/0/70e9d8b8-4b32-4414-b32f-1f47523239c5.jpg?1706242114",
+        colorIdentity: ["G", "R"],
+        scryfallUri: "https://scryfall.com/card/mkm/186/anzrag-the-quake-mole?utm_source=api",
+        name: "Anzrag, the Quake-Mole"
     },
     "Ao, the Dawn Sky": {
         id: "8d2c4063-7322-4041-a870-b95598a03e29",
@@ -553,6 +581,13 @@ export const commanderList: {
         colorIdentity: ["B"],
         scryfallUri: "https://scryfall.com/card/thb/84/aphemia-the-cacophony?utm_source=api",
         name: "Aphemia, the Cacophony"
+    },
+    "Apothecary White": {
+        id: "4fedf84e-55ca-4334-a2c1-6e991112bb68",
+        image: "https://cards.scryfall.io/normal/front/4/f/4fedf84e-55ca-4334-a2c1-6e991112bb68.jpg?1706239557",
+        colorIdentity: ["W"],
+        scryfallUri: "https://scryfall.com/card/clu/1/apothecary-white?utm_source=api",
+        name: "Apothecary White"
     },
     "Aragorn and Arwen, Wed": {
         id: "d7d4c97a-9319-4534-9a49-da000f41a02d",
@@ -618,10 +653,10 @@ export const commanderList: {
         name: "Araumi of the Dead Tide"
     },
     "Arcades Sabboth": {
-        id: "d20a0b5a-2a04-4cce-83e4-2d65ef9399df",
-        image: "https://cards.scryfall.io/normal/front/d/2/d20a0b5a-2a04-4cce-83e4-2d65ef9399df.jpg?1562937212",
+        id: "175695bb-2630-4269-a407-9138c7008e81",
+        image: "https://cards.scryfall.io/normal/front/1/7/175695bb-2630-4269-a407-9138c7008e81.jpg?1675200635",
         colorIdentity: ["G", "U", "W"],
-        scryfallUri: "https://scryfall.com/card/chr/71/arcades-sabboth?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/dmr/187/arcades-sabboth?utm_source=api",
         name: "Arcades Sabboth"
     },
     "Arcades, the Strategist": {
@@ -632,10 +667,10 @@ export const commanderList: {
         name: "Arcades, the Strategist"
     },
     "Arcanis the Omnipotent": {
-        id: "e7a7941b-68bf-48b1-a5ed-2013068b486c",
-        image: "https://cards.scryfall.io/normal/front/e/7/e7a7941b-68bf-48b1-a5ed-2013068b486c.jpg?1562627407",
+        id: "2074ed36-fbae-4886-b3ad-360fdfbb69cd",
+        image: "https://cards.scryfall.io/normal/front/2/0/2074ed36-fbae-4886-b3ad-360fdfbb69cd.jpg?1675199157",
         colorIdentity: ["U"],
-        scryfallUri: "https://scryfall.com/card/c17/80/arcanis-the-omnipotent?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/dmr/39/arcanis-the-omnipotent?utm_source=api",
         name: "Arcanis the Omnipotent"
     },
     "Arcee, Sharpshooter // Arcee, Acrobatic Coupe": {
@@ -815,7 +850,7 @@ export const commanderList: {
     },
     "Ashnod the Uncaring": {
         id: "a76e8ab8-33bf-4a5a-b6a2-7046301b6c31",
-        image: "https://cards.scryfall.io/normal/front/a/7/a76e8ab8-33bf-4a5a-b6a2-7046301b6c31.jpg?1685036070",
+        image: "https://cards.scryfall.io/normal/front/a/7/a76e8ab8-33bf-4a5a-b6a2-7046301b6c31.jpg?1705542693",
         colorIdentity: ["B", "R", "U"],
         scryfallUri: "https://scryfall.com/card/brc/4/ashnod-the-uncaring?utm_source=api",
         name: "Ashnod the Uncaring"
@@ -954,11 +989,18 @@ export const commanderList: {
         name: "Auntie Blyte, Bad Influence"
     },
     "Aurelia, Exemplar of Justice": {
-        id: "a8e9f4d2-bba5-4061-8ae7-a68b912f2c11",
-        image: "https://cards.scryfall.io/normal/front/a/8/a8e9f4d2-bba5-4061-8ae7-a68b912f2c11.jpg?1572893504",
+        id: "f129569e-b14e-435f-bdb6-138ca67eb922",
+        image: "https://cards.scryfall.io/normal/front/f/1/f129569e-b14e-435f-bdb6-138ca67eb922.jpg?1702429598",
         colorIdentity: ["R", "W"],
-        scryfallUri: "https://scryfall.com/card/grn/153/aurelia-exemplar-of-justice?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/rvr/164/aurelia-exemplar-of-justice?utm_source=api",
         name: "Aurelia, Exemplar of Justice"
+    },
+    "Aurelia, the Law Above": {
+        id: "8f80c6e7-e9f9-4ca6-87f7-a52c96079e4a",
+        image: "https://cards.scryfall.io/normal/front/8/f/8f80c6e7-e9f9-4ca6-87f7-a52c96079e4a.jpg?1706242118",
+        colorIdentity: ["R", "W"],
+        scryfallUri: "https://scryfall.com/card/mkm/188/aurelia-the-law-above?utm_source=api",
+        name: "Aurelia, the Law Above"
     },
     "Aurelia, the Warleader": {
         id: "7722682f-952c-4829-b4ef-e52300b7950e",
@@ -1290,10 +1332,10 @@ export const commanderList: {
         name: "Ben-Ben, Akki Hermit"
     },
     "Bennie Bracks, Zoologist": {
-        id: "3b21be33-c0f0-4ba9-b283-e498a71323c1",
-        image: "https://cards.scryfall.io/normal/front/3/b/3b21be33-c0f0-4ba9-b283-e498a71323c1.jpg?1673482524",
+        id: "90645549-20f1-4fe9-8363-7f67c20fa3b6",
+        image: "https://cards.scryfall.io/normal/front/9/0/90645549-20f1-4fe9-8363-7f67c20fa3b6.jpg?1706240558",
         colorIdentity: ["W"],
-        scryfallUri: "https://scryfall.com/card/ncc/86/bennie-bracks-zoologist?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/mkc/57/bennie-bracks-zoologist?utm_source=api",
         name: "Bennie Bracks, Zoologist"
     },
     "Beregond of the Guard": {
@@ -1411,7 +1453,7 @@ export const commanderList: {
     },
     "Blitzwing, Cruel Tormentor // Blitzwing, Adaptive Assailant": {
         id: "d20738d2-a159-4e3e-be7a-561a121bd447",
-        image: "https://cards.scryfall.io/normal/front/d/2/d20738d2-a159-4e3e-be7a-561a121bd447.jpg?1674092791",
+        image: "https://cards.scryfall.io/normal/front/d/2/d20738d2-a159-4e3e-be7a-561a121bd447.jpg?1703899858",
         colorIdentity: ["B"],
         scryfallUri:
             "https://scryfall.com/card/bot/4/blitzwing-cruel-tormentor-blitzwing-adaptive-assailant?utm_source=api",
@@ -1446,10 +1488,10 @@ export const commanderList: {
         name: "Borborygmos and Fblthp"
     },
     "Borborygmos Enraged": {
-        id: "8644c60f-7d06-4026-bcf3-df054701ca0a",
-        image: "https://cards.scryfall.io/normal/front/8/6/8644c60f-7d06-4026-bcf3-df054701ca0a.jpg?1561834730",
+        id: "02df18c5-07b9-4e85-9c4b-58b63fa59437",
+        image: "https://cards.scryfall.io/normal/front/0/2/02df18c5-07b9-4e85-9c4b-58b63fa59437.jpg?1702429604",
         colorIdentity: ["G", "R"],
-        scryfallUri: "https://scryfall.com/card/gtc/147/borborygmos-enraged?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/rvr/167/borborygmos-enraged?utm_source=api",
         name: "Borborygmos Enraged"
     },
     "Boris Devilboon": {
@@ -1656,10 +1698,10 @@ export const commanderList: {
         name: "Bruse Tarl, Boorish Herder"
     },
     "Bruvac the Grandiloquent": {
-        id: "5b43bdc7-e49e-4848-9101-6cad2ecab4dc",
-        image: "https://cards.scryfall.io/normal/front/5/b/5b43bdc7-e49e-4848-9101-6cad2ecab4dc.jpg?1632261753",
+        id: "2ce2d73f-3f64-44db-a2bc-a8f4a37dc487",
+        image: "https://cards.scryfall.io/normal/front/2/c/2ce2d73f-3f64-44db-a2bc-a8f4a37dc487.jpg?1702550789",
         colorIdentity: ["U"],
-        scryfallUri: "https://scryfall.com/card/jmp/10/bruvac-the-grandiloquent?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/rvr/35/bruvac-the-grandiloquent?utm_source=api",
         name: "Bruvac the Grandiloquent"
     },
     "Burakos, Party Leader": {
@@ -1957,10 +1999,10 @@ export const commanderList: {
         name: "Chromium, the Mutable"
     },
     "Chulane, Teller of Tales": {
-        id: "83f43730-1c1f-4150-8771-d901c54bedc4",
-        image: "https://cards.scryfall.io/normal/front/8/3/83f43730-1c1f-4150-8771-d901c54bedc4.jpg?1571282906",
+        id: "d1499a4b-1af1-4913-8e26-57d0707264db",
+        image: "https://cards.scryfall.io/normal/front/d/1/d1499a4b-1af1-4913-8e26-57d0707264db.jpg?1706240978",
         colorIdentity: ["G", "U", "W"],
-        scryfallUri: "https://scryfall.com/card/eld/326/chulane-teller-of-tales?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/mkc/202/chulane-teller-of-tales?utm_source=api",
         name: "Chulane, Teller of Tales"
     },
     "Circu, Dimir Lobotomist": {
@@ -2000,7 +2042,7 @@ export const commanderList: {
     },
     "Clavileño, First of the Blessed": {
         id: "9f55b648-b1ec-407a-a0c7-7647755793d1",
-        image: "https://cards.scryfall.io/normal/front/9/f/9f55b648-b1ec-407a-a0c7-7647755793d1.jpg?1698987711",
+        image: "https://cards.scryfall.io/normal/front/9/f/9f55b648-b1ec-407a-a0c7-7647755793d1.jpg?1699972735",
         colorIdentity: ["B", "W"],
         scryfallUri: "https://scryfall.com/card/lcc/2/clavile%C3%B1o-first-of-the-blessed?utm_source=api",
         name: "Clavileño, First of the Blessed"
@@ -2053,6 +2095,13 @@ export const commanderList: {
         colorIdentity: ["R", "W"],
         scryfallUri: "https://scryfall.com/card/clb/270/commander-liara-portyr?utm_source=api",
         name: "Commander Liara Portyr"
+    },
+    "Commander Mustard": {
+        id: "c1fa8c23-5501-476f-9614-162d7bd95b23",
+        image: "https://cards.scryfall.io/normal/front/c/1/c1fa8c23-5501-476f-9614-162d7bd95b23.jpg?1706239567",
+        colorIdentity: ["R", "W"],
+        scryfallUri: "https://scryfall.com/card/clu/6/commander-mustard?utm_source=api",
+        name: "Commander Mustard"
     },
     "Commissar Severina Raine": {
         id: "94ba8b76-8de7-46da-b641-2503903f0f8a",
@@ -2224,10 +2273,10 @@ export const commanderList: {
         name: "Dargo, the Shipwrecker"
     },
     "Darien, King of Kjeldor": {
-        id: "ed5f96a4-55e0-4ae3-bd78-f01703649e9d",
-        image: "https://cards.scryfall.io/normal/front/e/d/ed5f96a4-55e0-4ae3-bd78-f01703649e9d.jpg?1562442656",
+        id: "50875c99-c5c3-41dd-a0f9-08c98edfebc9",
+        image: "https://cards.scryfall.io/normal/front/5/0/50875c99-c5c3-41dd-a0f9-08c98edfebc9.jpg?1706240562",
         colorIdentity: ["W"],
-        scryfallUri: "https://scryfall.com/card/a25/9/darien-king-of-kjeldor?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/mkc/59/darien-king-of-kjeldor?utm_source=api",
         name: "Darien, King of Kjeldor"
     },
     "Darigaaz Reincarnated": {
@@ -2306,6 +2355,13 @@ export const commanderList: {
         colorIdentity: ["R"],
         scryfallUri: "https://scryfall.com/card/afr/138/delina-wild-mage?utm_source=api",
         name: "Delina, Wild Mage"
+    },
+    "Delney, Streetwise Lookout": {
+        id: "be219928-3d0e-4d00-b124-152ce8a8c13b",
+        image: "https://cards.scryfall.io/normal/front/b/e/be219928-3d0e-4d00-b124-152ce8a8c13b.jpg?1706241477",
+        colorIdentity: ["W"],
+        scryfallUri: "https://scryfall.com/card/mkm/12/delney-streetwise-lookout?utm_source=api",
+        name: "Delney, Streetwise Lookout"
     },
     "Demonlord Belzenlok": {
         id: "b07114d8-40b3-4102-8d70-e3ed94a7f515",
@@ -2618,10 +2674,17 @@ export const commanderList: {
     },
     "Durnan of the Yawning Portal": {
         id: "53f287c1-bd17-43fd-b0e3-b52472b0aa70",
-        image: "https://cards.scryfall.io/normal/front/5/3/53f287c1-bd17-43fd-b0e3-b52472b0aa70.jpg?1674140772",
+        image: "https://cards.scryfall.io/normal/front/5/3/53f287c1-bd17-43fd-b0e3-b52472b0aa70.jpg?1706481923",
         colorIdentity: ["G"],
         scryfallUri: "https://scryfall.com/card/clb/657/durnan-of-the-yawning-portal?utm_source=api",
         name: "Durnan of the Yawning Portal"
+    },
+    "Duskana, the Rage Mother": {
+        id: "31fa9d47-43d6-44b5-ab86-fc94a83eac26",
+        image: "https://cards.scryfall.io/normal/front/3/1/31fa9d47-43d6-44b5-ab86-fc94a83eac26.jpg?1706448894",
+        colorIdentity: ["G", "R", "W"],
+        scryfallUri: "https://scryfall.com/card/mkc/5/duskana-the-rage-mother?utm_source=api",
+        name: "Duskana, the Rage Mother"
     },
     "Dwynen, Gilt-Leaf Daen": {
         id: "2eb0f12b-9199-440d-9b85-831a5aec5dae",
@@ -2825,6 +2888,13 @@ export const commanderList: {
         colorIdentity: ["G", "W"],
         scryfallUri: "https://scryfall.com/card/2x2/10/emiel-the-blessed?utm_source=api",
         name: "Emiel the Blessed"
+    },
+    "Emissary Green": {
+        id: "323e9430-b87c-4b02-9ade-c4c65343147b",
+        image: "https://cards.scryfall.io/normal/front/3/2/323e9430-b87c-4b02-9ade-c4c65343147b.jpg?1706239566",
+        colorIdentity: ["G"],
+        scryfallUri: "https://scryfall.com/card/clu/5/emissary-green?utm_source=api",
+        name: "Emissary Green"
     },
     "Emmara, Soul of the Accord": {
         id: "41b930ee-e16b-4612-87de-c03ecc6ff6db",
@@ -3037,10 +3107,10 @@ export const commanderList: {
         name: "Esior, Wardwing Familiar"
     },
     "Esix, Fractal Bloom": {
-        id: "9c381bc2-d26e-4d7e-9a0b-a8f7d2d802be",
-        image: "https://cards.scryfall.io/normal/front/9/c/9c381bc2-d26e-4d7e-9a0b-a8f7d2d802be.jpg?1674185833",
+        id: "2e390f8e-1dd5-4383-83f5-45f20f18d410",
+        image: "https://cards.scryfall.io/normal/front/2/e/2e390f8e-1dd5-4383-83f5-45f20f18d410.jpg?1706241000",
         colorIdentity: ["G", "U"],
-        scryfallUri: "https://scryfall.com/card/c21/10/esix-fractal-bloom?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/mkc/210/esix-fractal-bloom?utm_source=api",
         name: "Esix, Fractal Bloom"
     },
     "Estrid, the Masked": {
@@ -3058,11 +3128,18 @@ export const commanderList: {
         name: "Etali, Primal Conqueror // Etali, Primal Sickness"
     },
     "Etali, Primal Storm": {
-        id: "e74b5f7e-847d-4eca-a77e-96bad5434292",
-        image: "https://cards.scryfall.io/normal/front/e/7/e74b5f7e-847d-4eca-a77e-96bad5434292.jpg?1698988319",
+        id: "a18fdaf9-964d-45e9-bd40-a8fc745ddd1e",
+        image: "https://cards.scryfall.io/normal/front/a/1/a18fdaf9-964d-45e9-bd40-a8fc745ddd1e.jpg?1706240833",
         colorIdentity: ["R"],
-        scryfallUri: "https://scryfall.com/card/lcc/224/etali-primal-storm?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/mkc/152/etali-primal-storm?utm_source=api",
         name: "Etali, Primal Storm"
+    },
+    "Etrata, Deadly Fugitive": {
+        id: "4410db5a-62af-43ac-979d-88a7c975f7bd",
+        image: "https://cards.scryfall.io/normal/front/4/4/4410db5a-62af-43ac-979d-88a7c975f7bd.jpg?1706242152",
+        colorIdentity: ["B", "U"],
+        scryfallUri: "https://scryfall.com/card/mkm/200/etrata-deadly-fugitive?utm_source=api",
+        name: "Etrata, Deadly Fugitive"
     },
     "Etrata, the Silencer": {
         id: "fa36b142-e67e-49da-9080-c5994e275266",
@@ -3112,6 +3189,13 @@ export const commanderList: {
         colorIdentity: ["B", "R", "W"],
         scryfallUri: "https://scryfall.com/card/stx/149/extus-oriq-overlord-awaken-the-blood-avatar?utm_source=api",
         name: "Extus, Oriq Overlord // Awaken the Blood Avatar"
+    },
+    "Ezrim, Agency Chief": {
+        id: "9554d5f2-7a33-4734-8cf3-dfae2ccc3596",
+        image: "https://cards.scryfall.io/normal/front/9/5/9554d5f2-7a33-4734-8cf3-dfae2ccc3596.jpg?1706242161",
+        colorIdentity: ["U", "W"],
+        scryfallUri: "https://scryfall.com/card/mkm/202/ezrim-agency-chief?utm_source=api",
+        name: "Ezrim, Agency Chief"
     },
     "Ezuri, Claw of Progress": {
         id: "6bf721b0-2b5a-4085-b50c-89cbe7420673",
@@ -3226,11 +3310,18 @@ export const commanderList: {
         name: "Far Traveler"
     },
     "Fblthp, the Lost": {
-        id: "52558748-6893-4c72-a9e2-e87d31796b59",
-        image: "https://cards.scryfall.io/normal/front/5/2/52558748-6893-4c72-a9e2-e87d31796b59.jpg?1559959349",
+        id: "79b2c547-0d9e-4fd7-a399-347ad908c70b",
+        image: "https://cards.scryfall.io/normal/front/7/9/79b2c547-0d9e-4fd7-a399-347ad908c70b.jpg?1702429390",
         colorIdentity: ["U"],
-        scryfallUri: "https://scryfall.com/card/war/50/fblthp-the-lost?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/rvr/44/fblthp-the-lost?utm_source=api",
         name: "Fblthp, the Lost"
+    },
+    "Feather, Radiant Arbiter": {
+        id: "d763695b-c184-409d-962d-5aaf39a6264e",
+        image: "https://cards.scryfall.io/normal/front/d/7/d763695b-c184-409d-962d-5aaf39a6264e.jpg?1706448890",
+        colorIdentity: ["R", "W"],
+        scryfallUri: "https://scryfall.com/card/mkc/6/feather-radiant-arbiter?utm_source=api",
+        name: "Feather, Radiant Arbiter"
     },
     "Feather, the Redeemed": {
         id: "e4a2d2c6-8eaa-4760-b620-921b807baa2e",
@@ -3332,10 +3423,10 @@ export const commanderList: {
         name: "Forge, Neverwinter Charlatan"
     },
     "Francisco, Fowl Marauder": {
-        id: "a1ca8ed4-7a98-43c1-ae00-3641ab070825",
-        image: "https://cards.scryfall.io/normal/front/a/1/a1ca8ed4-7a98-43c1-ae00-3641ab070825.jpg?1698987884",
+        id: "5182b527-739e-4523-8611-01244ced26ac",
+        image: "https://cards.scryfall.io/normal/front/5/1/5182b527-739e-4523-8611-01244ced26ac.jpg?1701084734",
         colorIdentity: ["B"],
-        scryfallUri: "https://scryfall.com/card/lcc/49/francisco-fowl-marauder?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/lcc/81/francisco-fowl-marauder?utm_source=api",
         name: "Francisco, Fowl Marauder"
     },
     "Frankie Peanuts": {
@@ -3794,10 +3885,10 @@ export const commanderList: {
         name: "Gisa, Glorious Resurrector"
     },
     "Gisela, Blade of Goldnight": {
-        id: "c40ba800-4423-4fd9-94c7-a9019c857af6",
-        image: "https://cards.scryfall.io/normal/front/c/4/c40ba800-4423-4fd9-94c7-a9019c857af6.jpg?1689999052",
+        id: "900b8908-ba51-472e-ab7a-43bd07f90577",
+        image: "https://cards.scryfall.io/normal/front/9/0/900b8908-ba51-472e-ab7a-43bd07f90577.jpg?1706547139",
         colorIdentity: ["R", "W"],
-        scryfallUri: "https://scryfall.com/card/cmm/338/gisela-blade-of-goldnight?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/mkc/211/gisela-blade-of-goldnight?utm_source=api",
         name: "Gisela, Blade of Goldnight"
     },
     "Gisela, the Broken Blade": {
@@ -4383,7 +4474,7 @@ export const commanderList: {
     },
     "Hakbal of the Surging Soul": {
         id: "e738e675-4fd1-4bc3-97f5-71d0e2fc3f2e",
-        image: "https://cards.scryfall.io/normal/front/e/7/e738e675-4fd1-4bc3-97f5-71d0e2fc3f2e.jpg?1698987718",
+        image: "https://cards.scryfall.io/normal/front/e/7/e738e675-4fd1-4bc3-97f5-71d0e2fc3f2e.jpg?1699885010",
         colorIdentity: ["G", "U"],
         scryfallUri: "https://scryfall.com/card/lcc/3/hakbal-of-the-surging-soul?utm_source=api",
         name: "Hakbal of the Surging Soul"
@@ -4569,6 +4660,13 @@ export const commanderList: {
         colorIdentity: ["R"],
         scryfallUri: "https://scryfall.com/card/akh/136/hazoret-the-fervent?utm_source=api",
         name: "Hazoret the Fervent"
+    },
+    "Headliner Scarlett": {
+        id: "be77b98a-dd79-477c-8ab2-7ebf5637a89e",
+        image: "https://cards.scryfall.io/normal/front/b/e/be77b98a-dd79-477c-8ab2-7ebf5637a89e.jpg?1706239565",
+        colorIdentity: ["R"],
+        scryfallUri: "https://scryfall.com/card/clu/4/headliner-scarlett?utm_source=api",
+        name: "Headliner Scarlett"
     },
     "Heartless Hidetsugu": {
         id: "7b3ff07c-9653-4197-ad3d-638e712e8465",
@@ -4873,10 +4971,10 @@ export const commanderList: {
         name: "Ikra Shidiqi, the Usurper"
     },
     "Ilharg, the Raze-Boar": {
-        id: "c0109b60-09aa-4a03-92e7-0c651d976d51",
-        image: "https://cards.scryfall.io/normal/front/c/0/c0109b60-09aa-4a03-92e7-0c651d976d51.jpg?1559959377",
+        id: "3d397fc3-fd4e-45ad-ad40-0f8a585c15fd",
+        image: "https://cards.scryfall.io/normal/front/3/d/3d397fc3-fd4e-45ad-ad40-0f8a585c15fd.jpg?1702550832",
         colorIdentity: ["R"],
-        scryfallUri: "https://scryfall.com/card/war/133/ilharg-the-raze-boar?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/rvr/113/ilharg-the-raze-boar?utm_source=api",
         name: "Ilharg, the Raze-Boar"
     },
     "Illuminor Szeras": {
@@ -5207,6 +5305,13 @@ export const commanderList: {
         colorIdentity: ["U"],
         scryfallUri: "https://scryfall.com/card/afr/62/iymrith-desert-doom?utm_source=api",
         name: "Iymrith, Desert Doom"
+    },
+    "Izoni, Center of the Web": {
+        id: "70ea66cd-587a-4ca9-9ca8-d7d2046bfbed",
+        image: "https://cards.scryfall.io/normal/front/7/0/70ea66cd-587a-4ca9-9ca8-d7d2046bfbed.jpg?1706242180",
+        colorIdentity: ["B", "G"],
+        scryfallUri: "https://scryfall.com/card/mkm/209/izoni-center-of-the-web?utm_source=api",
+        name: "Izoni, Center of the Web"
     },
     "Izoni, Thousand-Eyed": {
         id: "75955b0e-12d6-40ba-aab5-b7b7e2bde121",
@@ -5587,10 +5692,10 @@ export const commanderList: {
         name: "Jolrael, Empress of Beasts"
     },
     "Jolrael, Mwonvuli Recluse": {
-        id: "96c66316-a4cc-43e9-b354-03a34c1b12a7",
-        image: "https://cards.scryfall.io/normal/front/9/6/96c66316-a4cc-43e9-b354-03a34c1b12a7.jpg?1689998625",
+        id: "188f9016-275f-4060-8b11-9cdeef3759bd",
+        image: "https://cards.scryfall.io/normal/front/1/8/188f9016-275f-4060-8b11-9cdeef3759bd.jpg?1706240895",
         colorIdentity: ["G"],
-        scryfallUri: "https://scryfall.com/card/cmm/299/jolrael-mwonvuli-recluse?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/mkc/173/jolrael-mwonvuli-recluse?utm_source=api",
         name: "Jolrael, Mwonvuli Recluse"
     },
     "Jolrael, Voice of Zhalfir": {
@@ -5648,6 +5753,13 @@ export const commanderList: {
         colorIdentity: ["R"],
         scryfallUri: "https://scryfall.com/card/hml/77/joven?utm_source=api",
         name: "Joven"
+    },
+    "Judith, Carnage Connoisseur": {
+        id: "3eaa19ce-cace-499e-8b23-ef9e56b23700",
+        image: "https://cards.scryfall.io/normal/front/3/e/3eaa19ce-cace-499e-8b23-ef9e56b23700.jpg?1706242185",
+        colorIdentity: ["B", "R"],
+        scryfallUri: "https://scryfall.com/card/mkm/210/judith-carnage-connoisseur?utm_source=api",
+        name: "Judith, Carnage Connoisseur"
     },
     "Judith, the Scourge Diva": {
         id: "d6fb929c-1b8d-4d1d-aa69-ac6189cd7ebf",
@@ -5797,10 +5909,10 @@ export const commanderList: {
         name: "Kalitas, Traitor of Ghet"
     },
     "Kamahl, Fist of Krosa": {
-        id: "97ab4974-d0a4-4033-b150-8928b46dc626",
-        image: "https://cards.scryfall.io/normal/front/9/7/97ab4974-d0a4-4033-b150-8928b46dc626.jpg?1562927121",
+        id: "c960672d-06ad-4d41-8904-9c007f824756",
+        image: "https://cards.scryfall.io/normal/front/c/9/c960672d-06ad-4d41-8904-9c007f824756.jpg?1675200457",
         colorIdentity: ["G"],
-        scryfallUri: "https://scryfall.com/card/arc/61/kamahl-fist-of-krosa?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/dmr/166/kamahl-fist-of-krosa?utm_source=api",
         name: "Kamahl, Fist of Krosa"
     },
     "Kamahl, Heart of Krosa": {
@@ -5861,7 +5973,7 @@ export const commanderList: {
     },
     "Karador, Ghost Chieftain": {
         id: "8d128887-13fb-4e54-90f2-d3c46b7b29d7",
-        image: "https://cards.scryfall.io/normal/front/8/d/8d128887-13fb-4e54-90f2-d3c46b7b29d7.jpg?1689999102",
+        image: "https://cards.scryfall.io/normal/front/8/d/8d128887-13fb-4e54-90f2-d3c46b7b29d7.jpg?1702369890",
         colorIdentity: ["B", "G", "W"],
         scryfallUri: "https://scryfall.com/card/cmm/342/karador-ghost-chieftain?utm_source=api",
         name: "Karador, Ghost Chieftain"
@@ -5902,10 +6014,10 @@ export const commanderList: {
         name: "Karlach, Fury of Avernus"
     },
     "Karlov of the Ghost Council": {
-        id: "8cf01688-7046-4242-8647-d1c226ae53f7",
-        image: "https://cards.scryfall.io/normal/front/8/c/8cf01688-7046-4242-8647-d1c226ae53f7.jpg?1562706927",
+        id: "f7c41011-a9eb-451c-a76d-67d2dcf47c52",
+        image: "https://cards.scryfall.io/normal/front/f/7/f7c41011-a9eb-451c-a76d-67d2dcf47c52.jpg?1703964236",
         colorIdentity: ["B", "W"],
-        scryfallUri: "https://scryfall.com/card/c15/46/karlov-of-the-ghost-council?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/rvr/193/karlov-of-the-ghost-council?utm_source=api",
         name: "Karlov of the Ghost Council"
     },
     "Karn, Legacy Reforged": {
@@ -6027,6 +6139,13 @@ export const commanderList: {
         scryfallUri: "https://scryfall.com/card/nec/15/katsumasa-the-animator?utm_source=api",
         name: "Katsumasa, the Animator"
     },
+    "Kaust, Eyes of the Glade": {
+        id: "648c15d1-a2a2-4f59-9b0a-5448be3e990f",
+        image: "https://cards.scryfall.io/normal/front/6/4/648c15d1-a2a2-4f59-9b0a-5448be3e990f.jpg?1706448869",
+        colorIdentity: ["G", "R", "W"],
+        scryfallUri: "https://scryfall.com/card/mkc/1/kaust-eyes-of-the-glade?utm_source=api",
+        name: "Kaust, Eyes of the Glade"
+    },
     Kaysa: {
         id: "cd4b6daf-cf37-43c6-9446-3aa0de222ac4",
         image: "https://cards.scryfall.io/normal/front/c/d/cd4b6daf-cf37-43c6-9446-3aa0de222ac4.jpg?1562770177",
@@ -6049,10 +6168,10 @@ export const commanderList: {
         name: "Kazarov, Sengir Pureblood"
     },
     "Kazuul, Tyrant of the Cliffs": {
-        id: "9a7c54ed-594d-40d7-a64a-a57db6d5ba16",
-        image: "https://cards.scryfall.io/normal/front/9/a/9a7c54ed-594d-40d7-a64a-a57db6d5ba16.jpg?1690016843",
+        id: "721df547-d777-4247-b130-a4e247445b04",
+        image: "https://cards.scryfall.io/normal/front/7/2/721df547-d777-4247-b130-a4e247445b04.jpg?1707056994",
         colorIdentity: ["R"],
-        scryfallUri: "https://scryfall.com/card/cmm/237/kazuul-tyrant-of-the-cliffs?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/mkc/157/kazuul-tyrant-of-the-cliffs?utm_source=api",
         name: "Kazuul, Tyrant of the Cliffs"
     },
     "Kediss, Emberclaw Familiar": {
@@ -6096,6 +6215,13 @@ export const commanderList: {
         colorIdentity: ["G", "W"],
         scryfallUri: "https://scryfall.com/card/lci/231/kellan-daring-traveler-journey-on?utm_source=api",
         name: "Kellan, Daring Traveler // Journey On"
+    },
+    "Kellan, Inquisitive Prodigy // Tail the Suspect": {
+        id: "c49690c7-c282-4eb4-8da3-5e0c46a80fc4",
+        image: "https://cards.scryfall.io/normal/front/c/4/c49690c7-c282-4eb4-8da3-5e0c46a80fc4.jpg?1706242189",
+        colorIdentity: ["G", "U"],
+        scryfallUri: "https://scryfall.com/card/mkm/212/kellan-inquisitive-prodigy-tail-the-suspect?utm_source=api",
+        name: "Kellan, Inquisitive Prodigy // Tail the Suspect"
     },
     "Kellan, the Fae-Blooded // Birthright Boon": {
         id: "ec5e2680-8b42-4571-ab45-4936aec51901",
@@ -6143,7 +6269,7 @@ export const commanderList: {
         id: "0e259db1-14db-4314-998c-6a076a28d8cb",
         image: "https://cards.scryfall.io/normal/front/0/e/0e259db1-14db-4314-998c-6a076a28d8cb.jpg?1691056044",
         colorIdentity: ["B", "G", "R", "U", "W"],
-        scryfallUri: "https://scryfall.com/card/plist/1100/kenrith-the-returned-king?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/plst/ELD-303/kenrith-the-returned-king?utm_source=api",
         name: "Kenrith, the Returned King"
     },
     "Kentaro, the Smiling Cat": {
@@ -6407,10 +6533,10 @@ export const commanderList: {
         name: "Kolvori, God of Kinship // The Ringhart Crest"
     },
     "Koma, Cosmos Serpent": {
-        id: "2de25ea4-284a-4c16-b823-048ff00c6a03",
-        image: "https://cards.scryfall.io/normal/front/2/d/2de25ea4-284a-4c16-b823-048ff00c6a03.jpg?1631051668",
+        id: "b2f23d6f-f2c8-4022-9f46-ba7fda00ef99",
+        image: "https://cards.scryfall.io/normal/front/b/2/b2f23d6f-f2c8-4022-9f46-ba7fda00ef99.jpg?1706241008",
         colorIdentity: ["G", "U"],
-        scryfallUri: "https://scryfall.com/card/khm/221/koma-cosmos-serpent?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/mkc/213/koma-cosmos-serpent?utm_source=api",
         name: "Koma, Cosmos Serpent"
     },
     "Konda, Lord of Eiganjo": {
@@ -6525,11 +6651,18 @@ export const commanderList: {
         scryfallUri: "https://scryfall.com/card/bbd/4/krav-the-unredeemed?utm_source=api",
         name: "Krav, the Unredeemed"
     },
-    "Krenko, Mob Boss": {
-        id: "27141cae-3ca1-4a4f-933f-9608bbcf9bd9",
-        image: "https://cards.scryfall.io/normal/front/2/7/27141cae-3ca1-4a4f-933f-9608bbcf9bd9.jpg?1689997996",
+    "Krenko, Baron of Tin Street": {
+        id: "5524b712-c67d-4d2e-9344-9e85a6ce3227",
+        image: "https://cards.scryfall.io/normal/front/5/5/5524b712-c67d-4d2e-9344-9e85a6ce3227.jpg?1706241890",
         colorIdentity: ["R"],
-        scryfallUri: "https://scryfall.com/card/cmm/238/krenko-mob-boss?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/mkm/135/krenko-baron-of-tin-street?utm_source=api",
+        name: "Krenko, Baron of Tin Street"
+    },
+    "Krenko, Mob Boss": {
+        id: "7d00007d-6878-44e9-ab0d-396c25655e56",
+        image: "https://cards.scryfall.io/normal/front/7/d/7d00007d-6878-44e9-ab0d-396c25655e56.jpg?1702429511",
+        colorIdentity: ["R"],
+        scryfallUri: "https://scryfall.com/card/rvr/114/krenko-mob-boss?utm_source=api",
         name: "Krenko, Mob Boss"
     },
     "Krenko, Tin Street Kingpin": {
@@ -6693,6 +6826,13 @@ export const commanderList: {
         scryfallUri: "https://scryfall.com/card/mic/4/kyler-sigardian-emissary?utm_source=api",
         name: "Kyler, Sigardian Emissary"
     },
+    "Kylox, Visionary Inventor": {
+        id: "00faa272-91ad-407b-9175-8fa1d02585b8",
+        image: "https://cards.scryfall.io/normal/front/0/0/00faa272-91ad-407b-9175-8fa1d02585b8.jpg?1706242196",
+        colorIdentity: ["R", "U"],
+        scryfallUri: "https://scryfall.com/card/mkm/214/kylox-visionary-inventor?utm_source=api",
+        name: "Kylox, Visionary Inventor"
+    },
     "Kynaios and Tiro of Meletis": {
         id: "97fa8615-2b6c-445a-bcaf-44a7e847bf65",
         image: "https://cards.scryfall.io/normal/front/9/7/97fa8615-2b6c-445a-bcaf-44a7e847bf65.jpg?1633190298",
@@ -6791,6 +6931,13 @@ export const commanderList: {
         scryfallUri: "https://scryfall.com/card/ltr/21/landroval-horizon-witness?utm_source=api",
         name: "Landroval, Horizon Witness"
     },
+    "Lara Croft, Tomb Raider": {
+        id: "098c976b-6096-4ac7-8d52-2f219ae21d1f",
+        image: "https://cards.scryfall.io/normal/front/0/9/098c976b-6096-4ac7-8d52-2f219ae21d1f.jpg?1706570525",
+        colorIdentity: ["G", "R", "U"],
+        scryfallUri: "https://scryfall.com/card/sld/1501/lara-croft-tomb-raider?utm_source=api",
+        name: "Lara Croft, Tomb Raider"
+    },
     "Lathiel, the Bounteous Dawn": {
         id: "29d3484f-abd1-43fe-99f8-e0fa0a7b6692",
         image: "https://cards.scryfall.io/normal/front/2/9/29d3484f-abd1-43fe-99f8-e0fa0a7b6692.jpg?1608911191",
@@ -6807,7 +6954,7 @@ export const commanderList: {
     },
     "Lathril, Blade of the Elves": {
         id: "547888c3-a9a6-4413-b29a-6bcd8a9279bf",
-        image: "https://cards.scryfall.io/normal/front/5/4/547888c3-a9a6-4413-b29a-6bcd8a9279bf.jpg?1657065647",
+        image: "https://cards.scryfall.io/normal/front/5/4/547888c3-a9a6-4413-b29a-6bcd8a9279bf.jpg?1704848185",
         colorIdentity: ["B", "G"],
         scryfallUri: "https://scryfall.com/card/khc/1/lathril-blade-of-the-elves?utm_source=api",
         name: "Lathril, Blade of the Elves"
@@ -6827,17 +6974,24 @@ export const commanderList: {
         name: "Laurine, the Diversion"
     },
     "Lavinia, Azorius Renegade": {
-        id: "c497d496-1232-4614-93b0-9864fa93c29f",
-        image: "https://cards.scryfall.io/normal/front/c/4/c497d496-1232-4614-93b0-9864fa93c29f.jpg?1584831655",
+        id: "197bf3f4-c0df-4082-97a1-902ceabbdd3f",
+        image: "https://cards.scryfall.io/normal/front/1/9/197bf3f4-c0df-4082-97a1-902ceabbdd3f.jpg?1702429657",
         colorIdentity: ["U", "W"],
-        scryfallUri: "https://scryfall.com/card/rna/189/lavinia-azorius-renegade?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/rvr/195/lavinia-azorius-renegade?utm_source=api",
         name: "Lavinia, Azorius Renegade"
     },
-    "Lavinia of the Tenth": {
-        id: "813f1967-c048-4e6e-9720-216773fde47e",
-        image: "https://cards.scryfall.io/normal/front/8/1/813f1967-c048-4e6e-9720-216773fde47e.jpg?1562918974",
+    "Lavinia, Foil to Conspiracy": {
+        id: "d5435866-d48b-496a-ba07-438163b71ae8",
+        image: "https://cards.scryfall.io/normal/front/d/5/d5435866-d48b-496a-ba07-438163b71ae8.jpg?1706239659",
         colorIdentity: ["U", "W"],
-        scryfallUri: "https://scryfall.com/card/dgm/80/lavinia-of-the-tenth?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/clu/36/lavinia-foil-to-conspiracy?utm_source=api",
+        name: "Lavinia, Foil to Conspiracy"
+    },
+    "Lavinia of the Tenth": {
+        id: "58907d3b-9deb-4485-8ae2-c4e97c519212",
+        image: "https://cards.scryfall.io/normal/front/5/8/58907d3b-9deb-4485-8ae2-c4e97c519212.jpg?1706240145",
+        colorIdentity: ["U", "W"],
+        scryfallUri: "https://scryfall.com/card/clu/199/lavinia-of-the-tenth?utm_source=api",
         name: "Lavinia of the Tenth"
     },
     "Lazav, Dimir Mastermind": {
@@ -6848,11 +7002,18 @@ export const commanderList: {
         name: "Lazav, Dimir Mastermind"
     },
     "Lazav, the Multifarious": {
-        id: "24c1e710-f61c-4dd6-b620-6d2e1ecab689",
-        image: "https://cards.scryfall.io/normal/front/2/4/24c1e710-f61c-4dd6-b620-6d2e1ecab689.jpg?1572893714",
+        id: "662758ee-f7c8-4cba-b67b-48ac80c3b5ca",
+        image: "https://cards.scryfall.io/normal/front/6/6/662758ee-f7c8-4cba-b67b-48ac80c3b5ca.jpg?1706241012",
         colorIdentity: ["B", "U"],
-        scryfallUri: "https://scryfall.com/card/grn/184/lazav-the-multifarious?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/mkc/214/lazav-the-multifarious?utm_source=api",
         name: "Lazav, the Multifarious"
+    },
+    "Lazav, Wearer of Faces": {
+        id: "cc264d1d-689d-41ac-b624-3fc7bb890e58",
+        image: "https://cards.scryfall.io/normal/front/c/c/cc264d1d-689d-41ac-b624-3fc7bb890e58.jpg?1706242204",
+        colorIdentity: ["B", "U"],
+        scryfallUri: "https://scryfall.com/card/mkm/216/lazav-wearer-of-faces?utm_source=api",
+        name: "Lazav, Wearer of Faces"
     },
     "Leela, Sevateem Warrior": {
         id: "f5a4e5b5-70c8-4488-9e7d-7d68fe8219d7",
@@ -6939,10 +7100,10 @@ export const commanderList: {
         name: "Liesa, Shroud of Dusk"
     },
     "Lieutenant Kirtar": {
-        id: "e518750f-492d-4575-b4ee-c80c1f8e0a58",
-        image: "https://cards.scryfall.io/normal/front/e/5/e518750f-492d-4575-b4ee-c80c1f8e0a58.jpg?1562937804",
+        id: "475ba0c3-237e-4349-85e9-c31b016f609b",
+        image: "https://cards.scryfall.io/normal/front/4/7/475ba0c3-237e-4349-85e9-c31b016f609b.jpg?1675198864",
         colorIdentity: ["W"],
-        scryfallUri: "https://scryfall.com/card/ody/29/lieutenant-kirtar?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/dmr/12/lieutenant-kirtar?utm_source=api",
         name: "Lieutenant Kirtar"
     },
     "Light-Paws, Emperor's Voice": {
@@ -7073,11 +7234,18 @@ export const commanderList: {
         name: "Lobelia Sackville-Baggins"
     },
     "Lonis, Cryptozoologist": {
-        id: "5dfd08da-6717-49ee-94ba-2562224f5baa",
-        image: "https://cards.scryfall.io/normal/front/5/d/5dfd08da-6717-49ee-94ba-2562224f5baa.jpg?1626098533",
+        id: "e786423d-3a49-4318-ac77-791918bcafcb",
+        image: "https://cards.scryfall.io/normal/front/e/7/e786423d-3a49-4318-ac77-791918bcafcb.jpg?1706241017",
         colorIdentity: ["G", "U"],
-        scryfallUri: "https://scryfall.com/card/mh2/204/lonis-cryptozoologist?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/mkc/215/lonis-cryptozoologist?utm_source=api",
         name: "Lonis, Cryptozoologist"
+    },
+    "Lonis, Genetics Expert": {
+        id: "59813845-48c9-4af2-8beb-91d58aac09ee",
+        image: "https://cards.scryfall.io/normal/front/5/9/59813845-48c9-4af2-8beb-91d58aac09ee.jpg?1706239661",
+        colorIdentity: ["G", "U"],
+        scryfallUri: "https://scryfall.com/card/clu/37/lonis-genetics-expert?utm_source=api",
+        name: "Lonis, Genetics Expert"
     },
     "Loran, Disciple of History": {
         id: "9998f898-1f08-481b-8505-b890f0fec5e0",
@@ -7087,10 +7255,10 @@ export const commanderList: {
         name: "Loran, Disciple of History"
     },
     "Loran of the Third Path": {
-        id: "59faa45d-868b-4bc7-934c-0e077642e129",
-        image: "https://cards.scryfall.io/normal/front/5/9/59faa45d-868b-4bc7-934c-0e077642e129.jpg?1674420209",
+        id: "9e83a0ef-4fea-45ba-86c0-130d6687f7fe",
+        image: "https://cards.scryfall.io/normal/front/9/e/9e83a0ef-4fea-45ba-86c0-130d6687f7fe.jpg?1706240597",
         colorIdentity: ["W"],
-        scryfallUri: "https://scryfall.com/card/bro/12/loran-of-the-third-path?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/mkc/71/loran-of-the-third-path?utm_source=api",
         name: "Loran of the Third Path"
     },
     "Lorcan, Warlock Collector": {
@@ -7248,10 +7416,10 @@ export const commanderList: {
         name: "Lynde, Cheerful Tormentor"
     },
     "Lyra Dawnbringer": {
-        id: "93be6799-7b9d-44d4-84dc-2961692b5a85",
-        image: "https://cards.scryfall.io/normal/front/9/3/93be6799-7b9d-44d4-84dc-2961692b5a85.jpg?1562739679",
+        id: "a2e0c8c5-ea0e-4347-b5cb-b7b1801a523b",
+        image: "https://cards.scryfall.io/normal/front/a/2/a2e0c8c5-ea0e-4347-b5cb-b7b1801a523b.jpg?1675198875",
         colorIdentity: ["W"],
-        scryfallUri: "https://scryfall.com/card/dom/26/lyra-dawnbringer?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/dmr/13/lyra-dawnbringer?utm_source=api",
         name: "Lyra Dawnbringer"
     },
     "Lyzolda, the Blood Witch": {
@@ -7340,14 +7508,14 @@ export const commanderList: {
     },
     "Mahadi, Emporium Master": {
         id: "c3da2b1a-76c5-4d36-bdf8-025b86f61eb5",
-        image: "https://cards.scryfall.io/normal/front/c/3/c3da2b1a-76c5-4d36-bdf8-025b86f61eb5.jpg?1674137571",
+        image: "https://cards.scryfall.io/normal/front/c/3/c3da2b1a-76c5-4d36-bdf8-025b86f61eb5.jpg?1699601213",
         colorIdentity: ["B", "R"],
         scryfallUri: "https://scryfall.com/card/clb/282/mahadi-emporium-master?utm_source=api",
         name: "Mahadi, Emporium Master"
     },
     "Mairsil, the Pretender": {
         id: "87b71b08-668c-4b32-8243-8def1a9acf26",
-        image: "https://cards.scryfall.io/normal/front/8/7/87b71b08-668c-4b32-8243-8def1a9acf26.jpg?1562615456",
+        image: "https://cards.scryfall.io/normal/front/8/7/87b71b08-668c-4b32-8243-8def1a9acf26.jpg?1704575313",
         colorIdentity: ["B", "R", "U"],
         scryfallUri: "https://scryfall.com/card/c17/41/mairsil-the-pretender?utm_source=api",
         name: "Mairsil, the Pretender"
@@ -7499,6 +7667,13 @@ export const commanderList: {
         scryfallUri: "https://scryfall.com/card/ice/199/m%C3%A1rton-stromgald?utm_source=api",
         name: "Márton Stromgald"
     },
+    "Marvo, Deep Operative": {
+        id: "8fdb30c1-0551-48b7-8bcb-d7e0dbb6690a",
+        image: "https://cards.scryfall.io/normal/front/8/f/8fdb30c1-0551-48b7-8bcb-d7e0dbb6690a.jpg?1706448887",
+        colorIdentity: ["B", "U"],
+        scryfallUri: "https://scryfall.com/card/mkc/7/marvo-deep-operative?utm_source=api",
+        name: "Marvo, Deep Operative"
+    },
     "Marwyn, the Nurturer": {
         id: "aad61d99-5c8e-47b7-ab1a-e70905f59205",
         image: "https://cards.scryfall.io/normal/front/a/a/aad61d99-5c8e-47b7-ab1a-e70905f59205.jpg?1631235039",
@@ -7521,11 +7696,18 @@ export const commanderList: {
         name: "Masako the Humorless"
     },
     "Massacre Girl": {
-        id: "be8ec9e1-2c8e-496d-9111-4d453b75b578",
-        image: "https://cards.scryfall.io/normal/front/b/e/be8ec9e1-2c8e-496d-9111-4d453b75b578.jpg?1559959372",
+        id: "17919445-5b72-4014-9a05-8df4f8d5e80e",
+        image: "https://cards.scryfall.io/normal/front/1/7/17919445-5b72-4014-9a05-8df4f8d5e80e.jpg?1702429456",
         colorIdentity: ["B"],
-        scryfallUri: "https://scryfall.com/card/war/99/massacre-girl?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/rvr/83/massacre-girl?utm_source=api",
         name: "Massacre Girl"
+    },
+    "Massacre Girl, Known Killer": {
+        id: "cb1c8800-9d33-485c-b776-042003b9ea92",
+        image: "https://cards.scryfall.io/normal/front/c/b/cb1c8800-9d33-485c-b776-042003b9ea92.jpg?1706241722",
+        colorIdentity: ["B"],
+        scryfallUri: "https://scryfall.com/card/mkm/94/massacre-girl-known-killer?utm_source=api",
+        name: "Massacre Girl, Known Killer"
     },
     "Master Chef": {
         id: "b534b1cb-0cd7-4b8c-bb25-42207fcba209",
@@ -7533,6 +7715,13 @@ export const commanderList: {
         colorIdentity: ["G"],
         scryfallUri: "https://scryfall.com/card/clb/241/master-chef?utm_source=api",
         name: "Master Chef"
+    },
+    "Mastermind Plum": {
+        id: "df81568b-c66a-49c6-bd48-7df98ea00117",
+        image: "https://cards.scryfall.io/normal/front/d/f/df81568b-c66a-49c6-bd48-7df98ea00117.jpg?1706239558",
+        colorIdentity: ["B"],
+        scryfallUri: "https://scryfall.com/card/clu/3/mastermind-plum?utm_source=api",
+        name: "Mastermind Plum"
     },
     "Masumaro, First to Live": {
         id: "2c4625b7-c8b1-4fdf-af9f-935313436b35",
@@ -7617,6 +7806,13 @@ export const commanderList: {
         colorIdentity: ["R", "U"],
         scryfallUri: "https://scryfall.com/card/cmm/345/melek-izzet-paragon?utm_source=api",
         name: "Melek, Izzet Paragon"
+    },
+    "Melek, Reforged Researcher": {
+        id: "01c5ede0-a098-4f21-8b7e-795a83e75aae",
+        image: "https://cards.scryfall.io/normal/front/0/1/01c5ede0-a098-4f21-8b7e-795a83e75aae.jpg?1706884181",
+        colorIdentity: ["R", "U"],
+        scryfallUri: "https://scryfall.com/card/mkm/430/melek-reforged-researcher?utm_source=api",
+        name: "Melek, Reforged Researcher"
     },
     "Melira, Sylvok Outcast": {
         id: "e83851a1-e4e8-49ec-af5c-4efe86fa51ad",
@@ -7800,6 +7996,13 @@ export const commanderList: {
         scryfallUri: "https://scryfall.com/card/clb/286/minthara-merciless-soul?utm_source=api",
         name: "Minthara, Merciless Soul"
     },
+    "Mirko, Obsessive Theorist": {
+        id: "690acbbf-5e92-4323-b939-31bdb07f9905",
+        image: "https://cards.scryfall.io/normal/front/6/9/690acbbf-5e92-4323-b939-31bdb07f9905.jpg?1706448873",
+        colorIdentity: ["B", "U"],
+        scryfallUri: "https://scryfall.com/card/mkc/2/mirko-obsessive-theorist?utm_source=api",
+        name: "Mirko, Obsessive Theorist"
+    },
     "Mirko Vosk, Mind Drinker": {
         id: "d37cdd3e-4303-4391-aff4-4a543e65a836",
         image: "https://cards.scryfall.io/normal/front/d/3/d37cdd3e-4303-4391-aff4-4a543e65a836.jpg?1562934530",
@@ -7844,7 +8047,7 @@ export const commanderList: {
     },
     "Mishra, Eminent One": {
         id: "7f5b1daa-ec45-48de-9496-6ca5b491a0dc",
-        image: "https://cards.scryfall.io/normal/front/7/f/7f5b1daa-ec45-48de-9496-6ca5b491a0dc.jpg?1685036114",
+        image: "https://cards.scryfall.io/normal/front/7/f/7f5b1daa-ec45-48de-9496-6ca5b491a0dc.jpg?1705542701",
         colorIdentity: ["B", "R", "U"],
         scryfallUri: "https://scryfall.com/card/brc/1/mishra-eminent-one?utm_source=api",
         name: "Mishra, Eminent One"
@@ -7974,6 +8177,13 @@ export const commanderList: {
         colorIdentity: ["B", "G", "R", "U", "W"],
         scryfallUri: "https://scryfall.com/card/cmm/3/morophon-the-boundless?utm_source=api",
         name: "Morophon, the Boundless"
+    },
+    "Morska, Undersea Sleuth": {
+        id: "ae9ccfec-05c6-469e-b1dd-dfbafa1e927f",
+        image: "https://cards.scryfall.io/normal/front/a/e/ae9ccfec-05c6-469e-b1dd-dfbafa1e927f.jpg?1706448877",
+        colorIdentity: ["G", "U", "W"],
+        scryfallUri: "https://scryfall.com/card/mkc/3/morska-undersea-sleuth?utm_source=api",
+        name: "Morska, Undersea Sleuth"
     },
     "Mortarion, Daemon Primarch": {
         id: "3b6b1bcf-10a4-4643-9db0-b2a4fee340a2",
@@ -8312,10 +8522,10 @@ export const commanderList: {
         name: "Neheb, Dreadhorde Champion"
     },
     "Neheb, the Eternal": {
-        id: "a98695d3-a8ec-43f0-9a2a-fef4566f3a2f",
-        image: "https://cards.scryfall.io/normal/front/a/9/a98695d3-a8ec-43f0-9a2a-fef4566f3a2f.jpg?1689998058",
+        id: "767c5831-2195-4efa-802d-2ea2e6dabb5b",
+        image: "https://cards.scryfall.io/normal/front/7/6/767c5831-2195-4efa-802d-2ea2e6dabb5b.jpg?1706240851",
         colorIdentity: ["R"],
-        scryfallUri: "https://scryfall.com/card/cmm/244/neheb-the-eternal?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/mkc/158/neheb-the-eternal?utm_source=api",
         name: "Neheb, the Eternal"
     },
     "Neheb, the Worthy": {
@@ -8331,6 +8541,13 @@ export const commanderList: {
         colorIdentity: ["B", "R", "U"],
         scryfallUri: "https://scryfall.com/card/cmm/349/nekusar-the-mindrazer?utm_source=api",
         name: "Nekusar, the Mindrazer"
+    },
+    "Nelly Borca, Impulsive Accuser": {
+        id: "2ef59aa9-f5e1-413a-869b-d287db95efd0",
+        image: "https://cards.scryfall.io/normal/front/2/e/2ef59aa9-f5e1-413a-869b-d287db95efd0.jpg?1706448880",
+        colorIdentity: ["R", "W"],
+        scryfallUri: "https://scryfall.com/card/mkc/4/nelly-borca-impulsive-accuser?utm_source=api",
+        name: "Nelly Borca, Impulsive Accuser"
     },
     "Nemata, Grove Guardian": {
         id: "d60e3465-46ae-486f-8deb-6e2f1ac71a1b",
@@ -8493,11 +8710,18 @@ export const commanderList: {
         scryfallUri: "https://scryfall.com/card/c17/184/niv-mizzet-dracogenius?utm_source=api",
         name: "Niv-Mizzet, Dracogenius"
     },
+    "Niv-Mizzet, Guildpact": {
+        id: "32a8fda6-8614-45cd-879c-0cb7fa29647e",
+        image: "https://cards.scryfall.io/normal/front/3/2/32a8fda6-8614-45cd-879c-0cb7fa29647e.jpg?1706242214",
+        colorIdentity: ["B", "G", "R", "U", "W"],
+        scryfallUri: "https://scryfall.com/card/mkm/220/niv-mizzet-guildpact?utm_source=api",
+        name: "Niv-Mizzet, Guildpact"
+    },
     "Niv-Mizzet, Parun": {
-        id: "3035a97f-5104-4b56-84a4-5206e75607fc",
-        image: "https://cards.scryfall.io/normal/front/3/0/3035a97f-5104-4b56-84a4-5206e75607fc.jpg?1674142512",
+        id: "7be6bedd-8d38-4bd9-aa93-29f88a7f0126",
+        image: "https://cards.scryfall.io/normal/front/7/b/7be6bedd-8d38-4bd9-aa93-29f88a7f0126.jpg?1702429680",
         colorIdentity: ["R", "U"],
-        scryfallUri: "https://scryfall.com/card/clb/851/niv-mizzet-parun?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/rvr/207/niv-mizzet-parun?utm_source=api",
         name: "Niv-Mizzet, Parun"
     },
     "Niv-Mizzet Reborn": {
@@ -9093,7 +9317,7 @@ export const commanderList: {
     },
     "Pantlaza, Sun-Favored": {
         id: "2524645e-b066-4351-885b-10faa8d819d7",
-        image: "https://cards.scryfall.io/normal/front/2/5/2524645e-b066-4351-885b-10faa8d819d7.jpg?1698987725",
+        image: "https://cards.scryfall.io/normal/front/2/5/2524645e-b066-4351-885b-10faa8d819d7.jpg?1699972737",
         colorIdentity: ["G", "R", "W"],
         scryfallUri: "https://scryfall.com/card/lcc/4/pantlaza-sun-favored?utm_source=api",
         name: "Pantlaza, Sun-Favored"
@@ -9106,10 +9330,10 @@ export const commanderList: {
         name: "Parnesse, the Subtle Brush"
     },
     "Pashalik Mons": {
-        id: "11616853-34b1-4bb1-9590-461e12970ec3",
-        image: "https://cards.scryfall.io/normal/front/1/1/11616853-34b1-4bb1-9590-461e12970ec3.jpg?1562201917",
+        id: "ca20a650-65b0-4714-b7ce-0481af3db377",
+        image: "https://cards.scryfall.io/normal/front/c/a/ca20a650-65b0-4714-b7ce-0481af3db377.jpg?1675200126",
         colorIdentity: ["R"],
-        scryfallUri: "https://scryfall.com/card/mh1/138/pashalik-mons?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/dmr/133/pashalik-mons?utm_source=api",
         name: "Pashalik Mons"
     },
     "Passionate Archaeologist": {
@@ -9372,10 +9596,10 @@ export const commanderList: {
         name: "Prime Speaker Vannifar"
     },
     "Prime Speaker Zegana": {
-        id: "44974a77-5d36-49a8-b298-69d3721cfff9",
-        image: "https://cards.scryfall.io/normal/front/4/4/44974a77-5d36-49a8-b298-69d3721cfff9.jpg?1698988452",
+        id: "51d29fb4-72e3-4400-a57b-7e18acfb2909",
+        image: "https://cards.scryfall.io/normal/front/5/1/51d29fb4-72e3-4400-a57b-7e18acfb2909.jpg?1702429689",
         colorIdentity: ["G", "U"],
-        scryfallUri: "https://scryfall.com/card/lcc/278/prime-speaker-zegana?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/rvr/211/prime-speaker-zegana?utm_source=api",
         name: "Prime Speaker Zegana"
     },
     "Prince Imrahil the Fair": {
@@ -9415,7 +9639,7 @@ export const commanderList: {
     },
     "Prowl, Stoic Strategist // Prowl, Pursuit Vehicle": {
         id: "f0a3dc50-a5c4-4073-8fec-2f68544bc2a1",
-        image: "https://cards.scryfall.io/normal/front/f/0/f0a3dc50-a5c4-4073-8fec-2f68544bc2a1.jpg?1674092742",
+        image: "https://cards.scryfall.io/normal/front/f/0/f0a3dc50-a5c4-4073-8fec-2f68544bc2a1.jpg?1703899468",
         colorIdentity: ["W"],
         scryfallUri: "https://scryfall.com/card/bot/1/prowl-stoic-strategist-prowl-pursuit-vehicle?utm_source=api",
         name: "Prowl, Stoic Strategist // Prowl, Pursuit Vehicle"
@@ -9526,10 +9750,10 @@ export const commanderList: {
         name: "Radha, Heart of Keld"
     },
     "Radha, Heir to Keld": {
-        id: "7924e5a5-9614-4fd0-a621-80fa3103cc22",
-        image: "https://cards.scryfall.io/normal/front/7/9/7924e5a5-9614-4fd0-a621-80fa3103cc22.jpg?1619404089",
+        id: "ecb7c19a-b4af-405d-b016-a546ed12a99d",
+        image: "https://cards.scryfall.io/normal/front/e/c/ecb7c19a-b4af-405d-b016-a546ed12a99d.jpg?1675200719",
         colorIdentity: ["G", "R"],
-        scryfallUri: "https://scryfall.com/card/tsr/259/radha-heir-to-keld?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/dmr/196/radha-heir-to-keld?utm_source=api",
         name: "Radha, Heir to Keld"
     },
     "Radiant, Archangel": {
@@ -9610,11 +9834,18 @@ export const commanderList: {
         name: "Raiyuu, Storm's Edge"
     },
     "Rakdos, Lord of Riots": {
-        id: "04f3db71-802f-488c-b40d-ac90df2d660a",
-        image: "https://cards.scryfall.io/normal/front/0/4/04f3db71-802f-488c-b40d-ac90df2d660a.jpg?1562782015",
+        id: "c3ff0f75-6ead-449a-98ad-3baf9f887331",
+        image: "https://cards.scryfall.io/normal/front/c/3/c3ff0f75-6ead-449a-98ad-3baf9f887331.jpg?1702429697",
         colorIdentity: ["B", "R"],
-        scryfallUri: "https://scryfall.com/card/rtr/187/rakdos-lord-of-riots?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/rvr/215/rakdos-lord-of-riots?utm_source=api",
         name: "Rakdos, Lord of Riots"
+    },
+    "Rakdos, Patron of Chaos": {
+        id: "cc6fd2d5-8eb2-4265-a1bf-d4ae635285af",
+        image: "https://cards.scryfall.io/normal/front/c/c/cc6fd2d5-8eb2-4265-a1bf-d4ae635285af.jpg?1706242226",
+        colorIdentity: ["B", "R"],
+        scryfallUri: "https://scryfall.com/card/mkm/224/rakdos-patron-of-chaos?utm_source=api",
+        name: "Rakdos, Patron of Chaos"
     },
     "Rakdos the Defiler": {
         id: "5a4c4be4-06ae-4737-a3b0-818edadaf2e0",
@@ -9624,10 +9855,10 @@ export const commanderList: {
         name: "Rakdos the Defiler"
     },
     "Rakdos, the Showstopper": {
-        id: "4e3c30c7-c52e-41a0-b7c2-21d39c05160b",
-        image: "https://cards.scryfall.io/normal/front/4/e/4e3c30c7-c52e-41a0-b7c2-21d39c05160b.jpg?1584831753",
+        id: "210d07ab-7608-4fda-adb6-562cf194192f",
+        image: "https://cards.scryfall.io/normal/front/2/1/210d07ab-7608-4fda-adb6-562cf194192f.jpg?1706240163",
         colorIdentity: ["B", "R"],
-        scryfallUri: "https://scryfall.com/card/rna/199/rakdos-the-showstopper?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/clu/205/rakdos-the-showstopper?utm_source=api",
         name: "Rakdos, the Showstopper"
     },
     "Rakka Mar": {
@@ -9681,7 +9912,7 @@ export const commanderList: {
     },
     "Ranar the Ever-Watchful": {
         id: "1c8c41dd-8551-4ce8-a9be-9b9f65718852",
-        image: "https://cards.scryfall.io/normal/front/1/c/1c8c41dd-8551-4ce8-a9be-9b9f65718852.jpg?1657065666",
+        image: "https://cards.scryfall.io/normal/front/1/c/1c8c41dd-8551-4ce8-a9be-9b9f65718852.jpg?1704848195",
         colorIdentity: ["U", "W"],
         scryfallUri: "https://scryfall.com/card/khc/2/ranar-the-ever-watchful?utm_source=api",
         name: "Ranar the Ever-Watchful"
@@ -9772,7 +10003,7 @@ export const commanderList: {
     },
     "Ratchet, Field Medic // Ratchet, Rescue Racer": {
         id: "c23a2d6b-43c2-4756-94c7-207cc344f0a7",
-        image: "https://cards.scryfall.io/normal/front/c/2/c23a2d6b-43c2-4756-94c7-207cc344f0a7.jpg?1674092758",
+        image: "https://cards.scryfall.io/normal/front/c/2/c23a2d6b-43c2-4756-94c7-207cc344f0a7.jpg?1703899662",
         colorIdentity: ["W"],
         scryfallUri: "https://scryfall.com/card/bot/2/ratchet-field-medic-ratchet-rescue-racer?utm_source=api",
         name: "Ratchet, Field Medic // Ratchet, Rescue Racer"
@@ -10024,10 +10255,10 @@ export const commanderList: {
         name: "Rith, Liberated Primeval"
     },
     "Rith, the Awakener": {
-        id: "822bb102-58a8-47c7-ab44-6fef29885425",
-        image: "https://cards.scryfall.io/normal/front/8/2/822bb102-58a8-47c7-ab44-6fef29885425.jpg?1562919155",
+        id: "e1a75961-39a3-4221-9367-a763cf871d42",
+        image: "https://cards.scryfall.io/normal/front/e/1/e1a75961-39a3-4221-9367-a763cf871d42.jpg?1675200740",
         colorIdentity: ["G", "R", "W"],
-        scryfallUri: "https://scryfall.com/card/dde/48/rith-the-awakener?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/dmr/198/rith-the-awakener?utm_source=api",
         name: "Rith, the Awakener"
     },
     "Rivaz of the Claw": {
@@ -10156,6 +10387,13 @@ export const commanderList: {
         colorIdentity: ["U", "W"],
         scryfallUri: "https://scryfall.com/card/who/153/rory-williams?utm_source=api",
         name: "Rory Williams"
+    },
+    "Rose Noble": {
+        id: "39edd98a-2ee9-4799-9194-5b5a3efb6255",
+        image: "https://cards.scryfall.io/normal/front/3/9/39edd98a-2ee9-4799-9194-5b5a3efb6255.jpg?1702372038",
+        colorIdentity: ["U"],
+        scryfallUri: "https://scryfall.com/card/sld/1580/rose-noble?utm_source=api",
+        name: "Rose Noble"
     },
     "Rose Tyler": {
         id: "3aa8d034-f98c-4e27-b6af-850eadf59941",
@@ -10334,7 +10572,7 @@ export const commanderList: {
     },
     "Saint Traft and Rem Karolus": {
         id: "55a45de4-cc76-4aa0-a1dc-24df8e495215",
-        image: "https://cards.scryfall.io/normal/front/5/5/55a45de4-cc76-4aa0-a1dc-24df8e495215.jpg?1682207272",
+        image: "https://cards.scryfall.io/normal/front/5/5/55a45de4-cc76-4aa0-a1dc-24df8e495215.jpg?1701606017",
         colorIdentity: ["R", "U", "W"],
         scryfallUri: "https://scryfall.com/card/moc/9/saint-traft-and-rem-karolus?utm_source=api",
         name: "Saint Traft and Rem Karolus"
@@ -10473,10 +10711,10 @@ export const commanderList: {
         name: "Saruman, the White Hand"
     },
     "Saryth, the Viper's Fang": {
-        id: "bc8b3a09-75e8-428c-91f7-8fac62fadc98",
-        image: "https://cards.scryfall.io/normal/front/b/c/bc8b3a09-75e8-428c-91f7-8fac62fadc98.jpg?1636224715",
+        id: "8050afb7-3c16-4456-aa34-4cc999fac7f5",
+        image: "https://cards.scryfall.io/normal/front/8/0/8050afb7-3c16-4456-aa34-4cc999fac7f5.jpg?1706240929",
         colorIdentity: ["G"],
-        scryfallUri: "https://scryfall.com/card/mid/197/saryth-the-vipers-fang?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/mkc/185/saryth-the-vipers-fang?utm_source=api",
         name: "Saryth, the Viper's Fang"
     },
     "Sasaya, Orochi Ascendant // Sasaya's Essence": {
@@ -10536,10 +10774,10 @@ export const commanderList: {
         name: "Sauron, the Necromancer"
     },
     "Savra, Queen of the Golgari": {
-        id: "15accf35-a174-4ba5-a633-cc46da848dbe",
-        image: "https://cards.scryfall.io/normal/front/1/5/15accf35-a174-4ba5-a633-cc46da848dbe.jpg?1598917363",
+        id: "e189f09e-d637-4631-bae3-a5a583ada429",
+        image: "https://cards.scryfall.io/normal/front/e/1/e189f09e-d637-4631-bae3-a5a583ada429.jpg?1702429705",
         colorIdentity: ["B", "G"],
-        scryfallUri: "https://scryfall.com/card/rav/225/savra-queen-of-the-golgari?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/rvr/218/savra-queen-of-the-golgari?utm_source=api",
         name: "Savra, Queen of the Golgari"
     },
     "Scion of Halaster": {
@@ -10599,10 +10837,10 @@ export const commanderList: {
         name: "Selenia, Dark Angel"
     },
     "Selvala, Explorer Returned": {
-        id: "bd39ebe5-2725-4cfb-8a94-54e71d55e8b3",
-        image: "https://cards.scryfall.io/normal/front/b/d/bd39ebe5-2725-4cfb-8a94-54e71d55e8b3.jpg?1673305654",
+        id: "28c1b84a-a21b-4df1-9fc9-5b387fb56810",
+        image: "https://cards.scryfall.io/normal/front/2/8/28c1b84a-a21b-4df1-9fc9-5b387fb56810.jpg?1706241026",
         colorIdentity: ["G", "W"],
-        scryfallUri: "https://scryfall.com/card/dmc/167/selvala-explorer-returned?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/mkc/218/selvala-explorer-returned?utm_source=api",
         name: "Selvala, Explorer Returned"
     },
     "Selvala, Heart of the Wilds": {
@@ -10611,6 +10849,13 @@ export const commanderList: {
         colorIdentity: ["G"],
         scryfallUri: "https://scryfall.com/card/cmm/320/selvala-heart-of-the-wilds?utm_source=api",
         name: "Selvala, Heart of the Wilds"
+    },
+    "Senator Peacock": {
+        id: "8778b33c-efab-4b65-b6e3-f0e3d1d8f937",
+        image: "https://cards.scryfall.io/normal/front/8/7/8778b33c-efab-4b65-b6e3-f0e3d1d8f937.jpg?1706239557",
+        colorIdentity: ["U"],
+        scryfallUri: "https://scryfall.com/card/clu/2/senator-peacock?utm_source=api",
+        name: "Senator Peacock"
     },
     "Sengir, the Dark Baron": {
         id: "4d51a22e-74fc-442e-945a-56d02ca12713",
@@ -10907,10 +11152,10 @@ export const commanderList: {
         name: "Sidar Jabari of Zhalfir"
     },
     "Sidar Kondo of Jamuraa": {
-        id: "19d2671c-39bd-4dd7-ac97-9cdf5c2cb149",
-        image: "https://cards.scryfall.io/normal/front/1/9/19d2671c-39bd-4dd7-ac97-9cdf5c2cb149.jpg?1562390224",
+        id: "9c551a94-9895-486a-a39a-6bf2f8939b35",
+        image: "https://cards.scryfall.io/normal/front/9/c/9c551a94-9895-486a-a39a-6bf2f8939b35.jpg?1706241027",
         colorIdentity: ["G", "W"],
-        scryfallUri: "https://scryfall.com/card/c16/42/sidar-kondo-of-jamuraa?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/mkc/219/sidar-kondo-of-jamuraa?utm_source=api",
         name: "Sidar Kondo of Jamuraa"
     },
     "Sidisi, Brood Tyrant": {
@@ -11208,10 +11453,10 @@ export const commanderList: {
         name: "Solaflora, Intergalactic Icon"
     },
     "Sol'kanar the Swamp King": {
-        id: "4c56d4b5-08fb-4547-91e2-6e5f8fae408d",
-        image: "https://cards.scryfall.io/normal/front/4/c/4c56d4b5-08fb-4547-91e2-6e5f8fae408d.jpg?1562775925",
+        id: "88b4cb6a-ac4f-48ac-8c94-ba2b8e6b32a8",
+        image: "https://cards.scryfall.io/normal/front/8/8/88b4cb6a-ac4f-48ac-8c94-ba2b8e6b32a8.jpg?1698796299",
         colorIdentity: ["B", "R", "U"],
-        scryfallUri: "https://scryfall.com/card/tsb/100/solkanar-the-swamp-king?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/dmr/200/solkanar-the-swamp-king?utm_source=api",
         name: "Sol'kanar the Swamp King"
     },
     "Sol'Kanar the Tainted": {
@@ -11227,6 +11472,13 @@ export const commanderList: {
         colorIdentity: ["R"],
         scryfallUri: "https://scryfall.com/card/one/150/solphim-mayhem-dominus?utm_source=api",
         name: "Solphim, Mayhem Dominus"
+    },
+    "Sophia, Dogged Detective": {
+        id: "df653cf9-5a99-4f81-adb4-c155a9a63226",
+        image: "https://cards.scryfall.io/normal/front/d/f/df653cf9-5a99-4f81-adb4-c155a9a63226.jpg?1706448884",
+        colorIdentity: ["G", "U", "W"],
+        scryfallUri: "https://scryfall.com/card/mkc/8/sophia-dogged-detective?utm_source=api",
+        name: "Sophia, Dogged Detective"
     },
     "Sophina, Spearsage Deserter": {
         id: "e0a64924-068e-483f-91a6-d450b67b3c75",
@@ -11600,10 +11852,10 @@ export const commanderList: {
         name: "Syrix, Carrier of the Flame"
     },
     "Syr Konrad, the Grim": {
-        id: "03f16bbd-00d6-43ed-9a11-ebe7fc65933a",
-        image: "https://cards.scryfall.io/normal/front/0/3/03f16bbd-00d6-43ed-9a11-ebe7fc65933a.jpg?1682209239",
+        id: "9241a72e-cb88-4cea-a2f4-ff10af461437",
+        image: "https://cards.scryfall.io/normal/front/9/2/9241a72e-cb88-4cea-a2f4-ff10af461437.jpg?1706240798",
         colorIdentity: ["B"],
-        scryfallUri: "https://scryfall.com/card/moc/269/syr-konrad-the-grim?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/mkc/141/syr-konrad-the-grim?utm_source=api",
         name: "Syr Konrad, the Grim"
     },
     "Sythis, Harvest's Hand": {
@@ -11677,10 +11929,10 @@ export const commanderList: {
         name: "Tajic, Blade of the Legion"
     },
     "Tajic, Legion's Edge": {
-        id: "5e669a01-84d3-4fcc-8396-9e987bd89b4f",
-        image: "https://cards.scryfall.io/normal/front/5/e/5e669a01-84d3-4fcc-8396-9e987bd89b4f.jpg?1572893845",
+        id: "45c4c3b3-be18-4d74-99d8-f137498673d7",
+        image: "https://cards.scryfall.io/normal/front/4/5/45c4c3b3-be18-4d74-99d8-f137498673d7.jpg?1702429724",
         colorIdentity: ["R", "W"],
-        scryfallUri: "https://scryfall.com/card/grn/204/tajic-legions-edge?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/rvr/231/tajic-legions-edge?utm_source=api",
         name: "Tajic, Legion's Edge"
     },
     "Takeno, Samurai General": {
@@ -11804,7 +12056,7 @@ export const commanderList: {
     },
     "Tawnos, Solemn Survivor": {
         id: "bdf67de0-f468-4f04-99ab-a442347bb16b",
-        image: "https://cards.scryfall.io/normal/front/b/d/bdf67de0-f468-4f04-99ab-a442347bb16b.jpg?1685036104",
+        image: "https://cards.scryfall.io/normal/front/b/d/bdf67de0-f468-4f04-99ab-a442347bb16b.jpg?1705542685",
         colorIdentity: ["B", "U", "W"],
         scryfallUri: "https://scryfall.com/card/brc/3/tawnos-solemn-survivor?utm_source=api",
         name: "Tawnos, Solemn Survivor"
@@ -11907,6 +12159,13 @@ export const commanderList: {
         scryfallUri: "https://scryfall.com/card/khm/112/tergrid-god-of-fright-tergrids-lantern?utm_source=api",
         name: "Tergrid, God of Fright // Tergrid's Lantern"
     },
+    "Tesak, Judith's Hellhound": {
+        id: "0e563c13-7204-4cda-9b62-d46931fabcef",
+        image: "https://cards.scryfall.io/normal/front/0/e/0e563c13-7204-4cda-9b62-d46931fabcef.jpg?1706240492",
+        colorIdentity: ["R"],
+        scryfallUri: "https://scryfall.com/card/mkc/36/tesak-judiths-hellhound?utm_source=api",
+        name: "Tesak, Judith's Hellhound"
+    },
     "Teshar, Ancestor's Apostle": {
         id: "e8a9b45b-d466-4c06-9a25-6edb6e8f6f2f",
         image: "https://cards.scryfall.io/normal/front/e/8/e8a9b45b-d466-4c06-9a25-6edb6e8f6f2f.jpg?1690017040",
@@ -11944,7 +12203,7 @@ export const commanderList: {
     },
     "Tetzin, Gnome Champion // The Golden-Gear Colossus": {
         id: "0502deea-95ad-4b6d-a3ac-d3adcd607624",
-        image: "https://cards.scryfall.io/normal/front/0/5/0502deea-95ad-4b6d-a3ac-d3adcd607624.jpg?1698987772",
+        image: "https://cards.scryfall.io/normal/front/0/5/0502deea-95ad-4b6d-a3ac-d3adcd607624.jpg?1699402185",
         colorIdentity: ["R", "U", "W"],
         scryfallUri: "https://scryfall.com/card/lcc/13/tetzin-gnome-champion-the-golden-gear-colossus?utm_source=api",
         name: "Tetzin, Gnome Champion // The Golden-Gear Colossus"
@@ -11970,11 +12229,18 @@ export const commanderList: {
         scryfallUri: "https://scryfall.com/card/cmm/359/teysa-karlov?utm_source=api",
         name: "Teysa Karlov"
     },
-    "Teysa, Orzhov Scion": {
-        id: "9eb856e6-8f63-4048-9818-cc3e65748855",
-        image: "https://cards.scryfall.io/normal/front/9/e/9eb856e6-8f63-4048-9818-cc3e65748855.jpg?1593272816",
+    "Teysa, Opulent Oligarch": {
+        id: "9b5a13dd-c2fd-432e-bc49-cc62d94d62a0",
+        image: "https://cards.scryfall.io/normal/front/9/b/9b5a13dd-c2fd-432e-bc49-cc62d94d62a0.jpg?1706242259",
         colorIdentity: ["B", "W"],
-        scryfallUri: "https://scryfall.com/card/gpt/134/teysa-orzhov-scion?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/mkm/234/teysa-opulent-oligarch?utm_source=api",
+        name: "Teysa, Opulent Oligarch"
+    },
+    "Teysa, Orzhov Scion": {
+        id: "b8ca900d-767d-4461-aba3-107dd17d8326",
+        image: "https://cards.scryfall.io/normal/front/b/8/b8ca900d-767d-4461-aba3-107dd17d8326.jpg?1702429731",
+        colorIdentity: ["B", "W"],
+        scryfallUri: "https://scryfall.com/card/rvr/233/teysa-orzhov-scion?utm_source=api",
         name: "Teysa, Orzhov Scion"
     },
     "Thada Adel, Acquisitor": {
@@ -12089,6 +12355,13 @@ export const commanderList: {
         scryfallUri: "https://scryfall.com/card/ust/76/the-big-idea?utm_source=api",
         name: "The Big Idea"
     },
+    "The Celestial Toymaker": {
+        id: "55c9e915-9cee-45c3-96aa-9dfd5a600d0a",
+        image: "https://cards.scryfall.io/normal/front/5/5/55c9e915-9cee-45c3-96aa-9dfd5a600d0a.jpg?1702372043",
+        colorIdentity: ["B", "U", "W"],
+        scryfallUri: "https://scryfall.com/card/sld/1582/the-celestial-toymaker?utm_source=api",
+        name: "The Celestial Toymaker"
+    },
     "The Council of Four": {
         id: "0873cfa8-046c-4b14-ae22-3fd6a691f763",
         image: "https://cards.scryfall.io/normal/front/0/8/0873cfa8-046c-4b14-ae22-3fd6a691f763.jpg?1674137476",
@@ -12138,6 +12411,13 @@ export const commanderList: {
         scryfallUri: "https://scryfall.com/card/who/126/the-face-of-boe?utm_source=api",
         name: "The Face of Boe"
     },
+    "The Fifteenth Doctor": {
+        id: "530a26f1-cf7a-4e56-886b-6799b057c739",
+        image: "https://cards.scryfall.io/normal/front/5/3/530a26f1-cf7a-4e56-886b-6799b057c739.jpg?1702372036",
+        colorIdentity: ["R", "U"],
+        scryfallUri: "https://scryfall.com/card/sld/1584/the-fifteenth-doctor?utm_source=api",
+        name: "The Fifteenth Doctor"
+    },
     "The Fifth Doctor": {
         id: "2f548f4b-77b9-47bb-b262-a851fdf0124f",
         image: "https://cards.scryfall.io/normal/front/2/f/2f548f4b-77b9-47bb-b262-a851fdf0124f.jpg?1696636706",
@@ -12158,6 +12438,13 @@ export const commanderList: {
         colorIdentity: ["B", "G", "R", "U", "W"],
         scryfallUri: "https://scryfall.com/card/mh1/200/the-first-sliver?utm_source=api",
         name: "The First Sliver"
+    },
+    "The Fourteenth Doctor": {
+        id: "8b8a78cf-ee6c-4852-9651-eeaa634daaa1",
+        image: "https://cards.scryfall.io/normal/front/8/b/8b8a78cf-ee6c-4852-9651-eeaa634daaa1.jpg?1702372045",
+        colorIdentity: ["G", "R", "U", "W"],
+        scryfallUri: "https://scryfall.com/card/sld/1583/the-fourteenth-doctor?utm_source=api",
+        name: "The Fourteenth Doctor"
     },
     "The Fourth Doctor": {
         id: "c84ea0fd-efc7-4614-9f8f-41a3c71fceaa",
@@ -12252,7 +12539,7 @@ export const commanderList: {
     },
     "The Master, Gallifrey's End": {
         id: "7efb5dd0-abc4-4741-9d90-d8d93b03cf21",
-        image: "https://cards.scryfall.io/normal/front/7/e/7efb5dd0-abc4-4741-9d90-d8d93b03cf21.jpg?1696636740",
+        image: "https://cards.scryfall.io/normal/front/7/e/7efb5dd0-abc4-4741-9d90-d8d93b03cf21.jpg?1700695468",
         colorIdentity: ["B", "R"],
         scryfallUri: "https://scryfall.com/card/who/144/the-master-gallifreys-end?utm_source=api",
         name: "The Master, Gallifrey's End"
@@ -12277,6 +12564,13 @@ export const commanderList: {
         colorIdentity: ["R"],
         scryfallUri: "https://scryfall.com/card/sld/728/themberchaud?utm_source=api",
         name: "Themberchaud"
+    },
+    "The Meep": {
+        id: "366c4cdb-c6f2-4ee8-b5fb-acb59a9931bf",
+        image: "https://cards.scryfall.io/normal/front/3/6/366c4cdb-c6f2-4ee8-b5fb-acb59a9931bf.jpg?1702372041",
+        colorIdentity: ["B"],
+        scryfallUri: "https://scryfall.com/card/sld/1581/the-meep?utm_source=api",
+        name: "The Meep"
     },
     "The Mimeoplasm": {
         id: "c8173413-0431-4b70-a509-f1bc11a59225",
@@ -12326,6 +12620,13 @@ export const commanderList: {
         colorIdentity: [""],
         scryfallUri: "https://scryfall.com/card/dmc/19/the-peregrine-dynamo?utm_source=api",
         name: "The Peregrine Dynamo"
+    },
+    "The Pride of Hull Clade": {
+        id: "edb40ab9-e552-4eb5-9c35-09094136dd4f",
+        image: "https://cards.scryfall.io/normal/front/e/d/edb40ab9-e552-4eb5-9c35-09094136dd4f.jpg?1706242068",
+        colorIdentity: ["G", "U"],
+        scryfallUri: "https://scryfall.com/card/mkm/172/the-pride-of-hull-clade?utm_source=api",
+        name: "The Pride of Hull Clade"
     },
     "The Prismatic Piper": {
         id: "c78c2713-39e7-4a6e-a132-027099a89665",
@@ -12385,7 +12686,7 @@ export const commanderList: {
     },
     "The Seventh Doctor": {
         id: "8dd6bfb3-1338-4ee6-9281-30a7428200d2",
-        image: "https://cards.scryfall.io/normal/front/8/d/8dd6bfb3-1338-4ee6-9281-30a7428200d2.jpg?1696636767",
+        image: "https://cards.scryfall.io/normal/front/8/d/8dd6bfb3-1338-4ee6-9281-30a7428200d2.jpg?1702898919",
         colorIdentity: ["U", "W"],
         scryfallUri: "https://scryfall.com/card/who/158/the-seventh-doctor?utm_source=api",
         name: "The Seventh Doctor"
@@ -12490,7 +12791,7 @@ export const commanderList: {
     },
     "Thrakkus the Butcher": {
         id: "2255d1e4-f387-4187-8c10-7d0009f6ec79",
-        image: "https://cards.scryfall.io/normal/front/2/2/2255d1e4-f387-4187-8c10-7d0009f6ec79.jpg?1674137687",
+        image: "https://cards.scryfall.io/normal/front/2/2/2255d1e4-f387-4187-8c10-7d0009f6ec79.jpg?1705977507",
         colorIdentity: ["G", "R"],
         scryfallUri: "https://scryfall.com/card/clb/295/thrakkus-the-butcher?utm_source=api",
         name: "Thrakkus the Butcher"
@@ -12559,10 +12860,10 @@ export const commanderList: {
         name: "Tiamat"
     },
     "Tiana, Ship's Caretaker": {
-        id: "63852ffb-22ef-4b88-9cba-254291e978cd",
-        image: "https://cards.scryfall.io/normal/front/6/3/63852ffb-22ef-4b88-9cba-254291e978cd.jpg?1608917719",
+        id: "8030dc33-bead-4b1a-9270-fe19809044b9",
+        image: "https://cards.scryfall.io/normal/front/8/0/8030dc33-bead-4b1a-9270-fe19809044b9.jpg?1675200792",
         colorIdentity: ["R", "W"],
-        scryfallUri: "https://scryfall.com/card/cmr/454/tiana-ships-caretaker?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/dmr/204/tiana-ships-caretaker?utm_source=api",
         name: "Tiana, Ship's Caretaker"
     },
     "Tibor and Lumia": {
@@ -12684,11 +12985,18 @@ export const commanderList: {
         scryfallUri: "https://scryfall.com/card/war/224/tolsimir-friend-to-wolves?utm_source=api",
         name: "Tolsimir, Friend to Wolves"
     },
-    "Tolsimir Wolfblood": {
-        id: "069ac859-e0ef-4685-bad3-5c741102b5b9",
-        image: "https://cards.scryfall.io/normal/front/0/6/069ac859-e0ef-4685-bad3-5c741102b5b9.jpg?1598917578",
+    "Tolsimir, Midnight's Light": {
+        id: "08d22402-c41d-43d7-be1f-42be1e300726",
+        image: "https://cards.scryfall.io/normal/front/0/8/08d22402-c41d-43d7-be1f-42be1e300726.jpg?1706242263",
         colorIdentity: ["G", "W"],
-        scryfallUri: "https://scryfall.com/card/rav/236/tolsimir-wolfblood?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/mkm/236/tolsimir-midnights-light?utm_source=api",
+        name: "Tolsimir, Midnight's Light"
+    },
+    "Tolsimir Wolfblood": {
+        id: "d027f4be-e24f-4960-97bd-554e147df7a5",
+        image: "https://cards.scryfall.io/normal/front/d/0/d027f4be-e24f-4960-97bd-554e147df7a5.jpg?1702429731",
+        colorIdentity: ["G", "W"],
+        scryfallUri: "https://scryfall.com/card/rvr/234/tolsimir-wolfblood?utm_source=api",
         name: "Tolsimir Wolfblood"
     },
     "Toluz, Clever Conductor": {
@@ -12706,11 +13014,18 @@ export const commanderList: {
         name: "Tom Bombadil"
     },
     "Tomik, Distinguished Advokist": {
-        id: "f346387c-2f13-472b-b5b1-968b490eb38f",
-        image: "https://cards.scryfall.io/normal/front/f/3/f346387c-2f13-472b-b5b1-968b490eb38f.jpg?1560601039",
+        id: "0eea32dc-dbac-47a9-97b2-311413f1de9d",
+        image: "https://cards.scryfall.io/normal/front/0/e/0eea32dc-dbac-47a9-97b2-311413f1de9d.jpg?1702505596",
         colorIdentity: ["W"],
-        scryfallUri: "https://scryfall.com/card/war/34/tomik-distinguished-advokist?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/rvr/31/tomik-distinguished-advokist?utm_source=api",
         name: "Tomik, Distinguished Advokist"
+    },
+    "Tomik, Wielder of Law": {
+        id: "2c5a7550-fe1a-4797-9583-70ab56cfac0d",
+        image: "https://cards.scryfall.io/normal/front/2/c/2c5a7550-fe1a-4797-9583-70ab56cfac0d.jpg?1706242846",
+        colorIdentity: ["B", "W"],
+        scryfallUri: "https://scryfall.com/card/mkm/431/tomik-wielder-of-law?utm_source=api",
+        name: "Tomik, Wielder of Law"
     },
     "Tomorrow, Azami's Familiar": {
         id: "095813f9-d559-40bd-a50f-7c1f6e494e60",
@@ -12804,10 +13119,10 @@ export const commanderList: {
         name: "Toshiro Umezawa"
     },
     "Toski, Bearer of Secrets": {
-        id: "f9e79b59-94c8-4697-bf88-f0a0433170f5",
-        image: "https://cards.scryfall.io/normal/front/f/9/f9e79b59-94c8-4697-bf88-f0a0433170f5.jpg?1631051021",
+        id: "e82e61d1-488d-4627-a54c-d8496a967814",
+        image: "https://cards.scryfall.io/normal/front/e/8/e82e61d1-488d-4627-a54c-d8496a967814.jpg?1706240948",
         colorIdentity: ["G"],
-        scryfallUri: "https://scryfall.com/card/khm/197/toski-bearer-of-secrets?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/mkc/191/toski-bearer-of-secrets?utm_source=api",
         name: "Toski, Bearer of Secrets"
     },
     "Totentanz, Swarm Piper": {
@@ -12889,10 +13204,10 @@ export const commanderList: {
         name: "Tromokratis"
     },
     "Trostani Discordant": {
-        id: "fa1190a4-3d7e-4500-991f-e36ec3d1d9dc",
-        image: "https://cards.scryfall.io/normal/front/f/a/fa1190a4-3d7e-4500-991f-e36ec3d1d9dc.jpg?1572893872",
+        id: "79d61bba-4404-4336-8290-51d1576f728d",
+        image: "https://cards.scryfall.io/normal/front/7/9/79d61bba-4404-4336-8290-51d1576f728d.jpg?1706240188",
         colorIdentity: ["G", "W"],
-        scryfallUri: "https://scryfall.com/card/grn/208/trostani-discordant?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/clu/213/trostani-discordant?utm_source=api",
         name: "Trostani Discordant"
     },
     "Trostani, Selesnya's Voice": {
@@ -12901,6 +13216,13 @@ export const commanderList: {
         colorIdentity: ["G", "W"],
         scryfallUri: "https://scryfall.com/card/c19/204/trostani-selesnyas-voice?utm_source=api",
         name: "Trostani, Selesnya's Voice"
+    },
+    "Trostani, Three Whispers": {
+        id: "329f3aca-6db7-41d3-95b2-c479d14b7fa3",
+        image: "https://cards.scryfall.io/normal/front/3/2/329f3aca-6db7-41d3-95b2-c479d14b7fa3.jpg?1706242270",
+        colorIdentity: ["G", "W"],
+        scryfallUri: "https://scryfall.com/card/mkm/238/trostani-three-whispers?utm_source=api",
+        name: "Trostani, Three Whispers"
     },
     "Troyan, Gutsy Explorer": {
         id: "eadd2a1a-93a0-4257-897d-1aaee279449f",
@@ -13144,7 +13466,7 @@ export const commanderList: {
     },
     "Urza, Chief Artificer": {
         id: "ea409050-4296-4b76-a6cd-2896ce1b88e4",
-        image: "https://cards.scryfall.io/normal/front/e/a/ea409050-4296-4b76-a6cd-2896ce1b88e4.jpg?1685036112",
+        image: "https://cards.scryfall.io/normal/front/e/a/ea409050-4296-4b76-a6cd-2896ce1b88e4.jpg?1705542672",
         colorIdentity: ["B", "U", "W"],
         scryfallUri: "https://scryfall.com/card/brc/2/urza-chief-artificer?utm_source=api",
         name: "Urza, Chief Artificer"
@@ -13248,6 +13570,13 @@ export const commanderList: {
         colorIdentity: ["B", "R"],
         scryfallUri: "https://scryfall.com/card/khm/114/valki-god-of-lies-tibalt-cosmic-impostor?utm_source=api",
         name: "Valki, God of Lies // Tibalt, Cosmic Impostor"
+    },
+    "Vannifar, Evolved Enigma": {
+        id: "f6d381eb-6cb6-4505-aebe-995c1ddc8527",
+        image: "https://cards.scryfall.io/normal/front/f/6/f6d381eb-6cb6-4505-aebe-995c1ddc8527.jpg?1706242279",
+        colorIdentity: ["G", "U"],
+        scryfallUri: "https://scryfall.com/card/mkm/241/vannifar-evolved-enigma?utm_source=api",
+        name: "Vannifar, Evolved Enigma"
     },
     "Varchild, Betrayer of Kjeldor": {
         id: "7849b360-afad-4f50-b455-3d118f7bfcd0",
@@ -13487,6 +13816,13 @@ export const commanderList: {
         scryfallUri: "https://scryfall.com/card/dmu/226/vohar-vodalian-desecrator?utm_source=api",
         name: "Vohar, Vodalian Desecrator"
     },
+    "Voja, Jaws of the Conclave": {
+        id: "bfa1bd2f-25bd-4fbd-877b-cef00ab7f92f",
+        image: "https://cards.scryfall.io/normal/front/b/f/bfa1bd2f-25bd-4fbd-877b-cef00ab7f92f.jpg?1706884111",
+        colorIdentity: ["G", "R", "W"],
+        scryfallUri: "https://scryfall.com/card/mkm/432/voja-jaws-of-the-conclave?utm_source=api",
+        name: "Voja, Jaws of the Conclave"
+    },
     "Volo, Guide to Monsters": {
         id: "c9ae01f9-7461-47b4-aa1e-93bd6ff1bf9e",
         image: "https://cards.scryfall.io/normal/front/c/9/c9ae01f9-7461-47b4-aa1e-93bd6ff1bf9e.jpg?1627709617",
@@ -13594,7 +13930,7 @@ export const commanderList: {
     },
     "Wayta, Trainer Prodigy": {
         id: "04f2d7ee-43a4-48e8-af64-d9fad4b9c5f1",
-        image: "https://cards.scryfall.io/normal/front/0/4/04f2d7ee-43a4-48e8-af64-d9fad4b9c5f1.jpg?1698993146",
+        image: "https://cards.scryfall.io/normal/front/0/4/04f2d7ee-43a4-48e8-af64-d9fad4b9c5f1.jpg?1701246288",
         colorIdentity: ["G", "R", "W"],
         scryfallUri: "https://scryfall.com/card/lcc/7/wayta-trainer-prodigy?utm_source=api",
         name: "Wayta, Trainer Prodigy"
@@ -13782,10 +14118,10 @@ export const commanderList: {
         name: "Xiahou Dun, the One-Eyed"
     },
     "Xira Arien": {
-        id: "21fa636b-8ce8-40b6-a4d0-3191a664bd92",
-        image: "https://cards.scryfall.io/normal/front/2/1/21fa636b-8ce8-40b6-a4d0-3191a664bd92.jpg?1562901785",
+        id: "ce050d13-7897-4889-a514-a7617a1ed686",
+        image: "https://cards.scryfall.io/normal/front/c/e/ce050d13-7897-4889-a514-a7617a1ed686.jpg?1675200801",
         colorIdentity: ["B", "G", "R"],
-        scryfallUri: "https://scryfall.com/card/chr/90/xira-arien?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/dmr/205/xira-arien?utm_source=api",
         name: "Xira Arien"
     },
     "Xira, the Golden Sting": {
@@ -13797,7 +14133,7 @@ export const commanderList: {
     },
     "Xolatoyac, the Smiling Flood": {
         id: "1444a798-4e94-4bcc-b16a-0f20334f2550",
-        image: "https://cards.scryfall.io/normal/front/1/4/1444a798-4e94-4bcc-b16a-0f20334f2550.jpg?1698987755",
+        image: "https://cards.scryfall.io/normal/front/1/4/1444a798-4e94-4bcc-b16a-0f20334f2550.jpg?1699972738",
         colorIdentity: ["G", "U"],
         scryfallUri: "https://scryfall.com/card/lcc/8/xolatoyac-the-smiling-flood?utm_source=api",
         name: "Xolatoyac, the Smiling Flood"
@@ -13818,7 +14154,7 @@ export const commanderList: {
     },
     "Yahenni, Undying Partisan": {
         id: "2b77cd68-fbdd-4bca-a68c-299425588a61",
-        image: "https://cards.scryfall.io/normal/front/2/b/2b77cd68-fbdd-4bca-a68c-299425588a61.jpg?1698988295",
+        image: "https://cards.scryfall.io/normal/front/2/b/2b77cd68-fbdd-4bca-a68c-299425588a61.jpg?1700657113",
         colorIdentity: ["B"],
         scryfallUri: "https://scryfall.com/card/lcc/214/yahenni-undying-partisan?utm_source=api",
         name: "Yahenni, Undying Partisan"
@@ -13851,6 +14187,13 @@ export const commanderList: {
         scryfallUri: "https://scryfall.com/card/m20/220/yarok-the-desecrated?utm_source=api",
         name: "Yarok, the Desecrated"
     },
+    "Yarus, Roar of the Old Gods": {
+        id: "326845a7-7502-4dc3-8f3e-867d6c84e931",
+        image: "https://cards.scryfall.io/normal/front/3/2/326845a7-7502-4dc3-8f3e-867d6c84e931.jpg?1706242292",
+        colorIdentity: ["G", "R"],
+        scryfallUri: "https://scryfall.com/card/mkm/245/yarus-roar-of-the-old-gods?utm_source=api",
+        name: "Yarus, Roar of the Old Gods"
+    },
     "Yasharn, Implacable Earth": {
         id: "12878fbd-dbe5-44bc-9f34-38fd374ec10a",
         image: "https://cards.scryfall.io/normal/front/1/2/12878fbd-dbe5-44bc-9f34-38fd374ec10a.jpg?1604200584",
@@ -13873,17 +14216,17 @@ export const commanderList: {
         name: "Yasova Dragonclaw"
     },
     "Yawgmoth, Thran Physician": {
-        id: "8690cbcc-f8fd-41f7-9e28-e61c12b04014",
-        image: "https://cards.scryfall.io/normal/front/8/6/8690cbcc-f8fd-41f7-9e28-e61c12b04014.jpg?1665611812",
+        id: "b5a79f5d-d0df-4799-ac3a-84305e3af0c9",
+        image: "https://cards.scryfall.io/normal/front/b/5/b5a79f5d-d0df-4799-ac3a-84305e3af0c9.jpg?1675199878",
         colorIdentity: ["B"],
-        scryfallUri: "https://scryfall.com/card/mh1/116/yawgmoth-thran-physician?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/dmr/110/yawgmoth-thran-physician?utm_source=api",
         name: "Yawgmoth, Thran Physician"
     },
     "Yedora, Grave Gardener": {
-        id: "5bc9808d-1d47-417d-bba8-06694a83d88e",
-        image: "https://cards.scryfall.io/normal/front/5/b/5bc9808d-1d47-417d-bba8-06694a83d88e.jpg?1690017071",
+        id: "552ddba8-e1e3-44d8-b341-441c2b4cd937",
+        image: "https://cards.scryfall.io/normal/front/5/5/552ddba8-e1e3-44d8-b341-441c2b4cd937.jpg?1707057004",
         colorIdentity: ["G"],
-        scryfallUri: "https://scryfall.com/card/cmm/333/yedora-grave-gardener?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/mkc/197/yedora-grave-gardener?utm_source=api",
         name: "Yedora, Grave Gardener"
     },
     "Yenna, Redtooth Regent": {
@@ -13901,10 +14244,10 @@ export const commanderList: {
         name: "Yennett, Cryptic Sovereign"
     },
     "Yeva, Nature's Herald": {
-        id: "22ecead7-58b3-4e34-8f7d-b095abee7f24",
-        image: "https://cards.scryfall.io/normal/front/2/2/22ecead7-58b3-4e34-8f7d-b095abee7f24.jpg?1561758901",
+        id: "67ff9ba3-cd2b-4970-b4da-22104b10a4a4",
+        image: "https://cards.scryfall.io/normal/front/6/7/67ff9ba3-cd2b-4970-b4da-22104b10a4a4.jpg?1702429596",
         colorIdentity: ["G"],
-        scryfallUri: "https://scryfall.com/card/ddu/27/yeva-natures-herald?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/rvr/162/yeva-natures-herald?utm_source=api",
         name: "Yeva, Nature's Herald"
     },
     "Yidaro, Wandering Monster": {
@@ -14007,7 +14350,7 @@ export const commanderList: {
     },
     "Zacama, Primal Calamity": {
         id: "05c5a9a8-badd-43ab-8408-a13e75407681",
-        image: "https://cards.scryfall.io/normal/front/0/5/05c5a9a8-badd-43ab-8408-a13e75407681.jpg?1698988493",
+        image: "https://cards.scryfall.io/normal/front/0/5/05c5a9a8-badd-43ab-8408-a13e75407681.jpg?1700342995",
         colorIdentity: ["G", "R", "W"],
         scryfallUri: "https://scryfall.com/card/lcc/296/zacama-primal-calamity?utm_source=api",
         name: "Zacama, Primal Calamity"
@@ -14084,7 +14427,7 @@ export const commanderList: {
     },
     "Zaxara, the Exemplary": {
         id: "6dc390da-75f8-490a-a724-c12d21cfe578",
-        image: "https://cards.scryfall.io/normal/front/6/d/6dc390da-75f8-490a-a724-c12d21cfe578.jpg?1673305726",
+        image: "https://cards.scryfall.io/normal/front/6/d/6dc390da-75f8-490a-a724-c12d21cfe578.jpg?1701636845",
         colorIdentity: ["B", "G", "U"],
         scryfallUri: "https://scryfall.com/card/dmc/176/zaxara-the-exemplary?utm_source=api",
         name: "Zaxara, the Exemplary"
@@ -14300,10 +14643,10 @@ export const commanderList: {
         name: "Zurgo Helmsmasher"
     },
     "Zur the Enchanter": {
-        id: "aeb0160a-dfdc-4b1f-865e-ef905aee65d5",
-        image: "https://cards.scryfall.io/normal/front/a/e/aeb0160a-dfdc-4b1f-865e-ef905aee65d5.jpg?1673149301",
+        id: "561cfc04-65ea-49a4-8638-b4631a7cf828",
+        image: "https://cards.scryfall.io/normal/front/5/6/561cfc04-65ea-49a4-8638-b4631a7cf828.jpg?1675200810",
         colorIdentity: ["B", "U", "W"],
-        scryfallUri: "https://scryfall.com/card/2x2/297/zur-the-enchanter?utm_source=api",
+        scryfallUri: "https://scryfall.com/card/dmr/206/zur-the-enchanter?utm_source=api",
         name: "Zur the Enchanter"
     },
     "Zurzoth, Chaos Rider": {
