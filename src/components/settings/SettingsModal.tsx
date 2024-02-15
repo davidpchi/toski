@@ -25,6 +25,7 @@ import { DiscordAccountLinkingSection } from "./DiscordAccountLinkingSection";
 import { PersistSignInSection } from "./PersistSignInSection";
 import { FavoriteCommanderSection } from "./FavoriteCommanderSection";
 import { MoxfieldAccountLinkingSection } from "./MoxfieldAccountLinkingSection";
+import { FavoriteDecksSection } from "./FavoriteDecksSection";
 
 export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef }: { finalRef: any }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -103,6 +104,7 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
                                 setMoxfieldId={setMoxfieldId}
                                 setHasErrors={setHasErrors}
                             />
+                            <FavoriteDecksSection />
                         </Flex>
                         <PersistSignInSection />
                     </ModalBody>

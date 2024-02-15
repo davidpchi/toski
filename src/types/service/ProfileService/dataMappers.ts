@@ -7,7 +7,12 @@ function profileDataMapper(profile: ChatterfangProfile): Profile | undefined {
         return {
             id: profile.userId.toString(),
             favoriteCommanderId: profile.favoriteCommander ? profile.favoriteCommander : undefined,
-            moxfieldId: profile.moxfieldId ? profile.moxfieldId : undefined
+            moxfieldId: profile.moxfieldId ? profile.moxfieldId : undefined,
+            decks: profile.decks
+                ? profile.decks.map((deck) => {
+                      return { id: deck._id, moxfieldId: deck.deckId };
+                  })
+                : []
         };
     }
 

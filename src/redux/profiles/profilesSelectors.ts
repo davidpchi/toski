@@ -3,10 +3,13 @@ import { createSelector } from "@reduxjs/toolkit";
 import { AppState } from "../rootReducer";
 import { Profile } from "../../types/domain/Profile";
 import { MoxfieldProfile } from "../../types/domain/MoxfieldProfile";
+import { MoxfieldDeck } from "../../types/domain/MoxfieldDeck";
 
 const getProfiles = (state: AppState) => state.profiles.profiles;
 
 const getMoxfieldProfiles = (state: AppState) => state.profiles.moxfieldProfiles;
+
+const getMoxfieldDecks = (state: AppState) => state.profiles.moxfieldDecks;
 
 /**
  * Gets a specific profile based on discord id.
@@ -30,9 +33,19 @@ const getMoxfieldProfile = createSelector(
     }
 );
 
+const getMoxfieldDeck = createSelector(
+    getMoxfieldDecks,
+    (_state: AppState, id: string) => id,
+    (moxfieldDecks: { [id: string]: MoxfieldDeck } | undefined, id: string) => {
+        return moxfieldDecks ? moxfieldDecks[id] : undefined;
+    }
+);
+
 export const ProfileSelectors = {
     getProfiles,
     getMoxfieldProfiles,
+    getMoxfieldDecks,
     getProfile,
-    getMoxfieldProfile
+    getMoxfieldProfile,
+    getMoxfieldDeck
 };

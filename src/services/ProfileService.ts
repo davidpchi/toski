@@ -71,6 +71,65 @@ const useUpdateProfile = () => {
     );
 };
 
+const useAddDeckToProfile = () => {
+    const hydrateProfiles = useHydrateProfiles();
+
+    const accessToken = useSelector(AuthSelectors.getAccessToken);
+    const userId = useSelector(UserSelectors.getId);
+
+    const endpoint = "https://chatterfang.onrender.com/addDeck";
+
+    return useCallback(
+        (deckUrl: string, callback?: () => void) => {
+            const body = { userId: userId, url: deckUrl, source: "moxfield" };
+
+            if (accessToken !== undefined && userId !== undefined) {
+                axios
+                    .post<string>(endpoint, body, {
+                        headers: { "access-token": accessToken, "Content-Type": "application/json" }
+                    })
+                    .then((_res) => {
+                        // kick off a rehydrate of our profiles
+                        hydrateProfiles();
+
+                        // call the callback handler
+                        if (callback) {
+                            callback();
+                        }
+                    });
+            }
+        },
+        [accessToken, hydrateProfiles, userId]
+    );
+};
+
+const useRemoveDeckFromProfile = () => {
+    const hydrateProfiles = useHydrateProfiles();
+
+    const accessToken = useSelector(AuthSelectors.getAccessToken);
+    const userId = useSelector(UserSelectors.getId);
+
+    const endpoint = "https://chatterfang.onrender.com/removeDeck";
+
+    return useCallback(
+        (deckId: string) => {
+            const body = { userId: userId, deckId: deckId };
+
+            if (accessToken !== undefined && userId !== undefined) {
+                axios
+                    .post<string>(endpoint, body, {
+                        headers: { "access-token": accessToken, "Content-Type": "application/json" }
+                    })
+                    .then((_res) => {
+                        // kick off a rehydrate of our profiles
+                        hydrateProfiles();
+                    });
+            }
+        },
+        [accessToken, hydrateProfiles, userId]
+    );
+};
+
 /**
  * Given a player name (not discord screen name), return the discord id
  */
@@ -95,5 +154,7 @@ export const ProfileService = {
     useHydrateProfiles,
     useUpdateProfile,
     useGetProfileId,
-    useGetPlayerName
+    useGetPlayerName,
+    useAddDeckToProfile,
+    useRemoveDeckFromProfile
 };

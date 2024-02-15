@@ -55,7 +55,7 @@ export const PlayerMatchupsTable = React.memo(function PlayerMatchupsTable({
                 // check to see if the winner of the match played the commander that we are searching for.
                 // because we captured this array earlier, reference equality should be true
                 // if we are looking at the winner
-                if (player.name === match.winner && player.commanders === winningCommanders) {
+                if (winningCommanders.indexOf(commanderName) > -1) {
                     playerMatchup.winCount += 1;
                 }
 

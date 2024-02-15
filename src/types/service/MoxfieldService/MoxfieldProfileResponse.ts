@@ -1,9 +1,9 @@
-export type MoxfieldResponse = {
-    data: MoxfieldResponseData;
+export type MoxfieldProfileResponse = {
+    data: MoxfieldProfileResponseData;
     [key: string]: any; // This allows any other properties
 };
 
-export type MoxfieldResponseData = {
+export type MoxfieldProfileResponseData = {
     userName: string;
     profileImageType: string;
     profileImageUrl: string;

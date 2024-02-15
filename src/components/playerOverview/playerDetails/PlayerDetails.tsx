@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLoaderData, useNavigate } from "react-router-dom";
+
 import { Flex, Heading, Switch, Tab, TabList, TabPanel, TabPanels, Tabs, Text, Tooltip } from "@chakra-ui/react";
 
 import { StatsSelectors } from "../../../redux/stats/statsSelectors";
@@ -17,6 +18,9 @@ import { InsufficientData } from "../InsufficientData";
 import { CommanderMatchupsTable } from "../CommanderMatchupsTable";
 import { PlayerMatchupsTable } from "../PlayerMatchupsTable";
 import { primaryColor } from "../../../themes/acorn";
+import { ProfileService } from "../../../services/ProfileService";
+import { ProfileSelectors } from "../../../redux/profiles/profilesSelectors";
+import { PlayerDecks } from "./PlayerDecks";
 
 export async function loader(data: { params: any }) {
     return data.params.playerId;
@@ -26,7 +30,12 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
     const navigate = useNavigate();
     // Player variables
     const playerId = useLoaderData() as string;
+    const getProfileId = ProfileService.useGetProfileId();
+
     const player = useSelector((state: AppState) => StatsSelectors.getPlayer(state, playerId));
+    const potentialProfileId = player ? getProfileId(player.name) : undefined;
+    const profileId = potentialProfileId ?? "";
+    const profile = useSelector((state: AppState) => ProfileSelectors.getProfile(state, profileId));
     const commanders = useSelector((state: AppState) => StatsSelectors.getCommanders(state));
 
     const [showCommanderMatchups, setShowCommanderMatchups] = useState<boolean>(false);
@@ -85,6 +94,11 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
                     <Tab>
                         <Text>Match Trends</Text>
                     </Tab>
+                    {profile && profile.decks.length > 0 ? (
+                        <Tab>
+                            <Text>Decks</Text>
+                        </Tab>
+                    ) : null}
                 </TabList>
                 <TabPanels>
                     <TabPanel>
@@ -143,6 +157,9 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
                     </TabPanel>
                     <TabPanel>
                         <MatchPlacementBarChart matches={matches} playerId={playerId} />
+                    </TabPanel>
+                    <TabPanel>
+                        <PlayerDecks profileId={profileId} />
                     </TabPanel>
                 </TabPanels>
             </Tabs>
