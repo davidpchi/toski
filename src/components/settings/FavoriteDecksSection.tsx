@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 
 import { Button, Flex, Image, Input } from "@chakra-ui/react";
