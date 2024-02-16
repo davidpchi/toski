@@ -54,7 +54,7 @@ export const PlayerDecks = React.memo(function PlayerDecks({ profileId }: { prof
                             ) : (
                                 <Image src={placeholderImage} height={"80px"} borderRadius={8} />
                             )}
-                            <div style={{ marginLeft: "10px" }}>{deck.name}</div>
+                            <Flex style={{ marginLeft: "10px" }}>{deck.name}</Flex>
                         </Flex>
                     </Button>
                 );
