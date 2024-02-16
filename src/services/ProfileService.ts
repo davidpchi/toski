@@ -80,7 +80,7 @@ const useAddDeckToProfile = () => {
     const endpoint = "https://chatterfang.onrender.com/addDeck";
 
     return useCallback(
-        (deckUrl: string, callback?: () => void) => {
+        (deckUrl: string, onSuccess?: () => void, onError?: () => void) => {
             const body = { userId: userId, url: deckUrl, source: "moxfield" };
 
             if (accessToken !== undefined && userId !== undefined) {
@@ -92,9 +92,9 @@ const useAddDeckToProfile = () => {
                         // kick off a rehydrate of our profiles
                         hydrateProfiles();
 
-                        // call the callback handler
-                        if (callback) {
-                            callback();
+                        // call the onSuccess handler
+                        if (onSuccess) {
+                            onSuccess();
                         }
                     });
             }

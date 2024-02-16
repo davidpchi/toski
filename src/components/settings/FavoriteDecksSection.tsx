@@ -124,7 +124,7 @@ export const FavoriteDecksSection = React.memo(function FavoriteDecksSection() {
                     onChange={updateMoxfieldDeckUrl}
                     placeholder={"Enter Moxfield Deck URL to add"}
                 />
-                <Button onClick={addDeck} disabled={!canAddDeck}>
+                <Button onClick={addDeck} isDisabled={!canAddDeck || hydratedDecks.length >= 10}>
                     Add Deck
                 </Button>
             </Flex>
