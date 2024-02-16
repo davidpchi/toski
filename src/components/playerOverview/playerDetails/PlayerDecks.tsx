@@ -39,14 +39,22 @@ export const PlayerDecks = React.memo(function PlayerDecks({ profileId }: { prof
                 };
 
                 hydratedDecks.push(
-                    <Button onClick={navigateToMoxfieldDeck} minHeight={"100px"} variant={"ghost"} key={deck.id}>
+                    <Button
+                        onClick={navigateToMoxfieldDeck}
+                        minHeight={"100px"}
+                        variant={"ghost"}
+                        key={deck.id}
+                        width={"100%"}
+                        display={"flex"}
+                        justifyContent={"flex-start"}
+                    >
                         <Flex flexDirection={"row"} alignItems={"center"}>
-                            {deck.name}
                             {commanderImage !== undefined ? (
                                 <Image src={commanderImage} height={20} borderRadius={8} />
                             ) : (
                                 <Image src={placeholderImage} height={"80px"} borderRadius={8} />
                             )}
+                            <Flex style={{ marginLeft: "10px" }}>{deck.name}</Flex>
                         </Flex>
                     </Button>
                 );
