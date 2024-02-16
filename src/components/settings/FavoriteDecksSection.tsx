@@ -27,6 +27,8 @@ const FavoriteDeckItem = React.memo(function FavoriteDeckItem({
 }) {
     const commanderImage = commanderList[commanderName]?.image.replace("normal", "art_crop");
 
+    const shortenedDeckName = deckName.length > 20 ? deckName.substring(0, 20) + "..." : deckName;
+
     const removeDeckFromProfile = ProfileService.useRemoveDeckFromProfile();
 
     const removeDeck = useCallback(() => {
@@ -38,15 +40,28 @@ const FavoriteDeckItem = React.memo(function FavoriteDeckItem({
     }, [deckUrl]);
 
     return (
-        <Flex flexDirection={"row"} alignItems={"center"} margin={"4px"}>
-            <Button onClick={navigateToMoxfieldDeck} minHeight={"100px"} variant={"ghost"}>
+        <Flex
+            flexDirection={"row"}
+            justifyContent={"space-between"}
+            alignItems={"center"}
+            width={"100%"}
+            margin={"4px"}
+        >
+            <Button
+                onClick={navigateToMoxfieldDeck}
+                minHeight={"100px"}
+                variant={"ghost"}
+                flexGrow={1}
+                display={"flex"}
+                justifyContent={"flex-start"}
+            >
                 {commanderImage !== undefined ? (
                     <Image src={commanderImage} height={20} borderRadius={8} />
                 ) : (
                     <Image src={placeholderImage} height={"80px"} borderRadius={8} />
                 )}
-                <Flex flexDirection={"row"} alignItems={"center"} marginLeft={"10px"}>
-                    {deckName}
+                <Flex flexDirection={"row"} marginLeft={"10px"}>
+                    {shortenedDeckName}
                 </Flex>
             </Button>
             <Button onClick={removeDeck} variant={"ghost"} alignSelf={"stretch"} minHeight={"100px"}>
