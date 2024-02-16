@@ -137,11 +137,12 @@ export const FavoriteDecksSection = React.memo(function FavoriteDecksSection() {
         >
             <Flex>My Decks:</Flex>
             {hydratedDecks}
-            <Flex direction={"row"}>
+            <Flex direction={"row"} alignItems={"center"} width={"100%"} gap={2} marginTop={"16px"}>
                 <Input
                     value={moxfieldDeckUrl}
                     onChange={updateMoxfieldDeckUrl}
                     placeholder={"Enter Moxfield Deck URL to add"}
+                    flex={1}
                 />
                 <Button onClick={addDeck} isDisabled={!canAddDeck || hydratedDecks.length >= 10}>
                     Add Deck
