@@ -2,7 +2,19 @@ import React, { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLoaderData, useNavigate } from "react-router-dom";
 
-import { Flex, Heading, Switch, Tab, TabList, TabPanel, TabPanels, Tabs, Text, Tooltip } from "@chakra-ui/react";
+import {
+    Flex,
+    Heading,
+    Select,
+    Switch,
+    Tab,
+    TabList,
+    TabPanel,
+    TabPanels,
+    Tabs,
+    Text,
+    Tooltip
+} from "@chakra-ui/react";
 
 import { StatsSelectors } from "../../../redux/stats/statsSelectors";
 import { AppState } from "../../../redux/rootReducer";
@@ -39,6 +51,15 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
     const commanders = useSelector((state: AppState) => StatsSelectors.getCommanders(state));
 
     const [showCommanderMatchups, setShowCommanderMatchups] = useState<boolean>(false);
+    const [tabIndex, setTabIndex] = useState(0);
+
+    const handleTabDropDownChange = (event: any) => {
+        setTabIndex(parseInt(event.target.value, 10));
+    };
+
+    const handleTabsChange = (index: number) => {
+        setTabIndex(index);
+    };
 
     const [dateFilter, setDateFilter] = useState<Date | undefined>(undefined);
     const onDatePickerChange = useCallback(
@@ -62,8 +83,21 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
         <Flex direction="column" justify="center" align="center">
             <PlayerDetailsInfoCard playerId={playerId} />
             <DatePicker onChange={onDatePickerChange} />
-            <Tabs isFitted={true} width={"100%"}>
-                <TabList>
+            <Select
+                marginTop={"16px"}
+                display={{ base: "inline", md: "none" }}
+                width={200}
+                onChange={handleTabDropDownChange}
+                value={tabIndex}
+            >
+                <option value={0}>Match History</option>
+                <option value={1}>Commander History</option>
+                <option value={2}>Matchups</option>
+                <option value={3}>Match Trends</option>
+                {profile && profile.decks.length > 0 ? <option value={4}>Decks</option> : null}
+            </Select>
+            <Tabs isFitted={true} width={"100%"} index={tabIndex} onChange={handleTabsChange}>
+                <TabList display={{ base: "none", md: "flex" }}>
                     <Tab>
                         <Text>Match History</Text>
                     </Tab>

@@ -10,6 +10,7 @@ import {
     Image,
     Input,
     Link,
+    Select,
     Switch,
     Tab,
     TabList,
@@ -50,6 +51,15 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
     const commander = useSelector((state: AppState) => StatsSelectors.getCommander(state, commanderId));
 
     const [showCommanderMatchups, setShowCommanderMatchups] = useState<boolean>(false);
+    const [tabIndex, setTabIndex] = useState(0);
+
+    const handleTabDropDownChange = (event: any) => {
+        setTabIndex(parseInt(event.target.value, 10));
+    };
+
+    const handleTabsChange = (index: number) => {
+        setTabIndex(index);
+    };
 
     const [dateFilter, setDateFilter] = useState<Date | undefined>(undefined);
     const onDatePickerChange = useCallback(
@@ -239,8 +249,20 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                     <Input placeholder="Filter by..." onChange={onSearchChange} />
                 </div>
             </Flex>
-            <Tabs isFitted={true} width={"100%"} flexWrap={"wrap"}>
-                <TabList>
+            <Select
+                display={{ base: "inline", md: "none" }}
+                width={200}
+                onChange={handleTabDropDownChange}
+                value={tabIndex}
+            >
+                <option value={0}>Match History</option>
+                <option value={1}>Historical Winrate</option>
+                <option value={2}>Top Players</option>
+                <option value={3}>Matchups</option>
+                <option value={4}>Match Trends</option>
+            </Select>
+            <Tabs isFitted={true} width={"100%"} flexWrap={"wrap"} index={tabIndex} onChange={handleTabsChange}>
+                <TabList display={{ base: "none", md: "flex" }}>
                     <Tab>
                         <Text>Match History</Text>
                     </Tab>
