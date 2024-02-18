@@ -65,9 +65,7 @@ const FavoriteDeckItem = React.memo(function FavoriteDeckItem({
                 </Flex>
             </Button>
             <Button onClick={removeDeck} variant={"ghost"} alignSelf={"stretch"} minHeight={"100px"}>
-                <Flex>
-                    <FiTrash2 />
-                </Flex>
+                <FiTrash2 />
             </Button>
         </Flex>
     );
