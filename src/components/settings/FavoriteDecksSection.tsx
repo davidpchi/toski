@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 
 import { Button, Flex, Image, Input } from "@chakra-ui/react";
@@ -9,6 +9,8 @@ import { AppState } from "../../redux/rootReducer";
 import { MoxfieldService } from "../../services/MoxfieldService";
 import { commanderList } from "../../services/commanderList";
 import { ProfileService } from "../../services/ProfileService";
+
+import { FiTrash2 } from "react-icons/fi";
 
 const placeholderImage = "https://static.thenounproject.com/png/5425-200.png";
 
@@ -25,6 +27,8 @@ const FavoriteDeckItem = React.memo(function FavoriteDeckItem({
 }) {
     const commanderImage = commanderList[commanderName]?.image.replace("normal", "art_crop");
 
+    const shortenedDeckName = deckName.length > 20 ? deckName.substring(0, 20) + "..." : deckName;
+
     const removeDeckFromProfile = ProfileService.useRemoveDeckFromProfile();
 
     const removeDeck = useCallback(() => {
@@ -36,19 +40,32 @@ const FavoriteDeckItem = React.memo(function FavoriteDeckItem({
     }, [deckUrl]);
 
     return (
-        <Flex flexDirection={"row"} alignItems={"center"}>
-            <Button onClick={navigateToMoxfieldDeck} minHeight={"100px"} variant={"ghost"}>
-                <Flex flexDirection={"row"} alignItems={"center"}>
-                    {deckName}
-                    {commanderImage !== undefined ? (
-                        <Image src={commanderImage} height={20} borderRadius={8} />
-                    ) : (
-                        <Image src={placeholderImage} height={"80px"} borderRadius={8} />
-                    )}
+        <Flex
+            flexDirection={"row"}
+            justifyContent={"space-between"}
+            alignItems={"center"}
+            width={"100%"}
+            margin={"4px"}
+        >
+            <Button
+                onClick={navigateToMoxfieldDeck}
+                minHeight={"100px"}
+                variant={"ghost"}
+                flexGrow={1}
+                display={"flex"}
+                justifyContent={"flex-start"}
+            >
+                {commanderImage !== undefined ? (
+                    <Image src={commanderImage} height={20} borderRadius={8} />
+                ) : (
+                    <Image src={placeholderImage} height={"80px"} borderRadius={8} />
+                )}
+                <Flex flexDirection={"row"} marginLeft={"10px"}>
+                    {shortenedDeckName}
                 </Flex>
             </Button>
             <Button onClick={removeDeck} variant={"ghost"} alignSelf={"stretch"} minHeight={"100px"}>
-                <Flex>"X"</Flex>
+                <FiTrash2 />
             </Button>
         </Flex>
     );
@@ -118,11 +135,12 @@ export const FavoriteDecksSection = React.memo(function FavoriteDecksSection() {
         >
             <Flex>My Decks:</Flex>
             {hydratedDecks}
-            <Flex direction={"row"}>
+            <Flex direction={"row"} alignItems={"center"} width={"100%"} gap={2} marginTop={"16px"}>
                 <Input
                     value={moxfieldDeckUrl}
                     onChange={updateMoxfieldDeckUrl}
                     placeholder={"Enter Moxfield Deck URL to add"}
+                    flex={1}
                 />
                 <Button onClick={addDeck} isDisabled={!canAddDeck || hydratedDecks.length >= 10}>
                     Add Deck
