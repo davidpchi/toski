@@ -38,23 +38,27 @@ export const PlayerDecks = React.memo(function PlayerDecks({ profileId }: { prof
                     window.open(deck.url, "_blank");
                 };
 
+                const deckDisplayName = `${deck.name.substring(0, 20)}${deck.name.length > 20 ? "..." : ""}`;
+
                 hydratedDecks.push(
                     <Button
                         onClick={navigateToMoxfieldDeck}
                         minHeight={"100px"}
                         variant={"ghost"}
+                        width={"400px"}
                         key={deck.id}
-                        width={"100%"}
                         display={"flex"}
                         justifyContent={"flex-start"}
                     >
-                        <Flex flexDirection={"row"} alignItems={"center"}>
+                        <Flex flexDirection={"row"} alignItems={"center"} maxWidth={"500px"}>
                             {commanderImage !== undefined ? (
                                 <Image src={commanderImage} height={20} borderRadius={8} />
                             ) : (
                                 <Image src={placeholderImage} height={"80px"} borderRadius={8} />
                             )}
-                            <Flex style={{ marginLeft: "10px" }}>{deck.name}</Flex>
+                            <Flex marginLeft={"10px"} maxWidth={"300px"}>
+                                {deckDisplayName}
+                            </Flex>
                         </Flex>
                     </Button>
                 );
@@ -64,11 +68,14 @@ export const PlayerDecks = React.memo(function PlayerDecks({ profileId }: { prof
 
     return (
         <Flex
-            direction={"column"}
+            direction={"row"}
             justifyContent={"center"}
             flexWrap={"wrap"}
             alignItems={"flex-start"}
             marginBottom={"64px"}
+            wrap={"wrap"}
+            maxWidth={"1200px"}
+            alignSelf={"center"}
         >
             {hydratedDecks}
         </Flex>
