@@ -96,7 +96,7 @@ export const FavoriteDecksSection = React.memo(function FavoriteDecksSection() {
 
     let hydratedDecks = [];
 
-    if (moxfieldDecks === undefined) {
+    if (profile.decks.length > 0 && moxfieldDecks === undefined) {
         // we need to hydrate each of these decks
         for (const deck of profile.decks) {
             hydrateMoxfieldDeck(deck.moxfieldId);
