@@ -2,13 +2,13 @@ import { paragraphStyle } from "./styles";
 import { NewsArticle } from "../types/domain/NewsArticle";
 
 export const article_5: NewsArticle = {
-    id: "5",
+    id: "0005",
     title: "Match Submission Tool",
     author: "doomgeek",
     date: "October 06, 2023",
     summary: "Match submission and more",
     content: <Article_5 />,
-    image: "https://media.discordapp.net/attachments/1095034595377942670/1123500605953036418/OIG.png?ex=654b2afa&is=6538b5fa&hm=6aadb306c454e9e708ca782b8e103ecd62a092189160620ae636d5f44b1c5ea2&=&width=676&height=676"
+    image: "https://cdn.discordapp.xyz/attachments/1095034595377942670/1123500605953036418/OIG.png?ex=654b2afa&is=6538b5fa&hm=6aadb306c454e9e708ca782b8e103ecd62a092189160620ae636d5f44b1c5ea2&=&width=676&height=676"
 };
 
 export default function Article_5() {

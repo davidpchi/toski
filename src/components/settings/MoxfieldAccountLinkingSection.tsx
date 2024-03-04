@@ -9,6 +9,7 @@ import { AppState } from "../../redux/rootReducer";
 import { MoxfieldService } from "../../services/MoxfieldService";
 import { ProfileSelectors } from "../../redux/profiles/profilesSelectors";
 import { useUserInfo } from "../../logic/hooks/userHooks";
+import { secondaryColor } from "../../themes/acorn";
 
 const defaultMoxfieldLogo = "https://pbs.twimg.com/profile_images/1674989472839094273/p7a37K9W_400x400.jpg";
 const errorMoxfieldLogo = "https://upload.wikimedia.org/wikipedia/commons/4/4e/OOjs_UI_icon_error-destructive.svg";
@@ -141,7 +142,13 @@ export const MoxfieldAccountLinkingSection = React.memo(function MoxfieldAccount
                     <MoxfieldAccountLinkingValidation isValid={isValid} moxfieldId={moxfieldId} />
                 </Flex>
             </Flex>
-            <Flex width={"110px"} height={"80px"} borderRadius={8} justifyContent={"center"}>
+            <Flex
+                width={"110px"}
+                height={"80px"}
+                borderRadius={8}
+                justifyContent={"center"}
+                background={secondaryColor[100]}
+            >
                 <Image src={moxfieldImageUrl} alt="moxfield account link" height={"80px"} borderRadius={8} flex={0} />
             </Flex>
         </Flex>

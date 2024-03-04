@@ -2,13 +2,13 @@ import { paragraphStyle } from "./styles";
 import { NewsArticle } from "../types/domain/NewsArticle";
 
 export const article_9: NewsArticle = {
-    id: "9",
+    id: "0009",
     title: "Profile Customization & Account Linking",
     author: "doomgeek",
     date: "November 15th, 2023",
     summary: "New sign-in customization and account linking",
     content: <Article_9 />,
-    image: "https://cdn.discordapp.com/attachments/983610720316977193/1174531320274231456/apotheosis-v0-1dfk8n7gaj0c1.png"
+    image: "https://cdn.discordapp.xyz/attachments/983610720316977193/1174531320274231456/apotheosis-v0-1dfk8n7gaj0c1.png"
 };
 
 export default function Article_9() {
@@ -31,7 +31,7 @@ export default function Article_9() {
             </p>
             <img
                 style={{ margin: "auto" }}
-                src={"https://media.discordapp.net/attachments/874787353963683932/1174035912347373639/image.png"}
+                src={"https://cdn.discordapp.xyz/attachments/874787353963683932/1174035912347373639/image.png"}
                 alt="player details demo"
             />
             <p style={paragraphStyle}>This is just the start of what you'll soon be able to do once you sign-in!</p>
@@ -45,7 +45,7 @@ export default function Article_9() {
             </p>
             <img
                 style={{ margin: "auto" }}
-                src={"https://cdn.discordapp.com/attachments/983610720316977193/1174533885133074492/image.png"}
+                src={"https://cdn.discordapp.xyz/attachments/983610720316977193/1174533885133074492/image.png"}
                 alt="player details demo"
             />
             <p style={paragraphStyle}>

@@ -2,13 +2,13 @@ import { paragraphStyle } from "./styles";
 import { NewsArticle } from "../types/domain/NewsArticle";
 
 export const article_1: NewsArticle = {
-    id: "1",
+    id: "0001",
     title: "Introducing Articles!",
     author: "doomgeek",
     date: "September 22, 2023",
     summary: "Adding the articles section and new filters",
     content: <Article_1 />,
-    image: "https://media.discordapp.net/attachments/983610720316977193/1174627862502981662/alien-world-with-dark-skies-v0-x8rxh6edhbvb1.png"
+    image: "https://cdn.discordapp.xyz/attachments/983610720316977193/1174627862502981662/alien-world-with-dark-skies-v0-x8rxh6edhbvb1.png"
 };
 
 export default function Article_1() {

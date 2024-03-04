@@ -6,13 +6,15 @@ import { article_6 } from "./Article_6";
 import { article_7 } from "./Article_7";
 import { article_8 } from "./Article_8";
 import { article_9 } from "./Article_9";
+import { article_10 } from "./Article_10";
 
 export const Articles: { [id: string]: NewsArticle } = {
-    "1": article_1,
-    "4": article_4,
-    "5": article_5,
-    "6": article_6,
-    "7": article_7,
-    "8": article_8,
-    "9": article_9
+    "0001": article_1,
+    "0004": article_4,
+    "0005": article_5,
+    "0006": article_6,
+    "0007": article_7,
+    "0008": article_8,
+    "0009": article_9,
+    "0010": article_10
 };
