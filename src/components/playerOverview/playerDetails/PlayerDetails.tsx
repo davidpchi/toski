@@ -193,7 +193,14 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
                         <MatchPlacementBarChart matches={matches} playerId={playerId} />
                     </TabPanel>
                     <TabPanel>
-                        <PlayerDecks profileId={profileId} />
+                        <Flex
+                            alignSelf={"stretch"}
+                            justifyContent={"center"}
+                            alignItems={"stretch"}
+                            flexDirection={"row"}
+                        >
+                            <PlayerDecks profileId={profileId} />
+                        </Flex>
                     </TabPanel>
                 </TabPanels>
             </Tabs>

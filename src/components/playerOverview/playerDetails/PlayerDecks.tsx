@@ -61,9 +61,7 @@ export const PlayerDecks = React.memo(function PlayerDecks({ profileId }: { prof
             direction={"row"}
             justifyContent={"center"}
             flexWrap={"wrap"}
-            alignItems={"flex-start"}
             marginBottom={"64px"}
-            wrap={"wrap"}
             maxWidth={"1200px"}
             alignSelf={"center"}
         >
