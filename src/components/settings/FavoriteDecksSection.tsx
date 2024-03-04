@@ -40,13 +40,7 @@ const FavoriteDeckItem = React.memo(function FavoriteDeckItem({
     }, [deckUrl]);
 
     return (
-        <Flex
-            flexDirection={"row"}
-            justifyContent={"space-between"}
-            alignItems={"center"}
-            width={"100%"}
-            margin={"4px"}
-        >
+        <Flex flexDirection={"row"} justifyContent={"space-between"} alignItems={"center"} width={"100%"}>
             <Button
                 onClick={navigateToMoxfieldDeck}
                 minHeight={"100px"}
@@ -54,6 +48,8 @@ const FavoriteDeckItem = React.memo(function FavoriteDeckItem({
                 flexGrow={1}
                 display={"flex"}
                 justifyContent={"flex-start"}
+                marginRight={"8px"}
+                marginBottom={"4px"}
             >
                 {commanderImage !== undefined ? (
                     <Image src={commanderImage} height={20} borderRadius={8} />
@@ -64,7 +60,7 @@ const FavoriteDeckItem = React.memo(function FavoriteDeckItem({
                     {shortenedDeckName}
                 </Flex>
             </Button>
-            <Button onClick={removeDeck} variant={"ghost"} alignSelf={"stretch"} minHeight={"100px"}>
+            <Button onClick={removeDeck} variant={"ghost"} alignSelf={"stretch"} minHeight={"100px"} width={"110px"}>
                 <FiTrash2 />
             </Button>
         </Flex>
@@ -86,7 +82,13 @@ export const FavoriteDecksSection = React.memo(function FavoriteDecksSection() {
     const addDeck = useCallback(() => {
         if (moxfieldDeckUrl !== undefined) {
             setCanAddDeck(false);
-            addDeckToProfile(moxfieldDeckUrl, () => setCanAddDeck(true));
+            addDeckToProfile(moxfieldDeckUrl, () => {
+                // renable the add deck button
+                setCanAddDeck(true);
+
+                // clear the input
+                setMoxfieldDeckUrl("");
+            });
         }
     }, [addDeckToProfile, moxfieldDeckUrl]);
 
@@ -96,12 +98,7 @@ export const FavoriteDecksSection = React.memo(function FavoriteDecksSection() {
 
     let hydratedDecks = [];
 
-    if (profile.decks.length > 0 && moxfieldDecks === undefined) {
-        // we need to hydrate each of these decks
-        for (const deck of profile.decks) {
-            hydrateMoxfieldDeck(deck.moxfieldId);
-        }
-    } else {
+    if (profile.decks.length > 0 && moxfieldDecks !== undefined) {
         // we already have some decks, initialized, check to see which ones we haven't hydrated yet
         for (const curDeck of profile.decks) {
             const deck = moxfieldDecks[curDeck.moxfieldId];
@@ -131,18 +128,22 @@ export const FavoriteDecksSection = React.memo(function FavoriteDecksSection() {
             justifyContent={"center"}
             flexWrap={"wrap"}
             alignItems={"flex-start"}
-            marginBottom={"64px"}
+            alignSelf={"stretch"}
         >
-            <Flex>My Decks:</Flex>
+            <Flex marginBottom={"4px"}>My Decks:</Flex>
             {hydratedDecks}
             <Flex direction={"row"} alignItems={"center"} width={"100%"} gap={2} marginTop={"16px"}>
                 <Input
                     value={moxfieldDeckUrl}
                     onChange={updateMoxfieldDeckUrl}
-                    placeholder={"Enter Moxfield Deck URL to add"}
+                    placeholder={
+                        profile.decks.length >= 10
+                            ? "Maximum of 10 Decks Can be Added"
+                            : "Enter Moxfield Deck URL to add"
+                    }
                     flex={1}
                 />
-                <Button onClick={addDeck} isDisabled={!canAddDeck || hydratedDecks.length >= 10}>
+                <Button onClick={addDeck} isDisabled={!canAddDeck || profile.decks.length >= 10}>
                     Add Deck
                 </Button>
             </Flex>

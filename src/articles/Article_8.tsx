@@ -2,13 +2,13 @@ import { paragraphStyle } from "./styles";
 import { NewsArticle } from "../types/domain/NewsArticle";
 
 export const article_8: NewsArticle = {
-    id: "8",
+    id: "0008",
     title: "New Updates & Dinosaurs",
     author: "doomgeek",
     date: "November 3rd, 2023",
     summary: "A new updates experience and Lost Caverns of Ixalan support",
     content: <Article_8 />,
-    image: "https://media.discordapp.net/attachments/1095034595377942670/1130391446793502861/OIG.png?ex=65488d12&is=65361812&hm=434d96edbadd50506007c31c041855a617b218dcf81923e10174b8647ea88825&=&width=676&height=676"
+    image: "https://cdn.discordapp.xyz/attachments/1095034595377942670/1130391446793502861/OIG.png?ex=65488d12&is=65361812&hm=434d96edbadd50506007c31c041855a617b218dcf81923e10174b8647ea88825&=&width=676&height=676"
 };
 
 export default function Article_8() {

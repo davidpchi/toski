@@ -8,6 +8,7 @@ import { ChatterfangProfile } from "../types/service/ProfileService/ChatterfangP
 import { Profile } from "../types/domain/Profile";
 import { profilesDataMapper } from "../types/service/ProfileService/dataMappers";
 import { ProfilesAction } from "../redux/profiles/profilesActions";
+import { MoxfieldService } from "./MoxfieldService";
 
 const profileMap: { [name: string]: string } = {
     Doomgeek: "230904033915830272",
@@ -22,6 +23,8 @@ const profileMap: { [name: string]: string } = {
 const useHydrateProfiles = () => {
     const dispatch = useDispatch();
 
+    const hydrateMoxfieldDeck = MoxfieldService.useHydrateMoxfieldDeck();
+
     const endpoint = "https://chatterfang.onrender.com/profiles";
 
     return useCallback(() => {
@@ -33,8 +36,18 @@ const useHydrateProfiles = () => {
                 const data: ChatterfangProfile[] = res.data as unknown as ChatterfangProfile[];
                 const profiles: Profile[] = profilesDataMapper(data);
                 dispatch(ProfilesAction.GetProfilesComplete(profiles));
+
+                // upon hydrating profiles, also update the moxfield decks for all of these profiles
+                if (profiles.length > 0) {
+                    for (const profile of profiles) {
+                        // we need to hydrate each of these decks
+                        for (const deck of profile.decks) {
+                            hydrateMoxfieldDeck(deck.moxfieldId);
+                        }
+                    }
+                }
             });
-    }, [dispatch]);
+    }, [dispatch, hydrateMoxfieldDeck]);
 };
 
 const useUpdateProfile = () => {
