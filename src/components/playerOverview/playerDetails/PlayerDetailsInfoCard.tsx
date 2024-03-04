@@ -47,7 +47,7 @@ export const PlayerDetailsInfoCard = React.memo(function PlayerDetailsInfoCard({
 
     const navigateToMoxfieldAccount = useCallback(() => {
         if (moxfieldProfile) {
-            window.location.href = `https://www.moxfield.com/users/${moxfieldProfile.userName}`;
+            window.open(`https://www.moxfield.com/users/${moxfieldProfile.userName}`, "_blank");
         }
     }, [moxfieldProfile]);
 
