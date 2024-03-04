@@ -9,7 +9,7 @@ import { MoxfieldDeckResponseData } from "../types/service/MoxfieldService/Moxfi
 import { MoxfieldProfileResponseData } from "../types/service/MoxfieldService/MoxfieldProfileResponse";
 
 const useGetMoxfieldProfile = () => {
-    const endpoint = "https://chatterfang.onrender.com/moxfield/";
+    const endpoint = "https://chatterfang.onrender.com/moxfield/profile/";
 
     return useCallback(async (moxfieldId: string): Promise<MoxfieldProfile | undefined> => {
         try {
@@ -31,7 +31,7 @@ const useGetMoxfieldProfile = () => {
 
 const useHydrateMoxfieldProfile = () => {
     const dispatch = useDispatch();
-    const endpoint = "https://chatterfang.onrender.com/moxfield/";
+    const endpoint = "https://chatterfang.onrender.com/moxfield/profile/";
 
     return useCallback(
         async (moxfieldId: string) => {
@@ -55,7 +55,8 @@ const useHydrateMoxfieldProfile = () => {
 
 const useHydrateMoxfieldDeck = () => {
     const dispatch = useDispatch();
-    const endpoint = "https://corsproxy.io/?https://api2.moxfield.com/v3/decks/all/";
+
+    const endpoint = "https://chatterfang.onrender.com/moxfield/deck/";
 
     return useCallback(
         async (moxfieldId: string) => {

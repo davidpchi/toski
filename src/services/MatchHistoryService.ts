@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { Match } from "../types/domain/Match";
 import { sheetRowToMatch } from "../types/service/MatchHistory/dataMappers";
 import { StatsAction } from "../redux/stats/statsActions";
-import { useEffect } from "react";
+import { useCallback } from "react";
 import { sendDataToGoogleSheets } from "./GoogleFormsService";
 
 const matchHistoryDataEndpoint =
@@ -16,7 +16,7 @@ const useMatchHistory = () => {
     // Do the initial data hydration here
     const dispatch = useDispatch();
 
-    useEffect(() => {
+    return useCallback(() => {
         axios.get<string>(matchHistoryDataEndpoint, {}).then((res) => {
             // strip out the setResponse text from the data
             let raw: string = res.data;

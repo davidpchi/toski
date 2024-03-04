@@ -6,7 +6,6 @@ import { Button, Flex, Image, Input } from "@chakra-ui/react";
 import { useUserInfo } from "../../logic/hooks/userHooks";
 import { ProfileSelectors } from "../../redux/profiles/profilesSelectors";
 import { AppState } from "../../redux/rootReducer";
-import { MoxfieldService } from "../../services/MoxfieldService";
 import { commanderList } from "../../services/commanderList";
 import { ProfileService } from "../../services/ProfileService";
 
@@ -70,7 +69,6 @@ const FavoriteDeckItem = React.memo(function FavoriteDeckItem({
 export const FavoriteDecksSection = React.memo(function FavoriteDecksSection() {
     const { userId } = useUserInfo();
 
-    const hydrateMoxfieldDeck = MoxfieldService.useHydrateMoxfieldDeck();
     const addDeckToProfile = ProfileService.useAddDeckToProfile();
 
     const profile = useSelector((state: AppState) => ProfileSelectors.getProfile(state, userId ?? ""));
@@ -99,12 +97,11 @@ export const FavoriteDecksSection = React.memo(function FavoriteDecksSection() {
     let hydratedDecks = [];
 
     if (profile.decks.length > 0 && moxfieldDecks !== undefined) {
-        // we already have some decks, initialized, check to see which ones we haven't hydrated yet
         for (const curDeck of profile.decks) {
             const deck = moxfieldDecks[curDeck.moxfieldId];
-            if (deck === undefined) {
-                hydrateMoxfieldDeck(curDeck.moxfieldId);
-            } else {
+
+            // drop any unhydrated decks
+            if (deck !== undefined) {
                 hydratedDecks.push(
                     <FavoriteDeckItem
                         key={deck.id}

@@ -41,8 +41,9 @@ const useHydrateProfiles = () => {
                 if (profiles.length > 0) {
                     for (const profile of profiles) {
                         // we need to hydrate each of these decks
-                        for (const deck of profile.decks) {
-                            hydrateMoxfieldDeck(deck.moxfieldId);
+                        for (let i = 0; i < profile.decks.length; i++) {
+                            const deck = profile.decks[i];
+                            setTimeout(() => hydrateMoxfieldDeck(deck.moxfieldId), 250 * i);
                         }
                     }
                 }
