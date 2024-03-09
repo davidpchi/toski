@@ -1,5 +1,6 @@
 import { paragraphStyle } from "./styles";
 import { NewsArticle } from "../types/domain/NewsArticle";
+import article10 from "../assets/article10.png";
 
 export const article_10: NewsArticle = {
     id: "0010",
@@ -8,7 +9,7 @@ export const article_10: NewsArticle = {
     date: "March 3rd, 2024",
     summary: "Add your own decks to your profile!",
     content: <Article_10 />,
-    image: "https://cdn.discordapp.xyz/attachments/983610720316977193/1214112560689848362/different-lineage-v0-exedm3hy97mc1.png"
+    image: article10
 };
 
 export default function Article_10() {
