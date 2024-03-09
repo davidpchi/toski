@@ -1,6 +1,8 @@
 import { paragraphStyle } from "./styles";
 import { NewsArticle } from "../types/domain/NewsArticle";
 
+import article7 from "../assets/article7.webp";
+
 export const article_7: NewsArticle = {
     id: "0007",
     title: "The Doctor",
@@ -8,7 +10,7 @@ export const article_7: NewsArticle = {
     date: "October 17, 2023",
     summary: "Support for Doctor Who and matchups",
     content: <Article_7 />,
-    image: "https://cdn.discordapp.xyz/attachments/1095034595377942670/1119364926864101386/OIG.png?ex=6557ced3&is=654559d3&hm=f94caa56abe9b1845e99dc12e1cd1aac354a43a8259363673f72f2a69cffc3cd&=&width=676&height=676"
+    image: article7
 };
 
 export default function Article_7() {

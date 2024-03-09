@@ -1,6 +1,10 @@
 import { paragraphStyle } from "./styles";
 import { NewsArticle } from "../types/domain/NewsArticle";
 
+import article9 from "../assets/article9.png";
+import article9_0 from "../assets/article9_0.png";
+import article9_1 from "../assets/article9_1.png";
+
 export const article_9: NewsArticle = {
     id: "0009",
     title: "Profile Customization & Account Linking",
@@ -8,7 +12,7 @@ export const article_9: NewsArticle = {
     date: "November 15th, 2023",
     summary: "New sign-in customization and account linking",
     content: <Article_9 />,
-    image: "https://cdn.discordapp.xyz/attachments/983610720316977193/1174531320274231456/apotheosis-v0-1dfk8n7gaj0c1.png"
+    image: article9
 };
 
 export default function Article_9() {
@@ -29,11 +33,7 @@ export default function Article_9() {
                 commander you want to display at the top of your player details page, as well as the ability to link and
                 show a Moxfield account on your details page!
             </p>
-            <img
-                style={{ margin: "auto" }}
-                src={"https://cdn.discordapp.xyz/attachments/874787353963683932/1174035912347373639/image.png"}
-                alt="player details demo"
-            />
+            <img style={{ margin: "auto" }} src={article9_0} alt="player details demo" />
             <p style={paragraphStyle}>This is just the start of what you'll soon be able to do once you sign-in!</p>
             <h1 style={{ fontSize: 20, fontWeight: "bold", marginTop: 16 }}>First Time Account Linking</h1>
             <p style={paragraphStyle}>
@@ -43,11 +43,7 @@ export default function Article_9() {
                     player.
                 </b>
             </p>
-            <img
-                style={{ margin: "auto" }}
-                src={"https://cdn.discordapp.xyz/attachments/983610720316977193/1174533885133074492/image.png"}
-                alt="player details demo"
-            />
+            <img style={{ margin: "auto" }} src={article9_1} alt="player details demo" />
             <p style={paragraphStyle}>
                 If you don't see an active account linking, reach out to any Derranged Hermit and we'll get you set up!
             </p>

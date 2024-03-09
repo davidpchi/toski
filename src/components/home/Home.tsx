@@ -1,13 +1,10 @@
 import { Flex } from "@chakra-ui/react";
 
+import logo from "../../assets/logo.png";
+import bg_image from "../../assets/bg_image.png";
+
 import { HomeNewsSection } from "./HomeNewsSection";
 import { FF_IS_NEWS_ENABLED } from "../../services/featureFlagService";
-
-const backgroundVideo =
-    "https://cdn.discordapp.xyz/attachments/983610720316977193/1144864732914925620/Editor115_VP9.webm";
-
-const generalLogo = "https://cdn.discordapp.xyz/attachments/980133030050021396/1145161251945709670/toski_logo_v1.png";
-//'https://media.discordapp.net/attachments/980133030050021396/1145161252298035250/toski_logo_v1_alt.png';
 
 export default function Home() {
     return (
@@ -26,7 +23,7 @@ export default function Home() {
                         width: "100%"
                     }}
                 >
-                    <video
+                    {/* <video
                         autoPlay={true}
                         loop={true}
                         muted={true}
@@ -43,7 +40,24 @@ export default function Home() {
                         }}
                     >
                         <source type="video/webm" src={backgroundVideo} />
-                    </video>
+                    </video> */}
+                    <div
+                        style={{
+                            position: "absolute",
+                            left: 0,
+                            top: 0,
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "cover",
+                            borderRadius: "8px",
+                            overflow: "hidden",
+                            display: "flex",
+                            justifyContent: "center",
+                            background: "black"
+                        }}
+                    >
+                        <img src={bg_image} alt="MNC Logo" />
+                    </div>
                     <div
                         style={{
                             position: "absolute",
@@ -57,7 +71,7 @@ export default function Home() {
                             borderRadius: "8px"
                         }}
                     >
-                        <img src={generalLogo} style={{ height: "40%", objectFit: "scale-down" }} alt="MNC Logo" />
+                        <img src={logo} style={{ height: "40%", objectFit: "scale-down" }} alt="MNC Logo" />
                     </div>
                 </div>
             </Flex>
