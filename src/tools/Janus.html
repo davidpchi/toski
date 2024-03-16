@@ -24,9 +24,9 @@
 
             const getCommanderData = (item) => {
                 if (item.image_uris === undefined || item.image_uris.normal === undefined) {
-                    return `"${item.name.replaceAll('"', "\\\"")}": { id: "${item.id}", image: "${item.card_faces[0].image_uris.normal}", colorIdentity: ["${item.color_identity.join(`","`)}"], scryfallUri: "${item.scryfall_uri}", name: "${item.name}" },${"\r\n"}`;
+                    return `"${item.name.replaceAll('"', "\\\"")}": { id: "${item.id}", image: "${item.card_faces[0].image_uris.normal}", colorIdentity: ["${item.color_identity.join(`","`)}"], scryfallUri: "${item.scryfall_uri}", name: \`${item.name}\` },${"\r\n"}`;
                 } else {
-                    return `"${item.name.replaceAll('"', "\\\"")}": { id: "${item.id}", image: "${item.image_uris.normal}", colorIdentity: ["${item.color_identity.join(`","`)}"], scryfallUri: "${item.scryfall_uri}", name: "${item.name}" }, ${"\r\n"}`;
+                    return `"${item.name.replaceAll('"', "\\\"")}": { id: "${item.id}", image: "${item.image_uris.normal}", colorIdentity: ["${item.color_identity.join(`","`)}"], scryfallUri: "${item.scryfall_uri}", name: \`${item.name}\` }, ${"\r\n"}`;
                 }
             }
 

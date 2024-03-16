@@ -1,9 +1,28 @@
 import { TooltipItem } from "chart.js";
 import React from "react";
-import { Heading } from "@chakra-ui/react";
+import { Heading, Box } from "@chakra-ui/react";
 
 import { Match } from "../../types/domain/Match";
 import { LineGraph } from "../dataVisualizations/LineGraph";
+
+const getAverageMatchLength = (matches: Match[]) => {
+    // filter out all matches that do not have match length
+    const filteredMatches = matches.filter((match) => match.numberOfTurns !== undefined);
+
+    let avg = 0;
+    let count = 1;
+    if (filteredMatches.length > 0) {
+        for (let i = 0; i < filteredMatches.length; i++) {
+            // this should never be 0
+            const numberOfTurns = filteredMatches[i].numberOfTurns ?? 0;
+            avg = avg + (numberOfTurns - avg) / count;
+            count++;
+        }
+    }
+
+    // round to 2 decimal places
+    return avg.toFixed(2);
+};
 
 export const MatchLengthLineChart = React.memo(function MatchLengthLineChart({ matches }: { matches: Match[] }) {
     const matchesWithLengths = matches.filter((match: Match) => match.numberOfTurns);
@@ -19,9 +38,12 @@ export const MatchLengthLineChart = React.memo(function MatchLengthLineChart({ m
         return `Number of Turns: ${item.formattedValue}`;
     };
 
+    const averageMatchLength = getAverageMatchLength(matches);
+
     return (
         <>
             <Heading size="md">Match Lengths Over Time</Heading>
+            <Box>{`Average Match Length: ${averageMatchLength}`}</Box>
             <LineGraph
                 dataLabel={"Match Lengths"}
                 data={matchesWithLengthsData}
