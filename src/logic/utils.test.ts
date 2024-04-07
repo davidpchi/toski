@@ -49,7 +49,10 @@ describe("getAverageWinTurn", () => {
             matches: matches,
             validMatchesCount: 10,
             wins: 7,
-            colorProfile: {}
+            colorProfile: {
+                colorIdentities: {},
+                colors: {}
+            }
         };
     });
 

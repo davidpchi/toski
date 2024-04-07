@@ -77,7 +77,7 @@ export const PlayerDetailsInfoCard = React.memo(function PlayerDetailsInfoCard({
 
     const colorsPlayedArray: number[] = [];
     for (const colorObj of MTG_COLORS) {
-        colorsPlayedArray.push(player.colorProfile[colorObj.id]);
+        colorsPlayedArray.push(player.colorProfile.colors[colorObj.id]);
     }
 
     const moxfieldImage =

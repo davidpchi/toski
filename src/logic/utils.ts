@@ -88,14 +88,14 @@ export function getAverageWinTurn(player: Player) {
  */
 export function isNewlyQualifiedPlayer(player: Player) {
     const currentDate = new Date();
-    const dateOffset = (currentDate.getTime() - NEW_PLAYER_HIGHLIGHT_DAYS * 24 * 60 * 60 * 1000);
+    const dateOffset = currentDate.getTime() - NEW_PLAYER_HIGHLIGHT_DAYS * 24 * 60 * 60 * 1000;
 
     // TODO: This logic does not gracefully handle matches that are not valid. We don't really run into this very often
     // though, so we acknowledge this bug and will revisit it when it comes up (invalid matches are not really recorded anymore)
     if (
         PLAYER_MINIMUM_GAMES_REQUIRED <= player.validMatchesCount &&
         player.validMatchesCount <= PLAYER_MAXIMUM_GAMES_AS_NEW_PLAYER &&
-        // we should only be looking at the match that qualified the player (aka the PLAYER_MINIMUM_GAMES_REQUIRED match) 
+        // we should only be looking at the match that qualified the player (aka the PLAYER_MINIMUM_GAMES_REQUIRED match)
         // to determine if we should render the label
         dateOffset < player.matches[PLAYER_MINIMUM_GAMES_REQUIRED - 1].date.getTime()
     ) {
@@ -103,4 +103,119 @@ export function isNewlyQualifiedPlayer(player: Player) {
     } else {
         return false;
     }
+}
+
+/**
+ * Given a collection of colors, provides the color identity name.
+ */
+export function IdentifyColorIdentity(v2: string[]) {
+    // will return undefined if all else fails
+    let identity = undefined;
+    if (v2.length === 1) {
+        // all of the mono colors
+        if (v2.includes("W")) {
+            identity = "W";
+        } else if (v2.includes("U")) {
+            identity = "U";
+        } else if (v2.includes("B")) {
+            identity = "B";
+        } else if (v2.includes("R")) {
+            identity = "R";
+        } else if (v2.includes("G")) {
+            identity = "G";
+        } else {
+            identity = "Colorless";
+        }
+    } else if (v2.length === 2) {
+        // all gulds
+        if (v2.includes("W")) {
+            if (v2.includes("U")) {
+                identity = "Azorius";
+            } else if (v2.includes("B")) {
+                identity = "Orzhov";
+            } else if (v2.includes("R")) {
+                identity = "Boros";
+            } else if (v2.includes("G")) {
+                identity = "Selesnya";
+            }
+        } else if (v2.includes("U")) {
+            if (v2.includes("B")) {
+                identity = "Dimir";
+            } else if (v2.includes("R")) {
+                identity = "Izzet";
+            } else if (v2.includes("G")) {
+                identity = "Simic";
+            }
+        } else if (v2.includes("B")) {
+            if (v2.includes("R")) {
+                identity = "Rakdos";
+            } else if (v2.includes("G")) {
+                identity = "Golgari";
+            }
+        } else if (v2.includes("R")) {
+            if (v2.includes("G")) {
+                identity = "Gruul";
+            }
+        } else if (v2.includes("C")) {
+            identity = "Colorless";
+        }
+    } else if (v2.length === 3) {
+        // shards and wedges
+        if (v2.includes("W")) {
+            if (v2.includes("U")) {
+                if (v2.includes("B")) {
+                    identity = "Esper";
+                } else if (v2.includes("R")) {
+                    identity = "Jeskai";
+                } else if (v2.includes("G")) {
+                    identity = "Bant";
+                }
+            } else if (v2.includes("B")) {
+                if (v2.includes("R")) {
+                    identity = "Mardu";
+                } else if (v2.includes("G")) {
+                    identity = "Abzan";
+                }
+            } else if (v2.includes("R")) {
+                if (v2.includes("G")) {
+                    identity = "Naya";
+                }
+            }
+        } else if (v2.includes("U")) {
+            if (v2.includes("B")) {
+                if (v2.includes("R")) {
+                    identity = "Grixis";
+                } else if (v2.includes("G")) {
+                    identity = "Sultai";
+                }
+            } else if (v2.includes("R")) {
+                if (v2.includes("G")) {
+                    identity = "Temur";
+                }
+            }
+        } else if (v2.includes("B")) {
+            if (v2.includes("R")) {
+                if (v2.includes("G")) {
+                    identity = "Jund";
+                }
+            }
+        }
+    } else if (v2.length === 4) {
+        // all of the nephilim
+        if (v2.includes("W") === false) {
+            identity = "Glint-Eye";
+        } else if (v2.includes("U") === false) {
+            identity = "Dune-Brood";
+        } else if (v2.includes("B") === false) {
+            identity = "Ink-Treader";
+        } else if (v2.includes("R") === false) {
+            identity = "Witch-Maw";
+        } else if (v2.includes("G") === false) {
+            identity = "Yore-Tiller";
+        }
+    } else if (v2.length === 5) {
+        // if all colors are there, it's five color
+        identity = "Five-color";
+    }
+    return identity;
 }

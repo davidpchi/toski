@@ -1,7 +1,7 @@
 import { Chart as ChartJS, registerables, TooltipItem } from "chart.js";
 import React, { useMemo } from "react";
 import { Pie } from "react-chartjs-2";
-import { MTG_COLORS } from "../constants";
+import { MTG_COLOR_IDENTITIES } from "../constants";
 
 ChartJS.register(...registerables);
 
@@ -21,9 +21,10 @@ export const PieGraph = React.memo(function PieGraph({
      */
     backgroundColors?: string[];
 }) {
+    // TODO: we need to remove this hard code mapping of MTG Color Identities for the labels
     const pieGraphData = useMemo(() => {
         return {
-            labels: MTG_COLORS.map((color) => color.name),
+            labels: MTG_COLOR_IDENTITIES.map((color) => color.name),
             datasets: [
                 {
                     label: dataLabel,

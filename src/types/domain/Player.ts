@@ -21,7 +21,19 @@ export type Player = {
     wins: number;
     /**
      * A dictionary representing the colors of the commanders the player has played.
-     * The key is the color as a string, and the value is the number of times that color has been played.
      */
-    colorProfile: { [color: string]: number };
+    colorProfile: {
+        /**
+         * The key is the color (ex: blue, red, etc) as a string, and the value is the number of times that color has been played.
+         */
+        colors: {
+            [color: string]: number;
+        };
+        /**
+         * The key is the color identity (ex: mono blue, dimir, five-color, etc) as a string, and the value is the number of times that color identity has been played.
+         */
+        colorIdentities: {
+            [colorIdentity: string]: number;
+        };
+    };
 };
