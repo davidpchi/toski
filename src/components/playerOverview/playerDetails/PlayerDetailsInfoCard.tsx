@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-import { Flex, Heading, Text, Image, Button, Tooltip } from "@chakra-ui/react";
+import { Flex, Heading, Text, Image, Button, Tooltip, color } from "@chakra-ui/react";
 
 import { StatsSelectors } from "../../../redux/stats/statsSelectors";
 import { AppState } from "../../../redux/rootReducer";
@@ -75,9 +75,12 @@ export const PlayerDetailsInfoCard = React.memo(function PlayerDetailsInfoCard({
         : "";
     const favCommanderName = themeCommanderName ?? favoriteCommander?.name;
 
-    const colorsPlayedArray: number[] = [];
+    const colorsPlayedArray: { name: string; value: number }[] = [];
     for (const colorObj of MTG_COLORS) {
-        colorsPlayedArray.push(player.colorProfile.colors[colorObj.id]);
+        colorsPlayedArray.push({
+            name: colorObj.name,
+            value: player.colorProfile.colors[colorObj.id]
+        });
     }
 
     const moxfieldImage =

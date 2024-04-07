@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Checkbox, Flex, Heading } from "@chakra-ui/react";
+import { Checkbox, Flex, Heading, color } from "@chakra-ui/react";
 
 import { StatsSelectors } from "../../redux/stats/statsSelectors";
 import { useSelector } from "react-redux";
@@ -55,15 +55,21 @@ export const CommanderTrends = React.memo(function CommanderTrends() {
     }
 
     // Create colors played array
-    const colorsPlayedArray: number[] = [];
+    const colorsPlayedArray: { name: string; value: number }[] = [];
     for (const colorObj of MTG_COLORS) {
-        colorsPlayedArray.push(colorsPlayedDictionary[colorObj.id]);
+        colorsPlayedArray.push({
+            name: colorObj.name,
+            value: colorsPlayedDictionary[colorObj.id]
+        });
     }
 
     // Create color identities played array
-    const colorIdentitiesPlayedArray: number[] = [];
+    const colorIdentitiesPlayedArray: { name: string; value: number }[] = [];
     for (const colorObj of MTG_COLOR_IDENTITIES) {
-        colorIdentitiesPlayedArray.push(colorIdentitiesPlayedDictionary[colorObj.id]);
+        colorIdentitiesPlayedArray.push({
+            name: colorObj.name,
+            value: colorIdentitiesPlayedDictionary[colorObj.id]
+        });
     }
 
     console.log(colorIdentitiesPlayedArray);
