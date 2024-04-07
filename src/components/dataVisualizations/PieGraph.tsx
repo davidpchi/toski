@@ -1,7 +1,6 @@
 import { Chart as ChartJS, registerables, TooltipItem } from "chart.js";
 import React, { useMemo } from "react";
 import { Pie } from "react-chartjs-2";
-import { MTG_COLORS } from "../constants";
 
 ChartJS.register(...registerables);
 
@@ -13,7 +12,7 @@ export const PieGraph = React.memo(function PieGraph({
     backgroundColors
 }: {
     dataLabel: string;
-    data: number[] | string[];
+    data: { name: string; value: number }[] | { name: string; value: string }[];
     tooltipTitleCallback?: (tooltipItems: TooltipItem<"pie">[]) => string;
     tooltipLabelCallback?: (tooltipItems: TooltipItem<"pie">) => string;
     /**
@@ -23,11 +22,11 @@ export const PieGraph = React.memo(function PieGraph({
 }) {
     const pieGraphData = useMemo(() => {
         return {
-            labels: MTG_COLORS.map((color) => color.name),
+            labels: data.map((value) => value.name),
             datasets: [
                 {
                     label: dataLabel,
-                    data: data,
+                    data: data.map((item) => item.value),
                     fill: true,
                     backgroundColor: backgroundColors
                 }

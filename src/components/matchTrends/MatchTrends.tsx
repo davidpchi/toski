@@ -29,10 +29,11 @@ export const MatchTrends = React.memo(function MatchHistory() {
         acc[color.id] = 0;
         return acc;
     }, {});
+
     // Loop through all players and update dictionary
     for (const player of players) {
         for (const colorID in player.colorProfile) {
-            colorsPlayedDictionary[colorID] += player.colorProfile[colorID];
+            colorsPlayedDictionary[colorID] += player.colorProfile.colors[colorID];
         }
     }
     // Create colors played array

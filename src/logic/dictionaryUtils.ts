@@ -3,6 +3,7 @@ import { commanderList } from "../services/commanderList";
 import { Commander } from "../types/domain/Commander";
 import { Match } from "../types/domain/Match";
 import { Player } from "../types/domain/Player";
+import { IdentifyColorIdentity } from "./utils";
 
 /**
  * Given a collection of Matches, filter out games that don't have the desired number of players.
@@ -157,15 +158,30 @@ export function matchesToPlayersHelper(
                 // let's check to see if player is already in our dictionary.
                 const potentialPlayerObj: Player | undefined = playerDictionary[player.name];
                 if (potentialPlayerObj === undefined) {
-                    // initialize the color profile dictionary
-                    const colorProfile: { [color: string]: number } = {};
+                    // initialize the color profile dictionaries
+                    const colorProfileColors: { [color: string]: number } = {};
+                    const colorProfileIdentities: { [color: string]: number } = {};
+
                     // compute the players color profile
                     for (const commanderName of player.commanders) {
                         const potentialCommander = commanderList[commanderName];
                         const colors = potentialCommander ? potentialCommander.colorIdentity : [];
+
                         for (const color of colors) {
                             // add or increment this in our colorProfile dictionary
-                            colorProfile[color] = colorProfile[color] === undefined ? 1 : colorProfile[color] + 1;
+                            if (color) {
+                                colorProfileColors[color] =
+                                    colorProfileColors[color] === undefined ? 1 : colorProfileColors[color] + 1;
+                            }
+                        }
+
+                        //also determine the color identity save that too
+                        const colorIdentity = IdentifyColorIdentity(colors);
+                        if (colorIdentity !== undefined) {
+                            colorProfileIdentities[colorIdentity] =
+                                colorProfileIdentities[colorIdentity] === undefined
+                                    ? 1
+                                    : colorProfileIdentities[colorIdentity] + 1;
                         }
                     }
 
@@ -178,7 +194,10 @@ export function matchesToPlayersHelper(
                             player.rank === "1" && currentMatch.players.length === NUMBER_OF_PLAYERS_FOR_VALID_MATCH
                                 ? 1
                                 : 0,
-                        colorProfile: colorProfile
+                        colorProfile: {
+                            colors: colorProfileColors,
+                            colorIdentities: colorProfileIdentities
+                        }
                     };
                 } else {
                     // since this player exists, update the currentMatch count
@@ -194,12 +213,24 @@ export function matchesToPlayersHelper(
                     for (const commanderName of player.commanders) {
                         const potentialCommander = commanderList[commanderName];
                         const colors = potentialCommander ? potentialCommander.colorIdentity : [];
+
                         for (const color of colors) {
                             // add or increment this in our colorProfile dictionary
-                            playerDictionary[player.name].colorProfile[color] =
-                                playerDictionary[player.name].colorProfile[color] === undefined
+                            if (color) {
+                                playerDictionary[player.name].colorProfile.colors[color] =
+                                    playerDictionary[player.name].colorProfile.colors[color] === undefined
+                                        ? 1
+                                        : playerDictionary[player.name].colorProfile.colors[color] + 1;
+                            }
+                        }
+
+                        //also determine the color identity save that too
+                        const colorIdentity = IdentifyColorIdentity(colors);
+                        if (colorIdentity !== undefined) {
+                            playerDictionary[player.name].colorProfile.colorIdentities[colorIdentity] =
+                                playerDictionary[player.name].colorProfile.colorIdentities[colorIdentity] === undefined
                                     ? 1
-                                    : playerDictionary[player.name].colorProfile[color] + 1;
+                                    : playerDictionary[player.name].colorProfile.colorIdentities[colorIdentity] + 1;
                         }
                     }
                 }
