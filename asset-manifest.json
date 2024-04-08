@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/toski/static/css/main.1ebfa900.css",
-    "main.js": "/toski/static/js/main.3a85cb2d.js",
+    "main.js": "/toski/static/js/main.d2380471.js",
     "static/js/787.5938f32d.chunk.js": "/toski/static/js/787.5938f32d.chunk.js",
     "static/media/article10.png": "/toski/static/media/article10.e14cee4039bd0fc2f5e9.png",
     "static/media/bg_image.png": "/toski/static/media/bg_image.3364c1c933c5148bd491.png",
@@ -11,16 +11,17 @@
     "static/media/article9.png": "/toski/static/media/article9.8c1c25e6dc7fc16457e2.png",
     "static/media/article5.webp": "/toski/static/media/article5.1d081c330bf12172b25c.webp",
     "static/media/article9_0.png": "/toski/static/media/article9_0.d7973c370195be26cd9e.png",
+    "static/media/article11.webp": "/toski/static/media/article11.13cebe49c1f88579ca38.webp",
     "static/media/article7.webp": "/toski/static/media/article7.e5200ef81360b42f63d5.webp",
     "static/media/logo.png": "/toski/static/media/logo.550c921b28b93cfbb062.png",
     "static/media/article1.webp": "/toski/static/media/article1.5ea3b4b431e96614f6f9.webp",
     "index.html": "/toski/index.html",
     "main.1ebfa900.css.map": "/toski/static/css/main.1ebfa900.css.map",
-    "main.3a85cb2d.js.map": "/toski/static/js/main.3a85cb2d.js.map",
+    "main.d2380471.js.map": "/toski/static/js/main.d2380471.js.map",
     "787.5938f32d.chunk.js.map": "/toski/static/js/787.5938f32d.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.1ebfa900.css",
-    "static/js/main.3a85cb2d.js"
+    "static/js/main.d2380471.js"
   ]
 }
