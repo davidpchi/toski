@@ -1,19 +1,20 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
+
 import { Checkbox, Flex, Heading, color } from "@chakra-ui/react";
 
 import { StatsSelectors } from "../../redux/stats/statsSelectors";
-import { useSelector } from "react-redux";
 import { Loading } from "../Loading";
 import { Match } from "../../types/domain/Match";
 import { CommandersPlayedChart } from "./CommandersPlayedChart";
-import { Player } from "../../types/domain/Player";
 import { MTG_COLORS, MTG_COLOR_IDENTITIES } from "../constants";
 import { PieGraph } from "../dataVisualizations/PieGraph";
 import { AppState } from "../../redux/rootReducer";
+import { Commander } from "../../types/domain/Commander";
 
 export const CommanderTrends = React.memo(function CommanderTrends() {
     const matches = useSelector(StatsSelectors.getMatches);
-    const players: Player[] = useSelector((state: AppState) => StatsSelectors.getPlayersByDate(state));
+    const commanders: Commander[] = useSelector((state: AppState) => StatsSelectors.getCommandersByDate(state));
 
     const [showAdvancedColorChart, setShowAdvancedColorChart] = useState<boolean>(false);
 
@@ -21,7 +22,7 @@ export const CommanderTrends = React.memo(function CommanderTrends() {
         setShowAdvancedColorChart(!showAdvancedColorChart);
     };
 
-    if (matches === undefined || players === undefined) {
+    if (matches === undefined || commanders === undefined) {
         return <Loading text="" />;
     }
 
@@ -44,59 +45,67 @@ export const CommanderTrends = React.memo(function CommanderTrends() {
     );
 
     // Loop through all players and update dictionaries that count the number of colors and color identities
-    for (const player of players) {
-        for (const colorID in player.colorProfile.colors) {
-            colorsPlayedDictionary[colorID] += player.colorProfile.colors[colorID];
+    for (const commander of commanders) {
+        for (const colorID of commander.colorIdentity) {
+            colorsPlayedDictionary[colorID]++;
         }
 
-        for (const colorID in player.colorProfile.colorIdentities) {
-            colorIdentitiesPlayedDictionary[colorID] += player.colorProfile.colorIdentities[colorID];
-        }
+        colorIdentitiesPlayedDictionary[commander.colorIdentityName]++;
     }
 
     // Create colors played array
-    const colorsPlayedArray: { name: string; value: number }[] = [];
+    let colorsPlayedArray: { name: string; value: number; color: string }[] = [];
     for (const colorObj of MTG_COLORS) {
-        colorsPlayedArray.push({
-            name: colorObj.name,
-            value: colorsPlayedDictionary[colorObj.id]
-        });
+        const count = colorsPlayedDictionary[colorObj.id];
+
+        if (count > 0) {
+            colorsPlayedArray.push({
+                name: colorObj.name,
+                value: colorsPlayedDictionary[colorObj.id],
+                color: colorObj.rgb
+            });
+        }
     }
+
+    colorsPlayedArray = colorsPlayedArray.sort((a, b) => b.value - a.value);
 
     // Create color identities played array
-    const colorIdentitiesPlayedArray: { name: string; value: number }[] = [];
+    let colorIdentitiesPlayedArray: { name: string; value: number; color: string }[] = [];
     for (const colorObj of MTG_COLOR_IDENTITIES) {
-        colorIdentitiesPlayedArray.push({
-            name: colorObj.name,
-            value: colorIdentitiesPlayedDictionary[colorObj.id]
-        });
+        const count = colorIdentitiesPlayedDictionary[colorObj.id];
+        if (count > 0) {
+            colorIdentitiesPlayedArray.push({
+                name: colorObj.name,
+                value: colorIdentitiesPlayedDictionary[colorObj.id],
+                color: colorObj.rgb
+            });
+        }
     }
 
-    console.log(colorIdentitiesPlayedArray);
+    colorIdentitiesPlayedArray = colorIdentitiesPlayedArray.sort((a, b) => b.value - a.value);
 
     return (
         <Flex direction="column" justify="center" align="center">
             <Heading size="md">Commander Colors Played</Heading>
-            <Flex width={350} height={350}>
+            <Flex maxWidth={"750px"} justifyContent={"center"} alignItems={"center"}>
                 {!showAdvancedColorChart ? (
-                    <div style={{ flex: 1, display: "flex", width: "100%", height: "100%" }}>
-                        <PieGraph
-                            dataLabel={"Commanders played"}
-                            data={colorsPlayedArray}
-                            backgroundColors={MTG_COLORS.map((color) => color.rgb)}
-                        />
-                    </div>
+                    <PieGraph
+                        dataLabel={"Commanders played"}
+                        data={colorsPlayedArray}
+                        backgroundColors={colorsPlayedArray.map((item) => item.color)}
+                        showLegend={true}
+                        maxDimension={350}
+                    />
                 ) : (
-                    <div style={{ flex: 1, display: "flex", width: "200", height: "100%" }}>
-                        <PieGraph
-                            dataLabel={"Commanders played"}
-                            data={colorIdentitiesPlayedArray}
-                            backgroundColors={MTG_COLOR_IDENTITIES.map((color) => color.rgb)}
-                        />
-                    </div>
+                    <PieGraph
+                        dataLabel={"Commanders played"}
+                        data={colorIdentitiesPlayedArray}
+                        backgroundColors={colorIdentitiesPlayedArray.map((item) => item.color)}
+                        showLegend={true}
+                        maxDimension={350}
+                    />
                 )}
             </Flex>
-
             <Checkbox isChecked={showAdvancedColorChart} onChange={toggleAdvancedColorChart} marginTop={"16px"}>
                 {"Show Advanced Color Chart"}
             </Checkbox>

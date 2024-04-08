@@ -1,7 +1,14 @@
 export type Commander = {
     id: string;
     name: string;
+    /**
+     * The individual colors that make up this commanders color identity.
+     */
     colorIdentity: string[];
+    /**
+     * The friendly name of the color identity.
+     */
+    colorIdentityName: string;
     /**
      * A collection of match IDs of matches that the commander is played in.
      */

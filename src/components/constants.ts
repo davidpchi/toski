@@ -27,7 +27,6 @@ export const MTG_COLOR_IDENTITIES: { name: string; id: string; rgb: string }[] =
     { name: "Izzet", id: "Izzet", rgb: "#c8c9ab" },
     { name: "Simic", id: "Simic", rgb: "#c8c9ab" },
     { name: "Rakdos", id: "Rakdos", rgb: "#c8c9ab" },
-    { name: "Simic", id: "Simic", rgb: "#c8c9ab" },
     { name: "Golgari", id: "Golgari", rgb: "#c8c9ab" },
     { name: "Gruul", id: "Gruul", rgb: "#c8c9ab" },
     { name: "Esper", id: "Esper", rgb: "#c8c9ab" },
