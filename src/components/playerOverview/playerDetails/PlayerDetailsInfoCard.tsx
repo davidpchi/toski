@@ -173,15 +173,12 @@ export const PlayerDetailsInfoCard = React.memo(function PlayerDetailsInfoCard({
                     ) : null}
                 </Flex>
             </Flex>
-            <Flex maxWidth={175} maxHeight={175}>
-                <div style={{ flex: 1, display: "flex", width: "100%", height: "100%" }}>
-                    <PieGraph
-                        dataLabel={"Commanders played"}
-                        data={colorsPlayedArray}
-                        backgroundColors={MTG_COLORS.map((color) => color.rgb)}
-                    />
-                </div>
-            </Flex>
+            <PieGraph
+                maxDimension={175}
+                dataLabel={"Commanders played"}
+                data={colorsPlayedArray}
+                backgroundColors={MTG_COLORS.map((color) => color.rgb)}
+            />
         </Flex>
     );
 });

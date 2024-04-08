@@ -3,7 +3,7 @@ import { commanderList } from "../services/commanderList";
 import { Commander } from "../types/domain/Commander";
 import { Match } from "../types/domain/Match";
 import { Player } from "../types/domain/Player";
-import { IdentifyColorIdentity } from "./utils";
+import { getColorIdentity } from "./utils";
 
 /**
  * Given a collection of Matches, filter out games that don't have the desired number of players.
@@ -102,6 +102,7 @@ export function matchesToCommanderHelper(
                         id: commander.id,
                         name: currentCommanderName,
                         colorIdentity: commander.colorIdentity,
+                        colorIdentityName: getColorIdentity(commander.colorIdentity) ?? "",
                         matches: [currentMatch.id],
                         validMatchesCount: currentMatch.players.length === NUMBER_OF_PLAYERS_FOR_VALID_MATCH ? 1 : 0,
                         wins:
@@ -176,7 +177,7 @@ export function matchesToPlayersHelper(
                         }
 
                         //also determine the color identity save that too
-                        const colorIdentity = IdentifyColorIdentity(colors);
+                        const colorIdentity = getColorIdentity(colors);
                         if (colorIdentity !== undefined) {
                             colorProfileIdentities[colorIdentity] =
                                 colorProfileIdentities[colorIdentity] === undefined
@@ -225,7 +226,7 @@ export function matchesToPlayersHelper(
                         }
 
                         //also determine the color identity save that too
-                        const colorIdentity = IdentifyColorIdentity(colors);
+                        const colorIdentity = getColorIdentity(colors);
                         if (colorIdentity !== undefined) {
                             playerDictionary[player.name].colorProfile.colorIdentities[colorIdentity] =
                                 playerDictionary[player.name].colorProfile.colorIdentities[colorIdentity] === undefined

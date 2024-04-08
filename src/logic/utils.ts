@@ -108,7 +108,7 @@ export function isNewlyQualifiedPlayer(player: Player) {
 /**
  * Given a collection of colors, provides the color identity name.
  */
-export function IdentifyColorIdentity(v2: string[]) {
+export function getColorIdentity(v2: string[]) {
     // will return undefined if all else fails
     let identity = undefined;
     if (v2.length === 1) {

@@ -35,7 +35,7 @@ interface HeaderProps extends FlexProps {
     onProfileIconClick: () => void;
 }
 
-const useHeaderTitle = () => {
+export const useHeaderTitle = () => {
     const location = useLocation();
 
     return useMemo(() => {
@@ -130,7 +130,7 @@ export const Header = ({ onProfileIconClick, ...rest }: HeaderProps) => {
     return (
         <Flex
             transition="0.5s ease"
-            ml={{ base: 0, md: 60 }}
+            marginLeft={{ base: 0, md: "64px" }}
             px={{ base: 4, md: 4 }}
             height={FF_IS_LOGIN_ENABLED ? undefined : { base: 20, md: isHome ? 0 : 20 }}
             align="center"

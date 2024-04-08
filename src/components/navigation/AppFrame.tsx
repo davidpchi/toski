@@ -1,17 +1,55 @@
 import { ReactNode } from "react";
 
-import { Box, Drawer, DrawerContent, Flex, useDisclosure } from "@chakra-ui/react";
+import { Box, Drawer, DrawerContent, Flex, IconButton, useDisclosure } from "@chakra-ui/react";
 
 import { Header } from "./Header";
 import { Sidebar } from "./Sidebar";
 import { FeedbackButton } from "../FeedbackButton";
+import { FiMenu } from "react-icons/fi";
+import { SidebarNavItem } from "./SidebarNavItem";
+import { NavigationItems } from "./NavigationItems";
 
 export default function AppFrame({ children }: { children: ReactNode }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
+
+    const linkItems = [...NavigationItems];
+
     return (
         <>
+            <Flex
+                alignItems={"flex-start"}
+                display={{ base: "none", md: "block" }}
+                style={{
+                    position: "fixed",
+                    left: "0px",
+                    top: "0px",
+                    height: "100%"
+                }}
+                width={"64px"}
+                marginBottom={"16px"}
+                flexDirection={"column"}
+                boxShadow={"0px 12px 18px 2px rgba(0,0,0,0.3)"}
+            >
+                <IconButton
+                    onClick={onOpen}
+                    variant="ghost"
+                    aria-label="open menu"
+                    icon={<FiMenu />}
+                    marginBottom={"16px"}
+                />
+                {linkItems.map((link) => (
+                    <Box marginBottom={"16px"}>
+                        <SidebarNavItem
+                            key={link.name}
+                            icon={link.icon}
+                            route={link.route}
+                            onClose={onClose}
+                            label={""}
+                        />
+                    </Box>
+                ))}
+            </Flex>
             <Box minH="100vh">
-                <Sidebar onClose={() => onClose} display={{ base: "none", md: "block" }} />
                 <Drawer
                     autoFocus={false}
                     isOpen={isOpen}
@@ -19,7 +57,7 @@ export default function AppFrame({ children }: { children: ReactNode }) {
                     onClose={onClose}
                     returnFocusOnClose={false}
                     onOverlayClick={onClose}
-                    size="full"
+                    size="xs"
                 >
                     <DrawerContent>
                         <Sidebar onClose={onClose} />
@@ -28,7 +66,7 @@ export default function AppFrame({ children }: { children: ReactNode }) {
                 <Box>
                     <Header onProfileIconClick={onOpen} />
                 </Box>
-                <Box ml={{ base: 0, md: 60 }} p="8">
+                <Box marginLeft={{ base: 0, md: 20 }} p="8">
                     {children}
                     <Flex
                         height={"64px"}
