@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-import { Box, Drawer, DrawerContent, Flex, IconButton, useDisclosure } from "@chakra-ui/react";
+import { Box, Drawer, DrawerContent, Flex, IconButton, Tooltip, useDisclosure } from "@chakra-ui/react";
 
 import { Header } from "./Header";
 import { Sidebar } from "./Sidebar";
@@ -8,6 +8,7 @@ import { FeedbackButton } from "../FeedbackButton";
 import { FiMenu } from "react-icons/fi";
 import { SidebarNavItem } from "./SidebarNavItem";
 import { NavigationItems } from "./NavigationItems";
+import { primaryColor } from "../../themes/acorn";
 
 export default function AppFrame({ children }: { children: ReactNode }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -38,15 +39,22 @@ export default function AppFrame({ children }: { children: ReactNode }) {
                     marginBottom={"16px"}
                 />
                 {linkItems.map((link) => (
-                    <Box marginBottom={"16px"}>
-                        <SidebarNavItem
-                            key={link.name}
-                            icon={link.icon}
-                            route={link.route}
-                            onClose={onClose}
-                            label={""}
-                        />
-                    </Box>
+                    <Tooltip
+                        label={<p style={{ textAlign: "center" }}>{link.name}</p>}
+                        placement={"right"}
+                        background={primaryColor["500"]}
+                        borderRadius={"8px"}
+                    >
+                        <Box marginBottom={"16px"}>
+                            <SidebarNavItem
+                                key={link.name}
+                                icon={link.icon}
+                                route={link.route}
+                                onClose={onClose}
+                                label={""}
+                            />
+                        </Box>
+                    </Tooltip>
                 ))}
             </Flex>
             <Box minH="100vh">
