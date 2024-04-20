@@ -76,6 +76,22 @@ export const MatchDetails = React.memo(function MatchDetails() {
                         background={"white"}
                     >{`Number of turns: ${match.numberOfTurns}`}</Text>
                 ) : null}
+                {match.firstKnockOutTurn ? (
+                    <Text
+                        alignSelf={"stretch"}
+                        borderWidth={1}
+                        padding={"8px"}
+                        background={"white"}
+                    >{`First KO Turn: ${match.firstKnockOutTurn}`}</Text>
+                ) : null}
+                {match.timeLength ? (
+                    <Text
+                        alignSelf={"stretch"}
+                        borderWidth={1}
+                        padding={"8px"}
+                        background={"white"}
+                    >{`Game Length: ${match.timeLength} minutes`}</Text>
+                ) : null}
             </Flex>
         </Flex>
     );

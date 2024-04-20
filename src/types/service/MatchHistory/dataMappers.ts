@@ -36,6 +36,8 @@ export function sheetRowToMatch(cell: SheetRow, id: string): Match {
     const player4 = matchPlayerHelper(cell, 15, 16, 17, 18);
 
     const numberOfTurns = cell.c[19];
+    const firstKOTurn = cell.c[20];
+    const gameLength = cell.c[21];
 
     // Data that is manually entered will have winnerName populated.
     // However, if we swap to form based automated data entry, this field will not
@@ -81,7 +83,9 @@ export function sheetRowToMatch(cell: SheetRow, id: string): Match {
         id,
         numberOfTurns: numberOfTurns ? Number(numberOfTurns.v.toString()) : undefined,
         players: players,
-        winner: winnerName
+        winner: winnerName,
+        timeLength: gameLength ? Number(gameLength.v.toString()) : undefined,
+        firstKnockOutTurn: firstKOTurn ? Number(firstKOTurn.v.toString()) : undefined
     };
 }
 
