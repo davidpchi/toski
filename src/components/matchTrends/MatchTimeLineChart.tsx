@@ -28,7 +28,7 @@ export const MatchTimeLineChart = React.memo(function MatchTimeLineChart({ match
     const matchesWithTime = matches.filter((match: Match) => match.timeLength);
 
     const matchesWithLengthsData = matchesWithTime.map((match: Match) => {
-        return { x: match.id, y: Number(match.numberOfTurns) };
+        return { x: match.id, y: Number(match.timeLength) };
     });
 
     const tooltipTitleCallback = (item: TooltipItem<"line">[]) => {
@@ -50,7 +50,6 @@ export const MatchTimeLineChart = React.memo(function MatchTimeLineChart({ match
                 allowTogglableDataPoints={true}
                 tooltipTitleCallback={tooltipTitleCallback}
                 tooltipLabelCallback={tooltipLabelCallback}
-                maxY={20}
                 maxX={Number(matchesWithTime[matchesWithTime.length - 1].id)}
             />
         </>
