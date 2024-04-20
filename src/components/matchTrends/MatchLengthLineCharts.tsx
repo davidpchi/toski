@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Heading, Box, Flex, Switch } from "@chakra-ui/react";
+import { Heading, Flex, Switch } from "@chakra-ui/react";
 
 import { Match } from "../../types/domain/Match";
 import { primaryColor } from "../../themes/acorn";
@@ -7,15 +7,15 @@ import { MatchTurnsLineChart } from "./MatchTurnsLineChart";
 import { MatchTimeLineChart } from "./MatchTimeLineChart";
 
 export const MatchLengthLineCharts = React.memo(function MatchLengthLineCharts({ matches }: { matches: Match[] }) {
-    const [showTurns, setShowTurns] = useState<boolean>(false);
+    const [showTurns, setShowTurns] = useState<boolean>(true);
 
     return (
         <>
             <Heading size="md" paddingBottom={"0px"}>
-                Match Lenghts Over Time
+                Match Lengths Over Time
             </Heading>
             <Flex alignSelf={"stretch"} justifyContent={"center"} alignItems={"center"} flexDirection={"row"}>
-                <Heading size="sm" color={showTurns ? undefined : primaryColor["500"]}>
+                <Heading size="sm" color={showTurns ? primaryColor["500"] : undefined}>
                     Match Lengths Over Time (Turns)
                 </Heading>
                 <Switch
@@ -31,7 +31,7 @@ export const MatchLengthLineCharts = React.memo(function MatchLengthLineCharts({
                         }
                     }}
                 />
-                <Heading size="sm" color={showTurns ? primaryColor["500"] : undefined}>
+                <Heading size="sm" color={!showTurns ? primaryColor["500"] : undefined}>
                     Match Lengths Over Time (Minutes)
                 </Heading>
             </Flex>
