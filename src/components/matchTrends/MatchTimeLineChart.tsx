@@ -6,16 +6,16 @@ import { Match } from "../../types/domain/Match";
 import { LineGraph } from "../dataVisualizations/LineGraph";
 
 const getAverageMatchLength = (matches: Match[]) => {
-    // filter out all matches that do not have match length
-    const filteredMatches = matches.filter((match) => match.numberOfTurns !== undefined);
+    // filter out all matches that do not have time length
+    const filteredMatches = matches.filter((match) => match.timeLength !== undefined);
 
     let avg = 0;
     let count = 1;
     if (filteredMatches.length > 0) {
         for (let i = 0; i < filteredMatches.length; i++) {
             // this should never be 0
-            const numberOfTurns = filteredMatches[i].numberOfTurns ?? 0;
-            avg = avg + (numberOfTurns - avg) / count;
+            const matchLength = filteredMatches[i].timeLength ?? 0;
+            avg = avg + (matchLength - avg) / count;
             count++;
         }
     }
@@ -24,35 +24,34 @@ const getAverageMatchLength = (matches: Match[]) => {
     return avg.toFixed(2);
 };
 
-export const MatchLengthLineChart = React.memo(function MatchLengthLineChart({ matches }: { matches: Match[] }) {
-    const matchesWithLengths = matches.filter((match: Match) => match.numberOfTurns);
+export const MatchTimeLineChart = React.memo(function MatchTimeLineChart({ matches }: { matches: Match[] }) {
+    const matchesWithTime = matches.filter((match: Match) => match.timeLength);
 
-    const matchesWithLengthsData = matchesWithLengths.map((match: Match) => {
+    const matchesWithLengthsData = matchesWithTime.map((match: Match) => {
         return { x: match.id, y: Number(match.numberOfTurns) };
     });
 
     const tooltipTitleCallback = (item: TooltipItem<"line">[]) => {
-        return `Match Id: ${matchesWithLengths[item[0].dataIndex].id}`;
+        return `Match Id: ${matchesWithTime[item[0].dataIndex].id}`;
     };
     const tooltipLabelCallback = (item: TooltipItem<"line">) => {
-        return `Number of Turns: ${item.formattedValue}`;
+        return `Match Length in Minutes: ${item.formattedValue}`;
     };
 
     const averageMatchLength = getAverageMatchLength(matches);
 
     return (
         <>
-            <Heading size="md">Match Lengths Over Time</Heading>
-            <Box>{`Average Match Length: ${averageMatchLength}`}</Box>
+            <Box>{`Average Match Length in Minutes: ${averageMatchLength} minutes`}</Box>
             <LineGraph
-                dataLabel={"Match Lengths"}
+                dataLabel={"Match Lengths in Minutes"}
                 data={matchesWithLengthsData}
                 enableTrendline={true}
                 allowTogglableDataPoints={true}
                 tooltipTitleCallback={tooltipTitleCallback}
                 tooltipLabelCallback={tooltipLabelCallback}
                 maxY={20}
-                maxX={Number(matchesWithLengths[matchesWithLengths.length - 1].id)}
+                maxX={Number(matchesWithTime[matchesWithTime.length - 1].id)}
             />
         </>
     );
