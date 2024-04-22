@@ -66,7 +66,9 @@ export const submitMatch = async (
     player3?: MatchSubmissionPlayer,
     player4?: MatchSubmissionPlayer,
     turnCount?: number,
-    extraNotes?: string
+    extraNotes?: string,
+    firstKOTurn?: number,
+    timeLength?: number
 ) => {
     const formData: { [fieldName: string]: string } = {};
     formData["1178471159"] = date.toISOString().split("T")[0];
@@ -102,6 +104,10 @@ export const submitMatch = async (
     formData["676929187"] = turnCount !== undefined ? turnCount.toString() : "";
 
     formData["2043626966"] = extraNotes !== undefined ? extraNotes : "";
+
+    formData["1755577221"] = firstKOTurn !== undefined ? firstKOTurn.toString() : "";
+
+    formData["861944794"] = timeLength !== undefined ? timeLength.toString() : "";
 
     // This is all super hacky to begin so bear with me here...
     // We are able to directly submit to the google form via a URL and POST. No auth needed since this a public form.

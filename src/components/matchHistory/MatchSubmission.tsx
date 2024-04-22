@@ -247,6 +247,10 @@ export const MatchSubmission = React.memo(function MatchSubmission() {
 
     const [turnCount, setTurnCount] = useState<number>(0);
 
+    const [lengthInMins, setLengthInMins] = useState<number>(0);
+
+    const [firstKOTurn, setFirstKOTurn] = useState<number>(0);
+
     const [notes, setNotes] = useState<string>("");
 
     const [playerCount, setPlayerCount] = useState<number>(4);
@@ -257,6 +261,14 @@ export const MatchSubmission = React.memo(function MatchSubmission() {
 
     const onUpdateNotes = useCallback((event: any) => {
         setNotes(event.target.value);
+    }, []);
+
+    const onUpdateFirstKOTurn = useCallback((event: any) => {
+        setFirstKOTurn(Number(event.target.value));
+    }, []);
+
+    const onUpdateLengthInMins = useCallback((event: any) => {
+        setLengthInMins(Number(event.target.value));
     }, []);
 
     const onClose = useCallback(() => {
@@ -305,7 +317,9 @@ export const MatchSubmission = React.memo(function MatchSubmission() {
             player3,
             player4,
             turnCount,
-            notes
+            notes,
+            firstKOTurn,
+            lengthInMins
         );
 
         if (result) {
@@ -331,6 +345,8 @@ export const MatchSubmission = React.memo(function MatchSubmission() {
         date,
         turnCount,
         notes,
+        firstKOTurn,
+        lengthInMins,
         navigate
     ]);
 
@@ -413,6 +429,22 @@ export const MatchSubmission = React.memo(function MatchSubmission() {
             <Input
                 value={turnCount}
                 onChange={onUpdateTurnCount}
+                marginBottom={"16px"}
+                width={"100%"}
+                maxWidth={"500px"}
+            ></Input>
+            <Text>Game Length in Minutes:</Text>
+            <Input
+                value={lengthInMins}
+                onChange={onUpdateLengthInMins}
+                marginBottom={"16px"}
+                width={"100%"}
+                maxWidth={"500px"}
+            ></Input>
+            <Text>Turn of First KO:</Text>
+            <Input
+                value={firstKOTurn}
+                onChange={onUpdateFirstKOTurn}
                 marginBottom={"16px"}
                 width={"100%"}
                 maxWidth={"500px"}
