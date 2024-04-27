@@ -37,12 +37,12 @@ export async function sendDataToGoogleSheets({
                 withCredentials: false
             })
             .then((res) => {
-                console.log(res);
+                // console.log(res);
                 return true;
             });
     } catch (e) {
         // just assume the data entry was successful
-        console.log(e);
+        // console.log(e);
         return true;
     }
 
