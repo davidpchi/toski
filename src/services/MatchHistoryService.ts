@@ -80,34 +80,36 @@ export const submitMatch = async (
         formData["147625596"] = player1.rank.toString();
     }
 
-    if (player2) {
-        formData["840407098"] = player2.name;
-        formData["493870522"] = player2.commander;
-        formData["898724110"] = player2.turnOrder.toString();
-        formData["531480374"] = player2.rank.toString();
-    }
+    console.log(formData);
 
-    if (player3) {
-        formData["2099339267"] = player3.name;
-        formData["1961193649"] = player3.commander;
-        formData["87571757"] = player3.turnOrder.toString();
-        formData["807216034"] = player3.rank.toString();
-    }
+    // if (player2) {
+    //     formData["840407098"] = player2.name;
+    //     formData["493870522"] = player2.commander;
+    //     formData["898724110"] = player2.turnOrder.toString();
+    //     formData["531480374"] = player2.rank.toString();
+    // }
 
-    if (player4) {
-        formData["575868019"] = player4.name;
-        formData["270994715"] = player4.commander;
-        formData["153957972"] = player4.turnOrder.toString();
-        formData["652184592"] = player4.rank.toString();
-    }
+    // if (player3) {
+    //     formData["2099339267"] = player3.name;
+    //     formData["1961193649"] = player3.commander;
+    //     formData["87571757"] = player3.turnOrder.toString();
+    //     formData["807216034"] = player3.rank.toString();
+    // }
 
-    formData["676929187"] = turnCount !== undefined ? turnCount.toString() : "";
+    // if (player4) {
+    //     formData["575868019"] = player4.name;
+    //     formData["270994715"] = player4.commander;
+    //     formData["153957972"] = player4.turnOrder.toString();
+    //     formData["652184592"] = player4.rank.toString();
+    // }
 
-    formData["2043626966"] = extraNotes !== undefined ? extraNotes : "";
+    // formData["676929187"] = turnCount !== undefined ? turnCount.toString() : "";
 
-    formData["1755577221"] = firstKOTurn !== undefined ? firstKOTurn.toString() : "";
+    // formData["2043626966"] = extraNotes !== undefined ? extraNotes : "";
 
-    formData["861944794"] = timeLength !== undefined ? timeLength.toString() : "";
+    // formData["1755577221"] = firstKOTurn !== undefined ? firstKOTurn.toString() : "";
+
+    // formData["861944794"] = timeLength !== undefined ? timeLength.toString() : "";
 
     // This is all super hacky to begin so bear with me here...
     // We are able to directly submit to the google form via a URL and POST. No auth needed since this a public form.

@@ -59,7 +59,7 @@ export const CommanderMatchupsTable = React.memo(function CommanderMatchupsTable
                             : { ...potentialCommander, matchCount: potentialCommander.matchCount + 1 };
 
                     // check to see if the winning commander(s) of the match is commander we are getting matchups for
-                    if (winningCommanders.indexOf(commander) > -1) {
+                    if (winningCommanders.indexOf(commanderName) > -1) {
                         commanderMatchup.winCount += 1;
                     }
 
