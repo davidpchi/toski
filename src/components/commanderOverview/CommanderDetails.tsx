@@ -99,7 +99,7 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
         return <Loading text="" />;
     }
 
-    let matchesArray: Match[] = matches.sort((a, b) => b.date.getTime() - a.date.getTime());
+    let matchesArray: Match[] = matches.sort((a, b) => Number(b.id) - Number(a.id));
     if (searchInput.length > 0 && matches) {
         matchesArray = matches.filter((match: Match) => {
             for (let player of match.players) {
