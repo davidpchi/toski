@@ -15,7 +15,7 @@ export function filterMatchesByPlayerCount(matches: Match[], playerCount: number
     const result = [];
 
     for (const match of matches) {
-        if (match.players.length !== playerCount) {
+        if (match.players.length < playerCount) {
             continue;
         }
 
