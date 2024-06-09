@@ -6,7 +6,7 @@ import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import { Match } from "../../../types/domain/Match";
 import { commanderList } from "../../../services/commanderList";
 import { primaryColor } from "../../../themes/acorn";
-import { isMatchMultiKo } from "../../../logic/utils";
+import { MatchTag, getMatchTags } from "../../../logic/matchTags";
 
 const columnHelper = createColumnHelper<Match>();
 
@@ -88,7 +88,10 @@ export const matchHistoryColumns: ColumnDef<Match, any>[] = [
         id: "notes",
         cell: (info) => {
             const match = info.row.original;
-            let isMultiKo = isMatchMultiKo(match);
+            const matchTags = getMatchTags(match);
+
+            // TODO: we may want to move this rendering logic for each match tag into the match tag helper
+            const isMultiKo = matchTags.indexOf(MatchTag.MultiKo) > -1;
 
             return (
                 <Flex alignItems={"center"} justifyContent={"center"} flexDirection={"column"}>

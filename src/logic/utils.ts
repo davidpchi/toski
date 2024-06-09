@@ -220,19 +220,3 @@ export function getColorIdentity(v2: string[]) {
     }
     return identity;
 }
-
-/**
- * Given a match, determines if multiple players were eliminated at the same time.
- */
-export function isMatchMultiKo(match: Match) {
-    const matchRanks: { [id: string]: string } = {};
-    for (const player of match.players) {
-        if (matchRanks[player.rank] === undefined) {
-            matchRanks[player.rank] = player.rank;
-        } else if (player.name !== match.winner) {
-            return true;
-        }
-    }
-
-    return false;
-}
