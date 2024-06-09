@@ -5,6 +5,7 @@ import {
     PLAYER_MINIMUM_GAMES_REQUIRED,
     PLAYER_MINIMUM_WINS_REQUIRED
 } from "../components/constants";
+import { Match } from "../types/domain/Match";
 import { Player } from "../types/domain/Player";
 
 /**
@@ -218,4 +219,20 @@ export function getColorIdentity(v2: string[]) {
         identity = "Five-color";
     }
     return identity;
+}
+
+/**
+ * Given a match, determines if multiple players were eliminated at the same time.
+ */
+export function isMatchMultiKo(match: Match) {
+    const matchRanks: { [id: string]: string } = {};
+    for (const player of match.players) {
+        if (matchRanks[player.rank] === undefined) {
+            matchRanks[player.rank] = player.rank;
+        } else if (player.name !== match.winner) {
+            return true;
+        }
+    }
+
+    return false;
 }
