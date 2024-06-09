@@ -1,7 +1,12 @@
-import { Flex, Image, Text } from "@chakra-ui/react";
+import { FiLoader } from "react-icons/fi";
+
+import { Flex, Image, Tag, TagLabel, TagRightIcon, Text } from "@chakra-ui/react";
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
+
 import { Match } from "../../../types/domain/Match";
 import { commanderList } from "../../../services/commanderList";
+import { primaryColor } from "../../../themes/acorn";
+import { isMatchMultiKo } from "../../../logic/utils";
 
 const columnHelper = createColumnHelper<Match>();
 
@@ -36,7 +41,16 @@ export const matchHistoryColumns: ColumnDef<Match, any>[] = [
                     value.commanders[2] !== undefined ? `with companion ${value.commanders[2]}` : undefined;
                 return (
                     <Flex key={index} flexDirection={"column"}>
-                        <Text style={{wordWrap:"break-word", whiteSpace: "normal", paddingLeft: "16px", textIndent: "-16px"}}>{value.name + " playing " + commanderText}</Text>
+                        <Text
+                            style={{
+                                wordWrap: "break-word",
+                                whiteSpace: "normal",
+                                paddingLeft: "16px",
+                                textIndent: "-16px"
+                            }}
+                        >
+                            {value.name + " playing " + commanderText}
+                        </Text>
                         {companionText !== undefined ? <Text paddingLeft={2}>{companionText}</Text> : null}
                     </Flex>
                 );
@@ -61,10 +75,20 @@ export const matchHistoryColumns: ColumnDef<Match, any>[] = [
                 ? commanderList[commander].image.replace("normal", "art_crop")
                 : "";
 
+            let isMultiKo = isMatchMultiKo(match);
+
             return (
-                <Flex alignContent={"center"} justifyContent={"center"} flexDirection={"column"}>
+                <Flex alignItems={"center"} justifyContent={"center"} flexDirection={"column"}>
                     <Image src={commanderImage} width={20} borderRadius={8} />
                     <span>{info.getValue()}</span>
+                    <div style={{ flex: 0 }}>
+                        {isMultiKo ? (
+                            <Tag size={"md"} variant="subtle" bgColor={primaryColor["400"]}>
+                                <TagLabel>Multi-Ko</TagLabel>
+                                <TagRightIcon as={FiLoader} />
+                            </Tag>
+                        ) : null}
+                    </div>
                 </Flex>
             );
         },
