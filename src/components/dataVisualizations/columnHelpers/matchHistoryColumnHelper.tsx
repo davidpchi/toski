@@ -14,7 +14,7 @@ export const matchHistoryColumns: ColumnDef<Match, any>[] = [
     columnHelper.accessor((row) => row.id, {
         id: "id",
         cell: (info) => info.getValue(),
-        header: () => <span>Game Id</span>
+        header: () => <span>Id</span>
     }),
     columnHelper.accessor((row) => row.date, {
         id: "date",
@@ -75,12 +75,23 @@ export const matchHistoryColumns: ColumnDef<Match, any>[] = [
                 ? commanderList[commander].image.replace("normal", "art_crop")
                 : "";
 
-            let isMultiKo = isMatchMultiKo(match);
-
             return (
                 <Flex alignItems={"center"} justifyContent={"center"} flexDirection={"column"}>
                     <Image src={commanderImage} width={20} borderRadius={8} />
                     <span>{info.getValue()}</span>
+                </Flex>
+            );
+        },
+        header: () => <span>Winner</span>
+    }),
+    columnHelper.accessor((row) => row.numberOfTurns, {
+        id: "notes",
+        cell: (info) => {
+            const match = info.row.original;
+            let isMultiKo = isMatchMultiKo(match);
+
+            return (
+                <Flex alignItems={"center"} justifyContent={"center"} flexDirection={"column"}>
                     <div style={{ flex: 0 }}>
                         {isMultiKo ? (
                             <Tag size={"md"} variant="subtle" bgColor={primaryColor["400"]}>
@@ -92,13 +103,13 @@ export const matchHistoryColumns: ColumnDef<Match, any>[] = [
                 </Flex>
             );
         },
-        header: () => <span>Winner</span>
+        header: () => <span>Notes</span>
     }),
     columnHelper.accessor((row) => row.numberOfTurns, {
         id: "numberOfTurns",
         cell: (info) => {
             return <div>{info.row.original.numberOfTurns}</div>;
         },
-        header: () => <span>Turn Count</span>
+        header: () => <span>Turns</span>
     })
 ];
