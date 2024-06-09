@@ -75,20 +75,10 @@ export const matchHistoryColumns: ColumnDef<Match, any>[] = [
                 ? commanderList[commander].image.replace("normal", "art_crop")
                 : "";
 
-            let isMultiKo = isMatchMultiKo(match);
-
             return (
                 <Flex alignItems={"center"} justifyContent={"center"} flexDirection={"column"}>
                     <Image src={commanderImage} width={20} borderRadius={8} />
                     <span>{info.getValue()}</span>
-                    <div style={{ flex: 0 }}>
-                        {isMultiKo ? (
-                            <Tag size={"md"} variant="subtle" bgColor={primaryColor["400"]}>
-                                <TagLabel>Multi-Ko</TagLabel>
-                                <TagRightIcon as={FiLoader} />
-                            </Tag>
-                        ) : null}
-                    </div>
                 </Flex>
             );
         },
