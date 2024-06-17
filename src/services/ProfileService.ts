@@ -10,7 +10,7 @@ import { profilesDataMapper } from "../types/service/ProfileService/dataMappers"
 import { ProfilesAction } from "../redux/profiles/profilesActions";
 import { MoxfieldService } from "./MoxfieldService";
 
-const profileMap: { [name: string]: string } = {
+export const profileMap: { [name: string]: string } = {
     Doomgeek: "230904033915830272",
     "Aetherium Slinky": "226715073031176193",
     LumenAdi: "224315766042787840",
