@@ -1,6 +1,6 @@
 import React from "react";
 import { useLoaderData } from "react-router-dom";
-import { Flex, Heading, Text } from "@chakra-ui/react";
+import { Flex, Heading, Tag, TagLabel, TagRightIcon, Text } from "@chakra-ui/react";
 
 import { AppState } from "../../redux/rootReducer";
 import { useSelector } from "react-redux";
@@ -11,6 +11,9 @@ import { MatchDisplayPlayer } from "./types/MatchDisplayPlayer";
 import { MatchPlayerCard } from "./MatchPlayerCard";
 import { rankDictionary } from "../constants";
 import { primaryColor } from "../../themes/acorn";
+import { MatchTag, getMatchTags } from "../../logic/matchTags";
+import { FiLoader } from "react-icons/fi";
+import { MatchTagsGallery } from "../matchTags/MatchTagsGallery";
 
 export async function loader(data: { params: any }) {
     return data.params.matchId;
@@ -43,6 +46,20 @@ export const MatchDetails = React.memo(function MatchDetails() {
 
         return <MatchPlayerCard player={matchPlayer} key={"MatchPlayerCard_" + player.name} />;
     });
+
+    const matchTags = getMatchTags(match);
+    const tags = (
+        <Flex
+            alignItems={"center"}
+            justifyContent={"center"}
+            flexDirection={"column"}
+            background={"white"}
+            width={"100%"}
+            borderWidth={1}
+        >
+            <MatchTagsGallery match={match} />
+        </Flex>
+    );
 
     return (
         <Flex direction="column" justify="center" align="center">
@@ -92,6 +109,7 @@ export const MatchDetails = React.memo(function MatchDetails() {
                         background={"white"}
                     >{`Game Length: ${match.timeLength} minutes`}</Text>
                 ) : null}
+                {matchTags.length > 0 ? tags : null}
             </Flex>
         </Flex>
     );

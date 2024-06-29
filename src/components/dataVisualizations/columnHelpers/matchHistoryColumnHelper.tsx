@@ -6,7 +6,7 @@ import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import { Match } from "../../../types/domain/Match";
 import { commanderList } from "../../../services/commanderList";
 import { primaryColor } from "../../../themes/acorn";
-import { isMatchMultiKo } from "../../../logic/utils";
+import { MatchTag, getMatchTags } from "../../../logic/matchTags";
 
 const columnHelper = createColumnHelper<Match>();
 
@@ -14,7 +14,7 @@ export const matchHistoryColumns: ColumnDef<Match, any>[] = [
     columnHelper.accessor((row) => row.id, {
         id: "id",
         cell: (info) => info.getValue(),
-        header: () => <span>Game Id</span>
+        header: () => <span>Id</span>
     }),
     columnHelper.accessor((row) => row.date, {
         id: "date",
@@ -75,20 +75,10 @@ export const matchHistoryColumns: ColumnDef<Match, any>[] = [
                 ? commanderList[commander].image.replace("normal", "art_crop")
                 : "";
 
-            let isMultiKo = isMatchMultiKo(match);
-
             return (
-                <Flex alignItems={"center"} justifyContent={"center"} flexDirection={"column"}>
+                <Flex alignItems={"flex-start"} justifyContent={"center"} flexDirection={"column"}>
                     <Image src={commanderImage} width={20} borderRadius={8} />
                     <span>{info.getValue()}</span>
-                    <div style={{ flex: 0 }}>
-                        {isMultiKo ? (
-                            <Tag size={"md"} variant="subtle" bgColor={primaryColor["400"]}>
-                                <TagLabel>Multi-Ko</TagLabel>
-                                <TagRightIcon as={FiLoader} />
-                            </Tag>
-                        ) : null}
-                    </div>
                 </Flex>
             );
         },
