@@ -14,7 +14,7 @@ export const matchHistoryColumns: ColumnDef<Match, any>[] = [
     columnHelper.accessor((row) => row.id, {
         id: "id",
         cell: (info) => info.getValue(),
-        header: () => <span>Game Id</span>
+        header: () => <span>Id</span>
     }),
     columnHelper.accessor((row) => row.date, {
         id: "date",
@@ -76,37 +76,13 @@ export const matchHistoryColumns: ColumnDef<Match, any>[] = [
                 : "";
 
             return (
-                <Flex alignItems={"center"} justifyContent={"center"} flexDirection={"column"}>
+                <Flex alignItems={"flex-start"} justifyContent={"center"} flexDirection={"column"}>
                     <Image src={commanderImage} width={20} borderRadius={8} />
                     <span>{info.getValue()}</span>
                 </Flex>
             );
         },
         header: () => <span>Winner</span>
-    }),
-    columnHelper.accessor((row) => row.numberOfTurns, {
-        id: "notes",
-        cell: (info) => {
-            const match = info.row.original;
-            const matchTags = getMatchTags(match);
-
-            // TODO: we may want to move this rendering logic for each match tag into the match tag helper
-            const isMultiKo = matchTags.indexOf(MatchTag.MultiKo) > -1;
-
-            return (
-                <Flex alignItems={"center"} justifyContent={"center"} flexDirection={"column"}>
-                    <div style={{ flex: 0 }}>
-                        {isMultiKo ? (
-                            <Tag size={"md"} variant="subtle" bgColor={primaryColor["400"]}>
-                                <TagLabel>Multi-Ko</TagLabel>
-                                <TagRightIcon as={FiLoader} />
-                            </Tag>
-                        ) : null}
-                    </div>
-                </Flex>
-            );
-        },
-        header: () => <span>Notes</span>
     }),
     columnHelper.accessor((row) => row.numberOfTurns, {
         id: "numberOfTurns",
