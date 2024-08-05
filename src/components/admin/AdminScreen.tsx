@@ -19,6 +19,7 @@ export const Admin = React.memo(function Admin() {
 
     // This is a soft admin auth check. Technically, all
     // data stored in a chatterfang profile is public at the moment.
+    // Hence, even if a user were to skip this check, all of this information is public atm.
 
     if (currentUser === undefined || !currentUser.isAdmin) {
         navigate("/", { replace: true });
