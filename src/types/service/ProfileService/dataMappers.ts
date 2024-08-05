@@ -12,7 +12,8 @@ function profileDataMapper(profile: ChatterfangProfile): Profile | undefined {
                 ? profile.decks.map((deck) => {
                       return { id: deck._id, moxfieldId: deck.deckId };
                   })
-                : []
+                : [],
+            toskiId: profile.toskiId
         };
     }
 

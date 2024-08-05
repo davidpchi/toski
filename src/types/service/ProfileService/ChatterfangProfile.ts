@@ -10,4 +10,5 @@ export type ChatterfangProfile = {
         deckId: string;
         source: string;
     }[];
+    toskiId?: string;
 };

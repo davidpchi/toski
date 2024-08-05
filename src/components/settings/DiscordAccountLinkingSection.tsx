@@ -8,15 +8,11 @@ import { CheckIcon, WarningTwoIcon } from "@chakra-ui/icons";
 import { useUserInfo } from "../../logic/hooks/userHooks";
 import { ProfileSelectors } from "../../redux/profiles/profilesSelectors";
 import { AppState } from "../../redux/rootReducer";
-import { ProfileService } from "../../services/ProfileService";
 
 export const DiscordAccountLinkingSection = React.memo(function DiscordAccountLinkingSection() {
-    const getPlayerName = ProfileService.useGetPlayerName();
-
     const { userId, userPic, username } = useUserInfo();
     const profile = useSelector((state: AppState) => ProfileSelectors.getProfile(state, userId ?? ""));
-
-    const toskiPlayer = getPlayerName(profile ? profile.id : "");
+    const toskiPlayer = profile?.toskiId;
 
     return (
         <Flex

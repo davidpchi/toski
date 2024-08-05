@@ -30,4 +30,6 @@ export type Profile = {
          */
         moxfieldId: string;
     }[];
+
+    toskiId?: string;
 };

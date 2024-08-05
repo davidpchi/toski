@@ -30,7 +30,6 @@ import { InsufficientData } from "../InsufficientData";
 import { CommanderMatchupsTable } from "../CommanderMatchupsTable";
 import { PlayerMatchupsTable } from "../PlayerMatchupsTable";
 import { primaryColor } from "../../../themes/acorn";
-import { ProfileService } from "../../../services/ProfileService";
 import { ProfileSelectors } from "../../../redux/profiles/profilesSelectors";
 import { PlayerDecks } from "./PlayerDecks";
 
@@ -42,12 +41,11 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
     const navigate = useNavigate();
     // Player variables
     const playerId = useLoaderData() as string;
-    const getProfileId = ProfileService.useGetProfileId();
 
     const player = useSelector((state: AppState) => StatsSelectors.getPlayer(state, playerId));
-    const potentialProfileId = player ? getProfileId(player.name) : undefined;
-    const profileId = potentialProfileId ?? "";
-    const profile = useSelector((state: AppState) => ProfileSelectors.getProfile(state, profileId));
+    const toskiToDiscordMap = useSelector((state: AppState) => state.profiles.toskiToDiscordMap);
+    const profileId = toskiToDiscordMap && player ? toskiToDiscordMap[player.name.toLowerCase()] : undefined;
+    const profile = useSelector((state: AppState) => ProfileSelectors.getProfile(state, profileId ?? ""));
     const commanders = useSelector((state: AppState) => StatsSelectors.getCommanders(state));
 
     const [showCommanderMatchups, setShowCommanderMatchups] = useState<boolean>(false);
@@ -199,7 +197,7 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
                             alignItems={"stretch"}
                             flexDirection={"row"}
                         >
-                            <PlayerDecks profileId={profileId} />
+                            <PlayerDecks profileId={profile ? profile.id : ""} />
                         </Flex>
                     </TabPanel>
                 </TabPanels>

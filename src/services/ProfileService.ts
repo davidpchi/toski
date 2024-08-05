@@ -10,16 +10,6 @@ import { profilesDataMapper } from "../types/service/ProfileService/dataMappers"
 import { ProfilesAction } from "../redux/profiles/profilesActions";
 import { MoxfieldService } from "./MoxfieldService";
 
-const profileMap: { [name: string]: string } = {
-    Doomgeek: "230904033915830272",
-    "Aetherium Slinky": "226715073031176193",
-    LumenAdi: "224315766042787840",
-    Wisecompany: "396390132988641281",
-    Leon_Von_Kaktuus: "563015313935826984",
-    Wrinklebuns: "187707404761169920",
-    WitchPHD: "71482669514366976"
-};
-
 const useHydrateProfiles = () => {
     const dispatch = useDispatch();
 
@@ -144,31 +134,9 @@ const useRemoveDeckFromProfile = () => {
     );
 };
 
-/**
- * Given a player name (not discord screen name), return the discord id
- */
-const useGetProfileId = (): ((playerName: string) => string | undefined) => {
-    return useCallback((playerName: string) => {
-        return profileMap[playerName] ?? "";
-    }, []);
-};
-
-/**
- * Given a discord id, return the player name (not discord screen name)
- * @param profileId The discord Id to search from
- * @returns The player name (not the discord screen name). Returns undefined if the mapping doesn't exist.
- */
-const useGetPlayerName = (): ((profileId: string) => string | undefined) => {
-    return useCallback((profileId: string) => {
-        return Object.keys(profileMap).find((name) => profileMap[name] === profileId);
-    }, []);
-};
-
 export const ProfileService = {
     useHydrateProfiles,
     useUpdateProfile,
-    useGetProfileId,
-    useGetPlayerName,
     useAddDeckToProfile,
     useRemoveDeckFromProfile
 };
