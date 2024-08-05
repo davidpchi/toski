@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-import { Flex, Heading, Text, Image, Button, Tooltip, color } from "@chakra-ui/react";
+import { Flex, Heading, Text, Image, Button, Tooltip } from "@chakra-ui/react";
 
 import { StatsSelectors } from "../../../redux/stats/statsSelectors";
 import { AppState } from "../../../redux/rootReducer";
@@ -12,7 +12,6 @@ import { getAverageWinTurn, getWinRatePercentage } from "../../../logic/utils";
 import { commanderList } from "../../../services/commanderList";
 import { primaryColor } from "../../../themes/acorn";
 import { ProfileSelectors } from "../../../redux/profiles/profilesSelectors";
-import { ProfileService } from "../../../services/ProfileService";
 import { MoxfieldProfile } from "../../../types/domain/MoxfieldProfile";
 import { MoxfieldService } from "../../../services/MoxfieldService";
 
