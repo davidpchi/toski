@@ -75,6 +75,35 @@ const useUpdateProfile = () => {
     );
 };
 
+const useUpdateProfileLink = () => {
+    const hydrateProfiles = useHydrateProfiles();
+
+    const accessToken = useSelector(AuthSelectors.getAccessToken);
+
+    const endpoint = "https://chatterfang.onrender.com/linkprofile";
+
+    return useCallback(
+        (userId: string, toskiId: string) => {
+            const updatedProfile = {
+                userId: userId,
+                toskiId: toskiId
+            };
+
+            if (accessToken !== undefined && userId !== undefined) {
+                axios
+                    .post<string>(endpoint, updatedProfile, {
+                        headers: { "access-token": accessToken, "Content-Type": "application/json" }
+                    })
+                    .then((_res) => {
+                        // kick off a rehydrate of our profiles
+                        hydrateProfiles();
+                    });
+            }
+        },
+        [accessToken, hydrateProfiles]
+    );
+};
+
 const useAddDeckToProfile = () => {
     const hydrateProfiles = useHydrateProfiles();
 
@@ -138,5 +167,6 @@ export const ProfileService = {
     useHydrateProfiles,
     useUpdateProfile,
     useAddDeckToProfile,
-    useRemoveDeckFromProfile
+    useRemoveDeckFromProfile,
+    useUpdateProfileLink
 };

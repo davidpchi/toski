@@ -31,5 +31,15 @@ export type Profile = {
         moxfieldId: string;
     }[];
 
+    /**
+     * The user's toski player id. This is typically the user's friendly in-game name.
+     */
     toskiId?: string;
+
+    /**
+     * A bool representing if the admin views should be shown to the user.
+     * All admin relevant data is still gated by the service, so even if the user were able to get
+     * access to admin only pages, there wouldn't be anything relevant to show.
+     */
+    isAdmin: boolean;
 };

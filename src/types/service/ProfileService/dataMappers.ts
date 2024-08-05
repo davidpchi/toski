@@ -13,7 +13,8 @@ function profileDataMapper(profile: ChatterfangProfile): Profile | undefined {
                       return { id: deck._id, moxfieldId: deck.deckId };
                   })
                 : [],
-            toskiId: profile.toskiId
+            toskiId: profile.toskiId,
+            isAdmin: profile.isAdmin ?? false
         };
     }
 

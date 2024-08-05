@@ -11,4 +11,5 @@ export type ChatterfangProfile = {
         source: string;
     }[];
     toskiId?: string;
+    isAdmin?: boolean;
 };
