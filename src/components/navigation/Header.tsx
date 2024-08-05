@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo } from "react";
 import { FiMenu, FiChevronDown } from "react-icons/fi";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import {
@@ -25,9 +25,10 @@ import { routes } from "../../navigation/routes";
 import { FF_IS_LOGIN_ENABLED } from "../../services/featureFlagService";
 import { LoginModal } from "../auth/LoginModal";
 import { SettingsMenuItem } from "../settings/SettingsModal";
-import { ProfileService } from "../../services/ProfileService";
 import { getDiscordLoginEndpoint } from "../../services/DiscordService";
 import { useUserInfo } from "../../logic/hooks/userHooks";
+import { AppState } from "../../redux/rootReducer";
+import { ProfileSelectors } from "../../redux/profiles/profilesSelectors";
 
 const placeholderImage = "https://static.thenounproject.com/png/5425-200.png";
 
@@ -70,7 +71,6 @@ export const useHeaderTitle = () => {
 export const Header = ({ onProfileIconClick, ...rest }: HeaderProps) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const getPlayerName = ProfileService.useGetPlayerName();
 
     const headerTitle = useHeaderTitle();
     const location = useLocation();
@@ -79,6 +79,8 @@ export const Header = ({ onProfileIconClick, ...rest }: HeaderProps) => {
     const finalRef = React.useRef(null);
 
     const { userId, userPic, username } = useUserInfo();
+
+    const profile = useSelector((state: AppState) => ProfileSelectors.getProfile(state, userId ?? ""));
 
     /**
      * When the app starts, we check to see if there's an existing access token already saved via local storage.
@@ -120,12 +122,11 @@ export const Header = ({ onProfileIconClick, ...rest }: HeaderProps) => {
 
     const navigateToProfile = useCallback(() => {
         // find the player name based on their discord id
-        const playerName = getPlayerName(userId ?? "");
-        if (playerName) {
-            navigate(`/playerOverview/${playerName}`);
+        if (profile?.toskiId) {
+            navigate(`/playerOverview/${profile?.toskiId}`);
             window.scrollTo(0, 0);
         }
-    }, [getPlayerName, navigate, userId]);
+    }, [navigate, profile?.toskiId]);
 
     return (
         <Flex

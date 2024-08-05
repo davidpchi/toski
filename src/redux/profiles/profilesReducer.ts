@@ -10,7 +10,7 @@ import { MoxfieldDeck } from "../../types/domain/MoxfieldDeck";
  */
 export type ProfilesState = Readonly<{
     /**
-     * A map of all profiles where the ID is the discord id.
+     * A map of all profiles where the key is the discord id and the value is the chatterfang profile.
      */
     profiles: { [id: string]: Profile } | undefined;
     /**
@@ -21,22 +21,32 @@ export type ProfilesState = Readonly<{
      * A map of Moxfield decks where the ID is the Moxfield deck id
      */
     moxfieldDecks: { [id: string]: MoxfieldDeck } | undefined;
+    /**
+     * A map of all linked toski accounts where the key is the all lower-case toski id and the value is the discord id
+     */
+    toskiToDiscordMap: { [id: string]: string } | undefined;
 }>;
 
 const initialState: ProfilesState = {
     profiles: undefined,
     moxfieldProfiles: undefined,
-    moxfieldDecks: undefined
+    moxfieldDecks: undefined,
+    toskiToDiscordMap: undefined
 };
 
 export const profilesReducer = createReducer(initialState, (builder) => {
     builder
         .addCase(ProfilesAction.GetProfilesComplete, (state, action) => {
-            const result: { [id: string]: Profile } = {};
+            const profilesMap: { [id: string]: Profile } = {};
+            const toskiToDiscordMap: { [id: string]: string } = {};
             for (const item of action.payload) {
-                result[item.id] = item;
+                profilesMap[item.id] = item;
+                if (item.toskiId) {
+                    toskiToDiscordMap[item.toskiId.toLowerCase()] = item.id;
+                }
             }
-            state.profiles = result;
+            state.profiles = profilesMap;
+            state.toskiToDiscordMap = toskiToDiscordMap;
         })
         .addCase(ProfilesAction.HydrateMoxfieldProfileComplete, (state, action) => {
             if (state.moxfieldProfiles === undefined) {

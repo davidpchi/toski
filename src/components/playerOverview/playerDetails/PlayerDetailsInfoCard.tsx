@@ -25,9 +25,9 @@ export const PlayerDetailsInfoCard = React.memo(function PlayerDetailsInfoCard({
         StatsSelectors.getFavoriteCommanderForPlayer(state, playerId)
     );
 
-    const getProfileId = ProfileService.useGetProfileId();
-    const potentialProfileId = player ? getProfileId(player.name) : undefined;
-    const profileId = potentialProfileId ?? "";
+    const toskiToDiscordMap = useSelector((state: AppState) => state.profiles.toskiToDiscordMap);
+
+    const profileId = player && toskiToDiscordMap ? toskiToDiscordMap[player.name.toLowerCase()] : "";
     const profile = useSelector((state: AppState) => ProfileSelectors.getProfile(state, profileId));
 
     // TODO: let's move this to a selector
