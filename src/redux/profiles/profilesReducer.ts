@@ -2,7 +2,7 @@ import { createReducer } from "@reduxjs/toolkit";
 
 import { ProfilesAction } from "./profilesActions";
 import { Profile } from "../../types/domain/Profile";
-import { MoxfieldProfile } from "../../types/domain/MoxfieldProfile";
+import { ExternalProfile } from "../../types/domain/ExternalProfile";
 import { MoxfieldDeck } from "../../types/domain/MoxfieldDeck";
 import { ArchidektDeck } from "../../types/domain/ArchidektDeck";
 
@@ -17,7 +17,11 @@ export type ProfilesState = Readonly<{
     /**
      * A map of Moxfield profiles where the ID is the Moxfield username.
      */
-    moxfieldProfiles: { [id: string]: MoxfieldProfile } | undefined;
+    moxfieldProfiles: { [id: string]: ExternalProfile } | undefined;
+    /**
+     * A map of Archidekt profiles where the ID is the Archidekt username.
+     */
+    archidektProfiles: { [id: string]: ExternalProfile } | undefined;
     /**
      * A map of Moxfield decks where the ID is the Moxfield deck id
      */
@@ -35,6 +39,7 @@ export type ProfilesState = Readonly<{
 const initialState: ProfilesState = {
     profiles: undefined,
     moxfieldProfiles: undefined,
+    archidektProfiles: undefined,
     moxfieldDecks: undefined,
     archidektDecks: undefined,
     toskiToDiscordMap: undefined
@@ -56,7 +61,7 @@ export const profilesReducer = createReducer(initialState, (builder) => {
         })
         .addCase(ProfilesAction.HydrateMoxfieldProfileComplete, (state, action) => {
             if (state.moxfieldProfiles === undefined) {
-                const result: { [id: string]: MoxfieldProfile } = {};
+                const result: { [id: string]: ExternalProfile } = {};
                 result[action.payload.userName] = action.payload;
                 state.moxfieldProfiles = result;
             } else {
@@ -70,6 +75,15 @@ export const profilesReducer = createReducer(initialState, (builder) => {
                 state.moxfieldDecks = result;
             } else {
                 state.moxfieldDecks[action.payload.id] = action.payload;
+            }
+        })
+        .addCase(ProfilesAction.HydrateArchidektProfileComplete, (state, action) => {
+            if (state.archidektProfiles === undefined) {
+                const result: { [id: string]: ExternalProfile } = {};
+                result[action.payload.userName] = action.payload;
+                state.archidektProfiles = result;
+            } else {
+                state.archidektProfiles[action.payload.userName] = action.payload;
             }
         })
         .addCase(ProfilesAction.HydrateArchidektDeckComplete, (state, action) => {

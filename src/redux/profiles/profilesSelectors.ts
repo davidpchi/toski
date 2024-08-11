@@ -2,12 +2,14 @@ import { createSelector } from "@reduxjs/toolkit";
 
 import { AppState } from "../rootReducer";
 import { Profile } from "../../types/domain/Profile";
-import { MoxfieldProfile } from "../../types/domain/MoxfieldProfile";
+import { ExternalProfile } from "../../types/domain/ExternalProfile";
 import { MoxfieldDeck } from "../../types/domain/MoxfieldDeck";
 
 const getProfiles = (state: AppState) => state.profiles.profiles;
 
 const getMoxfieldProfiles = (state: AppState) => state.profiles.moxfieldProfiles;
+
+const getArchidektProfiles = (state: AppState) => state.profiles.archidektProfiles;
 
 const getMoxfieldDecks = (state: AppState) => state.profiles.moxfieldDecks;
 
@@ -30,7 +32,7 @@ const getProfile = createSelector(
 const getMoxfieldProfile = createSelector(
     getMoxfieldProfiles,
     (_state: AppState, id: string) => id,
-    (moxfieldProfiles: { [id: string]: MoxfieldProfile } | undefined, id: string) => {
+    (moxfieldProfiles: { [id: string]: ExternalProfile } | undefined, id: string) => {
         return moxfieldProfiles ? moxfieldProfiles[id] : undefined;
     }
 );
@@ -43,11 +45,20 @@ const getMoxfieldDeck = createSelector(
     }
 );
 
+const getArchidektProfile = createSelector(
+    getArchidektProfiles,
+    (_state: AppState, id: string) => id,
+    (archidektProfiles: { [id: string]: ExternalProfile } | undefined, id: string) => {
+        return archidektProfiles ? archidektProfiles[id] : undefined;
+    }
+);
+
 export const ProfileSelectors = {
     getProfiles,
     getMoxfieldProfiles,
     getMoxfieldDecks,
     getArchidektDecks,
+    getArchidektProfile,
     getProfile,
     getMoxfieldProfile,
     getMoxfieldDeck

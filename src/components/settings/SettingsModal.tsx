@@ -26,6 +26,7 @@ import { PersistSignInSection } from "./PersistSignInSection";
 import { FavoriteCommanderSection } from "./FavoriteCommanderSection";
 import { MoxfieldAccountLinkingSection } from "./MoxfieldAccountLinkingSection";
 import { FavoriteDecksSection } from "./FavoriteDecksSection";
+import { ArchidektAccountLinkingSection } from "./ArchidektAccountLinkingSection";
 
 export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef }: { finalRef: any }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -47,6 +48,8 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
     // This determines if the user can save. Various validators may take this setter as a way of preventing the
     // settings page from saving. Currently, this is only the moxfield account linking.
     const [hasErrors, setHasErrors] = useState<boolean>(false);
+
+    const [archidektId, setArchidektId] = useState<string>(profile?.archidektId ?? "");
 
     useEffect(() => {
         // if profiles are hydrated AND we don't see our current user in the profiles list, kick off an "initialization" request to get this user into the db
@@ -102,6 +105,11 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
                             <MoxfieldAccountLinkingSection
                                 moxfieldId={moxfieldId}
                                 setMoxfieldId={setMoxfieldId}
+                                setHasErrors={setHasErrors}
+                            />
+                            <ArchidektAccountLinkingSection
+                                archidektId={archidektId}
+                                setArchidektId={setArchidektId}
                                 setHasErrors={setHasErrors}
                             />
                             <FavoriteDecksSection />

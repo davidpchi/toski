@@ -12,7 +12,7 @@ import { getAverageWinTurn, getWinRatePercentage } from "../../../logic/utils";
 import { commanderList } from "../../../services/commanderList";
 import { primaryColor } from "../../../themes/acorn";
 import { ProfileSelectors } from "../../../redux/profiles/profilesSelectors";
-import { MoxfieldProfile } from "../../../types/domain/MoxfieldProfile";
+import { ExternalProfile } from "../../../types/domain/ExternalProfile";
 import { MoxfieldService } from "../../../services/MoxfieldService";
 
 export const PlayerDetailsInfoCard = React.memo(function PlayerDetailsInfoCard({ playerId }: { playerId: string }) {
@@ -30,7 +30,7 @@ export const PlayerDetailsInfoCard = React.memo(function PlayerDetailsInfoCard({
     const profile = useSelector((state: AppState) => ProfileSelectors.getProfile(state, profileId));
 
     // TODO: let's move this to a selector
-    const moxfieldProfile: MoxfieldProfile | undefined = useSelector((state: AppState) => {
+    const moxfieldProfile: ExternalProfile | undefined = useSelector((state: AppState) => {
         if (state.profiles.moxfieldProfiles !== undefined && profile?.moxfieldId !== undefined) {
             return state.profiles.moxfieldProfiles[profile.moxfieldId];
         }
