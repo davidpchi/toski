@@ -37,15 +37,16 @@ const useHydrateArchidektProfile = () => {
     return useCallback(
         async (moxfieldId: string) => {
             try {
-                const _res = await axios.get<MoxfieldProfileResponseData>(endpoint + moxfieldId, {
+                const _res = await axios.get<ArchidektProfileResponse>(endpoint + moxfieldId, {
                     headers: { "Content-Type": "application/json" }
                 });
-                const serviceObj: MoxfieldProfileResponseData = _res.data;
+                const serviceObj: ArchidektProfileResponse = _res.data;
                 let newMoxfieldProfile: ExternalProfile = {
-                    userName: serviceObj.userName,
-                    imageUrl: serviceObj.profileImageUrl ? serviceObj.profileImageUrl : undefined
+                    userName: serviceObj.username,
+                    imageUrl: serviceObj.avatar ? serviceObj.avatar : undefined
                 };
-                dispatch(ProfilesAction.HydrateMoxfieldProfileComplete(newMoxfieldProfile));
+
+                dispatch(ProfilesAction.HydrateArchidektProfileComplete(newMoxfieldProfile));
             } catch (err) {
                 console.error("Error in Hydrate Archidekt Profile" + err);
             }

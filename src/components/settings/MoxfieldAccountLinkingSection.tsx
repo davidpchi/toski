@@ -144,11 +144,12 @@ export const MoxfieldAccountLinkingSection = React.memo(function MoxfieldAccount
             <Flex
                 width={"110px"}
                 height={"80px"}
+                padding={"8px"}
                 borderRadius={8}
                 justifyContent={"center"}
                 background={secondaryColor[100]}
             >
-                <Image src={moxfieldImageUri} alt="moxfield account link" height={"80px"} borderRadius={8} flex={0} />
+                <Image src={moxfieldImageUri} alt="moxfield account link" borderRadius={8} flex={0} />
             </Flex>
         </Flex>
     );

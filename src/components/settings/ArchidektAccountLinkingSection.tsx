@@ -92,10 +92,10 @@ export const ArchidektAccountLinkingSection = React.memo(function ArchidektAccou
         const validationResult = await validateArchidektId(archidektId);
 
         if (validationResult.isValid) {
-            if (validationResult.moxfieldProfileImageUri === "") {
+            if (validationResult.archidektProfileImageUri === "") {
                 setArchidektImageUri(defaultArchidektLogo);
-            } else if (validationResult.moxfieldProfileImageUri) {
-                setArchidektImageUri(validationResult.moxfieldProfileImageUri);
+            } else if (validationResult.archidektProfileImageUri) {
+                setArchidektImageUri(validationResult.archidektProfileImageUri);
             } else {
                 // if the archidekt account is valid, there may still be no profile image
                 setArchidektImageUri(missingArchidektProfileImage);
@@ -146,11 +146,12 @@ export const ArchidektAccountLinkingSection = React.memo(function ArchidektAccou
             <Flex
                 width={"110px"}
                 height={"80px"}
+                padding={"8px"}
                 borderRadius={8}
                 justifyContent={"center"}
                 background={secondaryColor[100]}
             >
-                <Image src={archidektImageUri} alt="archidekt account link" height={"80px"} borderRadius={8} flex={0} />
+                <Image src={archidektImageUri} alt="archidekt account link" borderRadius={8} flex={0} />
             </Flex>
         </Flex>
     );

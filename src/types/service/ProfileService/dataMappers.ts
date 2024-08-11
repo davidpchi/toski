@@ -32,6 +32,7 @@ function profileDataMapper(profile: ChatterfangProfile): Profile | undefined {
                   })
                 : [],
             toskiId: profile.toskiId,
+            archidektId: profile.archidektId,
             isAdmin: profile.isAdmin ?? false
         };
     }

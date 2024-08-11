@@ -5,6 +5,7 @@ export type ChatterfangProfile = {
     userId: number;
     favoriteCommander: string;
     moxfieldId?: string;
+    archidektId?: string;
     decks: {
         _id: string;
         deckId: string;

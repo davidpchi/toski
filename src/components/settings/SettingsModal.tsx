@@ -72,10 +72,10 @@ export const SettingsMenuItem = React.memo(function SettingsMenuItem({ finalRef 
     const onSave = useCallback(async () => {
         console.log(hasErrors);
         if (!hasErrors) {
-            updateProfile(commanderSelectValue, moxfieldId);
+            updateProfile(commanderSelectValue, moxfieldId, archidektId);
             onClose();
         }
-    }, [hasErrors, onClose, updateProfile, commanderSelectValue, moxfieldId]);
+    }, [hasErrors, updateProfile, commanderSelectValue, moxfieldId, archidektId, onClose]);
 
     return (
         <>
