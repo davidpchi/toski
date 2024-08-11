@@ -11,6 +11,8 @@ const getMoxfieldProfiles = (state: AppState) => state.profiles.moxfieldProfiles
 
 const getMoxfieldDecks = (state: AppState) => state.profiles.moxfieldDecks;
 
+const getArchidektDecks = (state: AppState) => state.profiles.archidektDecks;
+
 /**
  * Gets a specific profile based on discord id.
  */
@@ -45,6 +47,7 @@ export const ProfileSelectors = {
     getProfiles,
     getMoxfieldProfiles,
     getMoxfieldDecks,
+    getArchidektDecks,
     getProfile,
     getMoxfieldProfile,
     getMoxfieldDeck

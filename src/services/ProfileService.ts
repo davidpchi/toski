@@ -9,11 +9,14 @@ import { Profile } from "../types/domain/Profile";
 import { profilesDataMapper } from "../types/service/ProfileService/dataMappers";
 import { ProfilesAction } from "../redux/profiles/profilesActions";
 import { MoxfieldService } from "./MoxfieldService";
+import { DeckSource } from "../types/domain/DeckSource";
+import { ArchidektService } from "./ArchidektService";
 
 const useHydrateProfiles = () => {
     const dispatch = useDispatch();
 
     const hydrateMoxfieldDeck = MoxfieldService.useHydrateMoxfieldDeck();
+    const HydrateArchidektDeck = ArchidektService.useHydrateArchidektDeck();
 
     const endpoint = "https://chatterfang.onrender.com/profiles";
 
@@ -33,12 +36,19 @@ const useHydrateProfiles = () => {
                         // we need to hydrate each of these decks
                         for (let i = 0; i < profile.decks.length; i++) {
                             const deck = profile.decks[i];
-                            setTimeout(() => hydrateMoxfieldDeck(deck.moxfieldId), 250 * i);
+                            switch (deck.externalId.source) {
+                                case DeckSource.Moxfield:
+                                    setTimeout(() => hydrateMoxfieldDeck(deck.externalId.id), 250 * i);
+                                    break;
+                                case DeckSource.Archidekt:
+                                    setTimeout(() => HydrateArchidektDeck(deck.externalId.id), 250 * i);
+                                    break;
+                            }
                         }
                     }
                 }
             });
-    }, [dispatch, hydrateMoxfieldDeck]);
+    }, [HydrateArchidektDeck, dispatch, hydrateMoxfieldDeck]);
 };
 
 const useUpdateProfile = () => {
@@ -113,8 +123,9 @@ const useAddDeckToProfile = () => {
     const endpoint = "https://chatterfang.onrender.com/addDeck";
 
     return useCallback(
-        (deckUrl: string, onSuccess?: () => void, onError?: () => void) => {
-            const body = { userId: userId, url: deckUrl, source: "moxfield" };
+        (deckUrl: string, source: DeckSource, onSuccess?: () => void, onError?: () => void) => {
+            const deckSource = source === DeckSource.Archidekt ? "archidekt" : "moxfield";
+            const body = { userId: userId, url: deckUrl, source: deckSource };
 
             if (accessToken !== undefined && userId !== undefined) {
                 axios

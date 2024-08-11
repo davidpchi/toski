@@ -4,6 +4,7 @@ import { ProfilesAction } from "./profilesActions";
 import { Profile } from "../../types/domain/Profile";
 import { MoxfieldProfile } from "../../types/domain/MoxfieldProfile";
 import { MoxfieldDeck } from "../../types/domain/MoxfieldDeck";
+import { ArchidektDeck } from "../../types/domain/ArchidektDeck";
 
 /**
  * State containing all game history data
@@ -22,6 +23,10 @@ export type ProfilesState = Readonly<{
      */
     moxfieldDecks: { [id: string]: MoxfieldDeck } | undefined;
     /**
+     * A map of Archidekt decks where the ID is the Archidekt deck id
+     */
+    archidektDecks: { [id: string]: ArchidektDeck } | undefined;
+    /**
      * A map of all linked toski accounts where the key is the all lower-case toski id and the value is the discord id
      */
     toskiToDiscordMap: { [id: string]: string } | undefined;
@@ -31,6 +36,7 @@ const initialState: ProfilesState = {
     profiles: undefined,
     moxfieldProfiles: undefined,
     moxfieldDecks: undefined,
+    archidektDecks: undefined,
     toskiToDiscordMap: undefined
 };
 
@@ -64,6 +70,15 @@ export const profilesReducer = createReducer(initialState, (builder) => {
                 state.moxfieldDecks = result;
             } else {
                 state.moxfieldDecks[action.payload.id] = action.payload;
+            }
+        })
+        .addCase(ProfilesAction.HydrateArchidektDeckComplete, (state, action) => {
+            if (state.archidektDecks === undefined) {
+                const result: { [id: string]: ArchidektDeck } = {};
+                result[action.payload.id] = action.payload;
+                state.archidektDecks = result;
+            } else {
+                state.archidektDecks[action.payload.id] = action.payload;
             }
         });
 });

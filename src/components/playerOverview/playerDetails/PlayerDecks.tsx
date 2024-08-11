@@ -4,29 +4,51 @@ import { AppState } from "../../../redux/rootReducer";
 import { ProfileSelectors } from "../../../redux/profiles/profilesSelectors";
 import { Button, Flex, Image } from "@chakra-ui/react";
 import { commanderList } from "../../../services/commanderList";
+import { DeckSource } from "../../../types/domain/DeckSource";
+import { ExternalDeck } from "../../../types/domain/ExternalDeck";
 
 const placeholderImage = "https://static.thenounproject.com/png/5425-200.png";
 
 export const PlayerDecks = React.memo(function PlayerDecks({ profileId }: { profileId: string }) {
     const profile = useSelector((state: AppState) => ProfileSelectors.getProfile(state, profileId ?? ""));
     const moxfieldDecks = useSelector(ProfileSelectors.getMoxfieldDecks);
+    const archidektDecks = useSelector(ProfileSelectors.getArchidektDecks);
 
     // this component will not render unless moxfield decks are populated
-    if (profile === undefined || moxfieldDecks === undefined) {
+    if (profile === undefined) {
         return null;
     }
 
     let hydratedDecks = [];
 
     for (const curDeck of profile.decks) {
-        const deck = moxfieldDecks[curDeck.moxfieldId];
+        let deck: ExternalDeck | undefined = undefined;
+        let commanderImageUri: string | undefined = undefined;
+
+        // attempt to hydrate the deck
+        switch (curDeck.externalId.source) {
+            case DeckSource.Moxfield:
+                if (moxfieldDecks !== undefined) {
+                    const result = moxfieldDecks[curDeck.externalId.id];
+                    deck = result;
+                    commanderImageUri = commanderList[result.commanderName]?.image.replace("normal", "art_crop");
+                }
+                break;
+            case DeckSource.Archidekt:
+                if (archidektDecks !== undefined) {
+                    const result = archidektDecks[curDeck.externalId.id];
+                    deck = result;
+                    commanderImageUri = result.commanderImageUri;
+                }
+                break;
+        }
 
         // drop any unhydrated decks
         if (deck !== undefined) {
-            const commanderImage = commanderList[deck.commanderName]?.image.replace("normal", "art_crop");
-
             const navigateToMoxfieldDeck = () => {
-                window.open(deck.url, "_blank");
+                if (deck) {
+                    window.open(deck.url, "_blank");
+                }
             };
 
             const deckDisplayName = `${deck.name.substring(0, 20)}${deck.name.length > 20 ? "..." : ""}`;
@@ -42,8 +64,8 @@ export const PlayerDecks = React.memo(function PlayerDecks({ profileId }: { prof
                     justifyContent={"flex-start"}
                 >
                     <Flex flexDirection={"row"} alignItems={"center"} maxWidth={"500px"}>
-                        {commanderImage !== undefined ? (
-                            <Image src={commanderImage} height={20} borderRadius={8} />
+                        {commanderImageUri !== undefined ? (
+                            <Image src={commanderImageUri} height={20} borderRadius={8} />
                         ) : (
                             <Image src={placeholderImage} height={"80px"} borderRadius={8} />
                         )}
