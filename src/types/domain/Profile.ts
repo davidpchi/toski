@@ -1,3 +1,5 @@
+import { DeckSource } from "./DeckSource";
+
 /**
  * Represents metadata about a user of the site
  */
@@ -25,10 +27,21 @@ export type Profile = {
          * The id used to identify the deck in chatterfang.
          */
         id: string;
+
         /**
-         * The moxfield id of the deck that can be used in moxfield to look up information about the deck.
+         * An object with the information needed to find a deck from a deck provider
          */
-        moxfieldId: string;
+        externalId: {
+            /**
+             * The external id of this deck.
+             */
+            id: string;
+
+            /**
+             * The external source of this deck.
+             */
+            source: DeckSource;
+        };
     }[];
 
     /**

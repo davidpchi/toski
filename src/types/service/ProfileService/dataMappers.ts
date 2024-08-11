@@ -1,5 +1,17 @@
+import { DeckSource } from "../../domain/DeckSource";
 import { Profile } from "../../domain/Profile";
 import { ChatterfangProfile } from "./ChatterfangProfile";
+
+function mapDeckSource(source: string): DeckSource {
+    switch (source) {
+        case "moxfield":
+            return DeckSource.Moxfield;
+        case "archidekt":
+            return DeckSource.Archidekt;
+        default:
+            return DeckSource.Unknown;
+    }
+}
 
 function profileDataMapper(profile: ChatterfangProfile): Profile | undefined {
     // check to see if the chatterfang profile has all the fields defined
@@ -10,7 +22,13 @@ function profileDataMapper(profile: ChatterfangProfile): Profile | undefined {
             moxfieldId: profile.moxfieldId ? profile.moxfieldId : undefined,
             decks: profile.decks
                 ? profile.decks.map((deck) => {
-                      return { id: deck._id, moxfieldId: deck.deckId };
+                      return {
+                          id: deck._id,
+                          externalId: {
+                              id: deck.deckId,
+                              source: mapDeckSource(deck.source)
+                          }
+                      };
                   })
                 : [],
             toskiId: profile.toskiId,

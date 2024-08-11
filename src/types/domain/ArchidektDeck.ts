@@ -1,5 +1,5 @@
 import { ExternalDeck } from "./ExternalDeck";
 
-export type MoxfieldDeck = {
-    commanderName: string;
+export type ArchidektDeck = {
+    commanderImageUri: string;
 } & ExternalDeck;

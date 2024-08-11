@@ -10,22 +10,22 @@ import { commanderList } from "../../services/commanderList";
 import { ProfileService } from "../../services/ProfileService";
 
 import { FiTrash2 } from "react-icons/fi";
+import { ExternalDeck } from "../../types/domain/ExternalDeck";
+import { DeckSource } from "../../types/domain/DeckSource";
 
 const placeholderImage = "https://static.thenounproject.com/png/5425-200.png";
 
 const FavoriteDeckItem = React.memo(function FavoriteDeckItem({
     deckName,
     deckUrl,
-    commanderName,
+    deckImage,
     deckId
 }: {
     deckName: string;
     deckUrl: string;
-    commanderName: string;
     deckId: string;
+    deckImage?: string;
 }) {
-    const commanderImage = commanderList[commanderName]?.image.replace("normal", "art_crop");
-
     const shortenedDeckName = deckName.length > 20 ? deckName.substring(0, 20) + "..." : deckName;
 
     const removeDeckFromProfile = ProfileService.useRemoveDeckFromProfile();
@@ -50,8 +50,8 @@ const FavoriteDeckItem = React.memo(function FavoriteDeckItem({
                 marginRight={"8px"}
                 marginBottom={"4px"}
             >
-                {commanderImage !== undefined ? (
-                    <Image src={commanderImage} height={20} borderRadius={8} />
+                {deckImage !== undefined ? (
+                    <Image src={deckImage} height={20} borderRadius={8} />
                 ) : (
                     <Image src={placeholderImage} height={"80px"} borderRadius={8} />
                 )}
@@ -73,22 +73,43 @@ export const FavoriteDecksSection = React.memo(function FavoriteDecksSection() {
 
     const profile = useSelector((state: AppState) => ProfileSelectors.getProfile(state, userId ?? ""));
     const moxfieldDecks = useSelector(ProfileSelectors.getMoxfieldDecks);
+    const archidektDecks = useSelector(ProfileSelectors.getArchidektDecks);
 
-    const [moxfieldDeckUrl, setMoxfieldDeckUrl] = useState<string>();
+    const [deckUrl, setDeckUrl] = useState<string>();
     const [canAddDeck, setCanAddDeck] = useState<boolean>(true);
 
     const addDeck = useCallback(() => {
-        if (moxfieldDeckUrl !== undefined) {
+        if (deckUrl !== undefined) {
             setCanAddDeck(false);
-            addDeckToProfile(moxfieldDeckUrl, () => {
+
+            let finalDeckUrl = deckUrl;
+
+            let source: DeckSource = DeckSource.Moxfield;
+
+            // if this deck url looks like it could be an archidekt deck,
+            // let's clean it up a bit since the service is strict about deck url format.
+            if (deckUrl.indexOf("archidekt.com/decks") > 0) {
+                source = DeckSource.Archidekt;
+
+                const httpsSplit = deckUrl.split("//");
+                const url = httpsSplit.length > 1 ? httpsSplit[1] : httpsSplit[0];
+                // check to see if the archidekt url has the friendly deck name in the url
+                const slashSplit = url.split("/");
+                if (slashSplit.length > 3) {
+                    // drop the final slash and everything after that
+                    finalDeckUrl = slashSplit[0] + "/" + slashSplit[1] + "/" + slashSplit[2];
+                }
+            }
+
+            addDeckToProfile(finalDeckUrl, source, () => {
                 // renable the add deck button
                 setCanAddDeck(true);
 
                 // clear the input
-                setMoxfieldDeckUrl("");
+                setDeckUrl("");
             });
         }
-    }, [addDeckToProfile, moxfieldDeckUrl]);
+    }, [addDeckToProfile, deckUrl]);
 
     if (profile === undefined) {
         return null;
@@ -96,9 +117,28 @@ export const FavoriteDecksSection = React.memo(function FavoriteDecksSection() {
 
     let hydratedDecks = [];
 
-    if (profile.decks.length > 0 && moxfieldDecks !== undefined) {
+    if (profile.decks.length > 0) {
         for (const curDeck of profile.decks) {
-            const deck = moxfieldDecks[curDeck.moxfieldId];
+            let deck: ExternalDeck | undefined = undefined;
+            let commanderImageUri: string | undefined = undefined;
+
+            // attempt to hydrate the deck
+            switch (curDeck.externalId.source) {
+                case DeckSource.Moxfield:
+                    if (moxfieldDecks !== undefined) {
+                        const result = moxfieldDecks[curDeck.externalId.id];
+                        deck = result;
+                        commanderImageUri = commanderList[result.commanderName]?.image.replace("normal", "art_crop");
+                    }
+                    break;
+                case DeckSource.Archidekt:
+                    if (archidektDecks !== undefined) {
+                        const result = archidektDecks[curDeck.externalId.id];
+                        deck = result;
+                        commanderImageUri = result.commanderImageUri;
+                    }
+                    break;
+            }
 
             // drop any unhydrated decks
             if (deck !== undefined) {
@@ -106,7 +146,7 @@ export const FavoriteDecksSection = React.memo(function FavoriteDecksSection() {
                     <FavoriteDeckItem
                         key={deck.id}
                         deckName={deck.name}
-                        commanderName={deck.commanderName}
+                        deckImage={commanderImageUri}
                         deckId={curDeck.id}
                         deckUrl={deck.url}
                     />
@@ -115,8 +155,8 @@ export const FavoriteDecksSection = React.memo(function FavoriteDecksSection() {
         }
     }
 
-    function updateMoxfieldDeckUrl(event: any) {
-        setMoxfieldDeckUrl(event.target.value);
+    function updateDeckUrl(event: any) {
+        setDeckUrl(event.target.value);
     }
 
     return (
@@ -131,12 +171,10 @@ export const FavoriteDecksSection = React.memo(function FavoriteDecksSection() {
             {hydratedDecks}
             <Flex direction={"row"} alignItems={"center"} width={"100%"} gap={2} marginTop={"16px"}>
                 <Input
-                    value={moxfieldDeckUrl}
-                    onChange={updateMoxfieldDeckUrl}
+                    value={deckUrl}
+                    onChange={updateDeckUrl}
                     placeholder={
-                        profile.decks.length >= 10
-                            ? "Maximum of 10 Decks Can be Added"
-                            : "Enter Moxfield Deck URL to add"
+                        profile.decks.length >= 10 ? "Maximum of 10 Decks Can be Added" : "Enter Deck URL to add"
                     }
                     flex={1}
                 />
