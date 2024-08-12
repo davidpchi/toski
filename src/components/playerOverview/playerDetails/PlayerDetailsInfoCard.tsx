@@ -66,7 +66,8 @@ export const PlayerDetailsInfoCard = React.memo(function PlayerDetailsInfoCard({
         if (profile?.archidektId !== undefined && archidektProfile === undefined) {
             hydrateArchidektProfile(profile.archidektId);
         }
-    }, []);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [profile?.moxfieldId, profile?.archidektId]);
 
     if (player === undefined) {
         return null;
