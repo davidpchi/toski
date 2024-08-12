@@ -18,6 +18,7 @@ const useGetMoxfieldProfile = () => {
             });
             const serviceObj: MoxfieldProfileResponseData = _res.data;
             let newMoxfieldProfile: ExternalProfile = {
+                id: serviceObj.userName,
                 userName: serviceObj.userName,
                 imageUrl: serviceObj.profileImageUrl ? serviceObj.profileImageUrl : undefined
             };
@@ -41,6 +42,7 @@ const useHydrateMoxfieldProfile = () => {
                 });
                 const serviceObj: MoxfieldProfileResponseData = _res.data;
                 let newMoxfieldProfile: ExternalProfile = {
+                    id: serviceObj.userName,
                     userName: serviceObj.userName,
                     imageUrl: serviceObj.profileImageUrl ? serviceObj.profileImageUrl : undefined
                 };

@@ -16,7 +16,7 @@ const useHydrateProfiles = () => {
     const dispatch = useDispatch();
 
     const hydrateMoxfieldDeck = MoxfieldService.useHydrateMoxfieldDeck();
-    const HydrateArchidektDeck = ArchidektService.useHydrateArchidektDeck();
+    const hydrateArchidektDeck = ArchidektService.useHydrateArchidektDeck();
 
     const endpoint = "https://chatterfang.onrender.com/profiles";
 
@@ -41,14 +41,14 @@ const useHydrateProfiles = () => {
                                     setTimeout(() => hydrateMoxfieldDeck(deck.externalId.id), 250 * i);
                                     break;
                                 case DeckSource.Archidekt:
-                                    setTimeout(() => HydrateArchidektDeck(deck.externalId.id), 250 * i);
+                                    setTimeout(() => hydrateArchidektDeck(deck.externalId.id), 250 * i);
                                     break;
                             }
                         }
                     }
                 }
             });
-    }, [HydrateArchidektDeck, dispatch, hydrateMoxfieldDeck]);
+    }, [hydrateArchidektDeck, dispatch, hydrateMoxfieldDeck]);
 };
 
 type UpdateProfilePayload = {

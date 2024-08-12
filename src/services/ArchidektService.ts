@@ -19,6 +19,7 @@ const useGetArchidektProfile = () => {
             });
             const serviceObj: ArchidektProfileResponse = _res.data;
             let newArchidektProfile: ExternalProfile = {
+                id: serviceObj.id,
                 userName: serviceObj.username,
                 imageUrl: serviceObj.avatar ? serviceObj.avatar : undefined
             };
@@ -42,6 +43,7 @@ const useHydrateArchidektProfile = () => {
                 });
                 const serviceObj: ArchidektProfileResponse = _res.data;
                 let newMoxfieldProfile: ExternalProfile = {
+                    id: serviceObj.id,
                     userName: serviceObj.username,
                     imageUrl: serviceObj.avatar ? serviceObj.avatar : undefined
                 };
