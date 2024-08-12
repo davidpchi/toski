@@ -30,15 +30,19 @@ export const PlayerDecks = React.memo(function PlayerDecks({ profileId }: { prof
             case DeckSource.Moxfield:
                 if (moxfieldDecks !== undefined) {
                     const result = moxfieldDecks[curDeck.externalId.id];
-                    deck = result;
-                    commanderImageUri = commanderList[result.commanderName]?.image.replace("normal", "art_crop");
+                    if (result !== undefined) {
+                        deck = result;
+                        commanderImageUri = commanderList[result.commanderName]?.image.replace("normal", "art_crop");
+                    }
                 }
                 break;
             case DeckSource.Archidekt:
                 if (archidektDecks !== undefined) {
                     const result = archidektDecks[curDeck.externalId.id];
-                    deck = result;
-                    commanderImageUri = result.commanderImageUri;
+                    if (result !== undefined) {
+                        deck = result;
+                        commanderImageUri = result.commanderImageUri;
+                    }
                 }
                 break;
         }

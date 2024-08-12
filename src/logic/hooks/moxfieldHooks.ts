@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 
-import { MoxfieldProfile } from "../../types/domain/MoxfieldProfile";
+import { ExternalProfile } from "../../types/domain/ExternalProfile";
 import { MoxfieldService } from "../../services/MoxfieldService";
 
 /**
@@ -22,7 +22,7 @@ export const useValidateMoxfieldId = (): ((
             }
 
             // Make the call to the moxfield service to get the moxfield profile for the specified id.
-            const moxfieldProfileObj: MoxfieldProfile | undefined = await getMoxfieldProfile(moxfieldId);
+            const moxfieldProfileObj: ExternalProfile | undefined = await getMoxfieldProfile(moxfieldId);
 
             // If moxfield id does not match the one returned by the service (case-sensitive), fail validation.
             if (moxfieldProfileObj !== undefined && moxfieldProfileObj.userName === moxfieldId) {

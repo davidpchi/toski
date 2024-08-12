@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { Flex, Text, Input, Image } from "@chakra-ui/react";
 import { CheckIcon, WarningTwoIcon } from "@chakra-ui/icons";
 import { useValidateMoxfieldId } from "../../logic/hooks/moxfieldHooks";
-import { MoxfieldProfile } from "../../types/domain/MoxfieldProfile";
+import { ExternalProfile } from "../../types/domain/ExternalProfile";
 import { AppState } from "../../redux/rootReducer";
 import { MoxfieldService } from "../../services/MoxfieldService";
 import { ProfileSelectors } from "../../redux/profiles/profilesSelectors";
@@ -56,26 +56,25 @@ export const MoxfieldAccountLinkingSection = React.memo(function MoxfieldAccount
     const { userId } = useUserInfo();
 
     const profile = useSelector((state: AppState) => ProfileSelectors.getProfile(state, userId ?? ""));
-    const moxfieldProfile: MoxfieldProfile | undefined = useSelector((state: AppState) =>
+    const moxfieldProfile: ExternalProfile | undefined = useSelector((state: AppState) =>
         ProfileSelectors.getMoxfieldProfile(state, profile?.moxfieldId ?? "")
     );
 
     // when we mount the component, validation has not ocurred yet
     const [isValid, setIsValid] = useState<boolean | undefined>(undefined);
-    const [moxfieldImageUrl, setMoxfieldImageUrl] = useState<string>(defaultMoxfieldLogo);
+    const [moxfieldImageUri, setMoxfieldImageUri] = useState<string>(defaultMoxfieldLogo);
 
     // when we load the user's profile, if they already have a moxfield profile linked we should use that
     useEffect(() => {
         if (profile && profile.moxfieldId && !moxfieldProfile) {
             hydrateMoxfieldProfile(profile.moxfieldId);
-            console.log("hydrating");
         }
     }, [hydrateMoxfieldProfile, moxfieldProfile, profile]);
 
     // if we are hydrating the moxfield profile for the first time, let's set the image AND the moxfield id
     useEffect(() => {
         if (moxfieldProfile) {
-            setMoxfieldImageUrl(moxfieldProfile.imageUrl ?? missingMoxfieldProfileImage);
+            setMoxfieldImageUri(moxfieldProfile.imageUrl ?? missingMoxfieldProfileImage);
             setMoxfieldId(moxfieldProfile.userName);
         }
     }, [moxfieldProfile, setMoxfieldId]);
@@ -92,18 +91,18 @@ export const MoxfieldAccountLinkingSection = React.memo(function MoxfieldAccount
 
         if (validationResult.isValid) {
             if (validationResult.moxfieldProfileImageUri === "") {
-                setMoxfieldImageUrl(defaultMoxfieldLogo);
+                setMoxfieldImageUri(defaultMoxfieldLogo);
             } else if (validationResult.moxfieldProfileImageUri) {
-                setMoxfieldImageUrl(validationResult.moxfieldProfileImageUri);
+                setMoxfieldImageUri(validationResult.moxfieldProfileImageUri);
             } else {
                 // if the moxfield account is valid, there may still be no profile image
-                setMoxfieldImageUrl(missingMoxfieldProfileImage);
+                setMoxfieldImageUri(missingMoxfieldProfileImage);
             }
             setIsValid(true);
             setHasErrors(false);
         } else {
             // if the moxfield account does not validate, put us in the error state
-            setMoxfieldImageUrl(errorMoxfieldLogo);
+            setMoxfieldImageUri(errorMoxfieldLogo);
             setIsValid(false);
             setHasErrors(true);
         }
@@ -118,7 +117,7 @@ export const MoxfieldAccountLinkingSection = React.memo(function MoxfieldAccount
 
         // an empty id implies that they are clearing the moxfield account link
         if (event.target.value === "") {
-            setMoxfieldImageUrl(defaultMoxfieldLogo);
+            setMoxfieldImageUri(defaultMoxfieldLogo);
         }
     }
 
@@ -145,11 +144,12 @@ export const MoxfieldAccountLinkingSection = React.memo(function MoxfieldAccount
             <Flex
                 width={"110px"}
                 height={"80px"}
+                padding={"8px"}
                 borderRadius={8}
                 justifyContent={"center"}
                 background={secondaryColor[100]}
             >
-                <Image src={moxfieldImageUrl} alt="moxfield account link" height={"80px"} borderRadius={8} flex={0} />
+                <Image src={moxfieldImageUri} alt="moxfield account link" borderRadius={8} flex={0} />
             </Flex>
         </Flex>
     );

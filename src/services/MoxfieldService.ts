@@ -4,20 +4,21 @@ import { useDispatch } from "react-redux";
 
 import { ProfilesAction } from "../redux/profiles/profilesActions";
 import { MoxfieldDeck } from "../types/domain/MoxfieldDeck";
-import { MoxfieldProfile } from "../types/domain/MoxfieldProfile";
+import { ExternalProfile } from "../types/domain/ExternalProfile";
 import { MoxfieldDeckResponseData } from "../types/service/MoxfieldService/MoxfieldDeckResponse";
 import { MoxfieldProfileResponseData } from "../types/service/MoxfieldService/MoxfieldProfileResponse";
 
 const useGetMoxfieldProfile = () => {
     const endpoint = "https://chatterfang.onrender.com/moxfield/profile/";
 
-    return useCallback(async (moxfieldId: string): Promise<MoxfieldProfile | undefined> => {
+    return useCallback(async (moxfieldId: string): Promise<ExternalProfile | undefined> => {
         try {
             const _res = await axios.get<MoxfieldProfileResponseData>(endpoint + moxfieldId, {
                 headers: { "Content-Type": "application/json" }
             });
             const serviceObj: MoxfieldProfileResponseData = _res.data;
-            let newMoxfieldProfile: MoxfieldProfile = {
+            let newMoxfieldProfile: ExternalProfile = {
+                id: serviceObj.userName,
                 userName: serviceObj.userName,
                 imageUrl: serviceObj.profileImageUrl ? serviceObj.profileImageUrl : undefined
             };
@@ -40,7 +41,8 @@ const useHydrateMoxfieldProfile = () => {
                     headers: { "Content-Type": "application/json" }
                 });
                 const serviceObj: MoxfieldProfileResponseData = _res.data;
-                let newMoxfieldProfile: MoxfieldProfile = {
+                let newMoxfieldProfile: ExternalProfile = {
+                    id: serviceObj.userName,
                     userName: serviceObj.userName,
                     imageUrl: serviceObj.profileImageUrl ? serviceObj.profileImageUrl : undefined
                 };

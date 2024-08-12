@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useSelector } from "react-redux";
 
-import { Flex, Heading, Text, Image, Button, Tooltip } from "@chakra-ui/react";
+import { Flex, Heading, Text } from "@chakra-ui/react";
 
 import { StatsSelectors } from "../../../redux/stats/statsSelectors";
 import { AppState } from "../../../redux/rootReducer";
@@ -12,12 +12,14 @@ import { getAverageWinTurn, getWinRatePercentage } from "../../../logic/utils";
 import { commanderList } from "../../../services/commanderList";
 import { primaryColor } from "../../../themes/acorn";
 import { ProfileSelectors } from "../../../redux/profiles/profilesSelectors";
-import { MoxfieldProfile } from "../../../types/domain/MoxfieldProfile";
+import { ExternalProfile } from "../../../types/domain/ExternalProfile";
 import { MoxfieldService } from "../../../services/MoxfieldService";
+import { LinkedAccountIcon } from "./LinkedAccountIcon";
+import { ArchidektService } from "../../../services/ArchidektService";
 
 export const PlayerDetailsInfoCard = React.memo(function PlayerDetailsInfoCard({ playerId }: { playerId: string }) {
     const hydrateMoxfieldProfile = MoxfieldService.useHydrateMoxfieldProfile();
-    const [isMoxfieldButtonHovered, setIsMoxfieldButtonHovered] = useState<boolean>();
+    const hydrateArchidektProfile = ArchidektService.useHydrateArchidektProfile();
 
     const player = useSelector((state: AppState) => StatsSelectors.getPlayer(state, playerId));
     const favoriteCommander = useSelector((state: AppState) =>
@@ -30,19 +32,19 @@ export const PlayerDetailsInfoCard = React.memo(function PlayerDetailsInfoCard({
     const profile = useSelector((state: AppState) => ProfileSelectors.getProfile(state, profileId));
 
     // TODO: let's move this to a selector
-    const moxfieldProfile: MoxfieldProfile | undefined = useSelector((state: AppState) => {
+    const moxfieldProfile: ExternalProfile | undefined = useSelector((state: AppState) => {
         if (state.profiles.moxfieldProfiles !== undefined && profile?.moxfieldId !== undefined) {
             return state.profiles.moxfieldProfiles[profile.moxfieldId];
         }
         return undefined;
     });
 
-    useEffect(() => {
-        // This useEffect ensures we don't call Chatterfang every time the page renders
-        if (profile?.moxfieldId !== undefined && !moxfieldProfile) {
-            hydrateMoxfieldProfile(profile.moxfieldId);
+    const archidektProfile: ExternalProfile | undefined = useSelector((state: AppState) => {
+        if (state.profiles.archidektProfiles !== undefined && profile?.archidektId !== undefined) {
+            return state.profiles.archidektProfiles[profile.archidektId];
         }
-    }, [hydrateMoxfieldProfile, moxfieldProfile, profile]);
+        return undefined;
+    });
 
     const navigateToMoxfieldAccount = useCallback(() => {
         if (moxfieldProfile) {
@@ -50,14 +52,22 @@ export const PlayerDetailsInfoCard = React.memo(function PlayerDetailsInfoCard({
         }
     }, [moxfieldProfile]);
 
-    const moxfieldButtonOnHoverStart = useCallback(() => {
-        console.log("here");
-        setIsMoxfieldButtonHovered(true);
-    }, [setIsMoxfieldButtonHovered]);
+    const navigateToArchidektAccount = useCallback(() => {
+        if (archidektProfile) {
+            window.open(`https://archidekt.com/u/${archidektProfile.userName}`, "_blank");
+        }
+    }, [archidektProfile]);
 
-    const moxfieldButtonOnHoverEnd = useCallback(() => {
-        setIsMoxfieldButtonHovered(false);
-    }, [setIsMoxfieldButtonHovered]);
+    useEffect(() => {
+        // We always attempt to hydrate the latest moxfield and archidekt accounts if they don't exist for the first render
+        if (profile?.moxfieldId !== undefined && moxfieldProfile === undefined) {
+            hydrateMoxfieldProfile(profile.moxfieldId);
+        }
+        if (profile?.archidektId !== undefined && archidektProfile === undefined) {
+            hydrateArchidektProfile(profile.archidektId);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [profile?.moxfieldId, profile?.archidektId]);
 
     if (player === undefined) {
         return null;
@@ -81,11 +91,6 @@ export const PlayerDetailsInfoCard = React.memo(function PlayerDetailsInfoCard({
             value: player.colorProfile.colors[colorObj.id]
         });
     }
-
-    const moxfieldImage =
-        moxfieldProfile && isMoxfieldButtonHovered && moxfieldProfile.imageUrl
-            ? moxfieldProfile.imageUrl
-            : "https://avatars.githubusercontent.com/u/65498797?s=200&v=4";
 
     return (
         <Flex direction="row" justifyContent="center" alignItems={"center"} flexWrap={"wrap"} marginBottom={"16px"}>
@@ -155,20 +160,20 @@ export const PlayerDetailsInfoCard = React.memo(function PlayerDetailsInfoCard({
                 >{`Avg. win turn: ${getAverageWinTurn(player)}`}</Text>
                 <Flex flexDirection={"row"} justifyContent={"center"} zIndex={10} marginTop={"2px"}>
                     {moxfieldProfile !== undefined ? (
-                        <Tooltip label={`Moxfield Account: ${moxfieldProfile.userName}`}>
-                            <Button
-                                style={{ padding: 0 }}
-                                onClick={navigateToMoxfieldAccount}
-                                variant={"ghost"}
-                                width={"32px"}
-                                height={"32px"}
-                                borderRadius={"16px"}
-                                onMouseEnter={moxfieldButtonOnHoverStart}
-                                onMouseLeave={moxfieldButtonOnHoverEnd}
-                            >
-                                <Image borderRadius={"16px"} width={"32px"} height={"32px"} src={moxfieldImage} />
-                            </Button>
-                        </Tooltip>
+                        <LinkedAccountIcon
+                            hoveredImageUri={moxfieldProfile.imageUrl ?? ""}
+                            restImageUri={"https://avatars.githubusercontent.com/u/65498797?s=200&v=4"}
+                            onClick={navigateToMoxfieldAccount}
+                            onHoverTooltip={`Moxfield Account: ${moxfieldProfile.userName}`}
+                        />
+                    ) : null}
+                    {archidektProfile !== undefined ? (
+                        <LinkedAccountIcon
+                            hoveredImageUri={archidektProfile.imageUrl ?? ""}
+                            restImageUri={"https://archidekt.com/images/logo.svg"}
+                            onClick={navigateToArchidektAccount}
+                            onHoverTooltip={`Archidekt Account: ${archidektProfile.userName}`}
+                        />
                     ) : null}
                 </Flex>
             </Flex>

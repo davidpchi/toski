@@ -16,7 +16,7 @@ const useHydrateProfiles = () => {
     const dispatch = useDispatch();
 
     const hydrateMoxfieldDeck = MoxfieldService.useHydrateMoxfieldDeck();
-    const HydrateArchidektDeck = ArchidektService.useHydrateArchidektDeck();
+    const hydrateArchidektDeck = ArchidektService.useHydrateArchidektDeck();
 
     const endpoint = "https://chatterfang.onrender.com/profiles";
 
@@ -41,14 +41,21 @@ const useHydrateProfiles = () => {
                                     setTimeout(() => hydrateMoxfieldDeck(deck.externalId.id), 250 * i);
                                     break;
                                 case DeckSource.Archidekt:
-                                    setTimeout(() => HydrateArchidektDeck(deck.externalId.id), 250 * i);
+                                    setTimeout(() => hydrateArchidektDeck(deck.externalId.id), 250 * i);
                                     break;
                             }
                         }
                     }
                 }
             });
-    }, [HydrateArchidektDeck, dispatch, hydrateMoxfieldDeck]);
+    }, [hydrateArchidektDeck, dispatch, hydrateMoxfieldDeck]);
+};
+
+type UpdateProfilePayload = {
+    userId?: string;
+    favoriteCommander?: string;
+    moxfieldId?: string;
+    archidektId?: string;
 };
 
 const useUpdateProfile = () => {
@@ -60,15 +67,20 @@ const useUpdateProfile = () => {
     const endpoint = "https://chatterfang.onrender.com/profiles";
 
     return useCallback(
-        (commanderId: string, moxfieldId?: string) => {
-            const newProfile =
-                // specifically check against undefined because empty string moxfield id is valid (unlinking account)
-                moxfieldId !== undefined
-                    ? { userId: userId, favoriteCommander: commanderId, moxfieldId: moxfieldId }
-                    : {
-                          userId: userId,
-                          favoriteCommander: commanderId
-                      };
+        (commanderId: string, moxfieldId?: string, archidektId?: string) => {
+            const newProfile: UpdateProfilePayload = {
+                userId: userId,
+                favoriteCommander: commanderId
+            };
+
+            // specifically check against undefined because empty string moxfield id is valid (unlinking account)
+            if (moxfieldId !== undefined) {
+                newProfile.moxfieldId = moxfieldId;
+            }
+
+            if (archidektId !== undefined) {
+                newProfile.archidektId = archidektId;
+            }
 
             if (accessToken !== undefined && userId !== undefined) {
                 axios

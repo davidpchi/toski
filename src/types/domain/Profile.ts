@@ -20,6 +20,11 @@ export type Profile = {
     moxfieldId?: string;
 
     /**
+     * The user's Archidekt profile Id
+     */
+    archidektId?: string;
+
+    /**
      * A collection of a user's favorite decks. Today, it is expected that all of these decks come from moxfield.
      */
     decks: {
