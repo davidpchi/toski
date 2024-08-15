@@ -1,9 +1,9 @@
 import axios from "axios";
 
+import { useQuery } from "@tanstack/react-query";
 import { Match } from "../types/domain/Match";
 import { sheetRowToMatch } from "../types/service/MatchHistory/dataMappers";
 import { sendDataToGoogleSheets } from "./GoogleFormsService";
-import { useQuery } from "@tanstack/react-query";
 
 const matchHistoryDataEndpoint =
     "https://docs.google.com/spreadsheets/d/1FsjnGp3JPsqAEmlyWlxmYK5pSwGASqfIcDl9HvD-fuk/gviz/tq?gid=1885300192";
@@ -23,20 +23,16 @@ const fetchMatchHistory = async () => {
         })
 };
 
-const useMatchHistory = () => {
+const useMatchHistory = <TData = Match[]>(select?: (data: Match[]) => TData) => {
     return useQuery({
         queryKey: ['matches'],
         queryFn: fetchMatchHistory,
+        select: select,
     })
 };
 
-function mapObjectToMatches(resultObj: any): Match[] | undefined {
+function mapObjectToMatches(resultObj: any): Match[] {
     const matches: Match[] = [];
-
-    if (resultObj.table === undefined || resultObj.table.rows === undefined) {
-        console.log("Error parsing JSON object from data: resultObj.table or resultObj.table.rows is undefined.");
-        return undefined;
-    }
 
     for (let i = 0; i < resultObj.table.rows.length; i++) {
         const cell = resultObj.table.rows[i];
