@@ -107,7 +107,7 @@ export const CommanderTrends = React.memo(function CommanderTrends() {
             <Checkbox isChecked={showAdvancedColorChart} onChange={toggleAdvancedColorChart} marginTop={"16px"}>
                 {"Show Advanced Color Chart"}
             </Checkbox>
-            {/* <CommandersPlayedChart matches={sortedMatches} /> */}
+            <CommandersPlayedChart />
         </Flex>
     );
 });
