@@ -1,19 +1,13 @@
+import { Checkbox, Flex, Heading } from "@chakra-ui/react";
 import React, { useCallback, useState } from "react";
-import { useSelector } from "react-redux";
-
-import { Checkbox, Flex, Heading, color } from "@chakra-ui/react";
-
-import { StatsSelectors } from "../../redux/stats/statsSelectors";
-import { Loading } from "../Loading";
-import { Match } from "../../types/domain/Match";
-import { CommandersPlayedChart } from "./CommandersPlayedChart";
-import { MTG_COLORS, MTG_COLOR_IDENTITIES } from "../constants";
-import { PieGraph } from "../dataVisualizations/PieGraph";
-import { AppState } from "../../redux/rootReducer";
-import { Commander } from "../../types/domain/Commander";
 import { matchesToCommanderHelper } from "../../logic/dictionaryUtils";
 import { MatchHistoryService } from "../../services/MatchHistoryService";
+import { Match } from "../../types/domain/Match";
+import { MTG_COLORS, MTG_COLOR_IDENTITIES } from "../constants";
+import { PieGraph } from "../dataVisualizations/PieGraph";
 import { Error } from "../Error";
+import { Loading } from "../Loading";
+import { CommandersPlayedChart } from "./CommandersPlayedChart";
 
 export const CommanderTrends = React.memo(function CommanderTrends() {
     const [showAdvancedColorChart, setShowAdvancedColorChart] = useState(false);

@@ -1,5 +1,5 @@
 import { Box, Checkbox, Flex, Input, Tooltip } from "@chakra-ui/react";
-import React from "react";
+import React, { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { matchesToPlayersHelper } from "../../logic/dictionaryUtils";
 import { useTableFilters } from "../../logic/hooks/tableHooks";
@@ -22,15 +22,18 @@ export const PlayerOverview = React.memo(function MatchHistory() {
     const { dateFilter, showOnlyQualfied, searchInput, onDatePickerChange, onShowOnlyQualifiedChange, onSearchChange } =
         useTableFilters();
 
-    const selectPlayersByDate = (matches: Match[]) => Object.values(matchesToPlayersHelper(matches, undefined, dateFilter));
-    const {data, isLoading, isError} = MatchHistoryService.useMatchHistory(selectPlayersByDate);
+    const selectPlayersByDate = useCallback(
+        (matches: Match[]) => Object.values(matchesToPlayersHelper(matches, undefined, dateFilter)),
+        []
+    );
+    const {data, isPending, isError} = MatchHistoryService.useMatchHistory(selectPlayersByDate);
 
-    const filterPlayers = (players: Player[] | undefined) => {
+    const filterPlayers = (players: Player[]) => {
         return players?.filter(p => showOnlyQualfied ? p.validMatchesCount >= PLAYER_MINIMUM_GAMES_REQUIRED : true)
             .filter(p => searchInput ? p.name.toLowerCase().includes(searchInput.toLowerCase()) : true)
     }
     
-    if (isLoading) {
+    if (isPending) {
         return <Loading text="" />;
     } else if (isError) {
         return <Error error="" />

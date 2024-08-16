@@ -1,26 +1,27 @@
+import { Heading } from "@chakra-ui/react";
 import { TooltipItem } from "chart.js";
 import React, { useCallback } from "react";
-import { Heading } from "@chakra-ui/react";
-
+import { MatchHistoryService } from "../../services/MatchHistoryService";
 import { Match } from "../../types/domain/Match";
 import { LineGraph } from "../dataVisualizations/LineGraph";
-import { matchesToCommanderHelper } from "../../logic/dictionaryUtils";
-import { MatchHistoryService } from "../../services/MatchHistoryService";
-import { Loading } from "../Loading";
 import { Error } from "../Error";
+import { Loading } from "../Loading";
 
 export const CommandersPlayedChart = React.memo(function CommandersPlayedChart() {
-    const selectCommanderCounts = useCallback((matches: Match[]) => {
-        let commandersDictionary: { [id: string]: string } = {};
-        return matches.map((match: Match, index: number) => {
-            for (const player of match.players) {
-                for (const commander of player.commanders) {
-                    commandersDictionary[commander] = commander;
+    const selectCommanderCounts = useCallback(
+        (matches: Match[]) => {
+            let commandersDictionary: { [id: string]: string } = {};
+            return matches.map((match: Match, index: number) => {
+                for (const player of match.players) {
+                    for (const commander of player.commanders) {
+                        commandersDictionary[commander] = commander;
+                    }
                 }
-            }
-            return { x: Number(match.id) + 1, y: Object.values(commandersDictionary).length };
-        });
-    }, []);
+                return { x: Number(match.id) + 1, y: Object.values(commandersDictionary).length };
+            });
+        }, 
+        []
+    );
     const { data, isPending, isError } = MatchHistoryService.useMatchHistory(selectCommanderCounts);
 
     const tooltipTitleCallback = (item: TooltipItem<"line">[]) => {

@@ -9,9 +9,9 @@ import { matchHistoryColumns } from "../dataVisualizations/columnHelpers/matchHi
 
 export const MatchHistory = React.memo(function MatchHistory() {
     const navigate = useNavigate();
-    const { data, isLoading, isError } = MatchHistoryService.useMatchHistory();
+    const { data, isPending, isError } = MatchHistoryService.useMatchHistory();
 
-    if (isLoading) {
+    if (isPending) {
         return <Loading text="" />;
     } else if (isError) {
         return <Error error="" />

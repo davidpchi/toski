@@ -1,8 +1,6 @@
+import { Box, Checkbox, Flex, Input, Tooltip } from "@chakra-ui/react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-
-import { Box, Checkbox, Flex, Input, Tooltip } from "@chakra-ui/react";
-
 import { matchesToCommanderHelper } from "../../logic/dictionaryUtils";
 import { useTableFilters } from "../../logic/hooks/tableHooks";
 import { MatchHistoryService } from "../../services/MatchHistoryService";
@@ -21,15 +19,17 @@ export const CommanderOverview = React.memo(function MatchHistory() {
     const { dateFilter, showOnlyQualfied, searchInput, onDatePickerChange, onShowOnlyQualifiedChange, onSearchChange } =
         useTableFilters();
 
-    const selectCommandersByDate = (matches: Match[]) => Object.values(matchesToCommanderHelper(matches, undefined, dateFilter));
-    const {data, isLoading, isError } = MatchHistoryService.useMatchHistory(selectCommandersByDate);
+    const selectCommandersByDate = React.useCallback(
+        (matches: Match[]) => Object.values(matchesToCommanderHelper(matches, undefined, dateFilter)),
+        []);
+    const { data, isPending, isError } = MatchHistoryService.useMatchHistory(selectCommandersByDate);
 
-    const filterCommanders = (commanders: Commander[] | undefined) => {
+    const filterCommanders = (commanders: Commander[]) => {
         return commanders?.filter(c => showOnlyQualfied ? c.validMatchesCount >= COMMANDER_MINIMUM_GAMES_REQUIRED : true)
             .filter(c => searchInput ? c.name.toLowerCase().includes(searchInput.toLowerCase()) : true)
     };
 
-    if (isLoading) {
+    if (isPending) {
         return <Loading text="" />;
     } else if (isError) {
         return <Error error="" />
@@ -60,19 +60,19 @@ export const CommanderOverview = React.memo(function MatchHistory() {
                     <Input placeholder="Filter by..." onChange={onSearchChange} value={searchInput} />
                 </Box>
             </Flex>
-                <SortableTable
-                    columns={commanderOverviewColumns}
-                    data={filterCommanders(data)}
-                    defaultSort={[{ id: "name", desc: false}]}
-                    getRowProps={(row: any) => {
-                        return {
-                            onClick: () => {
-                                navigate(`/commanderOverview/${row.original.id}`);
-                                window.scrollTo(0, 0);
-                            }
-                        };
-                    }}
-                />
+            <SortableTable
+                columns={commanderOverviewColumns}
+                data={filterCommanders(data)}
+                defaultSort={[{ id: "name", desc: false }]}
+                getRowProps={(row: any) => {
+                    return {
+                        onClick: () => {
+                            navigate(`/commanderOverview/${row.original.id}`);
+                            window.scrollTo(0, 0);
+                        }
+                    };
+                }}
+            />
         </Flex>
     );
 });
