@@ -8,7 +8,7 @@ import { AppState } from "../../../redux/rootReducer";
 import { MTG_COLORS } from "../../constants";
 import { ImageWithHover } from "../../common/ImageWithHover";
 import { PieGraph } from "../../dataVisualizations/PieGraph";
-import { getAverageWinTurn, getWinRatePercentage } from "../../../logic/utils";
+import { getAverageWinTurnForPlayer, getWinRatePercentage } from "../../../logic/utils";
 import { commanderList } from "../../../services/commanderList";
 import { primaryColor } from "../../../themes/acorn";
 import { ProfileSelectors } from "../../../redux/profiles/profilesSelectors";
@@ -157,7 +157,7 @@ export const PlayerDetailsInfoCard = React.memo(function PlayerDetailsInfoCard({
                     borderLeftWidth={1}
                     borderRightWidth={1}
                     borderBottomWidth={1}
-                >{`Avg. win turn: ${getAverageWinTurn(player)}`}</Text>
+                >{`Avg. win turn: ${getAverageWinTurnForPlayer(player)}`}</Text>
                 <Flex flexDirection={"row"} justifyContent={"center"} zIndex={10} marginTop={"2px"}>
                     {moxfieldProfile !== undefined ? (
                         <LinkedAccountIcon

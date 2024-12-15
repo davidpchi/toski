@@ -14,6 +14,7 @@ import { AppState } from "../../redux/rootReducer";
 import { MatchPositionWinsBarChart } from "./MatchPositionWinsBarChart";
 import { MatchTimeLineChart } from "./MatchTimeLineChart";
 import { MatchLengthLineCharts } from "./MatchLengthLineCharts";
+import { MatchFirstKoTurnLineChart } from "./MatchFirstKoTurnLineChart";
 
 export const MatchTrends = React.memo(function MatchHistory() {
     const matches = useSelector(StatsSelectors.getMatches);
@@ -48,6 +49,7 @@ export const MatchTrends = React.memo(function MatchHistory() {
         <Flex direction="column" justify="center" align="center">
             <MatchLengthBarChart matches={sortedMatches} />
             <MatchLengthLineCharts matches={sortedMatches} />
+            <MatchFirstKoTurnLineChart matches={sortedMatches} />
             <MatchFrequencyLineChart matches={sortedMatches} />
             <MatchPositionWinsBarChart matches={sortedMatches} />
         </Flex>

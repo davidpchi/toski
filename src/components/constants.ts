@@ -1,6 +1,7 @@
 export const PLAYER_MINIMUM_GAMES_REQUIRED = 10;
 export const PLAYER_MINIMUM_WINS_REQUIRED = 5; // Used for average win turn
 export const COMMANDER_MINIMUM_GAMES_REQUIRED = 5;
+export const COMMANDER_MINIMUM_WINS_REQUIRED = 5; // Used for average win turn
 export const NEW_PLAYER_HIGHLIGHT_DAYS = 30; // Used for highlighting newly qualified players for N days
 export const NUMBER_OF_PLAYERS_FOR_VALID_MATCH = 4; // Used for filtering out matches without 4 players
 export const PLAYER_MAXIMUM_GAMES_AS_NEW_PLAYER = 15; // Used for defining what constitutes a new player; below this they get highlighted
