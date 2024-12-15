@@ -1,10 +1,13 @@
 import {
+    COMMANDER_MINIMUM_GAMES_REQUIRED,
+    COMMANDER_MINIMUM_WINS_REQUIRED,
     NEW_PLAYER_HIGHLIGHT_DAYS,
     NUMBER_OF_PLAYERS_FOR_VALID_MATCH,
     PLAYER_MAXIMUM_GAMES_AS_NEW_PLAYER,
     PLAYER_MINIMUM_GAMES_REQUIRED,
     PLAYER_MINIMUM_WINS_REQUIRED
 } from "../components/constants";
+import { Commander } from "../types/domain/Commander";
 import { Match } from "../types/domain/Match";
 import { Player } from "../types/domain/Player";
 
@@ -49,7 +52,7 @@ export function getWinRatePercentage(
  * @param player
  * @returns A number rounded up to one decimal.
  */
-export function getAverageWinTurn(player: Player) {
+export function getAverageWinTurnForPlayer(player: Player) {
     // Early exit conditions
     // Don't show if player has fewer than 10 matches or 5 wins all time
     if (player.validMatchesCount < PLAYER_MINIMUM_GAMES_REQUIRED) {
@@ -77,6 +80,57 @@ export function getAverageWinTurn(player: Player) {
         return accumulator + currentValue;
     }, 0);
     const average = temp / winTurns.length; // Don't use player.wins, it includes games without recorded turns
+
+    // Return as string rounded to nearest tenth
+    return average.toFixed(1);
+}
+
+/**
+ * Given a commander gets the average win turn of a commander.
+ * Filters out automatically matches that don't meet the commander count requirement.
+ * @param player
+ * @returns A number rounded up to one decimal.
+ */
+export function getAverageWinTurnForCommander(commander: Commander, matches: Match[]) {
+    // Early exit conditions
+    // Don't show if player has fewer than 10 matches or 5 wins all time
+    if (commander.validMatchesCount < COMMANDER_MINIMUM_GAMES_REQUIRED) {
+        return "Not enough games";
+    } else if (commander.wins < COMMANDER_MINIMUM_WINS_REQUIRED) {
+        return "Not enough wins";
+    }
+
+    // Create win turns array
+    const winTurns = [];
+
+    // Get win turn for every match win
+    for (const matchId of commander.matches) {
+        // get the match in question
+        const match = matches.find((match) => match.id === matchId);
+
+        if (match !== undefined) {
+            // determine if the commander won the game
+            const commanders = match.players.filter(
+                (player) =>
+                    player.name === match.winner &&
+                    player.commanders.findIndex((value) => value === commander.name) > -1
+            );
+
+            // Exclude matches where commander isn't a winner and commander count requirement isn't filled
+            if (commanders.length > 0 && match.players.length === NUMBER_OF_PLAYERS_FOR_VALID_MATCH) {
+                // Exclude wins without turns data
+                if (Number(match.numberOfTurns) > 0) {
+                    winTurns.push(Number(match.numberOfTurns));
+                }
+            }
+        }
+    }
+
+    // Calculate average win turn
+    const temp: number = winTurns.reduce((accumulator: number, currentValue: number) => {
+        return accumulator + currentValue;
+    }, 0);
+    const average = temp / winTurns.length; // Don't use commander.wins, it includes games without recorded turns
 
     // Return as string rounded to nearest tenth
     return average.toFixed(1);

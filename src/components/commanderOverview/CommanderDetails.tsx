@@ -37,7 +37,7 @@ import { MatchPlacementBarChart } from "./MatchPlacementBarChart";
 import { primaryColor } from "../../themes/acorn";
 import { topPlayersColumns } from "../dataVisualizations/columnHelpers/topPlayersColumnHelper";
 import { filterMatchesByPlayerCount } from "../../logic/dictionaryUtils";
-import { getWinRatePercentage } from "../../logic/utils";
+import { getAverageWinTurnForCommander, getWinRatePercentage } from "../../logic/utils";
 import { CommanderMatchupsTable } from "./CommanderMatchupsTable";
 import { PlayerMatchupsTable } from "./PlayerMatchupsTable";
 
@@ -215,6 +215,15 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                                 : "N/A" // Displays N/A if the commander has no valid matches
                         }`}
                     </Text>
+                    <Text
+                        paddingLeft={"16px"}
+                        paddingRight={"16px"}
+                        paddingTop={"8px"}
+                        paddingBottom={"8px"}
+                        borderLeftWidth={1}
+                        borderRightWidth={1}
+                        borderBottomWidth={1}
+                    >{`Avg. win turn: ${getAverageWinTurnForCommander(commander, matches)}`}</Text>
                     <Text
                         paddingLeft={"16px"}
                         paddingRight={"16px"}

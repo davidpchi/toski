@@ -1,6 +1,6 @@
 import { Match } from "../types/domain/Match";
 import { Player } from "../types/domain/Player";
-import { getAverageWinTurn, getWinRatePercentage } from "./utils";
+import { getAverageWinTurnForPlayer, getWinRatePercentage } from "./utils";
 
 describe("getWinRatePercentage", function () {
     it("given win number and total number of matches, provide win rate", function () {
@@ -25,7 +25,7 @@ describe("getWinRatePercentage", function () {
     });
 });
 
-describe("getAverageWinTurn", () => {
+describe("getAverageWinTurnForPlayer", () => {
     let player: Player;
     let matches: Match[];
 
@@ -57,21 +57,21 @@ describe("getAverageWinTurn", () => {
     });
 
     it("should handle invalid matches and calculate the average win turn correctly", () => {
-        expect(getAverageWinTurn(player)).toBe("9.0"); // (7+8+11+10+9)/5 = 9
+        expect(getAverageWinTurnForPlayer(player)).toBe("9.0"); // (7+8+11+10+9)/5 = 9
     });
 
     it("should handle rounding average win turn correctly", () => {
         player.matches[0].numberOfTurns = 99.4;
-        expect(getAverageWinTurn(player)).toBe("27.5"); // (99.4+8+11+10+9)/5 = 27.48
+        expect(getAverageWinTurnForPlayer(player)).toBe("27.5"); // (99.4+8+11+10+9)/5 = 27.48
     });
 
     it('should return "Insufficient data" if player has fewer than 10 matches', () => {
         player.matches = [];
-        expect(getAverageWinTurn(player)).toBe("Not enough games played");
+        expect(getAverageWinTurnForPlayer(player)).toBe("Not enough games played");
     });
 
     it('should return "Insufficient data" if player has fewer than 5 wins ever', () => {
         player.wins = 4;
-        expect(getAverageWinTurn(player)).toBe("Not enough wins");
+        expect(getAverageWinTurnForPlayer(player)).toBe("Not enough wins");
     });
 });
