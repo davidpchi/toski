@@ -32,7 +32,7 @@ export const MatchFirstKoTurnLineChart = React.memo(function MatchFirstKoTurnLin
     const matchesWithKoTurn = matches.filter((match: Match) => match.firstKnockOutTurn);
 
     const matchesWithLengthsData = matchesWithKoTurn.map((match: Match) => {
-        return { x: match.id, y: Number(match.numberOfTurns) };
+        return { x: match.id, y: Number(match.firstKnockOutTurn) };
     });
 
     const tooltipTitleCallback = (item: TooltipItem<"line">[]) => {

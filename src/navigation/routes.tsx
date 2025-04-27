@@ -98,6 +98,11 @@ export const routes: { [path: string]: route } = {
         name: "Admin Panel",
         path: "/admin",
         element: <Admin />
+    },
+    "/about": {
+        name: "About",
+        path: "/about",
+        element: <NewsOverview /> // TODO: Replace this with the real about page
     }
 };
 
