@@ -1,4 +1,4 @@
-import { FiBarChart, FiCalendar, FiHome, FiShield, FiTrendingUp, FiUsers } from "react-icons/fi";
+import { FiBarChart, FiCalendar, FiHelpCircle, FiHome, FiShield, FiTrendingUp, FiUsers } from "react-icons/fi";
 import { IconType } from "react-icons";
 
 interface LinkItemProps {
@@ -13,5 +13,6 @@ export const NavigationItems: Array<LinkItemProps> = [
     { name: "Commander Overview", icon: FiShield, route: "/commanderOverview" },
     { name: "Commander Trends", icon: FiBarChart, route: "/commanderTrends" },
     { name: "Match History", icon: FiCalendar, route: "/matchHistory" },
-    { name: "Match Trends", icon: FiTrendingUp, route: "/matchTrends" }
+    { name: "Match Trends", icon: FiTrendingUp, route: "/matchTrends" },
+    { name: "About", icon: FiHelpCircle, route: "/about" }
 ];
