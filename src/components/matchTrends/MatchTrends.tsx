@@ -22,9 +22,6 @@ export const MatchTrends = React.memo(function MatchHistory() {
         return <Loading text="" />;
     }
 
-    // cannot directly mutate state, copy to new array first
-    const sortedMatches = matches.slice().sort((a: Match, b: Match) => Number(a.id) - Number(b.id));
-
     // Create a color dictionary to track colors played
     const colorsPlayedDictionary: Record<string, number> = MTG_COLORS.reduce<Record<string, number>>((acc, color) => {
         acc[color.id] = 0;
@@ -45,11 +42,11 @@ export const MatchTrends = React.memo(function MatchHistory() {
 
     return (
         <Flex direction="column" justifyContent="center" alignItems="center" paddingBottom="32px">
-            <MatchLengthBarChart matches={sortedMatches} />
-            <MatchLengthLineCharts matches={sortedMatches} />
-            <MatchFirstKoTurnLineChart matches={sortedMatches} />
-            <MatchFrequencyLineChart matches={sortedMatches} />
-            <MatchPositionWinsBarChart matches={sortedMatches} />
+            <MatchLengthBarChart />
+            <MatchLengthLineCharts />
+            <MatchFirstKoTurnLineChart />
+            <MatchFrequencyLineChart />
+            <MatchPositionWinsBarChart />
         </Flex>
     );
 });

@@ -51,6 +51,7 @@ export const MatchTurnsLineChart = React.memo(function MatchTurnsLineChart({ mat
                 tooltipTitleCallback={tooltipTitleCallback}
                 tooltipLabelCallback={tooltipLabelCallback}
                 maxY={20}
+                minX={Number(matchesWithLengths[0].id)}
                 maxX={Number(matchesWithLengths[matchesWithLengths.length - 1].id)}
             />
         </>
