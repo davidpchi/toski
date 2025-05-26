@@ -50,6 +50,7 @@ export const MatchTimeLineChart = React.memo(function MatchTimeLineChart({ match
                 allowTogglableDataPoints={true}
                 tooltipTitleCallback={tooltipTitleCallback}
                 tooltipLabelCallback={tooltipLabelCallback}
+                minX={Number(matchesWithTime[0].id)}
                 maxX={Number(matchesWithTime[matchesWithTime.length - 1].id)}
             />
         </>

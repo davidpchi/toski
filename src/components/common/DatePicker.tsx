@@ -60,13 +60,13 @@ export const DatePicker = React.memo(function DatePicker({
 
     useEffect(() => {
         if (startDate === undefined && currentDate) {
-            dispatch(StatsAction.UpdateStartDate(currentDate.toISOString()));
+            dispatch(StatsAction.UpdateStartDate(currentDate));
         }
     }, [startDate, currentDate, dispatch]);
 
     const setDate = (date: Date | undefined) => {
         const effectiveDate = date && isToday(startOfDay(date)) ? undefined : date;
-        dispatch(StatsAction.UpdateStartDate(effectiveDate?.toISOString()));
+        dispatch(StatsAction.UpdateStartDate(effectiveDate));
         onDatePickerChange?.(effectiveDate);
     };
 

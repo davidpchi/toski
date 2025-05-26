@@ -12,5 +12,5 @@ export const StatsAction = {
         payload: data
     })),
 
-    UpdateStartDate: createAction<string | undefined>(StatsActionType.UpdateStartDate)
+    UpdateStartDate: createAction<Date | undefined>(StatsActionType.UpdateStartDate)
 };

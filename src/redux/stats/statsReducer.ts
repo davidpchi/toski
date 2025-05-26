@@ -27,20 +27,20 @@ export type StatsState = Readonly<{
     /**
      * The start date for filtering matches (ISO date string)
      */
-    startDate: string | undefined;
+    startDate: Date | undefined;
 }>;
 
-const getThreeMonthsAgoISO = (): string => {
+const getThreeMonthsAgoDate = (): Date => {
     const date = new Date();
     date.setMonth(date.getMonth() - 3);
-    return date.toISOString().split("T")[0]; // Format as YYYY-MM-DD
+    return date;
 };
 
 const initialState: StatsState = {
     matches: undefined,
     commanders: undefined,
     players: undefined,
-    startDate: getThreeMonthsAgoISO()
+    startDate: getThreeMonthsAgoDate()
 };
 
 export const statsReducer = createReducer(initialState, (builder) => {

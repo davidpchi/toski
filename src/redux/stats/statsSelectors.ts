@@ -51,7 +51,7 @@ const getMatchesByCommanderName = createSelector(
     getMatches,
     getStartDate,
     (_state: AppState, commanderName: string) => commanderName,
-    (matches: Match[] | undefined, startDate: string | undefined, commanderName: string): Match[] => {
+    (matches: Match[] | undefined, startDate: Date | undefined, commanderName: string): Match[] => {
         if (matches === undefined) return [];
 
         const filteredMatches = filterMatchesByDate(matches, startDate ? new Date(startDate) : undefined);
@@ -69,7 +69,7 @@ const getMatchesByPlayerName = createSelector(
     getMatches,
     getStartDate,
     (_state: AppState, playerName: string) => playerName,
-    (matches: Match[] | undefined, startDate: string | undefined, playerName: string): Match[] => {
+    (matches: Match[] | undefined, startDate: Date | undefined, playerName: string): Match[] => {
         if (matches === undefined) return [];
 
         const filteredMatches = filterMatchesByDate(matches, startDate ? new Date(startDate) : undefined);
@@ -77,6 +77,15 @@ const getMatchesByPlayerName = createSelector(
         return filteredMatches.filter((match) => match.players.some((player) => player.name === playerName));
     }
 );
+
+/**
+ * Returns all matches filtered by global startDate.
+ */
+const getMatchesByDate = createSelector(getMatches, getStartDate, (matches, startDate): Match[] => {
+    if (!matches) return [];
+
+    return filterMatchesByDate(matches, startDate ? new Date(startDate) : undefined);
+});
 
 /**
  * Returns all commanders filtered by global startDate.
@@ -155,6 +164,7 @@ export const StatsSelectors = {
     getCommander,
     getPlayer,
     getStartDate,
+    getMatchesByDate,
     getMatchesByCommanderName,
     getMatchesByPlayerName,
     getCommandersByDate,
