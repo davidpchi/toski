@@ -13,12 +13,8 @@ import { AppState } from "../../redux/rootReducer";
 import { MatchPositionWinsBarChart } from "./MatchPositionWinsBarChart";
 import { MatchLengthLineCharts } from "./MatchLengthLineCharts";
 import { MatchFirstKoTurnLineChart } from "./MatchFirstKoTurnLineChart";
-import { DatePicker } from "../common/DatePicker";
-import { useTableFilters } from "../../logic/hooks/tableHooks";
 
 export const MatchTrends = React.memo(function MatchHistory() {
-    const { onDatePickerChange } = useTableFilters();
-
     const matches = useSelector(StatsSelectors.getMatches);
     const players: Player[] = useSelector((state: AppState) => StatsSelectors.getPlayersByDate(state));
 
@@ -49,7 +45,6 @@ export const MatchTrends = React.memo(function MatchHistory() {
 
     return (
         <Flex direction="column" justifyContent="center" alignItems="center" paddingBottom="32px">
-            <DatePicker onDatePickerChange={onDatePickerChange} />
             <MatchLengthBarChart matches={sortedMatches} />
             <MatchLengthLineCharts matches={sortedMatches} />
             <MatchFirstKoTurnLineChart matches={sortedMatches} />

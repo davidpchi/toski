@@ -9,7 +9,6 @@ import { Player } from "../../types/domain/Player";
 import { useNavigate } from "react-router-dom";
 import { PLAYER_MINIMUM_GAMES_REQUIRED } from "../constants";
 import { AppState } from "../../redux/rootReducer";
-import { DatePicker } from "../common/DatePicker";
 import { useTableFilters } from "../../logic/hooks/tableHooks";
 
 /**
@@ -18,8 +17,7 @@ import { useTableFilters } from "../../logic/hooks/tableHooks";
 export const PlayerOverview = React.memo(function MatchHistory() {
     const navigate = useNavigate();
 
-    const { showOnlyQualfied, searchInput, onShowOnlyQualifiedChange, onSearchChange, onDatePickerChange } =
-        useTableFilters();
+    const { showOnlyQualfied, searchInput, onShowOnlyQualifiedChange, onSearchChange } = useTableFilters();
 
     const allPlayers: { [id: string]: Player } | undefined = useSelector(StatsSelectors.getPlayers);
     const players: Player[] = useSelector((state: AppState) => StatsSelectors.getPlayersByDate(state));
@@ -50,7 +48,6 @@ export const PlayerOverview = React.memo(function MatchHistory() {
                 flexWrap={"wrap"}
                 justifyContent={"center"}
             >
-                <DatePicker onDatePickerChange={onDatePickerChange} />
                 <Tooltip
                     label={<p style={{ textAlign: "center" }}>Players play 10 games to be qualified.</p>}
                     hasArrow

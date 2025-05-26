@@ -17,16 +17,17 @@ import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { StatsSelectors } from "../../redux/stats/statsSelectors";
 import { StatsAction } from "../../redux/stats/statsActions";
-import { format, isToday, startOfDay } from "date-fns";
+import { format, isToday, startOfDay, differenceInCalendarDays } from "date-fns";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+// Label (abbreviated) -> display (long-form) mapping
 const quickRanges = [
-    { label: "1M", days: 30 },
-    { label: "2M", days: 60 },
-    { label: "6M", days: 180 },
-    { label: "1Y", days: 365 },
-    { label: "All", days: undefined }
+    { label: "1M", display: "1 Month", days: 30 },
+    { label: "3M", display: "3 Months", days: 90 },
+    { label: "6M", display: "6 Months", days: 180 },
+    { label: "1Y", display: "1 Year", days: 365 },
+    { label: "All", display: "All Time", days: undefined }
 ];
 
 export const DatePicker = React.memo(function DatePicker({
@@ -43,6 +44,15 @@ export const DatePicker = React.memo(function DatePicker({
 
     const displayDate = useMemo(() => {
         if (!currentDate || isToday(startOfDay(currentDate))) return "All Time";
+
+        const today = startOfDay(new Date());
+        for (const { days, display } of quickRanges) {
+            if (!days) continue;
+            const rangeStart = new Date(today.getTime() - days * 24 * 60 * 60 * 1000);
+            const diff = Math.abs(differenceInCalendarDays(rangeStart, currentDate));
+            if (diff <= 1) return display;
+        }
+
         return format(currentDate, "MMM d, yyyy");
     }, [currentDate]);
 
@@ -75,7 +85,7 @@ export const DatePicker = React.memo(function DatePicker({
                         size="sm"
                         leftIcon={<CalendarIcon />}
                         variant="outline"
-                        w="180px" // fixed width for consistency
+                        width="180px"
                         justifyContent="flex-start"
                         fontWeight="normal"
                         fontSize="sm"
@@ -87,20 +97,20 @@ export const DatePicker = React.memo(function DatePicker({
                     </Button>
                 )}
             </PopoverTrigger>
-            <PopoverContent width="fit-content" minW="260px" maxW="90vw" _focus={{ outline: "none" }}>
+            <PopoverContent width="fit-content" minWidth="260px" maxWidth="90vw" _focus={{ outline: "none" }}>
                 <PopoverArrow />
                 <PopoverBody>
                     <Box>
-                        <Text fontSize="sm" fontWeight="bold" mb="2">
+                        <Text fontSize="sm" fontWeight="bold" marginBottom="2">
                             Filter Match Data
                         </Text>
 
-                        <VStack align="start" spacing={4}>
+                        <VStack alignItems="start" spacing={4}>
                             <Box>
-                                <Text fontSize="sm" mb="1">
+                                <Text fontSize="sm" marginBottom="1">
                                     Quick Ranges
                                 </Text>
-                                <Stack direction="row" wrap="wrap" spacing={2}>
+                                <Stack direction="row" flexWrap="wrap" spacing={2}>
                                     {quickRanges.map(({ label, days }) => (
                                         <Button key={label} size="xs" onClick={() => handleQuickRange(days)}>
                                             {label}
@@ -110,10 +120,10 @@ export const DatePicker = React.memo(function DatePicker({
                             </Box>
 
                             <Box>
-                                <Text fontSize="sm" mb="1">
+                                <Text fontSize="sm" marginBottom="1">
                                     Custom Date
                                 </Text>
-                                <Box border="1px solid #E2E8F0" borderRadius="md" p={2}>
+                                <Box border="1px solid #E2E8F0" borderRadius="md" padding="2">
                                     <ReactDatePicker
                                         selected={currentDate}
                                         onChange={(date: Date | null) => setDate(date ?? undefined)}

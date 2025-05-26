@@ -36,27 +36,28 @@ export const useTableFilters = () => {
         [setSearchInput]
     );
 
+    // TODO: Temporarily disable this logic until we have more time to investigate this bug.
     // this useEffect is listening to all of the filter changes and applying to them to the search parameters
-    useEffect(() => {
-        // date filter
-        if (dateFilter) {
-            searchParams.set("fromDate", dateFilter.getTime().toString());
-        } else {
-            searchParams.delete("fromDate");
-        }
+    // useEffect(() => {
+    //     // date filter
+    //     if (dateFilter) {
+    //         searchParams.set("fromDate", dateFilter.getTime().toString());
+    //     } else {
+    //         searchParams.delete("fromDate");
+    //     }
 
-        // qualified filter
-        // this will make sure that the qualified filter is always set in the url
-        searchParams.set("onlyQualified", showOnlyQualfied.toString());
+    //     // qualified filter
+    //     // this will make sure that the qualified filter is always set in the url
+    //     searchParams.set("onlyQualified", showOnlyQualfied.toString());
 
-        if (searchInput) {
-            searchParams.set("filter", searchInput);
-        } else {
-            searchParams.delete("filter");
-        }
+    //     if (searchInput) {
+    //         searchParams.set("filter", searchInput);
+    //     } else {
+    //         searchParams.delete("filter");
+    //     }
 
-        setSearchParams(searchParams);
-    }, [dateFilter, nameFilterParam, searchInput, searchParams, setSearchParams, showOnlyQualfied]);
+    //     setSearchParams(searchParams);
+    // }, [dateFilter, nameFilterParam, searchInput, searchParams, setSearchParams, showOnlyQualfied]);
 
     return {
         dateFilter,

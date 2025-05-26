@@ -34,7 +34,6 @@ import { MatchPlayer } from "../../types/domain/MatchPlayer";
 import { LineGraph } from "../dataVisualizations/LineGraph";
 import { Player } from "../../types/domain/Player";
 import { COMMANDER_MINIMUM_GAMES_REQUIRED, NUMBER_OF_PLAYERS_FOR_VALID_MATCH } from "../constants";
-import { DatePicker } from "../common/DatePicker";
 import { MatchPlacementBarChart } from "./MatchPlacementBarChart";
 import { primaryColor } from "../../themes/acorn";
 import { topPlayersColumns } from "../dataVisualizations/columnHelpers/topPlayersColumnHelper";
@@ -42,7 +41,6 @@ import { filterMatchesByPlayerCount } from "../../logic/dictionaryUtils";
 import { getAverageWinTurnForCommander, getWinRatePercentage } from "../../logic/utils";
 import { CommanderMatchupsTable } from "./CommanderMatchupsTable";
 import { PlayerMatchupsTable } from "./PlayerMatchupsTable";
-import { useTableFilters } from "../../logic/hooks/tableHooks";
 
 export async function loader(data: { params: any }) {
     return data.params.commanderId;
@@ -63,8 +61,6 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
     const handleTabsChange = (index: number) => {
         setTabIndex(index);
     };
-
-    const { onDatePickerChange } = useTableFilters();
 
     const [searchInput, setSearchInput] = useState("");
     const onSearchChange = useCallback((event: any) => {
@@ -218,7 +214,6 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                 paddingBottom="16px"
                 gap="16px"
             >
-                <DatePicker onDatePickerChange={onDatePickerChange} />
                 <Input placeholder="Filter by player or commander name..." onChange={onSearchChange} />
             </Flex>
 
