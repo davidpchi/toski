@@ -11,8 +11,12 @@ import { MTG_COLORS, MTG_COLOR_IDENTITIES } from "../constants";
 import { PieGraph } from "../dataVisualizations/PieGraph";
 import { AppState } from "../../redux/rootReducer";
 import { Commander } from "../../types/domain/Commander";
+import { useTableFilters } from "../../logic/hooks/tableHooks";
+import { DatePicker } from "../common/DatePicker";
 
 export const CommanderTrends = React.memo(function CommanderTrends() {
+    const { onDatePickerChange } = useTableFilters();
+
     const matches = useSelector(StatsSelectors.getMatches);
     const commanders: Commander[] = useSelector((state: AppState) => StatsSelectors.getCommandersByDate(state));
 
@@ -86,6 +90,7 @@ export const CommanderTrends = React.memo(function CommanderTrends() {
 
     return (
         <Flex direction="column" justify="center" align="center">
+            <DatePicker onDatePickerChange={onDatePickerChange} />
             <Heading size="md">Commander Colors Played</Heading>
             <Flex maxWidth={"750px"} justifyContent={"center"} alignItems={"center"}>
                 {!showAdvancedColorChart ? (

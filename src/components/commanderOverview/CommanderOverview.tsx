@@ -18,7 +18,7 @@ export const CommanderOverview = React.memo(function MatchHistory() {
     const navigate = useNavigate();
 
     const allCommanders = useSelector(StatsSelectors.getCommanders);
-    const { dateFilter, showOnlyQualfied, searchInput, onDatePickerChange, onShowOnlyQualifiedChange, onSearchChange } =
+    const { showOnlyQualfied, searchInput, onShowOnlyQualifiedChange, onSearchChange, onDatePickerChange } =
         useTableFilters();
 
     const commanders: Commander[] = useSelector((state: AppState) => StatsSelectors.getCommandersByDate(state));
@@ -48,7 +48,7 @@ export const CommanderOverview = React.memo(function MatchHistory() {
                 flexWrap={"wrap"}
                 justifyContent={"center"}
             >
-                <DatePicker />
+                <DatePicker onDatePickerChange={onDatePickerChange} />
                 <Tooltip
                     label={<p style={{ textAlign: "center" }}>Commanders play 5 games to be qualified.</p>}
                     hasArrow

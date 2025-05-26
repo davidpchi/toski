@@ -1,37 +1,37 @@
-import { Flex, Select, Text } from "@chakra-ui/react";
-import React, { useEffect, useMemo, useState } from "react";
+import {
+    Box,
+    Button,
+    Popover,
+    PopoverArrow,
+    PopoverBody,
+    PopoverContent,
+    PopoverTrigger,
+    Stack,
+    Text
+} from "@chakra-ui/react";
+import { CalendarIcon } from "@chakra-ui/icons";
+import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { StatsSelectors } from "../../redux/stats/statsSelectors";
 import { StatsAction } from "../../redux/stats/statsActions";
+import { format, isToday, startOfDay } from "date-fns";
+import ReactDatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
-enum DatePickerOption {
-    AllTime = "allTime",
-    Weeks1 = "week1",
-    Weeks2 = "week2",
-    Months1 = "month1",
-    Months6 = "month6",
-    Year1 = "year1"
-}
+const quickRanges = [
+    { label: "1W", days: 7 },
+    { label: "2W", days: 14 },
+    { label: "1M", days: 30 },
+    { label: "6M", days: 180 },
+    { label: "1Y", days: 365 },
+    { label: "All", days: undefined }
+];
 
-function getDatePickerOptionsFromDate(value: Date | undefined): DatePickerOption {
-    const currentDate = new Date();
-
-    if (value === undefined) {
-        return DatePickerOption.AllTime;
-    } else {
-        const dateDiff = Math.round((currentDate.getTime() - value.getTime()) / (1000 * 60 * 60 * 24));
-
-        if (dateDiff <= 7) return DatePickerOption.Weeks1;
-        if (dateDiff <= 14) return DatePickerOption.Weeks2;
-        if (dateDiff <= 30) return DatePickerOption.Months1;
-        if (dateDiff <= 180) return DatePickerOption.Months6;
-        if (dateDiff <= 365) return DatePickerOption.Year1;
-    }
-
-    return DatePickerOption.AllTime;
-}
-
-export const DatePicker = React.memo(function DatePicker() {
+export const DatePicker = React.memo(function DatePicker({
+    onDatePickerChange
+}: {
+    onDatePickerChange?: (date: Date | undefined) => void;
+}) {
     const dispatch = useDispatch();
     const startDate = useSelector(StatsSelectors.getStartDate);
 
@@ -39,55 +39,76 @@ export const DatePicker = React.memo(function DatePicker() {
         return startDate ? new Date(startDate) : undefined;
     }, [startDate]);
 
-    const [dateSelectValue, setDateSelectValue] = useState<DatePickerOption>(getDatePickerOptionsFromDate(currentDate));
+    const displayDate = useMemo(() => {
+        if (!currentDate || isToday(startOfDay(currentDate))) return "All Time";
+        return format(currentDate, "MMM d, yyyy");
+    }, [currentDate]);
 
     useEffect(() => {
-        setDateSelectValue(getDatePickerOptionsFromDate(currentDate));
-    }, [currentDate, startDate]);
-
-    const onDateFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const value = event.target.value as DatePickerOption;
-        let dateDiff: number | undefined;
-
-        switch (value) {
-            case DatePickerOption.Weeks1:
-                dateDiff = 7;
-                break;
-            case DatePickerOption.Weeks2:
-                dateDiff = 14;
-                break;
-            case DatePickerOption.Months1:
-                dateDiff = 30;
-                break;
-            case DatePickerOption.Months6:
-                dateDiff = 180;
-                break;
-            case DatePickerOption.Year1:
-                dateDiff = 365;
-                break;
-            case DatePickerOption.AllTime:
-            default:
-                dateDiff = undefined;
+        if (startDate === undefined && currentDate) {
+            dispatch(StatsAction.UpdateStartDate(currentDate.toISOString()));
         }
+    }, [startDate, currentDate, dispatch]);
 
-        const newStartDate =
-            dateDiff !== undefined ? new Date(Date.now() - dateDiff * 24 * 60 * 60 * 1000).toISOString() : undefined;
+    const setDate = (date: Date | undefined) => {
+        const effectiveDate = date && isToday(startOfDay(date)) ? undefined : date;
+        dispatch(StatsAction.UpdateStartDate(effectiveDate?.toISOString()));
+        onDatePickerChange?.(effectiveDate);
+    };
 
-        dispatch(StatsAction.UpdateStartDate(newStartDate));
-        setDateSelectValue(value);
+    const handleQuickRange = (days: number | undefined) => {
+        const date = days ? new Date(Date.now() - days * 24 * 60 * 60 * 1000) : undefined;
+        setDate(date);
     };
 
     return (
-        <Flex direction="row" alignItems="center" marginRight="16px">
-            <Text marginRight="8px">Data from: </Text>
-            <Select width={200} onChange={onDateFilterChange} value={dateSelectValue}>
-                <option value={DatePickerOption.AllTime}>All time</option>
-                <option value={DatePickerOption.Weeks1}>1 week ago</option>
-                <option value={DatePickerOption.Weeks2}>2 weeks ago</option>
-                <option value={DatePickerOption.Months1}>1 month ago</option>
-                <option value={DatePickerOption.Months6}>6 months ago</option>
-                <option value={DatePickerOption.Year1}>1 year ago</option>
-            </Select>
-        </Flex>
+        <Popover placement="bottom-start">
+            <PopoverTrigger>
+                <Button
+                    size="sm"
+                    leftIcon={<CalendarIcon />}
+                    variant="outline"
+                    minW="150px"
+                    maxW="200px"
+                    whiteSpace="nowrap"
+                    overflow="hidden"
+                    textOverflow="ellipsis"
+                >
+                    {displayDate}
+                </Button>
+            </PopoverTrigger>
+            <PopoverContent width="fit-content" minW="250px" _focus={{ outline: "none" }}>
+                <PopoverArrow />
+                <PopoverBody>
+                    <Box>
+                        <Text fontSize="sm" mb="2">
+                            Quick ranges
+                        </Text>
+                        <Stack direction="row" wrap="wrap" spacing={2} mb={4}>
+                            {quickRanges.map(({ label, days }) => (
+                                <Button key={label} size="xs" onClick={() => handleQuickRange(days)}>
+                                    {label}
+                                </Button>
+                            ))}
+                        </Stack>
+
+                        <Text fontSize="sm" mb="2">
+                            Or pick a date
+                        </Text>
+                        <Box border="1px solid #E2E8F0" borderRadius="md" p={2}>
+                            <ReactDatePicker
+                                selected={currentDate}
+                                onChange={(date: Date | null) => setDate(date ?? undefined)}
+                                dateFormat="MMM d, yyyy"
+                                maxDate={new Date()}
+                                isClearable
+                                placeholderText="Select a date"
+                                inline
+                            />
+                        </Box>
+                    </Box>
+                </PopoverBody>
+            </PopoverContent>
+        </Popover>
     );
 });
