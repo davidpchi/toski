@@ -24,7 +24,7 @@ export const CommanderMatchupsTable = React.memo(function CommanderMatchupsTable
 
     // get all the valid matches the player has participated in
     const matches = filterMatchesByPlayerCount(
-        useSelector((state: AppState) => StatsSelectors.getMatchesByPlayerName(state, playerId, dateFilter)),
+        useSelector((state: AppState) => StatsSelectors.getMatchesByPlayerName(state, playerId)),
         NUMBER_OF_PLAYERS_FOR_VALID_MATCH
     );
     const commanderMatchups: { [commanderId: string]: CommanderMatchupItem } = {};

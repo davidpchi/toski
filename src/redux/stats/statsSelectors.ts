@@ -6,10 +6,9 @@ import { Player } from "../../types/domain/Player";
 import { AppState } from "../rootReducer";
 
 const getMatches = (state: AppState) => state.stats.matches;
-
 const getCommanders = (state: AppState) => state.stats.commanders;
-
 const getPlayers = (state: AppState) => state.stats.players;
+const getStartDate = (state: AppState) => state.stats.startDate;
 
 /**
  * Gets a specific match based on matchId. matchId is the index in which it is in the array.
@@ -46,149 +45,105 @@ const getPlayer = createSelector(
 );
 
 /**
- * Returns a collection matches in chronological order given a commander NAME. Note that this is not searching using commander id.
+ * Returns a collection of matches for a given commander NAME, filtered by global startDate.
  */
 const getMatchesByCommanderName = createSelector(
     getMatches,
+    getStartDate,
     (_state: AppState, commanderName: string) => commanderName,
-    (_state: AppState, _commanderName: string, startDate?: Date) => startDate,
-    (matches: Match[] | undefined, commanderName: string, startDate?: Date): Match[] => {
-        if (matches === undefined) {
-            return [];
-        }
+    (matches: Match[] | undefined, startDate: string | undefined, commanderName: string): Match[] => {
+        if (matches === undefined) return [];
 
-        const allMatches = filterMatchesByDate(matches, startDate);
+        const filteredMatches = filterMatchesByDate(matches, startDate ? new Date(startDate) : undefined);
 
-        const result = [];
-        for (const match of allMatches) {
-            for (const player of match.players) {
-                let foundCommander = false;
-
-                for (const commander of player.commanders) {
-                    if (commander === commanderName) {
-                        result.push(match);
-                        foundCommander = true;
-                        break;
-                    }
-                }
-
-                // since we already determined that this match has the commander,
-                // we don't need to keep looking through the rest of the players of this match
-                if (foundCommander) {
-                    break;
-                }
-            }
-        }
-
-        return result;
+        return filteredMatches.filter((match) =>
+            match.players.some((player) => player.commanders.includes(commanderName))
+        );
     }
 );
 
 /**
- * Returns a collection matches in chronological order given a player NAME
+ * Returns a collection of matches for a given player NAME, filtered by global startDate.
  */
 const getMatchesByPlayerName = createSelector(
     getMatches,
+    getStartDate,
     (_state: AppState, playerName: string) => playerName,
-    (_state: AppState, _playerName: string, startDate?: Date) => startDate,
-    (matches: Match[] | undefined, playerName: string, startDate?: Date): Match[] => {
-        if (matches === undefined) {
-            return [];
-        }
+    (matches: Match[] | undefined, startDate: string | undefined, playerName: string): Match[] => {
+        if (matches === undefined) return [];
 
-        const allMatches = filterMatchesByDate(matches, startDate);
+        const filteredMatches = filterMatchesByDate(matches, startDate ? new Date(startDate) : undefined);
 
-        const result = [];
-        for (const match of allMatches) {
-            for (const player of match.players) {
-                if (player.name === playerName) {
-                    result.push(match);
-                    break;
-                }
-            }
-        }
-
-        return result;
-    }
-);
-
-const getCommandersByDate = createSelector(
-    getMatches,
-    getCommanders,
-    (_state: AppState, startDate?: Date) => startDate,
-    (
-        matches: Match[] | undefined,
-        commanders: { [id: string]: Commander } | undefined,
-        startDate?: Date
-    ): Commander[] => {
-        if (matches === undefined || commanders === undefined) {
-            return [];
-        }
-
-        return Object.values(matchesToCommanderHelper(matches, undefined, startDate));
+        return filteredMatches.filter((match) => match.players.some((player) => player.name === playerName));
     }
 );
 
 /**
- * Returns a collection commanders in chronological order given a player name
+ * Returns all commanders filtered by global startDate.
+ */
+const getCommandersByDate = createSelector(
+    getMatches,
+    getCommanders,
+    getStartDate,
+    (matches, commanders, startDate): Commander[] => {
+        if (matches === undefined || commanders === undefined) return [];
+
+        return Object.values(matchesToCommanderHelper(matches, undefined, startDate ? new Date(startDate) : undefined));
+    }
+);
+
+/**
+ * Returns all commanders for a given player name filtered by global startDate.
  */
 const getCommandersByPlayerName = createSelector(
     getMatches,
     getCommanders,
+    getStartDate,
     (_state: AppState, playerName: string) => playerName,
-    (_state: AppState, _playerName: string, startDate?: Date) => startDate,
-    (
-        matches: Match[] | undefined,
-        commanders: { [id: string]: Commander } | undefined,
-        playerName: string,
-        startDate?: Date
-    ): Commander[] => {
-        if (matches === undefined || commanders === undefined) {
-            return [];
-        }
+    (matches, commanders, startDate, playerName): Commander[] => {
+        if (matches === undefined || commanders === undefined) return [];
 
-        return Object.values(matchesToCommanderHelper(matches, playerName, startDate));
-    }
-);
-
-const getFavoriteCommanderForPlayer = createSelector(getCommandersByPlayerName, (commanders: Commander[]) => {
-    return commanders !== undefined && commanders.length > 0
-        ? commanders.sort((a, b) => b.matches.length - a.matches.length)[0]!
-        : undefined;
-});
-
-const getPlayersByDate = createSelector(
-    getMatches,
-    getCommanders,
-    (_state: AppState, startDate?: Date) => startDate,
-    (matches: Match[] | undefined, commanders: { [id: string]: Commander } | undefined, startDate?: Date): Player[] => {
-        if (matches === undefined || commanders === undefined) {
-            return [];
-        }
-
-        return Object.values(matchesToPlayersHelper(matches, undefined, startDate));
+        return Object.values(
+            matchesToCommanderHelper(matches, playerName, startDate ? new Date(startDate) : undefined)
+        );
     }
 );
 
 /**
- * Returns a collection of players in chronological order based on commander NAME
+ * Returns the favorite commander for a player by match count.
+ */
+const getFavoriteCommanderForPlayer = createSelector(getCommandersByPlayerName, (commanders: Commander[]) => {
+    return commanders.length > 0 ? commanders.sort((a, b) => b.matches.length - a.matches.length)[0] : undefined;
+});
+
+/**
+ * Returns all players filtered by global startDate.
+ */
+const getPlayersByDate = createSelector(
+    getMatches,
+    getCommanders,
+    getStartDate,
+    (matches, commanders, startDate): Player[] => {
+        if (matches === undefined || commanders === undefined) return [];
+
+        return Object.values(matchesToPlayersHelper(matches, undefined, startDate ? new Date(startDate) : undefined));
+    }
+);
+
+/**
+ * Returns all players for a given commander NAME filtered by global startDate.
  */
 const getPlayersByCommanderName = createSelector(
     getMatches,
     getCommanders,
+    getStartDate,
     (_state: AppState, commanderName: string) => commanderName,
-    (_state: AppState, _commanderName: string, startDate?: Date) => startDate,
-    (
-        matches: Match[] | undefined,
-        commanders: { [id: string]: Commander } | undefined,
-        commanderName: string,
-        startDate?: Date
-    ): Player[] => {
-        if (matches === undefined || commanders === undefined) {
-            return [];
-        }
+    (matches, commanders, startDate, commanderName): Player[] => {
+        if (matches === undefined || commanders === undefined) return [];
 
-        return Object.values(matchesToPlayersHelper(matches, commanderName, startDate));
+        return Object.values(
+            matchesToPlayersHelper(matches, commanderName, startDate ? new Date(startDate) : undefined)
+        );
     }
 );
 
@@ -199,6 +154,7 @@ export const StatsSelectors = {
     getMatch,
     getCommander,
     getPlayer,
+    getStartDate,
     getMatchesByCommanderName,
     getMatchesByPlayerName,
     getCommandersByDate,
