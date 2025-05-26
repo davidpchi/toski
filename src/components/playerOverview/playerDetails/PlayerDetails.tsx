@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useLoaderData, useNavigate } from "react-router-dom";
 
@@ -32,6 +32,7 @@ import { PlayerMatchupsTable } from "../PlayerMatchupsTable";
 import { primaryColor } from "../../../themes/acorn";
 import { ProfileSelectors } from "../../../redux/profiles/profilesSelectors";
 import { PlayerDecks } from "./PlayerDecks";
+import { useTableFilters } from "../../../logic/hooks/tableHooks";
 
 export async function loader(data: { params: any }) {
     return data.params.playerId;
@@ -41,6 +42,8 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
     const navigate = useNavigate();
     // Player variables
     const playerId = useLoaderData() as string;
+
+    const { onDatePickerChange } = useTableFilters();
 
     const player = useSelector((state: AppState) => StatsSelectors.getPlayer(state, playerId));
     const toskiToDiscordMap = useSelector((state: AppState) => state.profiles.toskiToDiscordMap);
@@ -59,13 +62,7 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
         setTabIndex(index);
     };
 
-    const [dateFilter, setDateFilter] = useState<Date | undefined>(undefined);
-    const onDatePickerChange = useCallback(
-        (date: Date | undefined) => {
-            setDateFilter(date);
-        },
-        [setDateFilter]
-    );
+    const [dateFilter] = useState<Date | undefined>(undefined);
 
     // needs to come after we initialize the date filter
     const matches = useSelector((state: AppState) =>
@@ -80,7 +77,7 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
     return (
         <Flex direction="column" justify="center" align="center">
             <PlayerDetailsInfoCard playerId={playerId} />
-            <DatePicker />
+            <DatePicker onDatePickerChange={onDatePickerChange} />
             <Select
                 marginTop={"16px"}
                 display={{ base: "inline", md: "none" }}
@@ -152,7 +149,7 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
                         )}
                     </TabPanel>
                     <TabPanel>
-                        <CommanderHistoryTable playerId={playerId} dateFilter={dateFilter} />
+                        <CommanderHistoryTable playerId={playerId} />
                     </TabPanel>
                     <TabPanel>
                         <Flex

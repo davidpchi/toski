@@ -14,11 +14,9 @@ import { filterMatchesByPlayerCount } from "../../logic/dictionaryUtils";
 import { NUMBER_OF_PLAYERS_FOR_VALID_MATCH } from "../constants";
 
 export const CommanderMatchupsTable = React.memo(function CommanderMatchupsTable({
-    commanderName,
-    dateFilter
+    commanderName
 }: {
     commanderName: string;
-    dateFilter?: Date;
 }) {
     const navigate = useNavigate();
 

@@ -18,7 +18,7 @@ import { useTableFilters } from "../../logic/hooks/tableHooks";
 export const PlayerOverview = React.memo(function MatchHistory() {
     const navigate = useNavigate();
 
-    const { dateFilter, showOnlyQualfied, searchInput, onDatePickerChange, onShowOnlyQualifiedChange, onSearchChange } =
+    const { showOnlyQualfied, searchInput, onShowOnlyQualifiedChange, onSearchChange, onDatePickerChange } =
         useTableFilters();
 
     const allPlayers: { [id: string]: Player } | undefined = useSelector(StatsSelectors.getPlayers);
@@ -50,7 +50,7 @@ export const PlayerOverview = React.memo(function MatchHistory() {
                 flexWrap={"wrap"}
                 justifyContent={"center"}
             >
-                <DatePicker />
+                <DatePicker onDatePickerChange={onDatePickerChange} />
                 <Tooltip
                     label={<p style={{ textAlign: "center" }}>Players play 10 games to be qualified.</p>}
                     hasArrow

@@ -1,3 +1,5 @@
+// CommanderDetails.tsx
+
 import { TooltipItem } from "chart.js";
 import React, { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
@@ -40,6 +42,7 @@ import { filterMatchesByPlayerCount } from "../../logic/dictionaryUtils";
 import { getAverageWinTurnForCommander, getWinRatePercentage } from "../../logic/utils";
 import { CommanderMatchupsTable } from "./CommanderMatchupsTable";
 import { PlayerMatchupsTable } from "./PlayerMatchupsTable";
+import { useTableFilters } from "../../logic/hooks/tableHooks";
 
 export async function loader(data: { params: any }) {
     return data.params.commanderId;
@@ -61,58 +64,44 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
         setTabIndex(index);
     };
 
-    const [dateFilter, setDateFilter] = useState<Date | undefined>(undefined);
-    const onDatePickerChange = useCallback(
-        (date: Date | undefined) => {
-            setDateFilter(date);
-        },
-        [setDateFilter]
-    );
+    const { onDatePickerChange } = useTableFilters();
 
     const [searchInput, setSearchInput] = useState("");
-    const onSearchChange = useCallback(
-        (event: any) => {
-            setSearchInput(event.target.value);
-        },
-        [setSearchInput]
-    );
+    const onSearchChange = useCallback((event: any) => {
+        setSearchInput(event.target.value);
+    }, []);
 
-    // Get all matches to display in Match History of the Commander Overview
     const matches = useSelector((state: AppState) =>
         StatsSelectors.getMatchesByCommanderName(state, commander ? commander.name : "")
     );
 
-    // Get matches filtered by player count to use in statistical calculations
-    // These matches are considered "valid" because they all have the same number of players
     const validMatches = filterMatchesByPlayerCount(
         useSelector((state: AppState) =>
             StatsSelectors.getMatchesByCommanderName(state, commander ? commander.name : "")
         ),
         NUMBER_OF_PLAYERS_FOR_VALID_MATCH
     );
+
     const commanderPlayers: Player[] = useSelector((state: AppState) =>
         StatsSelectors.getPlayersByCommanderName(state, commander ? commander.name : "")
     );
-    commanderPlayers.sort((a: Player, b: Player) => b.validMatchesCount - a.validMatchesCount);
+
+    const sortedCommanderPlayers = [...commanderPlayers].sort(
+        (a: Player, b: Player) => b.validMatchesCount - a.validMatchesCount
+    );
 
     if (commander === undefined) {
         return <Loading text="" />;
     }
 
-    let matchesArray: Match[] = matches.sort((a, b) => Number(b.id) - Number(a.id));
-    if (searchInput.length > 0 && matches) {
-        matchesArray = matches.filter((match: Match) => {
-            for (let player of match.players) {
-                if (player.name.toLowerCase().includes(searchInput.toLowerCase())) {
-                    return true;
-                }
-                for (let comm of player.commanders) {
-                    if (comm.toLowerCase().includes(searchInput.toLowerCase())) {
-                        return true;
-                    }
-                }
-            }
-            return false;
+    let filteredMatches: Match[] = [...matches].sort((a, b) => Number(b.id) - Number(a.id));
+    if (searchInput.length > 0) {
+        filteredMatches = filteredMatches.filter((match: Match) => {
+            return match.players.some(
+                (player) =>
+                    player.name.toLowerCase().includes(searchInput.toLowerCase()) ||
+                    player.commanders.some((comm) => comm.toLowerCase().includes(searchInput.toLowerCase()))
+            );
         });
     }
 
@@ -120,10 +109,8 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
 
     const winratePerMatch = validMatches.map((match: Match, index: number) => {
         const winningPlayer = match.players.find((player: MatchPlayer) => player.rank === "1");
-
         let currentWinRate = 0;
 
-        // this should always be true
         if (winningPlayer !== undefined) {
             for (const winningCommander of winningPlayer.commanders) {
                 const isWinner = winningCommander === commander.name;
@@ -147,120 +134,97 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
     };
 
     return (
-        <Flex direction="column" justify="center" align="center">
+        <Flex direction="column" justifyContent="center" alignItems="center">
             <Flex
                 direction="row"
-                maxWidth={"1024px"}
-                alignSelf={"center"}
-                justifyContent={"center"}
-                alignItems={"center"}
-                align="start"
+                maxWidth="1024px"
+                alignSelf="center"
+                justifyContent="center"
+                alignItems="center"
                 flexWrap="wrap"
                 marginBottom="32px"
             >
                 {commanderList[commander.name] ? (
                     <Image
-                        width={300}
+                        width="300px"
                         src={commanderList[commander.name].image}
-                        boxShadow={"0px 12px 18px 2px rgba(0,0,0,0.3)"}
-                        borderRadius={"4%"}
+                        boxShadow="0px 12px 18px 2px rgba(0,0,0,0.3)"
+                        borderRadius="4%"
                         zIndex={1}
                     />
                 ) : null}
                 <Flex
                     direction="column"
-                    paddingTop={"16px"}
-                    paddingRight={"16px"}
-                    paddingLeft={{ base: "16px", md: 0 }}
-                    paddingBottom={"16px"}
-                    marginLeft={{ base: 0, md: "-8px" }}
+                    paddingTop="16px"
+                    paddingRight="16px"
+                    paddingLeft={{ base: "16px", md: "0px" }}
+                    paddingBottom="16px"
+                    marginLeft={{ base: "0px", md: "-8px" }}
                 >
                     <Heading
-                        size={"sm"}
-                        textTransform={"uppercase"}
-                        paddingRight={"16px"}
-                        paddingLeft={"16px"}
-                        paddingTop={"8px"}
-                        paddingBottom={"8px"}
-                        borderWidth={1}
-                        borderTopRadius={"8px"}
+                        size="sm"
+                        textTransform="uppercase"
+                        paddingRight="16px"
+                        paddingLeft="16px"
+                        paddingTop="8px"
+                        paddingBottom="8px"
+                        borderWidth="1px"
+                        borderTopRadius="8px"
                         backgroundColor={primaryColor["500"]}
-                        color={"white"}
+                        color="white"
                     >
                         {commander.name}
                     </Heading>
-                    <Text
-                        paddingLeft={"16px"}
-                        paddingRight={"16px"}
-                        paddingTop={"8px"}
-                        paddingBottom={"8px"}
-                        borderLeftWidth={1}
-                        borderRightWidth={1}
-                        borderBottomWidth={1}
-                    >{`Total Games: ${commander.validMatchesCount}`}</Text>
-                    <Text
-                        paddingLeft={"16px"}
-                        paddingRight={"16px"}
-                        paddingTop={"8px"}
-                        paddingBottom={"8px"}
-                        borderLeftWidth={1}
-                        borderRightWidth={1}
-                        borderBottomWidth={1}
-                    >
+                    <Text padding="8px 16px" borderLeftWidth="1px" borderRightWidth="1px" borderBottomWidth="1px">
+                        {`Total Games: ${commander.validMatchesCount}`}
+                    </Text>
+                    <Text padding="8px 16px" borderLeftWidth="1px" borderRightWidth="1px" borderBottomWidth="1px">
                         {`Winrate: ${
                             commander.validMatchesCount > 0
                                 ? `${getWinRatePercentage(commander.wins, commander.validMatchesCount)}% (${
                                       commander.wins
                                   } win${commander.wins > 1 ? "s" : ""})`
-                                : "N/A" // Displays N/A if the commander has no valid matches
+                                : "N/A"
                         }`}
                     </Text>
-                    <Text
-                        paddingLeft={"16px"}
-                        paddingRight={"16px"}
-                        paddingTop={"8px"}
-                        paddingBottom={"8px"}
-                        borderLeftWidth={1}
-                        borderRightWidth={1}
-                        borderBottomWidth={1}
-                    >{`Avg. win turn: ${getAverageWinTurnForCommander(commander, matches)}`}</Text>
-                    <Text
-                        paddingLeft={"16px"}
-                        paddingRight={"16px"}
-                        paddingTop={"8px"}
-                        paddingBottom={"8px"}
-                        borderLeftWidth={1}
-                        borderRightWidth={1}
-                        borderBottomWidth={1}
-                    >{`Qualified: ${
-                        commander.validMatchesCount >= COMMANDER_MINIMUM_GAMES_REQUIRED ? "Yes" : "No"
-                    }`}</Text>
-                    {commanderList[commander.name] ? (
+                    <Text padding="8px 16px" borderLeftWidth="1px" borderRightWidth="1px" borderBottomWidth="1px">
+                        {`Avg. win turn: ${getAverageWinTurnForCommander(commander, matches)}`}
+                    </Text>
+                    <Text padding="8px 16px" borderLeftWidth="1px" borderRightWidth="1px" borderBottomWidth="1px">
+                        {`Qualified: ${commander.validMatchesCount >= COMMANDER_MINIMUM_GAMES_REQUIRED ? "Yes" : "No"}`}
+                    </Text>
+                    {commanderList[commander.name] && (
                         <Link
-                            paddingLeft={"16px"}
-                            paddingRight={"16px"}
-                            paddingTop={"8px"}
-                            paddingBottom={"8px"}
-                            borderLeftWidth={1}
-                            borderRightWidth={1}
-                            borderBottomWidth={1}
+                            padding="8px 16px"
+                            borderLeftWidth="1px"
+                            borderRightWidth="1px"
+                            borderBottomWidth="1px"
                             href={commanderList[commander.name].scryfallUri}
                             isExternal
                         >
-                            View on Scryfall <ExternalLinkIcon mx="2px" marginBottom={"5px"} />
+                            View on Scryfall <ExternalLinkIcon marginLeft="4px" marginBottom="5px" />
                         </Link>
-                    ) : null}
+                    )}
                 </Flex>
             </Flex>
-            <Flex direction={"column"}>
-                <DatePicker />
-                <div style={{ padding: 20 }}>
-                    <Input placeholder="Filter by..." onChange={onSearchChange} />
-                </div>
+
+            <Flex
+                direction={{ base: "column", md: "row" }}
+                alignItems={{ base: "stretch", md: "center" }}
+                width="100%"
+                maxWidth="1024px"
+                paddingLeft="16px"
+                paddingRight="16px"
+                paddingBottom="16px"
+                gap="16px"
+            >
+                <DatePicker onDatePickerChange={onDatePickerChange} />
+                <Input placeholder="Filter by player or commander name..." onChange={onSearchChange} />
             </Flex>
+
             <Select
                 display={{ base: "inline", md: "none" }}
-                width={200}
+                width="200px"
                 onChange={handleTabDropDownChange}
                 value={tabIndex}
             >
@@ -270,7 +234,8 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                 <option value={3}>Matchups</option>
                 <option value={4}>Match Trends</option>
             </Select>
-            <Tabs isFitted={true} width={"100%"} flexWrap={"wrap"} index={tabIndex} onChange={handleTabsChange}>
+
+            <Tabs isFitted width="100%" flexWrap="wrap" index={tabIndex} onChange={handleTabsChange}>
                 <TabList display={{ base: "none", md: "flex" }}>
                     <Tab>
                         <Text>Match History</Text>
@@ -298,30 +263,30 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                         <Text>Match Trends</Text>
                     </Tab>
                 </TabList>
+
                 <TabPanels>
                     <TabPanel>
-                        {matchesArray.length > 0 ? (
+                        {filteredMatches.length > 0 ? (
                             <SortableTable
                                 columns={matchHistoryColumns}
-                                data={matchesArray}
-                                getRowProps={(row: any) => {
-                                    return {
-                                        onClick: () => {
-                                            navigate(`/matchHistory/${row.original.id}`);
-                                            window.scrollTo(0, 0);
-                                        }
-                                    };
-                                }}
+                                data={filteredMatches}
+                                getRowProps={(row: any) => ({
+                                    onClick: () => {
+                                        navigate(`/matchHistory/${row.original.id}`);
+                                        window.scrollTo(0, 0);
+                                    }
+                                })}
                             />
                         ) : (
                             <div style={{ textAlign: "center" }}>No data</div>
                         )}
                     </TabPanel>
+
                     <TabPanel>
-                        <Flex flexDirection={"column"} justifyContent={"center"} alignItems={"center"} padding="8px">
+                        <Flex flexDirection="column" justifyContent="center" alignItems="center" padding="8px">
                             {validMatches.length >= COMMANDER_MINIMUM_GAMES_REQUIRED ? (
                                 <LineGraph
-                                    dataLabel={"Winrate"}
+                                    dataLabel="Winrate"
                                     data={winratePerMatch}
                                     allowTogglableDataPoints={true}
                                     tooltipTitleCallback={tooltipTitleCallback}
@@ -334,40 +299,35 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                             )}
                         </Flex>
                     </TabPanel>
+
                     <TabPanel>
-                        {commanderPlayers.length ? (
+                        {sortedCommanderPlayers.length > 0 ? (
                             <SortableTable
                                 columns={topPlayersColumns}
-                                data={commanderPlayers}
-                                getRowProps={(row: any) => {
-                                    return {
-                                        onClick: () => {
-                                            navigate(`/playerOverview/${row.original.name}`);
-                                            window.scrollTo(0, 0);
-                                        }
-                                    };
-                                }}
+                                data={sortedCommanderPlayers}
+                                getRowProps={(row: any) => ({
+                                    onClick: () => {
+                                        navigate(`/playerOverview/${row.original.name}`);
+                                        window.scrollTo(0, 0);
+                                    }
+                                })}
                             />
                         ) : (
                             <div style={{ textAlign: "center" }}>No data</div>
                         )}
                     </TabPanel>
+
                     <TabPanel>
-                        <Flex
-                            alignSelf={"stretch"}
-                            justifyContent={"center"}
-                            alignItems={"stretch"}
-                            flexDirection={"row"}
-                        >
+                        <Flex direction="row" alignSelf="stretch" justifyContent="center" alignItems="center">
                             <Heading size="sm" color={showCommanderMatchups ? undefined : primaryColor["500"]}>
                                 Player Matchups
                             </Heading>
                             <Switch
-                                size={"md"}
+                                size="md"
                                 onChange={() => setShowCommanderMatchups(!showCommanderMatchups)}
-                                paddingLeft={"8px"}
-                                paddingRight={"8px"}
-                                alignSelf={"center"}
+                                paddingLeft="8px"
+                                paddingRight="8px"
+                                alignSelf="center"
                                 colorScheme="primary"
                                 sx={{
                                     "span.chakra-switch__track:not([data-checked])": {
@@ -380,14 +340,15 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                             </Heading>
                         </Flex>
                         {showCommanderMatchups ? (
-                            <CommanderMatchupsTable commanderName={commander.name} dateFilter={dateFilter} />
+                            <CommanderMatchupsTable commanderName={commander.name} />
                         ) : (
-                            <PlayerMatchupsTable commanderName={commander.name} dateFilter={dateFilter} />
+                            <PlayerMatchupsTable commanderName={commander.name} />
                         )}
                     </TabPanel>
+
                     <TabPanel>
-                        {matchesArray.length > 0 ? (
-                            <MatchPlacementBarChart matches={matchesArray} commanderName={commander.name} />
+                        {filteredMatches.length > 0 ? (
+                            <MatchPlacementBarChart matches={filteredMatches} commanderName={commander.name} />
                         ) : (
                             <div style={{ textAlign: "center" }}>No data</div>
                         )}
