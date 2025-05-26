@@ -1,13 +1,16 @@
 import {
     Box,
     Button,
+    IconButton,
     Popover,
     PopoverArrow,
     PopoverBody,
     PopoverContent,
     PopoverTrigger,
     Stack,
-    Text
+    Text,
+    useBreakpointValue,
+    VStack
 } from "@chakra-ui/react";
 import { CalendarIcon } from "@chakra-ui/icons";
 import React, { useEffect, useMemo } from "react";
@@ -19,9 +22,8 @@ import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const quickRanges = [
-    { label: "1W", days: 7 },
-    { label: "2W", days: 14 },
     { label: "1M", days: 30 },
+    { label: "2M", days: 60 },
     { label: "6M", days: 180 },
     { label: "1Y", days: 365 },
     { label: "All", days: undefined }
@@ -44,6 +46,8 @@ export const DatePicker = React.memo(function DatePicker({
         return format(currentDate, "MMM d, yyyy");
     }, [currentDate]);
 
+    const isMobile = useBreakpointValue({ base: true, md: false });
+
     useEffect(() => {
         if (startDate === undefined && currentDate) {
             dispatch(StatsAction.UpdateStartDate(currentDate.toISOString()));
@@ -64,48 +68,64 @@ export const DatePicker = React.memo(function DatePicker({
     return (
         <Popover placement="bottom-start">
             <PopoverTrigger>
-                <Button
-                    size="sm"
-                    leftIcon={<CalendarIcon />}
-                    variant="outline"
-                    minW="150px"
-                    maxW="200px"
-                    whiteSpace="nowrap"
-                    overflow="hidden"
-                    textOverflow="ellipsis"
-                >
-                    {displayDate}
-                </Button>
+                {isMobile ? (
+                    <IconButton size="sm" icon={<CalendarIcon />} aria-label="Filter by date" variant="outline" />
+                ) : (
+                    <Button
+                        size="sm"
+                        leftIcon={<CalendarIcon />}
+                        variant="outline"
+                        w="180px" // fixed width for consistency
+                        justifyContent="flex-start"
+                        fontWeight="normal"
+                        fontSize="sm"
+                        whiteSpace="nowrap"
+                        overflow="hidden"
+                        textOverflow="ellipsis"
+                    >
+                        Filter: {displayDate}
+                    </Button>
+                )}
             </PopoverTrigger>
-            <PopoverContent width="fit-content" minW="250px" _focus={{ outline: "none" }}>
+            <PopoverContent width="fit-content" minW="260px" maxW="90vw" _focus={{ outline: "none" }}>
                 <PopoverArrow />
                 <PopoverBody>
                     <Box>
-                        <Text fontSize="sm" mb="2">
-                            Quick ranges
+                        <Text fontSize="sm" fontWeight="bold" mb="2">
+                            Filter Match Data
                         </Text>
-                        <Stack direction="row" wrap="wrap" spacing={2} mb={4}>
-                            {quickRanges.map(({ label, days }) => (
-                                <Button key={label} size="xs" onClick={() => handleQuickRange(days)}>
-                                    {label}
-                                </Button>
-                            ))}
-                        </Stack>
 
-                        <Text fontSize="sm" mb="2">
-                            Or pick a date
-                        </Text>
-                        <Box border="1px solid #E2E8F0" borderRadius="md" p={2}>
-                            <ReactDatePicker
-                                selected={currentDate}
-                                onChange={(date: Date | null) => setDate(date ?? undefined)}
-                                dateFormat="MMM d, yyyy"
-                                maxDate={new Date()}
-                                isClearable
-                                placeholderText="Select a date"
-                                inline
-                            />
-                        </Box>
+                        <VStack align="start" spacing={4}>
+                            <Box>
+                                <Text fontSize="sm" mb="1">
+                                    Quick Ranges
+                                </Text>
+                                <Stack direction="row" wrap="wrap" spacing={2}>
+                                    {quickRanges.map(({ label, days }) => (
+                                        <Button key={label} size="xs" onClick={() => handleQuickRange(days)}>
+                                            {label}
+                                        </Button>
+                                    ))}
+                                </Stack>
+                            </Box>
+
+                            <Box>
+                                <Text fontSize="sm" mb="1">
+                                    Custom Date
+                                </Text>
+                                <Box border="1px solid #E2E8F0" borderRadius="md" p={2}>
+                                    <ReactDatePicker
+                                        selected={currentDate}
+                                        onChange={(date: Date | null) => setDate(date ?? undefined)}
+                                        dateFormat="MMM d, yyyy"
+                                        maxDate={new Date()}
+                                        isClearable
+                                        placeholderText="Select a date"
+                                        inline
+                                    />
+                                </Box>
+                            </Box>
+                        </VStack>
                     </Box>
                 </PopoverBody>
             </PopoverContent>

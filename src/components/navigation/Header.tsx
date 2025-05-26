@@ -29,6 +29,7 @@ import { getDiscordLoginEndpoint } from "../../services/DiscordService";
 import { useUserInfo } from "../../logic/hooks/userHooks";
 import { AppState } from "../../redux/rootReducer";
 import { ProfileSelectors } from "../../redux/profiles/profilesSelectors";
+import { DatePicker } from "../common/DatePicker";
 
 const placeholderImage = "https://static.thenounproject.com/png/5425-200.png";
 
@@ -157,59 +158,56 @@ export const Header = ({ onProfileIconClick, ...rest }: HeaderProps) => {
                     {headerTitle}
                 </Text>
             </Flex>
-            <HStack spacing={{ base: "0", md: "6" }} flex={1} justifyContent={"flex-end"}>
+            <HStack spacing={{ base: "2", md: "4" }} flex={1} justifyContent={"flex-end"}>
+                <Box mr={{ base: 2, md: 4 }}>
+                    <DatePicker />
+                </Box>
                 {FF_IS_LOGIN_ENABLED ? (
-                    <>
-                        {/* <IconButton size="lg" variant="ghost" aria-label="open menu" icon={<FiBell />} /> */}
-                        <Flex alignItems={"center"}>
-                            <Menu>
-                                <MenuButton py={2} transition="all 0.3s" _focus={{ boxShadow: "none" }}>
-                                    <HStack>
-                                        <Avatar size={"sm"} src={userPic !== undefined ? userPic : placeholderImage} />
-                                        <VStack
-                                            display={{ base: "none", md: "flex" }}
-                                            alignItems="flex-start"
-                                            spacing="1px"
-                                            ml="2"
-                                        >
-                                            {username !== undefined ? (
-                                                <>
-                                                    <Text fontSize="sm">{username}</Text>
-                                                    <Text fontSize="xs" color="gray.600">
-                                                        Welcome!
-                                                    </Text>
-                                                </>
-                                            ) : (
-                                                <>
-                                                    <Text fontSize="sm">No User Signed In</Text>
-                                                    <Text fontSize="xs" color="gray.600">
-                                                        Sign In
-                                                    </Text>
-                                                </>
-                                            )}
-                                        </VStack>
-                                        <Box display={{ base: "none", md: "flex" }}>
-                                            <FiChevronDown />
-                                        </Box>
-                                    </HStack>
-                                </MenuButton>
-                                <MenuList
-                                // bg={useColorModeValue("white", "gray.900")}
-                                // borderColor={useColorModeValue("gray.200", "gray.700")}
-                                >
-                                    {username === undefined ? <MenuItem onClick={signIn}>Sign In</MenuItem> : null}
-                                    {username !== undefined ? (
-                                        <>
-                                            <MenuItem onClick={navigateToProfile}>Profile</MenuItem>
-                                            <SettingsMenuItem finalRef={finalRef} />
-                                            <MenuDivider />
-                                            <MenuItem onClick={signOut}>Sign out</MenuItem>
-                                        </>
-                                    ) : null}
-                                </MenuList>
-                            </Menu>
-                        </Flex>
-                    </>
+                    <Flex alignItems={"center"}>
+                        <Menu>
+                            <MenuButton py={2} transition="all 0.3s" _focus={{ boxShadow: "none" }}>
+                                <HStack>
+                                    <Avatar size={"sm"} src={userPic !== undefined ? userPic : placeholderImage} />
+                                    <VStack
+                                        display={{ base: "none", md: "flex" }}
+                                        alignItems="flex-start"
+                                        spacing="1px"
+                                        ml="2"
+                                    >
+                                        {username !== undefined ? (
+                                            <>
+                                                <Text fontSize="sm">{username}</Text>
+                                                <Text fontSize="xs" color="gray.600">
+                                                    Welcome!
+                                                </Text>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Text fontSize="sm">No User Signed In</Text>
+                                                <Text fontSize="xs" color="gray.600">
+                                                    Sign In
+                                                </Text>
+                                            </>
+                                        )}
+                                    </VStack>
+                                    <Box display={{ base: "none", md: "flex" }}>
+                                        <FiChevronDown />
+                                    </Box>
+                                </HStack>
+                            </MenuButton>
+                            <MenuList>
+                                {username === undefined ? <MenuItem onClick={signIn}>Sign In</MenuItem> : null}
+                                {username !== undefined ? (
+                                    <>
+                                        <MenuItem onClick={navigateToProfile}>Profile</MenuItem>
+                                        <SettingsMenuItem finalRef={finalRef} />
+                                        <MenuDivider />
+                                        <MenuItem onClick={signOut}>Sign out</MenuItem>
+                                    </>
+                                ) : null}
+                            </MenuList>
+                        </Menu>
+                    </Flex>
                 ) : null}
             </HStack>
             <LoginModal onSignOut={signOut} finalRef={finalRef} />
