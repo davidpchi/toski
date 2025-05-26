@@ -22,7 +22,7 @@ export const PlayerOverview = React.memo(function MatchHistory() {
         useTableFilters();
 
     const allPlayers: { [id: string]: Player } | undefined = useSelector(StatsSelectors.getPlayers);
-    const players: Player[] = useSelector((state: AppState) => StatsSelectors.getPlayersByDate(state, dateFilter));
+    const players: Player[] = useSelector((state: AppState) => StatsSelectors.getPlayersByDate(state));
 
     if (allPlayers === undefined) {
         return <Loading text="Loading..." />;
@@ -50,7 +50,7 @@ export const PlayerOverview = React.memo(function MatchHistory() {
                 flexWrap={"wrap"}
                 justifyContent={"center"}
             >
-                <DatePicker onChange={onDatePickerChange} value={dateFilter} />
+                <DatePicker />
                 <Tooltip
                     label={<p style={{ textAlign: "center" }}>Players play 10 games to be qualified.</p>}
                     hasArrow

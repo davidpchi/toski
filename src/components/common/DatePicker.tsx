@@ -1,5 +1,8 @@
 import { Flex, Select, Text } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { StatsSelectors } from "../../redux/stats/statsSelectors";
+import { StatsAction } from "../../redux/stats/statsActions";
 
 enum DatePickerOption {
     AllTime = "allTime",
@@ -10,7 +13,7 @@ enum DatePickerOption {
     Year1 = "year1"
 }
 
-export function getDatePickerOptionsFromDate(value: Date | undefined): DatePickerOption {
+function getDatePickerOptionsFromDate(value: Date | undefined): DatePickerOption {
     const currentDate = new Date();
 
     if (value === undefined) {
@@ -18,69 +21,65 @@ export function getDatePickerOptionsFromDate(value: Date | undefined): DatePicke
     } else {
         const dateDiff = Math.round((currentDate.getTime() - value.getTime()) / (1000 * 60 * 60 * 24));
 
-        if (dateDiff <= 7) {
-            return DatePickerOption.Weeks1;
-        } else if (dateDiff <= 14) {
-            return DatePickerOption.Weeks2;
-        } else if (dateDiff <= 30) {
-            return DatePickerOption.Months1;
-        } else if (dateDiff <= 180) {
-            return DatePickerOption.Months6;
-        } else if (dateDiff <= 365) {
-            return DatePickerOption.Year1;
-        }
+        if (dateDiff <= 7) return DatePickerOption.Weeks1;
+        if (dateDiff <= 14) return DatePickerOption.Weeks2;
+        if (dateDiff <= 30) return DatePickerOption.Months1;
+        if (dateDiff <= 180) return DatePickerOption.Months6;
+        if (dateDiff <= 365) return DatePickerOption.Year1;
     }
 
     return DatePickerOption.AllTime;
 }
 
-export const DatePicker = React.memo(function DatePicker({
-    onChange,
-    value
-}: {
-    onChange: (date: Date | undefined) => void;
-    value?: Date;
-}) {
-    const [dateSelectValue, setDateSelectValue] = useState<DatePickerOption>(getDatePickerOptionsFromDate(value));
+export const DatePicker = React.memo(function DatePicker() {
+    const dispatch = useDispatch();
+    const startDate = useSelector(StatsSelectors.getStartDate);
 
-    const onDateFilterChange = (event: any) => {
-        const value = event.target.value;
-        let dateDiff: number | undefined = undefined;
+    const currentDate = useMemo(() => {
+        return startDate ? new Date(startDate) : undefined;
+    }, [startDate]);
+
+    const [dateSelectValue, setDateSelectValue] = useState<DatePickerOption>(getDatePickerOptionsFromDate(currentDate));
+
+    useEffect(() => {
+        setDateSelectValue(getDatePickerOptionsFromDate(currentDate));
+    }, [currentDate, startDate]);
+
+    const onDateFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const value = event.target.value as DatePickerOption;
+        let dateDiff: number | undefined;
 
         switch (value) {
-            case DatePickerOption.AllTime:
-                dateDiff = undefined;
-                break;
-            case DatePickerOption.Weeks1: {
+            case DatePickerOption.Weeks1:
                 dateDiff = 7;
                 break;
-            }
-            case DatePickerOption.Weeks2: {
+            case DatePickerOption.Weeks2:
                 dateDiff = 14;
                 break;
-            }
-            case DatePickerOption.Months1: {
+            case DatePickerOption.Months1:
                 dateDiff = 30;
                 break;
-            }
-            case DatePickerOption.Months6: {
+            case DatePickerOption.Months6:
                 dateDiff = 180;
                 break;
-            }
-            case DatePickerOption.Year1: {
+            case DatePickerOption.Year1:
                 dateDiff = 365;
                 break;
-            }
+            case DatePickerOption.AllTime:
+            default:
+                dateDiff = undefined;
         }
 
-        onChange(dateDiff !== undefined ? new Date(new Date().getTime() - dateDiff * 24 * 60 * 60 * 1000) : undefined);
+        const newStartDate =
+            dateDiff !== undefined ? new Date(Date.now() - dateDiff * 24 * 60 * 60 * 1000).toISOString() : undefined;
 
+        dispatch(StatsAction.UpdateStartDate(newStartDate));
         setDateSelectValue(value);
     };
 
     return (
-        <Flex direction={"row"} alignItems={"center"} marginRight={"16px"}>
-            <Text marginRight={"8px"}>Data from: </Text>
+        <Flex direction="row" alignItems="center" marginRight="16px">
+            <Text marginRight="8px">Data from: </Text>
             <Select width={200} onChange={onDateFilterChange} value={dateSelectValue}>
                 <option value={DatePickerOption.AllTime}>All time</option>
                 <option value={DatePickerOption.Weeks1}>1 week ago</option>

@@ -79,19 +79,19 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
 
     // Get all matches to display in Match History of the Commander Overview
     const matches = useSelector((state: AppState) =>
-        StatsSelectors.getMatchesByCommanderName(state, commander ? commander.name : "", dateFilter)
+        StatsSelectors.getMatchesByCommanderName(state, commander ? commander.name : "")
     );
 
     // Get matches filtered by player count to use in statistical calculations
     // These matches are considered "valid" because they all have the same number of players
     const validMatches = filterMatchesByPlayerCount(
         useSelector((state: AppState) =>
-            StatsSelectors.getMatchesByCommanderName(state, commander ? commander.name : "", dateFilter)
+            StatsSelectors.getMatchesByCommanderName(state, commander ? commander.name : "")
         ),
         NUMBER_OF_PLAYERS_FOR_VALID_MATCH
     );
     const commanderPlayers: Player[] = useSelector((state: AppState) =>
-        StatsSelectors.getPlayersByCommanderName(state, commander ? commander.name : "", dateFilter)
+        StatsSelectors.getPlayersByCommanderName(state, commander ? commander.name : "")
     );
     commanderPlayers.sort((a: Player, b: Player) => b.validMatchesCount - a.validMatchesCount);
 
@@ -253,7 +253,7 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                 </Flex>
             </Flex>
             <Flex direction={"column"}>
-                <DatePicker onChange={onDatePickerChange} />
+                <DatePicker />
                 <div style={{ padding: 20 }}>
                     <Input placeholder="Filter by..." onChange={onSearchChange} />
                 </div>

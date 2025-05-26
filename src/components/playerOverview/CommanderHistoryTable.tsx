@@ -19,7 +19,7 @@ export const CommanderHistoryTable = React.memo(function CommanderHistoryTable({
 
     // Get array of commanders played and sort by game count
     const playedCommanders: Commander[] = useSelector((state: AppState) =>
-        StatsSelectors.getCommandersByPlayerName(state, playerId ? playerId : "", dateFilter)
+        StatsSelectors.getCommandersByPlayerName(state, playerId ? playerId : "")
     );
     playedCommanders.sort((a: Commander, b: Commander) => b.validMatchesCount - a.validMatchesCount);
 
