@@ -11,15 +11,13 @@ import { Loading } from "../Loading";
 import { Commander } from "../../types/domain/Commander";
 import { COMMANDER_MINIMUM_GAMES_REQUIRED } from "../constants";
 import { AppState } from "../../redux/rootReducer";
-import { DatePicker } from "../common/DatePicker";
 import { useTableFilters } from "../../logic/hooks/tableHooks";
 
 export const CommanderOverview = React.memo(function MatchHistory() {
     const navigate = useNavigate();
 
     const allCommanders = useSelector(StatsSelectors.getCommanders);
-    const { showOnlyQualfied, searchInput, onShowOnlyQualifiedChange, onSearchChange, onDatePickerChange } =
-        useTableFilters();
+    const { showOnlyQualfied, searchInput, onShowOnlyQualifiedChange, onSearchChange } = useTableFilters();
 
     const commanders: Commander[] = useSelector((state: AppState) => StatsSelectors.getCommandersByDate(state));
     if (commanders === undefined || commanders.length === 0) {
@@ -48,7 +46,6 @@ export const CommanderOverview = React.memo(function MatchHistory() {
                 flexWrap={"wrap"}
                 justifyContent={"center"}
             >
-                <DatePicker onDatePickerChange={onDatePickerChange} />
                 <Tooltip
                     label={<p style={{ textAlign: "center" }}>Commanders play 5 games to be qualified.</p>}
                     hasArrow

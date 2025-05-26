@@ -23,7 +23,6 @@ import { SortableTable } from "../../dataVisualizations/SortableTable";
 import { Loading } from "../../Loading";
 import { MatchPlacementBarChart } from "../MatchPlacementBarChart";
 import { Match } from "../../../types/domain/Match";
-import { DatePicker } from "../../common/DatePicker";
 import { PlayerDetailsInfoCard } from "./PlayerDetailsInfoCard";
 import { CommanderHistoryTable } from "../CommanderHistoryTable";
 import { InsufficientData } from "../InsufficientData";
@@ -32,7 +31,6 @@ import { PlayerMatchupsTable } from "../PlayerMatchupsTable";
 import { primaryColor } from "../../../themes/acorn";
 import { ProfileSelectors } from "../../../redux/profiles/profilesSelectors";
 import { PlayerDecks } from "./PlayerDecks";
-import { useTableFilters } from "../../../logic/hooks/tableHooks";
 
 export async function loader(data: { params: any }) {
     return data.params.playerId;
@@ -42,8 +40,6 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
     const navigate = useNavigate();
     // Player variables
     const playerId = useLoaderData() as string;
-
-    const { onDatePickerChange } = useTableFilters();
 
     const player = useSelector((state: AppState) => StatsSelectors.getPlayer(state, playerId));
     const toskiToDiscordMap = useSelector((state: AppState) => state.profiles.toskiToDiscordMap);
@@ -77,7 +73,6 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
     return (
         <Flex direction="column" justify="center" align="center">
             <PlayerDetailsInfoCard playerId={playerId} />
-            <DatePicker onDatePickerChange={onDatePickerChange} />
             <Select
                 marginTop={"16px"}
                 display={{ base: "inline", md: "none" }}

@@ -30,11 +30,17 @@ export type StatsState = Readonly<{
     startDate: string | undefined;
 }>;
 
+const getThreeMonthsAgoISO = (): string => {
+    const date = new Date();
+    date.setMonth(date.getMonth() - 3);
+    return date.toISOString().split("T")[0]; // Format as YYYY-MM-DD
+};
+
 const initialState: StatsState = {
     matches: undefined,
     commanders: undefined,
     players: undefined,
-    startDate: undefined
+    startDate: getThreeMonthsAgoISO()
 };
 
 export const statsReducer = createReducer(initialState, (builder) => {

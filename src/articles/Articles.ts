@@ -11,6 +11,7 @@ import { article_11 } from "./Article_11";
 import { article_12 } from "./Article_12";
 import { article_13 } from "./Article_13";
 import { article_14 } from "./Article_14";
+import { article_15 } from "./Article_15";
 
 export const Articles: { [id: string]: NewsArticle } = {
     "0001": article_1,
@@ -24,5 +25,6 @@ export const Articles: { [id: string]: NewsArticle } = {
     "0011": article_11,
     "0012": article_12,
     "0013": article_13,
-    "0014": article_14
+    "0014": article_14,
+    "0015": article_15
 };
