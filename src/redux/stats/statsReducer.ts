@@ -30,9 +30,9 @@ export type StatsState = Readonly<{
     startDate: Date | undefined;
 }>;
 
-const getThreeMonthsAgoDate = (): Date => {
-    const date = new Date();
-    date.setMonth(date.getMonth() - 3);
+const getSixMonthsAgoDate = (startingDate?: Date): Date => {
+    const date = startingDate ? new Date(startingDate) : new Date();
+    date.setMonth(date.getMonth() - 6);
     return date;
 };
 
@@ -40,7 +40,7 @@ const initialState: StatsState = {
     matches: undefined,
     commanders: undefined,
     players: undefined,
-    startDate: getThreeMonthsAgoDate()
+    startDate: getSixMonthsAgoDate()
 };
 
 export const statsReducer = createReducer(initialState, (builder) => {
@@ -49,6 +49,10 @@ export const statsReducer = createReducer(initialState, (builder) => {
         state.matches = matchesCollection;
         state.commanders = matchesToCommanderHelper(matchesCollection);
         state.players = matchesToPlayersHelper(matchesCollection);
+
+        // everytime we do an initial hydration, reset the start date to six months ago from the
+        // last recorded game
+        state.startDate = getSixMonthsAgoDate(matchesCollection[matchesCollection.length - 1]?.date);
     });
 
     builder.addCase(StatsAction.UpdateStartDate, (state, action) => {
