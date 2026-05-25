@@ -12,8 +12,10 @@ import {
     useDisclosure
 } from "@chakra-ui/react";
 import React, { useCallback } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { commanderList } from "../../services/commanderList";
+import { CommandersSelectors } from "../../redux/commanders/commandersSelectors";
+import { AppState } from "../../redux/rootReducer";
 import { MatchDisplayPlayer } from "./types/MatchDisplayPlayer";
 import { MatchDisplayCommander } from "./types/MatchDisplayCommander";
 
@@ -21,6 +23,7 @@ export const MatchPlayerImage = React.memo(function MatchPlayerImage({ player }:
     const navigate = useNavigate();
     const { isOpen, onOpen, onClose } = useDisclosure();
     const finalRef = React.useRef(null);
+    const commandersData = useSelector((state: AppState) => CommandersSelectors.getCommanders(state));
 
     const soloCommanderNav = useCallback(() => {
         if (player.commanders[0].id !== undefined) {
@@ -39,6 +42,8 @@ export const MatchPlayerImage = React.memo(function MatchPlayerImage({ player }:
             }
         };
 
+        const commanderData = commandersData ? commandersData[value.name] : undefined;
+
         return (
             <Button
                 key={value.id}
@@ -50,10 +55,10 @@ export const MatchPlayerImage = React.memo(function MatchPlayerImage({ player }:
                 size={"lg"}
                 alignSelf={"stretch"}
             >
-                {commanderList[value.name] ? (
+                {commanderData ? (
                     <Image
                         key={value.id}
-                        src={commanderList[value.name].image}
+                        src={commanderData.image}
                         borderRadius={"4%"}
                         boxShadow={"0px 12px 18px 2px rgba(0,0,0,0.3)"}
                     />
@@ -87,10 +92,10 @@ export const MatchPlayerImage = React.memo(function MatchPlayerImage({ player }:
                 height={"300px"}
                 size="md"
             >
-                {commanderList[player.commanders[0].name] ? (
+                {commandersData?.[player.commanders[0].name] ? (
                     <Image
                         height={player.isWinner ? "100%" : "85%"}
-                        src={commanderList[player.commanders[0].name].image}
+                        src={commandersData[player.commanders[0].name].image}
                         borderRadius={"4%"}
                         boxShadow={"0px 12px 18px 2px rgba(0,0,0,0.3)"}
                     />
@@ -124,9 +129,9 @@ export const MatchPlayerImage = React.memo(function MatchPlayerImage({ player }:
                 >
                     <div style={{ display: "grid" }}>
                         <div style={{ gridRowStart: 1, gridColumnStart: 1 }}>
-                            {commanderList[player.commanders[1].name] ? (
+                            {commandersData?.[player.commanders[1].name] ? (
                                 <Image
-                                    src={commanderList[player.commanders[1].name].image}
+                                    src={commandersData[player.commanders[1].name].image}
                                     borderRadius={"4%"}
                                     boxShadow={"0px 12px 18px 2px rgba(0,0,0,0.3)"}
                                 />
@@ -146,9 +151,9 @@ export const MatchPlayerImage = React.memo(function MatchPlayerImage({ player }:
                             )}
                         </div>
                         <div style={{ gridRowStart: 1, gridColumnStart: 1, paddingTop: "20%" }}>
-                            {commanderList[player.commanders[0].name] ? (
+                            {commandersData?.[player.commanders[0].name] ? (
                                 <Image
-                                    src={commanderList[player.commanders[0].name].image}
+                                    src={commandersData[player.commanders[0].name].image}
                                     borderRadius={"4%"}
                                     boxShadow={"0px 12px 18px 2px rgba(0,0,0,0.3)"}
                                 />
@@ -169,9 +174,9 @@ export const MatchPlayerImage = React.memo(function MatchPlayerImage({ player }:
                         </div>
                         {player.commanders[2] !== undefined ? (
                             <div style={{ gridRowStart: 1, gridColumnStart: 1, paddingTop: "90%" }}>
-                                {commanderList[player.commanders[2].name] ? (
+                                {commandersData?.[player.commanders[2].name] ? (
                                     <Image
-                                        src={commanderList[player.commanders[2].name].image}
+                                        src={commandersData[player.commanders[2].name].image}
                                         width={"50%"}
                                         borderRadius={"4%"}
                                         boxShadow={"0px 12px 18px 2px rgba(0,0,0,0.3)"}

@@ -1,8 +1,9 @@
 import React, { useCallback, useMemo } from "react";
 
 import { Flex, Select, Text, Image } from "@chakra-ui/react";
-
-import { commanderList } from "../../services/commanderList";
+import { useSelector } from "react-redux";
+import { AppState } from "../../redux/rootReducer";
+import { CommandersSelectors } from "../../redux/commanders/commandersSelectors";
 
 const placeholderImage = "https://static.thenounproject.com/png/5425-200.png";
 
@@ -13,17 +14,21 @@ export const FavoriteCommanderSection = React.memo(function FavoriteCommanderSec
     favoriteCommander: string;
     setFavoriteCommander: (value: string) => void;
 }) {
+    const commandersData = useSelector((state: AppState) => CommandersSelectors.getCommanders(state));
+
     const commandersArray = useMemo(() => {
-        return Object.keys(commanderList).map((commanderName) => {
-            return { id: commanderList[commanderName].id, name: commanderName };
+        if (!commandersData) return [];
+        return Object.values(commandersData).map((commander) => {
+            return { id: commander.scryfallId, name: commander.name };
         });
-    }, []);
+    }, [commandersData]);
 
     const commanderImage = useMemo(() => {
-        return Object.values(commanderList)
-            .find((commander) => commander.id === favoriteCommander)
+        if (!commandersData) return undefined;
+        return Object.values(commandersData)
+            .find((commander) => commander.scryfallId === favoriteCommander)
             ?.image.replace("normal", "art_crop");
-    }, [favoriteCommander]);
+    }, [favoriteCommander, commandersData]);
 
     const onCommanderSelectChange = useCallback(
         (event: any) => {

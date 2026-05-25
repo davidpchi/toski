@@ -1,9 +1,9 @@
 import { NUMBER_OF_PLAYERS_FOR_VALID_MATCH } from "../components/constants";
-import { commanderList } from "../services/commanderList";
 import { Commander } from "../types/domain/Commander";
 import { Match } from "../types/domain/Match";
 import { Player } from "../types/domain/Player";
 import { getColorIdentity } from "./utils";
+import { CommanderData } from "../services/CommanderService";
 
 /**
  * Given a collection of Matches, filter out games that don't have the desired number of players.
@@ -58,12 +58,14 @@ export function filterMatchesByDate(matches: Match[], startDate?: Date, endDate?
  * (as determined by the required number of players in the match).
  * @param matches The collection of matches to build the dictionary from
  * @param playerId An optional player name to filter the commanders by (will only return commanders the player has played)
+ * @param commandersMap Optional map of commanders to look up color identity. If not provided, empty array is used.
  * @returns A dictionary of commanders keyed by commanderId
  */
 export function matchesToCommanderHelper(
     matches: Match[],
     playerNameFilter?: string,
-    startDate?: Date
+    startDate?: Date,
+    commandersMap?: { [name: string]: CommanderData }
 ): { [id: string]: Commander } {
     const filteredMatches = filterMatchesByDate(matches, startDate);
 
@@ -83,26 +85,21 @@ export function matchesToCommanderHelper(
 
             // loop through all commanders and update our commanders dictionary
             for (const currentCommanderName of currentCommanderNames) {
-                const commander = commanderList[currentCommanderName];
+                const commanderData = commandersMap ? commandersMap[currentCommanderName] : undefined;
 
-                // check to see if the commander name is valid
-                if (commander === undefined) {
-                    // log the invalid commander
-                    console.log(
-                        `Invalid commander found in currentMatch <${currentMatch.id}> : ${currentCommanderName}`
-                    );
-                    continue;
-                }
+                // Use the scryfallId from commanderData if available, otherwise use the name as a fallback
+                const commanderId = commanderData ? commanderData.scryfallId : currentCommanderName;
 
                 // commander name is valid. let's check to see if we already added it to our dictionary
-                const potentialCommanderObj = playedCommanderDictionary[commander.id];
+                const potentialCommanderObj = playedCommanderDictionary[commanderId];
                 if (potentialCommanderObj === undefined) {
                     // the entry doesn't exist, add it to our dictionary
-                    playedCommanderDictionary[commander.id] = {
-                        id: commander.id,
+                    const colorIdentity = commanderData ? commanderData.colorIdentity : [];
+                    playedCommanderDictionary[commanderId] = {
+                        id: commanderId,
                         name: currentCommanderName,
-                        colorIdentity: commander.colorIdentity,
-                        colorIdentityName: getColorIdentity(commander.colorIdentity) ?? "",
+                        colorIdentity: colorIdentity,
+                        colorIdentityName: getColorIdentity(colorIdentity) ?? "",
                         matches: [currentMatch.id],
                         validMatchesCount: currentMatch.players.length === NUMBER_OF_PLAYERS_FOR_VALID_MATCH ? 1 : 0,
                         wins:
@@ -135,7 +132,8 @@ export function matchesToCommanderHelper(
 export function matchesToPlayersHelper(
     matches: Match[],
     commanderNameFilter?: string,
-    startDate?: Date
+    startDate?: Date,
+    commandersMap?: { [name: string]: CommanderData }
 ): { [id: string]: Player } {
     const filteredMatches = filterMatchesByDate(matches, startDate);
 
@@ -165,7 +163,7 @@ export function matchesToPlayersHelper(
 
                     // compute the players color profile
                     for (const commanderName of player.commanders) {
-                        const potentialCommander = commanderList[commanderName];
+                        const potentialCommander = commandersMap ? commandersMap[commanderName] : undefined;
                         const colors = potentialCommander ? potentialCommander.colorIdentity : [];
 
                         for (const color of colors) {
@@ -212,7 +210,7 @@ export function matchesToPlayersHelper(
 
                     // compute the players color profile
                     for (const commanderName of player.commanders) {
-                        const potentialCommander = commanderList[commanderName];
+                        const potentialCommander = commandersMap ? commandersMap[commanderName] : undefined;
                         const colors = potentialCommander ? potentialCommander.colorIdentity : [];
 
                         for (const color of colors) {

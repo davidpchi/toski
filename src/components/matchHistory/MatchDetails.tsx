@@ -5,8 +5,8 @@ import { Flex, Heading, Tag, TagLabel, TagRightIcon, Text } from "@chakra-ui/rea
 import { AppState } from "../../redux/rootReducer";
 import { useSelector } from "react-redux";
 import { StatsSelectors } from "../../redux/stats/statsSelectors";
+import { CommandersSelectors } from "../../redux/commanders/commandersSelectors";
 import { Loading } from "../Loading";
-import { commanderList } from "../../services/commanderList";
 import { MatchDisplayPlayer } from "./types/MatchDisplayPlayer";
 import { MatchPlayerCard } from "./MatchPlayerCard";
 import { rankDictionary } from "../constants";
@@ -24,6 +24,7 @@ export const MatchDetails = React.memo(function MatchDetails() {
 
     // look up this matchId in the matchHistory
     const match = useSelector((state: AppState) => StatsSelectors.getMatch(state, matchId));
+    const commandersData = useSelector((state: AppState) => CommandersSelectors.getCommanders(state));
 
     if (match === undefined) {
         return <Loading text="" />;
@@ -36,9 +37,10 @@ export const MatchDetails = React.memo(function MatchDetails() {
             name: player.name,
             rank: rankDictionary[player.rank],
             commanders: player.commanders.map((commanderName: string) => {
+                const commanderData = commandersData ? commandersData[commanderName] : undefined;
                 return {
                     name: commanderName,
-                    id: commanderList[commanderName] ? commanderList[commanderName].id : undefined
+                    id: commanderData ? commanderData.scryfallId : undefined
                 };
             }),
             isWinner: match.winner === player.name

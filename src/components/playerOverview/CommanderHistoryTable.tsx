@@ -5,8 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { AppState } from "../../redux/rootReducer";
 import { Commander } from "../../types/domain/Commander";
 import { StatsSelectors } from "../../redux/stats/statsSelectors";
+import { CommandersSelectors } from "../../redux/commanders/commandersSelectors";
 import { SortableTable } from "../dataVisualizations/SortableTable";
-import { commanderOverviewColumns } from "../dataVisualizations/columnHelpers/commanderOverviewColumnHelper";
+import { getCommanderOverviewColumns } from "../dataVisualizations/columnHelpers/commanderOverviewColumnHelper";
 
 export const CommanderHistoryTable = React.memo(function CommanderHistoryTable({ playerId }: { playerId: string }) {
     const navigate = useNavigate();
@@ -17,9 +18,12 @@ export const CommanderHistoryTable = React.memo(function CommanderHistoryTable({
     );
     playedCommanders.sort((a: Commander, b: Commander) => b.validMatchesCount - a.validMatchesCount);
 
+    const commandersData = useSelector((state: AppState) => CommandersSelectors.getCommanders(state));
+    const columns = getCommanderOverviewColumns(commandersData);
+
     return (
         <SortableTable
-            columns={commanderOverviewColumns}
+            columns={columns}
             data={playedCommanders}
             getRowProps={(row: any) => {
                 return {
