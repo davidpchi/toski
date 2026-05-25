@@ -42,5 +42,6 @@ export const CommandersSelectors = {
     getCommanderByName,
     getAllCommanders,
     getAllCommanderNames,
-    getCommandersLoading
+    getCommandersLoading,
+    getCommanders
 };

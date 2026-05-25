@@ -75,7 +75,9 @@ export const PlayerDetailsInfoCard = React.memo(function PlayerDetailsInfoCard({
     }
 
     const favoriteCommanderId = profile && profile.favoriteCommanderId ? profile.favoriteCommanderId : "";
-    const themeCommander = commandersData ? Object.values(commandersData).find((value) => value.scryfallId === favoriteCommanderId) : undefined;
+    const themeCommander = commandersData
+        ? Object.values(commandersData).find((value) => value.scryfallId === favoriteCommanderId)
+        : undefined;
     const themeCommanderImage = themeCommander?.image.replace("normal", "art_crop");
     const themeCommanderName = themeCommander?.name;
 
@@ -96,7 +98,7 @@ export const PlayerDetailsInfoCard = React.memo(function PlayerDetailsInfoCard({
 
     return (
         <Flex direction="row" justifyContent="center" alignItems={"center"} flexWrap={"wrap"} marginBottom={"16px"}>
-            {favoriteCommander ? (
+            {favoriteCommander && favCommanderImage ? (
                 <ImageWithHover
                     label={`Favorite Commander: ${favCommanderName}`}
                     width={300}
