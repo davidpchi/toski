@@ -1,18 +1,21 @@
 import { Box, Flex, Image } from "@chakra-ui/react";
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import { getWinRatePercentage } from "../../../logic/utils";
-import { commanderList } from "../../../services/commanderList";
+import { CommanderData } from "../../../services/CommanderService";
 import { Commander } from "../../../types/domain/Commander";
 
 const columnHelper = createColumnHelper<Commander>();
 
-export const commanderOverviewColumns: ColumnDef<Commander, any>[] = [
+export const getCommanderOverviewColumns = (
+    commandersMap: { [name: string]: CommanderData } | undefined
+): ColumnDef<Commander, any>[] => [
     columnHelper.accessor((row) => row.name, {
         id: "name",
         cell: (info) => {
             const commander = info.getValue();
-            const commanderImage = commanderList[commander]
-                ? commanderList[commander].image.replace("normal", "art_crop")
+            const commanderData = commandersMap ? commandersMap[commander] : undefined;
+            const commanderImage = commanderData
+                ? commanderData.image.replace("normal", "art_crop")
                 : "";
 
             return (
@@ -46,3 +49,6 @@ export const commanderOverviewColumns: ColumnDef<Commander, any>[] = [
         }
     )
 ];
+
+// Keep the old export for backward compatibility, but use undefined for now
+export const commanderOverviewColumns: ColumnDef<Commander, any>[] = getCommanderOverviewColumns(undefined);

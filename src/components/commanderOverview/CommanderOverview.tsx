@@ -5,8 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { Box, Checkbox, Flex, Input, Tooltip } from "@chakra-ui/react";
 
 import { SortableTable } from "../dataVisualizations/SortableTable";
-import { commanderOverviewColumns } from "../dataVisualizations/columnHelpers/commanderOverviewColumnHelper";
+import { getCommanderOverviewColumns } from "../dataVisualizations/columnHelpers/commanderOverviewColumnHelper";
 import { StatsSelectors } from "../../redux/stats/statsSelectors";
+import { CommandersSelectors } from "../../redux/commanders/commandersSelectors";
 import { Loading } from "../Loading";
 import { Commander } from "../../types/domain/Commander";
 import { COMMANDER_MINIMUM_GAMES_REQUIRED } from "../constants";
@@ -17,6 +18,7 @@ export const CommanderOverview = React.memo(function MatchHistory() {
     const navigate = useNavigate();
 
     const allCommanders = useSelector(StatsSelectors.getCommanders);
+    const commandersData = useSelector((state: AppState) => CommandersSelectors.getCommanders(state));
     const { showOnlyQualfied, searchInput, onShowOnlyQualifiedChange, onSearchChange } = useTableFilters();
 
     const commanders: Commander[] = useSelector((state: AppState) => StatsSelectors.getCommandersByDate(state));
@@ -36,6 +38,8 @@ export const CommanderOverview = React.memo(function MatchHistory() {
             allCommanders[value.id].name.toLowerCase().includes(searchInput.toLowerCase())
         );
     }
+
+    const columns = getCommanderOverviewColumns(commandersData);
 
     return (
         <Flex direction="column" justify="center" align="center">
@@ -63,7 +67,7 @@ export const CommanderOverview = React.memo(function MatchHistory() {
             </Flex>
             {commandersArray.length > 0 ? (
                 <SortableTable
-                    columns={commanderOverviewColumns}
+                    columns={columns}
                     data={commandersArray}
                     getRowProps={(row: any) => {
                         return {

@@ -1,7 +1,7 @@
 import { Box, Flex, Image } from "@chakra-ui/react";
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import { getWinRatePercentage } from "../../../logic/utils";
-import { commanderList } from "../../../services/commanderList";
+import { CommanderData } from "../../../services/CommanderService";
 
 export type CommanderMatchupItem = {
     id: string;
@@ -12,13 +12,16 @@ export type CommanderMatchupItem = {
 
 const columnHelper = createColumnHelper<CommanderMatchupItem>();
 
-export const commanderMatchupsColumns: ColumnDef<CommanderMatchupItem, any>[] = [
+export const getCommanderMatchupsColumns = (
+    commandersMap: { [name: string]: CommanderData } | undefined
+): ColumnDef<CommanderMatchupItem, any>[] => [
     columnHelper.accessor((row) => row.name, {
         id: "name",
         cell: (info) => {
             const commander = info.getValue();
-            const commanderImage = commanderList[commander]
-                ? commanderList[commander].image.replace("normal", "art_crop")
+            const commanderData = commandersMap ? commandersMap[commander] : undefined;
+            const commanderImage = commanderData
+                ? commanderData.image.replace("normal", "art_crop")
                 : "";
 
             return (
@@ -49,3 +52,6 @@ export const commanderMatchupsColumns: ColumnDef<CommanderMatchupItem, any>[] = 
         header: () => <span>Winrate Against</span>
     })
 ];
+
+// Keep the old export for backward compatibility
+export const commanderMatchupsColumns: ColumnDef<CommanderMatchupItem, any>[] = getCommanderMatchupsColumns(undefined);

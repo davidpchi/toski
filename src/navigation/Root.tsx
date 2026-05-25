@@ -6,12 +6,14 @@ import AppFrame from "../components/navigation/AppFrame";
 import { MatchHistoryService } from "../services/MatchHistoryService";
 import { DiscordService } from "../services/DiscordService";
 import { ProfileService } from "../services/ProfileService";
+import { CommanderService } from "../services/CommanderService";
 import { useAuthInfo } from "../logic/hooks/authHooks";
 
 export default function Root() {
     const hydrateProfiles = ProfileService.useHydrateProfiles();
     const getCurrentUserInfo = DiscordService.useGetCurrentUserInfo();
     const getMatchHistory = MatchHistoryService.useMatchHistory();
+    const hydrateCommanders = CommanderService.useHydrateCommanders();
 
     const { accessToken, tokenType } = useAuthInfo();
 
@@ -21,6 +23,9 @@ export default function Root() {
 
         // make the initial call to hydrate profiles
         hydrateProfiles();
+
+        // hydrate commanders data
+        hydrateCommanders();
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

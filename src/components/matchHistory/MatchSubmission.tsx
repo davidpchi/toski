@@ -25,7 +25,8 @@ import { TriangleDownIcon, TriangleUpIcon } from "@chakra-ui/icons";
 
 import { MatchHistoryService } from "../../services/MatchHistoryService";
 import { StatsSelectors } from "../../redux/stats/statsSelectors";
-import { commanderList } from "../../services/commanderList";
+import { CommandersSelectors } from "../../redux/commanders/commandersSelectors";
+import { AppState } from "../../redux/rootReducer";
 
 const placeholderImage = "https://static.thenounproject.com/png/5425-200.png";
 
@@ -114,8 +115,9 @@ const MatchSubmissionPlayerCard = React.memo(function MatchSubmissionPlayerCard(
         [setPlayerRank]
     );
 
-    const commanderImage = commanderList[commanderSelectValue]
-        ? commanderList[commanderSelectValue].image.replace("normal", "art_crop")
+    const commandersData = useSelector((state: AppState) => CommandersSelectors.getCommanders(state));
+    const commanderImage = commandersData?.[commanderSelectValue]
+        ? commandersData[commanderSelectValue].image.replace("normal", "art_crop")
         : undefined;
 
     return (
@@ -351,12 +353,14 @@ export const MatchSubmission = React.memo(function MatchSubmission() {
     ]);
 
     // loop through all of players and create their matchSubmission cards
+    const commandersData = useSelector((state: AppState) => CommandersSelectors.getCommanders(state));
 
     const commandersArray = useMemo(() => {
-        return Object.keys(commanderList).map((value) => {
+        const commanders = commandersData || {};
+        return Object.keys(commanders).map((value) => {
             return { name: value, label: value };
         });
-    }, []);
+    }, [commandersData]);
 
     return (
         <Flex direction="column" justify="center" align="center">

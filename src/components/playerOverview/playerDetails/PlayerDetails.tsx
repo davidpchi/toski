@@ -17,8 +17,9 @@ import {
 } from "@chakra-ui/react";
 
 import { StatsSelectors } from "../../../redux/stats/statsSelectors";
+import { CommandersSelectors } from "../../../redux/commanders/commandersSelectors";
 import { AppState } from "../../../redux/rootReducer";
-import { matchHistoryColumns } from "../../dataVisualizations/columnHelpers/matchHistoryColumnHelper";
+import { getMatchHistoryColumns } from "../../dataVisualizations/columnHelpers/matchHistoryColumnHelper";
 import { SortableTable } from "../../dataVisualizations/SortableTable";
 import { Loading } from "../../Loading";
 import { MatchPlacementBarChart } from "../MatchPlacementBarChart";
@@ -46,6 +47,7 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
     const profileId = toskiToDiscordMap && player ? toskiToDiscordMap[player.name.toLowerCase()] : undefined;
     const profile = useSelector((state: AppState) => ProfileSelectors.getProfile(state, profileId ?? ""));
     const commanders = useSelector((state: AppState) => StatsSelectors.getCommanders(state));
+    const commandersData = useSelector((state: AppState) => CommandersSelectors.getCommanders(state));
 
     const [showCommanderMatchups, setShowCommanderMatchups] = useState<boolean>(false);
     const [tabIndex, setTabIndex] = useState(0);
@@ -69,6 +71,8 @@ export const PlayerDetails = React.memo(function PlayerDetails() {
     if (commanders === undefined || player === undefined) {
         return <Loading text="Loading..." />;
     }
+
+    const matchHistoryColumns = getMatchHistoryColumns(commandersData);
 
     return (
         <Flex direction="column" justify="center" align="center">
