@@ -43,6 +43,7 @@ const useGetCommanders = () => {
             const res = await axios.get<CommanderApiResponse[]>(commandersDataEndpoint, {
                 headers: { "Content-Type": "application/json" }
             });
+
             return res.data.map(mapApiResponseToCommanderData);
         } catch (err) {
             console.error("Failed to fetch commanders:", err);

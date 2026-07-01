@@ -88,13 +88,14 @@ export function matchesToCommanderHelper(
                 const commanderData = commandersMap ? commandersMap[currentCommanderName] : undefined;
 
                 // Use the scryfallId from commanderData if available, otherwise use the name as a fallback
-                const commanderId = commanderData ? commanderData.scryfallId : currentCommanderName;
+                const commanderId = commanderData ? commanderData.id : currentCommanderName;
+
+                const colorIdentity = commanderData ? commanderData.colorIdentity : [];
 
                 // commander name is valid. let's check to see if we already added it to our dictionary
                 const potentialCommanderObj = playedCommanderDictionary[commanderId];
                 if (potentialCommanderObj === undefined) {
                     // the entry doesn't exist, add it to our dictionary
-                    const colorIdentity = commanderData ? commanderData.colorIdentity : [];
                     playedCommanderDictionary[commanderId] = {
                         id: commanderId,
                         name: currentCommanderName,
