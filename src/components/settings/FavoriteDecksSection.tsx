@@ -5,8 +5,8 @@ import { Button, Flex, Image, Input } from "@chakra-ui/react";
 
 import { useUserInfo } from "../../logic/hooks/userHooks";
 import { ProfileSelectors } from "../../redux/profiles/profilesSelectors";
+import { CommandersSelectors } from "../../redux/commanders/commandersSelectors";
 import { AppState } from "../../redux/rootReducer";
-import { commanderList } from "../../services/commanderList";
 import { ProfileService } from "../../services/ProfileService";
 
 import { FiTrash2 } from "react-icons/fi";
@@ -74,6 +74,7 @@ export const FavoriteDecksSection = React.memo(function FavoriteDecksSection() {
     const profile = useSelector((state: AppState) => ProfileSelectors.getProfile(state, userId ?? ""));
     const moxfieldDecks = useSelector(ProfileSelectors.getMoxfieldDecks);
     const archidektDecks = useSelector(ProfileSelectors.getArchidektDecks);
+    const commandersData = useSelector((state: AppState) => CommandersSelectors.getCommanders(state));
 
     const [deckUrl, setDeckUrl] = useState<string>();
     const [canAddDeck, setCanAddDeck] = useState<boolean>(true);
@@ -129,10 +130,8 @@ export const FavoriteDecksSection = React.memo(function FavoriteDecksSection() {
                         const result = moxfieldDecks[curDeck.externalId.id];
                         if (result !== undefined) {
                             deck = result;
-                            commanderImageUri = commanderList[result.commanderName]?.image.replace(
-                                "normal",
-                                "art_crop"
-                            );
+                            const commanderData = commandersData ? commandersData[result.commanderName] : undefined;
+                            commanderImageUri = commanderData?.image.replace("normal", "art_crop");
                         }
                     }
                     break;

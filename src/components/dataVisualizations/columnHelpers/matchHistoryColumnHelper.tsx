@@ -4,13 +4,15 @@ import { Flex, Image, Tag, TagLabel, TagRightIcon, Text } from "@chakra-ui/react
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 
 import { Match } from "../../../types/domain/Match";
-import { commanderList } from "../../../services/commanderList";
+import { CommanderData } from "../../../services/CommanderService";
 import { primaryColor } from "../../../themes/acorn";
 import { MatchTag, getMatchTags } from "../../../logic/matchTags";
 
 const columnHelper = createColumnHelper<Match>();
 
-export const matchHistoryColumns: ColumnDef<Match, any>[] = [
+export const getMatchHistoryColumns = (
+    commandersMap: { [name: string]: CommanderData } | undefined
+): ColumnDef<Match, any>[] => [
     columnHelper.accessor((row) => row.id, {
         id: "id",
         cell: (info) => info.getValue(),
@@ -71,8 +73,9 @@ export const matchHistoryColumns: ColumnDef<Match, any>[] = [
             // get the commander image for the winner
             const winner = match.players.find((player) => player.name === match.winner);
             const commander = winner ? winner.commanders[0] : "";
-            const commanderImage = commanderList[commander]
-                ? commanderList[commander].image.replace("normal", "art_crop")
+            const commanderData = commandersMap ? commandersMap[commander] : undefined;
+            const commanderImage = commanderData
+                ? commanderData.image.replace("normal", "art_crop")
                 : "";
 
             return (
@@ -92,3 +95,6 @@ export const matchHistoryColumns: ColumnDef<Match, any>[] = [
         header: () => <span>Turn Count</span>
     })
 ];
+
+// Keep the old export for backward compatibility
+export const matchHistoryColumns: ColumnDef<Match, any>[] = getMatchHistoryColumns(undefined);

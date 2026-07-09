@@ -4,12 +4,12 @@ import { useSelector } from "react-redux";
 import { Flex, Heading, Text } from "@chakra-ui/react";
 
 import { StatsSelectors } from "../../../redux/stats/statsSelectors";
+import { CommandersSelectors } from "../../../redux/commanders/commandersSelectors";
 import { AppState } from "../../../redux/rootReducer";
 import { MTG_COLORS } from "../../constants";
 import { ImageWithHover } from "../../common/ImageWithHover";
 import { PieGraph } from "../../dataVisualizations/PieGraph";
 import { getAverageWinTurnForPlayer, getWinRatePercentage } from "../../../logic/utils";
-import { commanderList } from "../../../services/commanderList";
 import { primaryColor } from "../../../themes/acorn";
 import { ProfileSelectors } from "../../../redux/profiles/profilesSelectors";
 import { ExternalProfile } from "../../../types/domain/ExternalProfile";
@@ -25,6 +25,7 @@ export const PlayerDetailsInfoCard = React.memo(function PlayerDetailsInfoCard({
     const favoriteCommander = useSelector((state: AppState) =>
         StatsSelectors.getFavoriteCommanderForPlayer(state, playerId)
     );
+    const commandersData = useSelector((state: AppState) => CommandersSelectors.getCommanders(state));
 
     const toskiToDiscordMap = useSelector((state: AppState) => state.profiles.toskiToDiscordMap);
 
@@ -74,13 +75,16 @@ export const PlayerDetailsInfoCard = React.memo(function PlayerDetailsInfoCard({
     }
 
     const favoriteCommanderId = profile && profile.favoriteCommanderId ? profile.favoriteCommanderId : "";
-    const themeCommander = Object.values(commanderList).find((value) => value.id === favoriteCommanderId);
+    const themeCommander = commandersData
+        ? Object.values(commandersData).find((value) => value.scryfallId === favoriteCommanderId)
+        : undefined;
     const themeCommanderImage = themeCommander?.image.replace("normal", "art_crop");
     const themeCommanderName = themeCommander?.name;
 
     // if the user has selected a favorite commander, use that, otherwise, default to their most played commander
+    const favCommanderData = favoriteCommander && commandersData ? commandersData[favoriteCommander.name] : undefined;
     const favCommanderImage = favoriteCommander
-        ? themeCommanderImage ?? commanderList[favoriteCommander.name].image.replace("normal", "art_crop")
+        ? themeCommanderImage ?? favCommanderData?.image.replace("normal", "art_crop")
         : "";
     const favCommanderName = themeCommanderName ?? favoriteCommander?.name;
 
@@ -94,7 +98,7 @@ export const PlayerDetailsInfoCard = React.memo(function PlayerDetailsInfoCard({
 
     return (
         <Flex direction="row" justifyContent="center" alignItems={"center"} flexWrap={"wrap"} marginBottom={"16px"}>
-            {favoriteCommander ? (
+            {favoriteCommander && favCommanderImage ? (
                 <ImageWithHover
                     label={`Favorite Commander: ${favCommanderName}`}
                     width={300}

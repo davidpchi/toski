@@ -1,5 +1,3 @@
-// CommanderDetails.tsx
-
 import { TooltipItem } from "chart.js";
 import React, { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
@@ -25,10 +23,10 @@ import {
 
 import { AppState } from "../../redux/rootReducer";
 import { StatsSelectors } from "../../redux/stats/statsSelectors";
+import { CommandersSelectors } from "../../redux/commanders/commandersSelectors";
 import { Loading } from "../Loading";
-import { commanderList } from "../../services/commanderList";
 import { SortableTable } from "../dataVisualizations/SortableTable";
-import { matchHistoryColumns } from "../dataVisualizations/columnHelpers/matchHistoryColumnHelper";
+import { getMatchHistoryColumns } from "../dataVisualizations/columnHelpers/matchHistoryColumnHelper";
 import { Match } from "../../types/domain/Match";
 import { MatchPlayer } from "../../types/domain/MatchPlayer";
 import { LineGraph } from "../dataVisualizations/LineGraph";
@@ -50,6 +48,10 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
     const navigate = useNavigate();
     const commanderId = useLoaderData() as string;
     const commander = useSelector((state: AppState) => StatsSelectors.getCommander(state, commanderId));
+    const commanderInfo = useSelector((state: AppState) =>
+        CommandersSelectors.getCommanderByName(state, commander?.name ?? "")
+    );
+    const commandersData = useSelector((state: AppState) => CommandersSelectors.getCommanders(state));
 
     const [showCommanderMatchups, setShowCommanderMatchups] = useState<boolean>(false);
     const [tabIndex, setTabIndex] = useState(0);
@@ -129,6 +131,8 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
         return `Winrate: ${item.formattedValue}%`;
     };
 
+    const matchHistoryColumns = getMatchHistoryColumns(commandersData);
+
     return (
         <Flex direction="column" justifyContent="center" alignItems="center">
             <Flex
@@ -140,10 +144,10 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                 flexWrap="wrap"
                 marginBottom="32px"
             >
-                {commanderList[commander.name] ? (
+                {commanderInfo ? (
                     <Image
                         width="300px"
-                        src={commanderList[commander.name].image}
+                        src={commanderInfo.image}
                         boxShadow="0px 12px 18px 2px rgba(0,0,0,0.3)"
                         borderRadius="4%"
                         zIndex={1}
@@ -189,13 +193,13 @@ export const CommanderDetails = React.memo(function CommanderDetails() {
                     <Text padding="8px 16px" borderLeftWidth="1px" borderRightWidth="1px" borderBottomWidth="1px">
                         {`Qualified: ${commander.validMatchesCount >= COMMANDER_MINIMUM_GAMES_REQUIRED ? "Yes" : "No"}`}
                     </Text>
-                    {commanderList[commander.name] && (
+                    {commanderInfo && (
                         <Link
                             padding="8px 16px"
                             borderLeftWidth="1px"
                             borderRightWidth="1px"
                             borderBottomWidth="1px"
-                            href={commanderList[commander.name].scryfallUri}
+                            href={commanderInfo.scryfallUri}
                             isExternal
                         >
                             View on Scryfall <ExternalLinkIcon marginLeft="4px" marginBottom="5px" />

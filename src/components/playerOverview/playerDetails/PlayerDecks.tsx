@@ -2,8 +2,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { AppState } from "../../../redux/rootReducer";
 import { ProfileSelectors } from "../../../redux/profiles/profilesSelectors";
+import { CommandersSelectors } from "../../../redux/commanders/commandersSelectors";
 import { Button, Flex, Image } from "@chakra-ui/react";
-import { commanderList } from "../../../services/commanderList";
 import { DeckSource } from "../../../types/domain/DeckSource";
 import { ExternalDeck } from "../../../types/domain/ExternalDeck";
 
@@ -13,6 +13,7 @@ export const PlayerDecks = React.memo(function PlayerDecks({ profileId }: { prof
     const profile = useSelector((state: AppState) => ProfileSelectors.getProfile(state, profileId ?? ""));
     const moxfieldDecks = useSelector(ProfileSelectors.getMoxfieldDecks);
     const archidektDecks = useSelector(ProfileSelectors.getArchidektDecks);
+    const commandersData = useSelector((state: AppState) => CommandersSelectors.getCommanders(state));
 
     // this component will not render unless moxfield decks are populated
     if (profile === undefined) {
@@ -32,7 +33,8 @@ export const PlayerDecks = React.memo(function PlayerDecks({ profileId }: { prof
                     const result = moxfieldDecks[curDeck.externalId.id];
                     if (result !== undefined) {
                         deck = result;
-                        commanderImageUri = commanderList[result.commanderName]?.image.replace("normal", "art_crop");
+                        const commanderData = commandersData ? commandersData[result.commanderName] : undefined;
+                        commanderImageUri = commanderData?.image.replace("normal", "art_crop");
                     }
                 }
                 break;

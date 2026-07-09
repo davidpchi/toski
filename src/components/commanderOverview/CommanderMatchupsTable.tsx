@@ -5,11 +5,11 @@ import { useNavigate } from "react-router-dom";
 import { SortableTable } from "../dataVisualizations/SortableTable";
 import { AppState } from "../../redux/rootReducer";
 import { StatsSelectors } from "../../redux/stats/statsSelectors";
+import { CommandersSelectors } from "../../redux/commanders/commandersSelectors";
 import {
     CommanderMatchupItem,
-    commanderMatchupsColumns
+    getCommanderMatchupsColumns
 } from "../dataVisualizations/columnHelpers/commanderMatchupsColumnHelper";
-import { commanderList } from "../../services/commanderList";
 import { filterMatchesByPlayerCount } from "../../logic/dictionaryUtils";
 import { NUMBER_OF_PLAYERS_FOR_VALID_MATCH } from "../constants";
 
@@ -19,6 +19,8 @@ export const CommanderMatchupsTable = React.memo(function CommanderMatchupsTable
     commanderName: string;
 }) {
     const navigate = useNavigate();
+
+    const commandersData = useSelector((state: AppState) => CommandersSelectors.getCommanders(state));
 
     // get all the valid matches the commander has participated in
     const matches = filterMatchesByPlayerCount(
@@ -45,11 +47,12 @@ export const CommanderMatchupsTable = React.memo(function CommanderMatchupsTable
                 // skip that since we don't want their record against themself
                 if (commander !== commanderName) {
                     const potentialCommander = commanderMatchups[commander];
+                    const commanderDataForThisCommander = commandersData ? commandersData[commander] : undefined;
                     // check to see if the commander already exists in our dictionary. if it doesn't, add it.
                     const commanderMatchup =
                         potentialCommander === undefined
                             ? {
-                                  id: commanderList[commander].id,
+                                  id: commanderDataForThisCommander ? commanderDataForThisCommander.scryfallId : "",
                                   name: commander,
                                   matchCount: 1,
                                   winCount: 0
@@ -68,10 +71,11 @@ export const CommanderMatchupsTable = React.memo(function CommanderMatchupsTable
     }
 
     const commanderMatchupsArray = Object.values(commanderMatchups).sort((a, b) => b.matchCount - a.matchCount);
+    const columns = getCommanderMatchupsColumns(commandersData);
 
     return (
         <SortableTable
-            columns={commanderMatchupsColumns}
+            columns={columns}
             data={commanderMatchupsArray}
             getRowProps={(row: any) => {
                 return {
