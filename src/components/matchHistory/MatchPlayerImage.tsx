@@ -26,8 +26,8 @@ export const MatchPlayerImage = React.memo(function MatchPlayerImage({ player }:
     const commandersData = useSelector((state: AppState) => CommandersSelectors.getCommanders(state));
 
     const soloCommanderNav = useCallback(() => {
-        if (player.commanders[0].id !== undefined) {
-            navigate("/commanderOverview/" + player.commanders[0].id);
+        if (player.commanders[0].name !== undefined) {
+            navigate("/commanderOverview/" + player.commanders[0].name);
         }
     }, [navigate, player.commanders]);
 
@@ -37,8 +37,8 @@ export const MatchPlayerImage = React.memo(function MatchPlayerImage({ player }:
 
     const commanderImagesForModal = player.commanders.map((value: MatchDisplayCommander) => {
         const onClickNav = () => {
-            if (value.id !== undefined) {
-                navigate("/commanderOverview/" + value.id);
+            if (value.name !== undefined) {
+                navigate("/commanderOverview/" + value.name);
             }
         };
 

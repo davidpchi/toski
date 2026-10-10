@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -33,6 +33,7 @@ export const CommanderOverview = React.memo(function MatchHistory() {
             (value: Commander) => allCommanders[value.id].validMatchesCount >= COMMANDER_MINIMUM_GAMES_REQUIRED
         );
     }
+
     if (searchInput.length > 0 && allCommanders) {
         commandersArray = commandersArray.filter((value: Commander) =>
             allCommanders[value.id].name.toLowerCase().includes(searchInput.toLowerCase())
