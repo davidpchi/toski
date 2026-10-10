@@ -27,8 +27,6 @@ export const CommandersPlayedChart = React.memo(function CommandersPlayedChart()
         return { x: Number(match.id) + 1, y: Object.keys(commandersDictionary).length };
     });
 
-    console.log(commandersCountData);
-
     const tooltipTitleCallback = (item: TooltipItem<"line">[]) => {
         return `Match Id: ${matches[item[0].dataIndex].id}`;
     };
